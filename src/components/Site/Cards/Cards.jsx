@@ -9,9 +9,7 @@ function Cards() {
     <div className={style.service_container} id="Преимущества">
       <img src={Eclipse} alt="" />
       <div className={style.title_wrapper}>
-        <span className={style.service_title}>
-          РЕКЛАМА КОТОРАЯ ПОВЫШАЕТ УЗНАВАЕМОСТЬ И ЦЕННОСТЬ ВАШЕГО БРЕНДА
-        </span>
+        <span className={style.service_title}>РЕКЛАМА КОТОРАЯ</span>
       </div>
 
       <div className={style.service_card}>
