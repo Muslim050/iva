@@ -1,0 +1,184 @@
+.linkFile {
+  display: flex;
+  align-items: center;
+  color: var(--primary_color);
+  border: 2px solid var(--primary_color);
+  font-weight: 500;
+  border-radius: 12px;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 7px 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: #556ff1a9;
+    box-shadow: 0 0 5px var(--primary_color);
+    color: white;
+  }
+
+}
+
+.tableRevenue {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1200px) {
+
+  /* hamburger */
+  .tableRevenue {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+
+.revenue_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 25px;
+  font-weight: 600;
+  color: white;
+}
+
+
+
+
+.profile {
+  display: flex;
+  font-size: 14px;
+  position: relative;
+  margin-bottom: 10px;
+  justify-content: space-between;
+
+
+
+  &__wrapper {
+
+    // width: 32px;
+    // height: 32px;
+    padding: 15px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 8px;
+    background: rgb(255, 242, 226);
+    border: 2px solid rgb(250, 203, 145);
+
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 0 5px rgb(250, 203, 145);
+
+    }
+  }
+}
+
+.profile__wrapper__tooltip {
+  position: absolute;
+  bottom: -45px;
+  right: 3px;
+  background-color: #fff;
+  box-shadow: 0 0 5px #bbbbbb;
+  padding: 10px;
+  border-radius: 12px;
+  z-index: 99999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease,
+    visibility 0s linear 0.3s;
+}
+
+.profile__wrapper__tooltip {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+  /* Отменяем задержку */
+}
+
+.linkFile svg path {
+  stroke: var(--primary_color);
+  /* Новый цвет SVG */
+}
+
+.linkFile:hover svg path {
+  stroke: #ffffff;
+  /* Новый цвет SVG */
+}
+
+.linkVideo {
+  display: flex;
+  align-items: center;
+  color: white;
+  background-color: var(--primary_color);
+  font-weight: 500;
+  border-radius: 12px;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 7px 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: #556ff1a9;
+    box-shadow: 0 0 5px var(--primary_color);
+  }
+}
+
+.linkVideo svg path {
+  stroke: var(--primary_color);
+  /* Новый цвет SVG */
+}
+
+.linkVideo:hover svg path {
+  stroke: #ffffff;
+  /* Новый цвет SVG */
+}
+
+// .linkVideo {
+//   display: inline-block;
+//   font-size: 14px;
+//   padding: 6px 15px;
+//   border-radius: 15px;
+//   // background-color: #5d00ff;
+//   border: 2px solid #5d00ff;
+//   cursor: pointer;
+//   color: white;
+//   // border: 0;
+//   font-weight: 600;
+
+//   &:hover {
+//     background-color: #7528fb;
+//   }
+// }
+.revenue_card {
+  width: 560px;
+  height: 300px;
+  background: #1238FF;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  background-image: url("../../../../assets/Circle.png");
+  background-position-y: -50px;
+  background-repeat: no-repeat;
+  padding: 30px;
+  overflow: hidden;
+  margin-bottom: 20px;
+
+
+}
+
+.revenue_bottom {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.revenue_icon {
+
+  position: absolute;
+  right: -10px;
+  bottom: -70px;
+}

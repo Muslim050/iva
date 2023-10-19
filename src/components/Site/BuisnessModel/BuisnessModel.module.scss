@@ -1,0 +1,96 @@
+.dflex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+
+.service_container {
+  width: 90%;
+  margin: 100px auto;
+
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+
+
+  .title_wrapper {
+    overflow: hidden;
+    text-align: center;
+    display: contents;
+
+    .service_title {
+      display: block;
+      text-align: center;
+      color: white;
+      text-transform: uppercase;
+      font-size: 40px;
+      font-weight: 600;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .service_subtitle {
+      display: block;
+      text-align: center;
+      color: #596780;
+      font-size: 20px;
+      font-weight: 600;
+      overflow: hidden;
+      width: 500px;
+      line-height: 150%;
+
+
+    }
+  }
+
+}
+
+.service_card {
+  @extend .dflex;
+  flex-wrap: wrap;
+
+  margin: 60px 0;
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    top: 0;
+    transition: all .3s ease-in-out;
+    width: 400px;
+    backdrop-filter: blur(25px);
+    margin: 20px;
+
+    img {
+      border-radius: 15px;
+
+    }
+
+
+    &:hover {
+      box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+      cursor: pointer;
+      top: -5px;
+    }
+
+    h3 {
+      font-size: 23px;
+      color: white;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+    }
+
+
+
+  }
+}

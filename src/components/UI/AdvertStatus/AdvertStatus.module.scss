@@ -1,0 +1,74 @@
+.wrapper__status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 11px;
+  border-radius: 8px;
+  justify-content: space-evenly;
+
+
+  &.sent {
+    background-color: #f1d5a6;
+    color: rgb(134, 98, 0);
+  }
+
+  &.accepted {
+    background-color: #dfc6ed;
+    color: #aa00ff;
+  }
+
+  &.in_review {
+    background-color: #c9d4e9;
+    color: #3d5b92;
+  }
+
+  &.confirmed {
+    background-color: #cae6d1;
+    color: #037b21;
+  }
+
+  &.confirmed_by_channel {
+    background-color: #ffd700;
+    color: rgb(92, 92, 92);
+  }
+
+  &.in_progress {
+    background-color: #E4E8FD;
+    color: #5570F1;
+  }
+
+  &.unused {
+    background-color: #ff3b2f;
+    color: white;
+  }
+
+  &.open {
+    background-color: #FFF2E2;
+    color: #1C1D22;
+  }
+
+  &.pre_booked {
+    background-color: rgb(215, 190, 229);
+    color: rgb(106, 69, 128);
+  }
+
+  &.booked {
+    background-color: #d0c9fa;
+    color: #4833d0;
+  }
+
+  &.in_use {
+    background-color: #DEEEE8;
+    color: #519C66;
+  }
+
+  &.inactive {
+    background-color: #eedede;
+    color: #9c5151;
+  }
+
+  &.finished {
+    background-color: #eedede;
+    color: #9c5151;
+  }
+}

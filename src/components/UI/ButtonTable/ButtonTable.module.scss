@@ -1,0 +1,41 @@
+.button {
+  display: flex;
+  justify-content: space-between;
+
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    color: white;
+    background-color: var(--primary_color);
+    font-weight: 500;
+    border-radius: 12px;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 7px 16px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      background-color: #556ff1a9;
+      box-shadow: 0 0 5px var(--primary_color);
+
+    }
+  }
+
+  &__icon {
+    display: flex;
+
+  }
+
+  &__text {
+    align-items: center;
+    display: flex;
+  }
+}
+
+@media only screen and (max-width: 760px) {
+  .button__text {
+    display: none;
+
+  }
+}

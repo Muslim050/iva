@@ -1,0 +1,74 @@
+.linkFile {
+  display: flex;
+  align-items: center;
+  color: var(--primary_color);
+  border: 2px solid var(--primary_color);
+  font-weight: 500;
+  border-radius: 12px;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 7px 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: #556ff1a9;
+    box-shadow: 0 0 5px var(--primary_color);
+    color: white;
+  }
+
+}
+
+.linkFile svg path {
+  stroke: var(--primary_color);
+  /* Новый цвет SVG */
+}
+
+.linkFile:hover svg path {
+  stroke: #ffffff;
+  /* Новый цвет SVG */
+}
+
+.linkVideo {
+  display: flex;
+  align-items: center;
+  color: white;
+  background-color: var(--primary_color);
+  font-weight: 500;
+  border-radius: 12px;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 7px 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: #556ff1a9;
+    box-shadow: 0 0 5px var(--primary_color);
+  }
+}
+
+.linkVideo svg path {
+  stroke: var(--primary_color);
+  /* Новый цвет SVG */
+}
+
+.linkVideo:hover svg path {
+  stroke: #ffffff;
+  /* Новый цвет SVG */
+}
+
+// .linkVideo {
+//   display: inline-block;
+//   font-size: 14px;
+//   padding: 6px 15px;
+//   border-radius: 15px;
+//   // background-color: #5d00ff;
+//   border: 2px solid #5d00ff;
+//   cursor: pointer;
+//   color: white;
+//   // border: 0;
+//   font-weight: 600;
+
+//   &:hover {
+//     background-color: #7528fb;
+//   }
+// }

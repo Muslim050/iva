@@ -1,0 +1,247 @@
+.section {
+  display: flex;
+  height: 100vh;
+
+  .sidebar_wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 92%;
+  }
+
+  &__sidebar {
+    transition-duration: 500ms;
+    color: rgb(70, 70, 70);
+    padding: 32px;
+    background-color: var(--background_cart);
+
+    &__width {
+      width: 300px;
+    }
+
+    &__widthh {
+      width: 88px;
+    }
+  }
+
+  &__sidebar__widthh {
+    padding: 16px;
+
+    .sidebar__link__active {
+      padding: 5px 15px;
+    }
+
+    .sidebar__link {
+      padding: 5px 15px;
+    }
+
+    .sidebar__linkL {
+      padding: 13px 15px;
+    }
+
+    .section__burger {
+      margin-left: 10px;
+
+    }
+  }
+
+
+  &__burger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-color, );
+    margin-bottom: 40px;
+    cursor: pointer;
+
+    &__icon {
+      width: 35px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+
+      &__open {
+        transform: rotate(180deg);
+      }
+    }
+
+    &__text {
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+}
+
+
+.sidebar__link__active {
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+  background-color: var(--primary_color);
+  line-height: 20px;
+  border-radius: 12px;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar__link__active svg path {
+  fill: white;
+}
+
+.sidebar__link:hover svg path {
+  fill: #53545C;
+}
+
+.sidebar {
+  position: relative;
+  display: flex;
+  margin-top: 12px;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--text-color);
+
+
+
+  &__link {
+    padding: 5px 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 12px;
+    color: #53545C;
+    transition: background-color 0.3s ease;
+    background-color: inherit;
+    border: 1px solid white;
+    transition: border 0.3s ease;
+
+    &:hover {
+      color: var(--text-color);
+      border: 1px solid rgb(154, 154, 154);
+      box-shadow: 0 0 10px #e3e3e3;
+    }
+  }
+
+
+  &__linkL {
+    padding: 10px 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 12px;
+    color: var(--text-color);
+    transition: background-color 0.3s ease;
+    background-color: inherit;
+    border: 1px solid white;
+    transition: border 0.3s ease;
+
+    &:hover {
+      color: var(--text-color);
+      border: 1px solid #f96a6a;
+      box-shadow: 0 0 5px #f96a6a;
+
+    }
+  }
+
+
+  &__text {
+    white-space: pre;
+    transition-duration: 500ms;
+    font-size: 16px;
+    margin-left: 16px;
+  }
+
+  .wrapper__icon {
+    width: 25px;
+    display: flex;
+  }
+
+  &__textlink {
+    opacity: 0;
+    transform: translateX(7rem);
+    overflow: hidden;
+  }
+
+
+  &__textL {
+    white-space: pre;
+    transition-duration: 500ms;
+    font-size: 15px;
+    margin-left: 16px;
+    color: red;
+  }
+
+  &__textlinkL {
+    opacity: 0;
+    transform: translateX(7rem);
+    overflow: hidden;
+  }
+}
+
+.wrapper__icon {
+  width: 25px;
+  display: flex;
+}
+
+.tooltip {
+  position: absolute;
+  top: 18px;
+  left: 210%;
+  transform: translateX(-28%);
+  background-color: #4e4e4e;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 5;
+
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar_wrapper {
+    .wrapper__icon {
+      width: 20px;
+      display: flex;
+    }
+  }
+
+  .section__sidebar__widthh {
+    padding: 8px;
+    width: 65px;
+
+
+    .sidebar__link__active {
+      padding: 5px 13px;
+    }
+
+    .sidebar__link {
+      padding: 5px 13px;
+    }
+
+    .sidebar__linkL {
+      padding: 5px 13px;
+    }
+
+    .section__burger {
+      margin-left: 10px;
+
+    }
+  }
+
+  .section__sidebar__width {
+    width: 250px;
+  }
+
+  .section__sidebar {
+    padding: 10px;
+  }
+
+}

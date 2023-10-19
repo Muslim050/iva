@@ -1,0 +1,85 @@
+.btn__wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+
+
+  &__btn {
+    color: white;
+    background: var(--primary_color);
+    border-radius: 12px;
+    font-size: 20px;
+    padding: 16px 20px 16px 20px;
+    max-width: 100%;
+    width: 180px;
+
+    &:hover {
+      background: var(--primary_colorHover);
+    }
+  }
+
+  &__disabled {
+    color: white;
+    background: rgb(129, 129, 129);
+    font-weight: 500;
+    border-radius: 12px;
+    font-size: 20px;
+    padding: 16px 20px 16px 20px;
+    cursor: pointer;
+    border: 0;
+  }
+
+  &__btnM {
+    color: white;
+    background: var(--primary_color);
+    border-radius: 12px;
+    font-size: 20px;
+    padding: 13px 15px 13px 15px;
+    max-width: 100%;
+    width: 150px;
+
+    &:hover {
+      background: var(--primary_colorHover);
+    }
+  }
+
+  &__disabledM {
+    color: white;
+    background: rgb(129, 129, 129);
+    font-weight: 500;
+    border-radius: 12px;
+
+    font-size: 20px;
+    padding: 13px 15px 13px 15px;
+    cursor: pointer;
+    border: 0;
+  }
+
+
+
+
+
+
+
+
+}
+
+
+.btn__wrapperB {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+
+  &__btnB {
+    color: white;
+    background: red;
+    border-radius: 12px;
+    font-size: 20px;
+    max-width: 100%;
+    width: 150px;
+
+    &:hover {
+      background: var(--primary_colorHover);
+    }
+  }
+}

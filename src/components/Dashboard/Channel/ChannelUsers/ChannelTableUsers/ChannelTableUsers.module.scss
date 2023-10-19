@@ -1,0 +1,145 @@
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-width: 1024px) {
+
+  .tableWrapper,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border-bottom: 2px solid #ccc;
+  }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+  td:nth-of-type(1):before {
+    content: "№";
+  }
+
+  td:nth-of-type(2):before {
+    content: "Username";
+  }
+
+  td:nth-of-type(3):before {
+    content: "Channel Name";
+  }
+
+  td:nth-of-type(4):before {
+    content: "Имя";
+  }
+
+  td:nth-of-type(5):before {
+    content: "Фамилия";
+  }
+
+
+  td:nth-of-type(6):before {
+    content: "Email";
+  }
+
+  td:nth-of-type(7):before {
+    content: "Роль";
+  }
+
+  td:nth-of-type(8):before {
+    content: "Номер";
+  }
+
+
+}
+
+.btn__connect {
+  background-color: #f15555;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 14.52px;
+
+  &:hover {
+    background-color: #ff0000;
+
+  }
+}
+
+.btn__connectR {
+  background-color: #5570F1;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 14.52px;
+
+  &:hover {
+    background-color: #284bfc;
+
+  }
+}
+
+.btn__google {}
+
+.table__status {
+  background-color: #DEEEE8;
+  color: #519C66;
+  padding: 3.5px 12px;
+  border-radius: 12px;
+  // border: 1px solid #519C66;
+  font-size: 12px;
+  line-height: 14.52px;
+
+
+}
+
+.table__tr_th_estatus {
+  background-color: #ffcece;
+  color: #d52828;
+  padding: 3.5px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 14.52px;
+}
+
+.btn__google {
+  border-radius: 10px;
+
+
+  &__wrapper {
+    background: white;
+    display: inline-block;
+    padding: 3px;
+    margin-bottom: -3px;
+
+    border-radius: 10px;
+    border: 1px solid #0062ffc7;
+
+    &:hover {
+      background: #73a7fcc7;
+
+    }
+  }
+
+}
