@@ -2,11 +2,16 @@ import React from "react";
 import { IconContext } from "react-icons";
 import {
   IoLogoInstagram,
-  IoLogoTwitter,
   IoLogoYoutube,
-  IoMailOutline,
-  IoArrowForward,
+  IoLogoFacebook,
 } from "react-icons/io5";
+import { SiTelegram } from "react-icons/si";
+import {
+  MdOutlineEmail,
+  MdOutlinePhoneInTalk,
+  MdLocationOn,
+} from "react-icons/md";
+
 import style from "./Footer.module.scss";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -21,10 +26,8 @@ function Footer() {
             <Link to={"/"} style={{}}>
               <img style={{ width: "100px" }} src={Logo} alt="" />
             </Link>
-            <h3 style={{ fontSize: "14px", margin: "20px 0" }}>
-              Lorem ipsum dolor amet, consectetur adipiscing elit. Eget nisl
-              nunc quam ac sed turpis volutpat. Cursus sed massa non nisi,
-              placerat.
+            <h3 style={{ fontSize: "18px", margin: "20px 0" }}>
+              Онлайн платформа для размещения видеорекламы на видеохостинге
             </h3>
             <div
               href="#"
@@ -44,7 +47,7 @@ function Footer() {
                 <IconContext.Provider
                   value={{ color: "#14da8f", size: "25px" }}
                 >
-                  <IoLogoTwitter />
+                  <IoLogoFacebook />
                 </IconContext.Provider>
               </div>
               <div className={style.service_icon}>
@@ -54,33 +57,61 @@ function Footer() {
                   <IoLogoYoutube />
                 </IconContext.Provider>
               </div>
+              <div className={style.service_icon}>
+                <IconContext.Provider
+                  value={{ color: "#14da8f", size: "25px" }}
+                >
+                  <SiTelegram />
+                </IconContext.Provider>
+              </div>
             </div>
           </div>
         </div>
 
         <div className={style.card_cart}>
           <div style={{ fontSize: "20px", marginBottom: "25px" }}>
-            Quick Links
+            Свяжитесь с нами
           </div>
 
           <ul>
-            <li style={{ fontSize: "14px", marginBottom: "15px" }}>About us</li>
-            <li style={{ fontSize: "14px", marginBottom: "15px" }}>About us</li>
-            <li style={{ fontSize: "14px", marginBottom: "15px" }}>About us</li>
-            <li style={{ fontSize: "14px", marginBottom: "15px" }}>About us</li>
-          </ul>
-        </div>
-        <div className={style.card_cart}>
-          <div style={{ fontSize: "20px", marginBottom: "25px" }}>Reach us</div>
-
-          <ul>
-            <li style={{ fontSize: "14px", marginBottom: "15px" }}>
-              bf@gmail,com
+            <li
+              style={{
+                fontSize: "15px",
+                marginBottom: "15px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <IconContext.Provider value={{ color: "#14da8f", size: "25px" }}>
+                <MdOutlineEmail />
+              </IconContext.Provider>
+              adtechmediainfo@gmail.com
             </li>
-            <li style={{ fontSize: "14px", marginBottom: "15px" }}>
-              +9989012345667
+            <li
+              style={{
+                fontSize: "15px",
+                marginBottom: "15px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <IconContext.Provider value={{ color: "#14da8f", size: "25px" }}>
+                <MdOutlinePhoneInTalk />
+              </IconContext.Provider>
+              <a href="tel:90 550-50-505">+998 90 550-50-50</a>
             </li>
-            <li style={{ fontSize: "14px", marginBottom: "15px" }}>address</li>
+            <li
+              style={{
+                fontSize: "15px",
+                marginBottom: "15px",
+                lineHeight: "25px",
+              }}
+            >
+              <IconContext.Provider value={{ color: "#14da8f", size: "25px" }}>
+                <MdLocationOn />
+              </IconContext.Provider>
+              Ташкент, ул. Мустақиллик 88А, БЦ “Дархан”
+            </li>
           </ul>
         </div>
       </div>

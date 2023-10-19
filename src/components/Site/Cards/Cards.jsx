@@ -6,7 +6,7 @@ import Eclipse from "src/assets/Site/Ellipse.png";
 
 function Cards() {
   return (
-    <div className={style.service_container} id="Преимущества">
+    <div className={style.service_container} id="Технология">
       <img src={Eclipse} alt="" />
       <div className={style.title_wrapper}>
         <span className={style.service_title}>РЕКЛАМА КОТОРАЯ</span>

@@ -37,13 +37,13 @@ const Header = () => {
           <ul className={`${styles.navMenu} ${isActive ? styles.active : ""}`}>
             <li onClick={removeActive}>
               <ScrollLink
-                to="Преимущества"
+                to="Технология"
                 spy={true}
                 smooth={true}
                 duration={500}
                 className={`${styles.navLink}`}
               >
-                Преимущества
+                Технология
               </ScrollLink>
             </li>
             <li onClick={removeActive}>
@@ -69,15 +69,7 @@ const Header = () => {
               </ScrollLink>
             </li>
             <li onClick={removeActive}>
-              <ScrollLink
-                to="contact"
-                spy={true}
-                smooth={true}
-                duration={500}
-                className={`${styles.navLink}`}
-              >
-                Контакты
-              </ScrollLink>
+              <ScrollLink className={`${styles.navLink}`}>Новости</ScrollLink>
             </li>
             <Link to={"/login"}>
               <button className={styles.btn}>Войти</button>

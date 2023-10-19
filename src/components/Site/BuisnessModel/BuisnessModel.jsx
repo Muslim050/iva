@@ -19,16 +19,16 @@ function BuisnessModel() {
         <img
           src={Eclipse}
           alt=""
-          style={{ position: "absolute", right: " -25%" }}
+          style={{ position: "absolute", right: " -10%" }}
         />
 
         <div className={style.title_wrapper}>
           <span className={style.service_title}>
-            Бизнес модель сотрудничества
+            РАЗВИВАЙТЕ СВОЙ БИЗНЕС ВМЕСТЕ С НАМИ
           </span>
           <h2 className={style.service_subtitle}>
-            Мы предлагаем понятную и прозрачную бизнес модель сотрудничества,
-            основанную на разделения доходов от рекламы - Revenue Share
+            Приглашаем к сотрудничеству рекламодателей, медиа компаний,
+            киностудий, производителей видеоконтента, видео-блогеров
           </h2>
         </div>
 

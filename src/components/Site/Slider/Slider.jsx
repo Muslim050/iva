@@ -21,9 +21,9 @@ function Slider() {
       <img src={Eclipse} alt="" className={style.imgSliderE} />
 
       <div className={style.title_wrapper}>
-        <span className={style.service_title}>200+ million</span> &nbsp; &nbsp;
-        &nbsp;
-        <span className={style.service_stitle}>viewers</span>
+        <span className={style.service_title}>
+          РЕКЛАМА КОТОРУЮ УВИДЕЛИ И БРЕНДЫ КОТОРЫЕ УЗНАЛИ МИЛЛИОНЫ
+        </span>{" "}
       </div>
 
       <div style={{ width: " 90%", margin: "100px auto" }}>
