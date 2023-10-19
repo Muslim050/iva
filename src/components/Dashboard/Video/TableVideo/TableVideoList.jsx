@@ -90,7 +90,8 @@ function TableVideoList({
                 </a>
               )}
 
-              {user === "admin" || user === "channel" ? (
+              {(user === "admin" || user === "channel") &&
+              !video.link_to_video ? (
                 <div style={{ display: "flow" }}>
                   <ButtonBorder
                     onClick={() => {

@@ -12,8 +12,7 @@ function OrderChartGeo({ statistic }) {
           key={index}
           className={style.tableChart__tdd}
           style={{
-            fontFamily: "Roboto, sans-serif",
-            fontSize: "12px",
+            fontSize: "14px",
           }}
         >
           {geo}

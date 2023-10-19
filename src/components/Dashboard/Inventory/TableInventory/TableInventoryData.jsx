@@ -138,8 +138,6 @@ function TableInventoryData({
               ) : (
                 ""
               )}
-            </td>
-            <td>
               {(user === "admin" ||
                 user === "advertiser" ||
                 user === "advertising_agency") &&

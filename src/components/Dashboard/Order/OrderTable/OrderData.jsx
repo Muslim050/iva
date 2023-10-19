@@ -337,6 +337,17 @@ function OrderData({ sortedData }) {
 
                 {role === "admin" && advert.status === "in_progress" ? (
                   <ButtonBorder onClick={() => handleFinishOrder(advert.id)}>
+                    {(advert.online_views / advert.expected_number_of_views) *
+                      100 >=
+                      100 && (
+                      <CircularBadge
+                        style={{
+                          backgroundColor: "red",
+                          width: "15px",
+                          height: "15px",
+                        }}
+                      />
+                    )}
                     <Finish
                       style={{
                         width: "17px",
