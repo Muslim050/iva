@@ -288,7 +288,7 @@ const orderStatusSlice = createSlice({
       })
       .addCase(finishOrder.fulfilled, (state, action) => {
         state.status = "succeeded";
-        toast.success("Инвентарь успешно финиширован!", toastConfig);
+        toast.success("Заказ успешно финиширован!", toastConfig);
       })
       .addCase(finishOrder.rejected, (state, action) => {
         state.status = "failed";

@@ -1,10 +1,13 @@
 import React from "react";
 import style from "./BuisnessModel.module.scss";
-import Image1 from "src/assets/Site/1.png";
-import Image2 from "src/assets/Site/2.png";
 import Eclipse from "src/assets/Site/Ellipse.png";
+import LeftForm from "./LeftForm";
+import RightForm from "./RightForm";
 
 function BuisnessModel() {
+  const [isLogin, setIsLogin] = React.useState(false);
+  const [isLoginP, setIsLoginP] = React.useState(false);
+
   return (
     <div
       id="Бизнес"
@@ -32,14 +35,10 @@ function BuisnessModel() {
           </h2>
         </div>
 
-        <div className={style.service_card}>
-          <div className={style.card}>
-            <img src={Image1} alt="" />
-          </div>
+        <div style={{ display: "flex", gap: "20px", marginTop: "30px" }}>
+          <LeftForm />
 
-          <div className={style.card}>
-            <img src={Image2} alt="" />
-          </div>
+          <RightForm />
         </div>
       </div>
     </div>

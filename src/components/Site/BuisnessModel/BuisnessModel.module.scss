@@ -94,3 +94,145 @@
 
   }
 }
+
+
+.login__wrapper {
+  border-radius: 12px;
+  width: 430px;
+  margin: 0 auto;
+  padding: 30px 30px;
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(245, 251, 242, 0.44);
+  background: inherit;
+
+  &__table_header {
+    width: 100%;
+    text-align: center;
+    align-items: baseline;
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__table_title {
+    color: rgb(255, 255, 255);
+    padding: 0px 0px 5px 0px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__table_subtitle {
+    color: #FF5621;
+    font-weight: 600;
+    font-size: 15px;
+    width: 100%;
+  }
+}
+
+.modalWindow {
+  position: relative;
+  margin-bottom: 15px;
+
+  &__input {
+    border: 0;
+    color: var(--text-color);
+    font-size: 16px;
+    line-height: 1.25rem;
+    border-radius: 10px;
+    width: 100%;
+    background-color: var(--input_background);
+    padding: 8px 15px 8px 15px;
+    height: 52px;
+    margin-top: 5px;
+
+    &:focus {
+      outline: none !important;
+      border: 1px solid #cacaca;
+      box-shadow: 0 0 10px #e3e3e3;
+    }
+  }
+
+  &__input_error {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    font-size: 13px;
+    color: red;
+  }
+}
+
+.inputIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+}
+
+.inputContainer {
+  position: relative;
+}
+
+
+
+.btn__wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+
+
+  &__btn {
+    color: white;
+    background: var(--primary_color);
+    font-weight: 600;
+    border-radius: 12px;
+    font-size: 20px;
+    padding: 16px 20px 16px 20px;
+    cursor: pointer;
+    border: 0;
+
+    &:hover {
+      background: var(--primary_colorHover);
+    }
+
+
+  }
+
+  &__disabled {
+    color: white;
+    background: rgb(174, 174, 174);
+    font-weight: 600;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 16px 20px 16px 20px;
+    cursor: pointer;
+    border: 0;
+  }
+}
+
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+
+  .spinner {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border: 4px solid #6c84f9a5;
+    border-radius: 50%;
+    border-top-color: var(--primary_color);
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+}

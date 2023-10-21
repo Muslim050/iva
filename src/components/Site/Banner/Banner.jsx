@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+
 import styles from "src/components/Site/Banner/banner.module.scss";
 import Video from "src/assets/Site/Site.mp4";
 import { Link as ScrollLink } from "react-scroll";

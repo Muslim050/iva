@@ -1,6 +1,8 @@
 import React from "react";
 import { SortButton } from "src/utils/SortButton";
 import style from "./OrderTable.module.scss";
+import ButtonTable from "src/components/UI/ButtonTable/ButtonTable";
+import { ReactComponent as Reload } from "src/assets/Table/reload.svg";
 
 function OrderRows({ data, sort, sortKey, changeSort }) {
   const user = localStorage.getItem("role");
@@ -21,7 +23,7 @@ function OrderRows({ data, sort, sortKey, changeSort }) {
     // { key: "porog", label: "Прогресс", visible: isAdmin },
 
     { key: "budget", label: "$Бюджет" },
-    { key: "", label: "Статус" },
+    { key: "status", label: "Статус" },
     { key: "", label: "Остаток" },
 
     { key: "deistvia", label: "Детали" },
@@ -40,6 +42,7 @@ function OrderRows({ data, sort, sortKey, changeSort }) {
           if (row.key === "porog" && !row.visible) {
             return null; // Пропускать невидимую колонку "порог"
           }
+
           return (
             <th key={row.key} className={style.th_Order}>
               <SortButton

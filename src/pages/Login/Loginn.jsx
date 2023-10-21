@@ -3,6 +3,7 @@ import { ReactComponent as Email } from "../../assets/InputIcon/Message.svg";
 import { ReactComponent as Lock } from "../../assets/InputIcon/Lock.svg";
 import { ReactComponent as Show } from "src/assets/InputIcon/Show.svg";
 import { ReactComponent as Ulock } from "src/assets/InputIcon/Ulock.svg";
+import Eclipse from "src/assets/Site/Ellipse.png";
 
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/auth/authSlice";
@@ -63,6 +64,9 @@ function Login() {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={style.login}>
+          <img className={style.eclipse_1} src={Eclipse} alt="" />
+          <img className={style.eclipse_2} src={Eclipse} alt="" />
+
           <div className={style.login__wrapper}>
             <div className={style.login__wrapper__table_header}>
               <div className={style.login__wrapper__table_title}>

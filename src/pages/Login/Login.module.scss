@@ -3,9 +3,22 @@
   align-items: center;
   display: flex;
   color: var(--text-color, );
-  background-color: var(--body_background);
+  // background-color: var(--body_background);
+  background-color: #002144ed;
   padding: 0 15px;
+  position: relative;
+}
 
+.eclipse_1 {
+  position: absolute;
+  right: -30%;
+  bottom: -20%;
+}
+
+.eclipse_2 {
+  position: absolute;
+  top: -20%;
+  left: -30%;
 }
 
 .login__wrapper {

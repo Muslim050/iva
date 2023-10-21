@@ -216,6 +216,32 @@ export const deleteInventory = createAsyncThunk(
   }
 );
 
+export const reloadInventory = createAsyncThunk(
+  "inventory/reloadInventory",
+  async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await axios.post(
+        `${backendURL}/inventory/tasks/save-online-views`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("response", response);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 403) {
+        throw new Error("Failed to fetch order");
+      }
+      throw error;
+    }
+  }
+);
 const inventorySlice = createSlice({
   name: "inventory",
   initialState,
@@ -279,6 +305,15 @@ const inventorySlice = createSlice({
       .addCase(deleteInventory.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(reloadInventory.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(reloadInventory.fulfilled, (state, action) => {
+        state.status = "succeeded";
+      })
+      .addCase(reloadInventory.rejected, (state, action) => {
+        state.status = "failed";
       });
   },
 });
