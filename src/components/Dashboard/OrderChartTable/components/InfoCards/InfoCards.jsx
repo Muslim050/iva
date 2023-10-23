@@ -47,14 +47,30 @@ export function InfoCardsBottom({
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
 
       <th
         className={style.infoCards_bottom_th}
-        rowspan="2"
+        rowspan="1"
         style={{ fontWeight: "400" }}
       >
         <div style={{ display: "flex", justifyContent: "center" }}>Итого:</div>
+      </th>
+      <th
+        className={style.infoCards_bottom_th}
+        rowspan="1"
+        style={{
+          borderLeft: "4px solid white",
+          width: "130px",
+        }}
+      >
+        <div className={style.infoCards_bottom_th__toptext}>
+          Остаток
+          <div className={style.infoCards_bottom_th__bottomtext}>
+            <FormatterView
+              data={getOrder.expected_number_of_views - getOrder.online_views}
+            />
+          </div>
+        </div>
       </th>
 
       <th
