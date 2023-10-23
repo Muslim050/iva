@@ -8,6 +8,7 @@
 
 .service_container {
   width: 100%;
+  padding: 100px 0;
 
   margin: 0px auto;
   align-items: center;
@@ -25,7 +26,8 @@
   .title_wrapper {
     display: flex;
     align-items: center;
-    width: 50%;
+    max-width: 1000px;
+    width: 100%;
 
     .service_title {
       display: block;
@@ -35,7 +37,8 @@
       font-size: 40px;
       font-weight: 600;
       overflow: hidden;
-
+      max-width: 936px;
+      width: 100%;
 
     }
 
@@ -98,4 +101,13 @@
       width: 100%
     }
   }
+}
+
+@media screen and (max-width: 820px) {
+
+  .service_title {
+    font-size: 25px !important;
+  }
+
+
 }

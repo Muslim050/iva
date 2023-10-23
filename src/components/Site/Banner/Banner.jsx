@@ -12,7 +12,7 @@ function Banner() {
       </div>
 
       <div className={styles.content}>
-        <h1 className={styles.banner_wrapper_title}>BRANDFORMANCE</h1>
+        <div className={styles.banner_wrapper_title}>BRANDFORMANCE</div>
         <h3 className={styles.banner_wrapper_subtitle}>
           Платформа онлайн видеорекламы
         </h3>

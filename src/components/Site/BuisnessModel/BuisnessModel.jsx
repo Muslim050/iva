@@ -35,7 +35,7 @@ function BuisnessModel() {
           </h2>
         </div>
 
-        <div style={{ display: "flex", gap: "20px", marginTop: "30px" }}>
+        <div className={style.wrapperForm}>
           <LeftForm />
 
           <RightForm />

@@ -11,6 +11,7 @@ import {
   MdOutlinePhoneInTalk,
   MdLocationOn,
 } from "react-icons/md";
+import { ImYoutube2 } from "react-icons/im";
 
 import style from "./Footer.module.scss";
 import { motion } from "framer-motion";
@@ -27,7 +28,10 @@ function Footer() {
               <img style={{ width: "100px" }} src={Logo} alt="" />
             </Link>
             <h3 style={{ fontSize: "18px", margin: "20px 0" }}>
-              Онлайн платформа для размещения видеорекламы на видеохостинге
+              <span style={{ lineHeight: "30px" }}>
+                Онлайн платформа для размещения видеорекламы на видеохостинге
+                YouTube
+              </span>
             </h3>
             <div
               href="#"
@@ -83,7 +87,7 @@ function Footer() {
               }}
             >
               <IconContext.Provider value={{ color: "#14da8f", size: "25px" }}>
-                <MdOutlineEmail />
+                <MdOutlineEmail style={{ marginRight: "10px" }} />
               </IconContext.Provider>
               adtechmediainfo@gmail.com
             </li>
@@ -96,7 +100,7 @@ function Footer() {
               }}
             >
               <IconContext.Provider value={{ color: "#14da8f", size: "25px" }}>
-                <MdOutlinePhoneInTalk />
+                <MdOutlinePhoneInTalk style={{ marginRight: "10px" }} />
               </IconContext.Provider>
               <a href="tel:90 550-50-505">+998 90 550-50-50</a>
             </li>
@@ -108,7 +112,7 @@ function Footer() {
               }}
             >
               <IconContext.Provider value={{ color: "#14da8f", size: "25px" }}>
-                <MdLocationOn />
+                <MdLocationOn style={{ marginRight: "10px" }} />
               </IconContext.Provider>
               Ташкент, ул. Мустақиллик 88А, БЦ “Дархан”
             </li>

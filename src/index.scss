@@ -1,9 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+// @import url('https://fonts.cdnfonts.com/css/helvetica-neue-55?styles=16020,15983,16014,15991,30133');
+@font-face {
+  font-family: "helvetica";
+  src: url("https://candyfonts.com/wp-data/2018/10/26/11538/HELR45W.ttf") format("woff"),
+    url("https://candyfonts.com/wp-data/2018/10/26/11538/HELR45W.ttf") format("opentype"),
+    url("https://candyfonts.com/wp-data/2018/10/26/11538/HELR45W.ttf") format("truetype");
+}
+
+// @import url('https://fonts.cdnfonts.com/css/helvetica-neue-5?styles=103506,103508,103502,103504,103500');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
 }
 
 a {
@@ -19,7 +29,9 @@ ul {
 body {
   margin: 0;
   padding: 0;
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: "helvetica";
+  // font-family: 'Helvetica Neue', sans-serif;
+
   box-sizing: border-box;
   line-height: 1;
 

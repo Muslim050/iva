@@ -1,14 +1,20 @@
 import React from "react";
-import { IconContext } from "react-icons";
-
-import { ImYoutube2 } from "react-icons/im";
-import { IoMailOutline, IoArrowForward } from "react-icons/io5";
+import { useInView } from "react-intersection-observer";
 import style from "./Cards.module.scss";
 import Eclipse from "src/assets/Site/Ellipse.png";
+import { motion } from "framer-motion";
 
 function Cards() {
+  const [ref, inView] = useInView({
+    triggerOnce: true, // Trigger the animation once when it comes into view.
+  });
+
+  const variants = {
+    hidden: { opacity: 0, scale: 0.8, x: -50 },
+    visible: { opacity: 1, scale: 1, x: 0 },
+  };
   return (
-    <div className={style.service_container} id="Технология">
+    <div className={style.service_container} id="Технология" ref={ref}>
       <img src={Eclipse} alt="" />
       <div className={style.title_wrapper}>
         <span className={style.service_title}>
@@ -17,52 +23,41 @@ function Cards() {
       </div>
 
       <div className={style.service_card}>
-        <div className={style.card}>
-          <h3 style={{ textAlign: "center", marginBottom: "35px" }}>
+        <motion.div
+          className={style.card}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={variants}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <h3 style={{ textAlign: "center", marginBottom: "20px" }}>
             BRANDFORMANCE
           </h3>
-          <a
-            href="#"
+
+          <div
             style={{
+              fontSize: "24px",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              color: "white",
+              justifyContent: "center",
+              color: "#cccccc",
             }}
           >
-            <div
-              style={{
-                fontSize: "24px",
-                display: "flex",
-                justifyContent: "center",
-                color: "#cccccc",
-              }}
-            >
-              <span style={{ lineHeight: "30px" }}>
-                {" "}
-                Это онлайн платформа для размещения видеорекламы на крупнейшем
-                видеохостинге{" "}
-                <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    height: "32px",
-                    fontSize: "80px",
-                  }}
-                >
-                  {/* <IconContext.Provider
-                    value={{ color: "#14da8f", size: "70px", marginTop: "5px" }}
-                  > */}
-                  <ImYoutube2 style={{ height: "30px" }} />
-                  {/* </IconContext.Provider> */}
-                </div>
-              </span>
-            </div>
-          </a>
-        </div>
+            <span style={{ lineHeight: "30px" }}>
+              {" "}
+              Это онлайн платформа для размещения видеорекламы на крупнейшем
+              видеохостинге YouTube
+            </span>
+          </div>
+        </motion.div>
 
-        <div className={style.card}>
-          <h3 style={{ textAlign: "center", marginBottom: "35px" }}>
+        <motion.div
+          className={style.card}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={variants}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <h3 style={{ textAlign: "center", marginBottom: "20px" }}>
             REACH & FREQUENCY
           </h3>
           <div
@@ -77,9 +72,15 @@ function Cards() {
             Мы обеспечиваем охват до 12 млн. человек. Это активные потребители
             18-44 лет, со средним и высоким доходом
           </div>
-        </div>
-        <div className={style.card}>
-          <h3 style={{ textAlign: "center", marginBottom: "35px" }}>
+        </motion.div>
+        <motion.div
+          className={style.card}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={variants}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <h3 style={{ textAlign: "center", marginBottom: "20px" }}>
             INSTREAM VIDEO
           </h3>
           <div
@@ -94,9 +95,16 @@ function Cards() {
             Это наиболее эффективный формат видеорекламы с самым высоким уровнем
             вовлечения и запоминаемости
           </div>
-        </div>
-        <div className={style.card}>
-          <h3 style={{ textAlign: "center", marginBottom: "35px" }}>
+        </motion.div>
+
+        <motion.div
+          className={style.card}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={variants}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        >
+          <h3 style={{ textAlign: "center", marginBottom: "20px" }}>
             BRAND SAFETY
           </h3>
           <div
@@ -111,9 +119,15 @@ function Cards() {
             Гарантия максимальной безопасности и требуемого уровня
             позиционирования вашего бренда
           </div>
-        </div>
-        <div className={style.card}>
-          <h3 style={{ textAlign: "center", marginBottom: "35px" }}>
+        </motion.div>
+        <motion.div
+          className={style.card}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={variants}
+          transition={{ duration: 0.6, delay: 1 }}
+        >
+          <h3 style={{ textAlign: "center", marginBottom: "20px" }}>
             VIEWABILITY
           </h3>
           <div
@@ -128,9 +142,15 @@ function Cards() {
             Максимальную видимость и вовлечение обеспечит наш формат
             фиксированной и неисчезающей рекламы
           </div>
-        </div>
-        <div className={style.card}>
-          <h3 style={{ textAlign: "center", marginBottom: "35px" }}>
+        </motion.div>
+        <motion.div
+          className={style.card}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={variants}
+          transition={{ duration: 0.6, delay: 1.2 }}
+        >
+          <h3 style={{ textAlign: "center", marginBottom: "20px" }}>
             ANALYTICS
           </h3>
           <div
@@ -145,7 +165,7 @@ function Cards() {
             Прозрачность и точность размещения, вам обеспечит доступ к онлайн
             статистике аудитории вашей рекламы
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
