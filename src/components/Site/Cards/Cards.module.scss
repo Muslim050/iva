@@ -124,7 +124,21 @@
 
 @media screen and (max-width: 445px) {
   .service_card {
-    grid-template-columns: repeat(auto-fit, minmax(auto, 1fr));
+
+    .card {
+      height: auto;
+    }
+  }
+
+  .service_card {
+    grid: none;
+
+  }
+
+}
+
+@media screen and (max-width: 821px) {
+  .service_card {
 
     .card {
       height: auto;

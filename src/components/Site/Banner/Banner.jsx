@@ -8,7 +8,7 @@ function Banner() {
   return (
     <section className={styles.banner}>
       <div className={styles.video_background}>
-        <video src={Video} autoPlay muted loop></video>
+        <video src={Video} autoPlay muted loop playsInline></video>
       </div>
 
       <div className={styles.content}>
