@@ -46,7 +46,10 @@
   max-width: 100%;
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  display: flex;
+  width: 1500px;
+  flex-wrap: wrap;
+  justify-content: center;
 
   .card {
     display: flex;

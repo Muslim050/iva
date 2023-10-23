@@ -13,7 +13,6 @@ function Home() {
   const { pathname } = useLocation();
   const { showChangePassword } = useSelector((state) => state.modal);
 
-  console.log("location", pathname);
   return (
     <>
       {pathname === "/" ? (

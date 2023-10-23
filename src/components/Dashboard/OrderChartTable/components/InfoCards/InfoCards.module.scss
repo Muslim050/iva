@@ -10,10 +10,10 @@
   border: 2px solid #ffdeb5;
 
   &__text {
-    color: #45464E;
-    font-size: 20px;
-    line-height: 30px;
-    font-weight: 500;
+    // color: #45464E;
+    // font-size: 20px;
+    // line-height: 30px;
+    // font-weight: 500;
   }
 }
 
@@ -26,7 +26,7 @@
 
   &__toptext {
     color: #45464E;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 16px;
     font-weight: 400;
     background: #FFF2E2;
@@ -34,9 +34,6 @@
   }
 
   &__bottomtext {
-    color: #45464E;
-    font-size: 18px;
     line-height: 30px;
-    font-weight: 500;
   }
 }

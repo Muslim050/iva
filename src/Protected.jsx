@@ -7,8 +7,6 @@ function Protected({ children, allowedRoles }) {
   const token = localStorage.getItem("token");
   const userRole = localStorage.getItem("role");
 
-  console.log("token", !token);
-
   if (token !== token) {
     return <Navigate to="/login" replace />;
   } else if (token === null) {
