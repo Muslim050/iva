@@ -18,7 +18,7 @@ function Cards() {
       <img src={Eclipse} alt="" />
       <div className={style.title_wrapper}>
         <span className={style.service_title}>
-          РЕКЛАМА КОТОРАЯ ПОВЫШАЕТ УЗНАВАЕМОСТЬ И ЦЕННОСТЬ ВАШЕГО БРЕНДА
+          РЕКЛАМА КОТОРАЯ ПОВЫШАЕТ ЦЕННОСТЬ ВАШЕГО БРЕНДА
         </span>
       </div>
 

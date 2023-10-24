@@ -15,8 +15,9 @@ function Site() {
         <Banner />
         <Cards />
         <Features />
-        <BuisnessModel />
         <Slider />
+        <BuisnessModel />
+
         <Footer />
       </div>
     </div>

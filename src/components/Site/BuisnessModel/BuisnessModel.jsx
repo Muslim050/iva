@@ -12,6 +12,8 @@ function BuisnessModel() {
     <div
       id="Бизнес"
       style={{
+        padding: "100px 0",
+
         position: "relative",
         background: "rgb(2,43,72)",
         background:

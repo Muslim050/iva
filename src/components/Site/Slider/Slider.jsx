@@ -22,7 +22,7 @@ function Slider() {
 
       <div className={style.title_wrapper}>
         <span className={style.service_title}>
-          РЕКЛАМА КОТОРУЮ УВИДЕЛИ И БРЕНДЫ КОТОРЫЕ УЗНАЛИ МИЛЛИОНЫ
+          РЕКЛАМА КОТОРУЮ УВИДЕЛИ МИЛЛИОНЫ ЛЮДЕЙ
         </span>{" "}
       </div>
 
