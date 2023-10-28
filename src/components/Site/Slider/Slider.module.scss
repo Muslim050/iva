@@ -5,6 +5,11 @@
   width: 100%;
 }
 
+video {
+  width: 100%;
+  border-radius: 18px;
+
+}
 
 .service_container {
   width: 100%;
@@ -19,9 +24,9 @@
 
   .imgSliderE {
     position: absolute;
-    left: -35%;
-    bottom: -50%;
+    bottom: -30%;
     z-index: 1;
+    right: -20%;
   }
 
   .title_wrapper {
@@ -38,6 +43,7 @@
       font-size: 40px;
       font-weight: 600;
       overflow: hidden;
+      line-height: 55px;
 
 
     }

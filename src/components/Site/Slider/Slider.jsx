@@ -8,12 +8,12 @@ import "swiper/scss/pagination";
 import "swiper/scss/effect-coverflow";
 import Eclipse from "src/assets/Site/Ellipse.png";
 
-import Img1 from "src/assets/Site/1.jpeg";
-import Img2 from "src/assets/Site/2.jpeg";
-import Img3 from "src/assets/Site/3.jpeg";
-import Img4 from "src/assets/Site/4.jpeg";
-import Img5 from "src/assets/Site/5.jpeg";
-import Img6 from "src/assets/Site/6.jpeg";
+import video1 from "src/assets/Site/video1.mp4";
+import video2 from "src/assets/Site/video2.mp4";
+import video3 from "src/assets/Site/video3.mp4";
+import video4 from "src/assets/Site/video4.mp4";
+import video5 from "src/assets/Site/video5.mp4";
+import video6 from "src/assets/Site/video6.mp4";
 
 function Slider() {
   return (
@@ -44,22 +44,22 @@ function Slider() {
           modules={[Navigation, Pagination, EffectCoverflow]}
         >
           <SwiperSlide>
-            <img src={Img1} alt="" />
+            <video src={video1} autoPlay muted loop playsInline></video>
           </SwiperSlide>
           <SwiperSlide>
-            <img src={Img2} alt="" />
+            <video src={video2} autoPlay muted loop playsInline></video>
           </SwiperSlide>
           <SwiperSlide>
-            <img src={Img3} alt="" />
+            <video src={video3} autoPlay muted loop playsInline></video>
           </SwiperSlide>
           <SwiperSlide>
-            <img src={Img4} alt="" />
+            <video src={video4} autoPlay muted loop playsInline></video>
           </SwiperSlide>
           <SwiperSlide>
-            <img src={Img5} alt="" />
+            <video src={video5} autoPlay muted loop playsInline></video>
           </SwiperSlide>
           <SwiperSlide>
-            <img src={Img6} alt="" />
+            <video src={video6} autoPlay muted loop playsInline></video>
           </SwiperSlide>
         </Swiper>
       </div>

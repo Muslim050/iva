@@ -68,9 +68,9 @@ const Header = () => {
                 Бизнес модель
               </ScrollLink>
             </li>
-            <li onClick={removeActive}>
-              <ScrollLink className={`${styles.navLink}`}>Новости</ScrollLink>
-            </li>
+            <Link onClick={removeActive} to={"/news"}>
+              <li className={`${styles.navLink}`}>Новости</li>
+            </Link>
             <Link to={"/login"}>
               <button className={styles.btn}>Войти</button>
             </Link>

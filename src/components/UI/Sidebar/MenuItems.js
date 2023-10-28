@@ -34,7 +34,7 @@ export const menuItems = [
     icon: <Inventory />,
   },
   {
-    roles: ["channel", "publisher"],
+    roles: ["channel", "publisher", "admin"],
     label: "Видео",
     to: "/video",
     icon: <Video />,

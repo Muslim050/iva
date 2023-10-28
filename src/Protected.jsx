@@ -18,7 +18,27 @@ function Protected({ children, allowedRoles }) {
   }
 
   if (!allowedRoles.includes(userRole)) {
-    return <div>Unauthorized Access</div>;
+    return (
+      <div
+        style={{
+          height: "80vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            width: "400px",
+            textAlign: "center",
+            fontWeight: "500",
+            fontSize: "24px",
+          }}
+        >
+          Не достаточно прав для просмотра данного контента!
+        </div>
+      </div>
+    );
   }
   return children;
 }

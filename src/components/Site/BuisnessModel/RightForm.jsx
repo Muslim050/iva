@@ -4,44 +4,44 @@ import { useForm } from "react-hook-form";
 import FormPub from "src/assets/Site/formpub.png";
 
 function RightForm() {
-  const [isLoginP, setIsLoginP] = React.useState(false);
+  const [isLogin, setIsLogin] = React.useState(false);
 
   const {
     register,
     formState: { errors, isValid },
-    handleSubmit,
+    getValues,
   } = useForm({
     defaultValues: {
       name: "",
       email: "",
       phone: "",
-      company: "",
       link: "",
     },
   });
 
-  const onSubmitPublisher = async (data) => {
-    try {
-      setIsLoginP(true);
-
-      setIsLoginP(false);
-    } catch (error) {
-      setIsLoginP(false);
-    }
+  const submitForm = () => {
+    const formData = getValues();
+    const subject = `Заказ рекламы от ${formData.name}`;
+    const emailBody = `
+    Имя: ${formData.name}
+    Email: ${formData.email}
+    Телефон: ${formData.phone}
+    Ссылка: ${formData.link}`;
+    const mailtoLink = `mailto:adtechmediainfo@gmail.com?subject=${subject}
+    &body=${encodeURIComponent(emailBody)}`;
+    window.location.href = mailtoLink;
   };
   return (
-    <form onSubmit={handleSubmit(onSubmitPublisher)}>
+    <div>
       <div className={style.login__wrapper}>
         <div className={style.login__wrapper__table_header}>
           <div className={style.login__wrapper__table_title}>
-            <img src={FormPub} alt="" />
-            Монетизировать контент
+            <img src={FormPub} alt="" /> Монетизировать контент
           </div>
           <div className={style.login__wrapper__table_subtitle}>
             Если вы владелец канала
           </div>
         </div>
-
         <div>
           <div className={style.modalWindow}>
             <div className={style.inputContainer}>
@@ -65,7 +65,6 @@ function RightForm() {
               />
             </div>
           </div>
-
           <div className={style.modalWindow}>
             <div className={style.inputContainer}>
               <label
@@ -110,7 +109,6 @@ function RightForm() {
               />
             </div>
           </div>
-
           <div className={style.modalWindow}>
             <div className={style.inputContainer}>
               <label
@@ -135,16 +133,20 @@ function RightForm() {
           </div>
           <div className={style.btn__wrapper}>
             <button
-              style={{ display: "flex", alignItems: "center" }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
               type="submit"
-              disabled={!isValid || isLoginP}
+              disabled={!isValid || isLogin}
               className={
-                isValid && !isLoginP
+                isValid && !isLogin
                   ? style.btn__wrapper__btn
                   : style.btn__wrapper__disabled
               }
+              onClick={submitForm}
             >
-              {isLoginP ? (
+              {isLogin ? (
                 <>
                   <span>Отправить</span>
                   <div className={style.loaderWrapper}>
@@ -158,7 +160,7 @@ function RightForm() {
           </div>
         </div>
       </div>
-    </form>
+    </div>
   );
 }
 

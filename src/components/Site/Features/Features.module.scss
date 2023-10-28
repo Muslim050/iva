@@ -36,6 +36,8 @@
       font-size: 40px;
       font-weight: 600;
       overflow: hidden;
+      line-height: 55px;
+
     }
   }
 
@@ -52,7 +54,7 @@
     flex-direction: column;
     background-color: inherit;
     padding: 30px;
-    // height: 230px;
+    height: 230px;
     position: relative;
     top: 0;
     transition: all .3s ease-in-out;
@@ -67,8 +69,8 @@
 
 
     &:hover {
-      box-shadow: #FF5621 0px 10px 30px 0px;
-      border: 1px solid #FF5621;
+      box-shadow: #b12a00 0px 10px 30px 0px;
+      border: 1px solid #b12a00;
 
       cursor: pointer;
       top: -5px;

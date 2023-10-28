@@ -1,4 +1,7 @@
 .banner {
+
+
+
   position: relative;
   height: 100vh;
   display: flex;
@@ -7,6 +10,16 @@
   justify-content: center;
   text-align: center;
   padding: 0 20px;
+
+  &:before,
+  section {
+    content: "";
+    width: 100%;
+    height: 100vh;
+    background-color: #0000007a;
+    z-index: 2;
+    position: absolute;
+  }
 
   .banner_wrapper {
     display: flex;
@@ -36,6 +49,8 @@
   top: 0%;
   left: 0%;
   overflow: hidden;
+
+
 }
 
 .video_background video {
@@ -86,14 +101,14 @@
 .btn {
   padding: 8px 16px;
   border-radius: 8px;
-  background: #FF5621;
-  border: 2px solid #FF5621;
+  background: #b12a00;
+  border: 2px solid #b12a00;
   color: white;
   font-size: 20px;
 
   &:hover {
     background: inherit;
-    border: 2px solid #FF5621;
+    border: 2px solid #b12a00;
 
   }
 }

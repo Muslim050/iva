@@ -13,9 +13,24 @@ function Cards() {
     hidden: { opacity: 0, scale: 0.8, x: -50 },
     visible: { opacity: 1, scale: 1, x: 0 },
   };
+  const variantss = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
   return (
     <div className={style.service_container} id="Технология" ref={ref}>
-      <img src={Eclipse} alt="" />
+      <motion.img
+        src={Eclipse}
+        alt=""
+        initial="hidden"
+        animate={inView ? "visible" : "hidden"}
+        variants={variantss}
+        transition={{ duration: 0.9, delay: 0.4 }}
+      />
       <div className={style.title_wrapper}>
         <span className={style.service_title}>
           РЕКЛАМА КОТОРАЯ ПОВЫШАЕТ ЦЕННОСТЬ ВАШЕГО БРЕНДА
@@ -36,7 +51,7 @@ function Cards() {
 
           <div
             style={{
-              fontSize: "24px",
+              fontSize: "18px",
               display: "flex",
               justifyContent: "center",
               color: "#cccccc",
@@ -62,7 +77,7 @@ function Cards() {
           </h3>
           <div
             style={{
-              fontSize: "24px",
+              fontSize: "18px",
               display: "flex",
               justifyContent: "center",
               color: "#cccccc",
@@ -85,7 +100,7 @@ function Cards() {
           </h3>
           <div
             style={{
-              fontSize: "24px",
+              fontSize: "18px",
               display: "flex",
               justifyContent: "center",
               color: "#cccccc",
@@ -109,7 +124,7 @@ function Cards() {
           </h3>
           <div
             style={{
-              fontSize: "24px",
+              fontSize: "18px",
               display: "flex",
               justifyContent: "center",
               color: "#cccccc",
@@ -132,7 +147,7 @@ function Cards() {
           </h3>
           <div
             style={{
-              fontSize: "24px",
+              fontSize: "18px",
               display: "flex",
               justifyContent: "center",
               color: "#cccccc",
@@ -155,7 +170,7 @@ function Cards() {
           </h3>
           <div
             style={{
-              fontSize: "24px",
+              fontSize: "18px",
               display: "flex",
               justifyContent: "center",
               color: "#cccccc",

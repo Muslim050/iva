@@ -13,6 +13,14 @@ function Features() {
     hidden: { opacity: 0, scale: 0.8, x: -50 },
     visible: { opacity: 1, scale: 1, x: 0 },
   };
+  const variantss = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
   return (
     <div
       id="форматы"
@@ -24,7 +32,14 @@ function Features() {
       ref={ref}
     >
       <div className={style.service_container}>
-        <img src={Eclipse} alt="" />
+        <motion.img
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={variantss}
+          transition={{ duration: 0.9, delay: 0.4 }}
+          src={Eclipse}
+          alt=""
+        />
 
         <div className={style.title_wrapper}>
           <span className={style.service_title}>
@@ -49,10 +64,10 @@ function Features() {
                 display: "flex",
                 justifyContent: "center",
                 color: "#cccccc",
+                lineHeight: "30px",
               }}
             >
-              Рекламный ролик до 20 сек размещается непосредственно перед
-              началом видеоконтента
+              Рекламный ролик до 20 сек размещается перед началом видеоконтента
             </div>
           </motion.div>
 
@@ -72,6 +87,7 @@ function Features() {
                 display: "flex",
                 justifyContent: "center",
                 color: "#cccccc",
+                lineHeight: "30px",
               }}
             >
               Рекламный ролик до 20 сек размещается примерно на 7-10 минуте

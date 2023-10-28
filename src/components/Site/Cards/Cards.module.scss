@@ -35,6 +35,8 @@
       font-size: 40px;
       font-weight: 600;
       overflow: hidden;
+      line-height: 55px;
+
     }
   }
 }
@@ -52,6 +54,7 @@
   justify-content: center;
 
   .card {
+
     display: flex;
     flex-direction: column;
     background-color: inherit;
@@ -66,8 +69,8 @@
     backdrop-filter: blur(25px);
 
     &:hover {
-      box-shadow: #FF5621 0px 10px 30px 0px;
-      border: 1px solid #FF5621;
+      box-shadow: #b12a00 0px 10px 30px 0px;
+      border: 1px solid #b12a00;
 
       cursor: pointer;
       top: -5px;

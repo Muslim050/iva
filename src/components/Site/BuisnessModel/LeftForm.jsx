@@ -1,7 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import style from "./BuisnessModel.module.scss";
-import axios from "axios";
 import FormAdv from "src/assets/Site/formadv.png";
 
 function LeftForm() {
@@ -10,74 +9,39 @@ function LeftForm() {
   const {
     register,
     formState: { errors, isValid },
-    handleSubmit,
+    getValues,
   } = useForm({
     defaultValues: {
       name: "",
       email: "",
       phone: "",
       company: "",
-      link: "",
     },
   });
 
-  const onSubmit = async (data) => {
-    try {
-      const response = await axios.post(
-        "https://api.sendgrid.com/v3/mail/send",
-        {
-          personalizations: [
-            {
-              to: [
-                {
-                  email: "recipient_email@example.com", // Замените на адрес получателя
-                },
-              ],
-            },
-          ],
-          from: {
-            email: "your_email@example.com", // Замените на свой адрес электронной почты
-          },
-          subject: "Запрос от рекламодателя",
-          content: [
-            {
-              type: "text/plain",
-              value: `Имя: ${data.name}\nEmail: ${data.email}\nТелефон: ${data.phone}\nКомпания: ${data.company}`,
-            },
-          ],
-        },
-        {
-          headers: {
-            Authorization:
-              "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", // Замените на ваш API-ключ SendGrid
-          },
-        }
-      );
-
-      if (response.status === 202) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (error) {
-      console.error("Email error: " + error);
-      return false;
-    }
+  const submitForm = () => {
+    const formData = getValues();
+    const subject = `Заказ рекламы от ${formData.company}`;
+    const emailBody = `Имя: ${formData.name}
+    Email: ${formData.email}
+    Телефон: ${formData.phone}
+    Компания: ${formData.company}`;
+    const mailtoLink = `mailto:adtechmediainfo@gmail.com?subject=${subject}
+    &body=${encodeURIComponent(emailBody)}`;
+    window.location.href = mailtoLink;
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <div>
       <div className={style.login__wrapper}>
         <div className={style.login__wrapper__table_header}>
           <div className={style.login__wrapper__table_title}>
-            <img src={FormAdv} alt="" />
-            Заказать рекламу
+            <img src={FormAdv} alt="" /> Заказать рекламу
           </div>
           <div className={style.login__wrapper__table_subtitle}>
             Если вы рекламодатель
           </div>
         </div>
-
         <div>
           <div className={style.modalWindow}>
             <div className={style.inputContainer}>
@@ -101,7 +65,6 @@ function LeftForm() {
               />
             </div>
           </div>
-
           <div className={style.modalWindow}>
             <div className={style.inputContainer}>
               <label
@@ -146,7 +109,6 @@ function LeftForm() {
               />
             </div>
           </div>
-
           <div className={style.modalWindow}>
             <div className={style.inputContainer}>
               <label
@@ -171,7 +133,10 @@ function LeftForm() {
           </div>
           <div className={style.btn__wrapper}>
             <button
-              style={{ display: "flex", alignItems: "center" }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
               type="submit"
               disabled={!isValid || isLogin}
               className={
@@ -179,6 +144,7 @@ function LeftForm() {
                   ? style.btn__wrapper__btn
                   : style.btn__wrapper__disabled
               }
+              onClick={submitForm}
             >
               {isLogin ? (
                 <>
@@ -194,7 +160,7 @@ function LeftForm() {
           </div>
         </div>
       </div>
-    </form>
+    </div>
   );
 }
 

@@ -14,7 +14,7 @@
 .service_container {
   width: 90%;
   margin: 0px auto;
-
+  position: relative;
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -39,6 +39,8 @@
       margin-bottom: 15px;
       max-width: 950px;
       width: 100%;
+      line-height: 55px;
+
     }
 
     .service_subtitle {
@@ -202,10 +204,12 @@
     font-size: 20px;
     padding: 16px 20px 16px 20px;
     cursor: pointer;
-    border: 0;
+    border: 2px solid #FF5621;
 
     &:hover {
       background: #cc3102;
+      border: 2px solid #cc3102;
+
     }
 
 
@@ -213,13 +217,18 @@
 
   &__disabled {
     color: white;
-    background: rgb(174, 174, 174);
+    border: 2px solid #FF5621;
     font-weight: 600;
     border-radius: 10px;
     font-size: 20px;
     padding: 16px 20px 16px 20px;
-    cursor: pointer;
-    border: 0;
+    background: inherit;
+
+    &:hover {
+      background: #b12a00;
+      border: 2px solid #b12a00;
+
+    }
   }
 }
 

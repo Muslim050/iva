@@ -3,11 +3,21 @@ import style from "./BuisnessModel.module.scss";
 import Eclipse from "src/assets/Site/Ellipse.png";
 import LeftForm from "./LeftForm";
 import RightForm from "./RightForm";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 function BuisnessModel() {
-  const [isLogin, setIsLogin] = React.useState(false);
-  const [isLoginP, setIsLoginP] = React.useState(false);
-
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+  });
+  const variants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
   return (
     <div
       id="Бизнес"
@@ -21,10 +31,19 @@ function BuisnessModel() {
       }}
     >
       <div className={style.service_container}>
-        <img
+        <motion.img
+          initial="hidden"
+          // animate={inView ? "hidden" : "visible"}
+          animate={inView ? "hidden" : "visible"}
+          variants={variants}
+          transition={{ duration: 0.9, delay: 0.4 }}
           src={Eclipse}
           alt=""
-          style={{ position: "absolute", right: " -10%" }}
+          style={{
+            position: "absolute",
+            right: "-20%",
+            bottom: "-40%",
+          }}
         />
 
         <div className={style.title_wrapper}>

@@ -25,6 +25,7 @@ import {
   fetchConfirmedIInventory,
 } from "./redux/inventory/inventorySlice";
 import Revenue from "./pages/Dashboard/Revenue/Revenue";
+import News from "./components/Site/News/News";
 
 function App() {
   const dispatch = useDispatch();
@@ -225,6 +226,8 @@ function App() {
           {/* Other routes */}
         </Route>
         <Route path="/login" element={<Loginn />} />
+        <Route path="/news" element={<News />} />
+
         <Route path="*" element={<NotFound />} />
 
         {/* Login and NotFound routes */}

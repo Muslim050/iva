@@ -38,7 +38,7 @@
     cursor: pointer;
 
     &:hover {
-      color: #FF5621;
+      color: #b12a00;
 
     }
   }
@@ -113,14 +113,14 @@
 .btn {
   padding: 8px 16px;
   border-radius: 8px;
-  background: #FF5621;
-  border: 2px solid #FF5621;
+  background: #b12a00;
+  border: 2px solid #b12a00;
   color: white;
   font-size: 20px;
 
   &:hover {
     background: inherit;
-    border: 2px solid #FF5621;
+    border: 2px solid #b12a00;
 
   }
 }
