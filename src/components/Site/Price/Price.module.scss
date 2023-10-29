@@ -81,6 +81,8 @@
   width: 1500px;
   flex-wrap: wrap;
   justify-content: center;
+  position: relative;
+  z-index: 10;
 
   .card {
     // display: flex;
