@@ -134,7 +134,7 @@ function App() {
           <Route
             path="/video"
             element={
-              <Protected allowedRoles={["channel", "publisher"]}>
+              <Protected allowedRoles={["channel", "publisher", "admin"]}>
                 <Video />
               </Protected>
             }
