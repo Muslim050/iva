@@ -102,7 +102,7 @@ function Footer() {
               <IconContext.Provider value={{ color: "#14da8f", size: "25px" }}>
                 <MdOutlinePhoneInTalk style={{ marginRight: "10px" }} />
               </IconContext.Provider>
-              <a href="tel:90 550-50-505">+998 90 550-50-50</a>
+              <a href="tel:90 550-50-505">+998 94 720 85 81</a>
             </li>
             <li
               style={{
