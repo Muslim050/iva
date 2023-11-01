@@ -6,17 +6,16 @@
 }
 
 .wrapper {
-  height: 35vh;
+  // height: 35vh;
   background: rgb(2, 43, 72);
   background: linear-gradient(180deg, rgba(2, 43, 72, 1) 0%, rgba(2, 29, 52, 1) 33%, rgba(2, 29, 52, 1) 63%, rgba(2, 22, 43, 1) 100%);
 }
 
 
 .service_container {
-  display: flex;
   width: 90%;
   margin: 0 auto;
-  position: relative;
+  padding-bottom: 30px;
 
 
 
@@ -41,8 +40,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 230px;
-  position: relative;
+  // height: 230px;
+  flex-wrap: wrap;
+
+  // position: relative;
   top: 0;
   transition: all .3s ease-in-out;
   width: 255px;
@@ -52,7 +53,7 @@
 }
 
 .service_card {
-  @extend .dflex;
+  // @extend .dflex;
   flex-wrap: wrap;
 
 
@@ -63,16 +64,15 @@
 
   .card {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: space-between;
-    height: 230px;
+    // height: 230px;
     position: relative;
     top: 0;
     transition: all .3s ease-in-out;
-    width: 255px;
-
+    // width: 370px;
     border-radius: 15px;
-    margin-bottom: 20px;
+    gap: 50px;
 
 
     h3 {
@@ -83,8 +83,8 @@
     .service_icon {
       margin-right: 15px;
       background: inherit;
-      width: 35px;
-      height: 35px;
+      width: 45px;
+      height: 45px;
       border-radius: 40%;
       cursor: pointer;
 
@@ -94,9 +94,9 @@
       }
 
       &:hover {
-        width: 35px;
-        height: 35px;
-        background: rgb(111, 111, 111);
+        width: 45px;
+        height: 45px;
+        background: #b52d04;
         border-radius: 50%;
       }
     }

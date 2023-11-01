@@ -60,7 +60,7 @@ function Features() {
             </h3>
             <div
               style={{
-                fontSize: "24px",
+                fontSize: "21px",
                 display: "flex",
                 justifyContent: "center",
                 color: "#cccccc",
@@ -83,7 +83,7 @@ function Features() {
             </h3>
             <div
               style={{
-                fontSize: "24px",
+                fontSize: "21px",
                 display: "flex",
                 justifyContent: "center",
                 color: "#cccccc",

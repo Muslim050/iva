@@ -12,6 +12,7 @@ import {
   MdLocationOn,
 } from "react-icons/md";
 import { ImYoutube2 } from "react-icons/im";
+import Youtube from "src/assets/Site/youtube.png";
 
 import style from "./Footer.module.scss";
 import { motion } from "framer-motion";
@@ -24,99 +25,172 @@ function Footer() {
       <div className={style.service_container}>
         <div className={style.service_card}>
           <div className={style.card}>
-            <Link to={"/"} style={{}}>
-              <img style={{ width: "100px" }} src={Logo} alt="" />
-            </Link>
-            <h3 style={{ fontSize: "18px", margin: "20px 0" }}>
-              <span style={{ lineHeight: "30px" }}>
-                Онлайн платформа для размещения видеорекламы на видеохостинге
-                YouTube
-              </span>
-            </h3>
-            <div
-              href="#"
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <div className={style.service_icon}>
-                <IconContext.Provider
-                  value={{ color: "#14da8f", size: "25px" }}
+            <div style={{ width: "100%", maxWidth: "370px" }}>
+              <div
+                style={{
+                  borderBottom: "2px solid grey",
+                  display: "flex",
+                  alignItems: "baseline",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "25px",
+                    fontWeight: "600",
+                    color: "#cccccc",
+                    marginBottom: "10px",
+                  }}
                 >
-                  <IoLogoInstagram />
-                </IconContext.Provider>
+                  Brandformance
+                </div>
               </div>
-              <div className={style.service_icon}>
-                <IconContext.Provider
-                  value={{ color: "#14da8f", size: "25px" }}
-                >
-                  <IoLogoFacebook />
-                </IconContext.Provider>
+
+              <div
+                style={{
+                  fontSize: "21px",
+                  display: "flex",
+                  justifyContent: "center",
+                  color: "#cccccc",
+                  marginBottom: "10px",
+                }}
+              >
+                <span style={{ lineHeight: "30px", marginTop: "20px" }}>
+                  Это онлайн платформа для размещения видеорекламы на крупнейшем
+                  видеохостинге
+                  <span>
+                    <img style={{ width: "90px" }} src={Youtube} alt="" />
+                  </span>
+                </span>
               </div>
-              <div className={style.service_icon}>
-                <IconContext.Provider
-                  value={{ color: "#14da8f", size: "25px" }}
+            </div>
+            <div style={{ width: "100%", maxWidth: "370px" }}>
+              <div
+                style={{
+                  borderBottom: "2px solid grey",
+                  display: "flex",
+                  alignItems: "baseline",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "25px",
+                    fontWeight: "600",
+                    color: "#cccccc",
+                    marginBottom: "10px",
+                  }}
                 >
-                  <IoLogoYoutube />
-                </IconContext.Provider>
+                  Социальные сети
+                </div>
               </div>
-              <div className={style.service_icon}>
-                <IconContext.Provider
-                  value={{ color: "#14da8f", size: "25px" }}
+
+              <div
+                href="#"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginTop: "20px",
+                }}
+              >
+                <div className={style.service_icon}>
+                  <IconContext.Provider
+                    value={{ color: "#14da8f", size: "35px" }}
+                  >
+                    <IoLogoInstagram />
+                  </IconContext.Provider>
+                </div>
+                <div className={style.service_icon}>
+                  <IconContext.Provider
+                    value={{ color: "#14da8f", size: "35px" }}
+                  >
+                    <IoLogoFacebook />
+                  </IconContext.Provider>
+                </div>
+                <div className={style.service_icon}>
+                  <IconContext.Provider
+                    value={{ color: "#14da8f", size: "35px" }}
+                  >
+                    <IoLogoYoutube />
+                  </IconContext.Provider>
+                </div>
+                <div className={style.service_icon}>
+                  <IconContext.Provider
+                    value={{ color: "#14da8f", size: "35px" }}
+                  >
+                    <SiTelegram />
+                  </IconContext.Provider>
+                </div>
+              </div>
+            </div>
+            <div style={{ width: "100%", maxWidth: "370px" }}>
+              <div
+                style={{
+                  borderBottom: "2px solid grey",
+                  display: "flex",
+                  alignItems: "baseline",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "25px",
+                    fontWeight: "600",
+                    color: "#cccccc",
+                    marginBottom: "10px",
+                  }}
                 >
-                  <SiTelegram />
-                </IconContext.Provider>
+                  Контакты
+                </div>
+              </div>
+
+              <div className={style.card_cart}>
+                <ul style={{ marginTop: "20px" }}>
+                  <li
+                    style={{
+                      fontSize: "15px",
+                      marginBottom: "15px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <IconContext.Provider
+                      value={{ color: "#14da8f", size: "30px" }}
+                    >
+                      <MdOutlineEmail style={{}} />
+                    </IconContext.Provider>
+                    adtechmediainfo@gmail.com
+                  </li>
+                  <li
+                    style={{
+                      fontSize: "15px",
+                      marginBottom: "15px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <IconContext.Provider
+                      value={{ color: "#14da8f", size: "30px" }}
+                    >
+                      <MdOutlinePhoneInTalk />
+                    </IconContext.Provider>
+                    <a href="tel:90 550-50-505">+998 94 720 85 81</a>
+                  </li>
+                  <li
+                    style={{
+                      fontSize: "15px",
+                      marginBottom: "15px",
+                      lineHeight: "25px",
+                    }}
+                  >
+                    <IconContext.Provider
+                      value={{ color: "#14da8f", size: "30px" }}
+                    >
+                      <MdLocationOn />
+                    </IconContext.Provider>
+                    Ташкент, ул. Мустақиллик 88А, БЦ “Дархан”
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-        </div>
-
-        <div className={style.card_cart}>
-          <div style={{ fontSize: "20px", marginBottom: "25px" }}>
-            Свяжитесь с нами
-          </div>
-
-          <ul>
-            <li
-              style={{
-                fontSize: "15px",
-                marginBottom: "15px",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <IconContext.Provider value={{ color: "#14da8f", size: "25px" }}>
-                <MdOutlineEmail style={{ marginRight: "10px" }} />
-              </IconContext.Provider>
-              adtechmediainfo@gmail.com
-            </li>
-            <li
-              style={{
-                fontSize: "15px",
-                marginBottom: "15px",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <IconContext.Provider value={{ color: "#14da8f", size: "25px" }}>
-                <MdOutlinePhoneInTalk style={{ marginRight: "10px" }} />
-              </IconContext.Provider>
-              <a href="tel:90 550-50-505">+998 94 720 85 81</a>
-            </li>
-            <li
-              style={{
-                fontSize: "15px",
-                marginBottom: "15px",
-                lineHeight: "25px",
-              }}
-            >
-              <IconContext.Provider value={{ color: "#14da8f", size: "25px" }}>
-                <MdLocationOn style={{ marginRight: "10px" }} />
-              </IconContext.Provider>
-              Ташкент, ул. Мустақиллик 88А, БЦ “Дархан”
-            </li>
-          </ul>
         </div>
       </div>
     </div>

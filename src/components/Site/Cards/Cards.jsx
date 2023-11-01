@@ -2,6 +2,8 @@ import React from "react";
 import { useInView } from "react-intersection-observer";
 import style from "./Cards.module.scss";
 import Eclipse from "src/assets/Site/Ellipse.png";
+import Youtube from "src/assets/Site/youtube.png";
+
 import { motion } from "framer-motion";
 
 function Cards() {
@@ -26,6 +28,7 @@ function Cards() {
       <motion.img
         src={Eclipse}
         alt=""
+        className={style.eclipse}
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
         variants={variantss}
@@ -51,16 +54,18 @@ function Cards() {
 
           <div
             style={{
-              fontSize: "18px",
+              fontSize: "21px",
               display: "flex",
               justifyContent: "center",
               color: "#cccccc",
             }}
           >
             <span style={{ lineHeight: "30px" }}>
-              {" "}
               Это онлайн платформа для размещения видеорекламы на крупнейшем
-              видеохостинге YouTube
+              видеохостинге
+              <span>
+                <img style={{ width: "90px" }} src={Youtube} alt="" />
+              </span>
             </span>
           </div>
         </motion.div>
@@ -77,7 +82,7 @@ function Cards() {
           </h3>
           <div
             style={{
-              fontSize: "18px",
+              fontSize: "21px",
               display: "flex",
               justifyContent: "center",
               color: "#cccccc",
@@ -100,7 +105,7 @@ function Cards() {
           </h3>
           <div
             style={{
-              fontSize: "18px",
+              fontSize: "21px",
               display: "flex",
               justifyContent: "center",
               color: "#cccccc",
@@ -124,7 +129,7 @@ function Cards() {
           </h3>
           <div
             style={{
-              fontSize: "18px",
+              fontSize: "21px",
               display: "flex",
               justifyContent: "center",
               color: "#cccccc",
@@ -147,7 +152,7 @@ function Cards() {
           </h3>
           <div
             style={{
-              fontSize: "18px",
+              fontSize: "21px",
               display: "flex",
               justifyContent: "center",
               color: "#cccccc",
@@ -170,7 +175,7 @@ function Cards() {
           </h3>
           <div
             style={{
-              fontSize: "18px",
+              fontSize: "21px",
               display: "flex",
               justifyContent: "center",
               color: "#cccccc",
