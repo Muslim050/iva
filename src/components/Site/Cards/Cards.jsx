@@ -60,13 +60,13 @@ function Cards() {
               color: "#cccccc",
             }}
           >
-            <span style={{ lineHeight: "30px" }}>
+            <div
+              style={{ lineHeight: "30px", display: "flex", flexWrap: "wrap" }}
+            >
               Это онлайн платформа для размещения видеорекламы на крупнейшем
               видеохостинге
-              <span>
-                <img style={{ width: "90px" }} src={Youtube} alt="" />
-              </span>
-            </span>
+              <img style={{ width: "90px" }} src={Youtube} alt="" />
+            </div>
           </div>
         </motion.div>
 
