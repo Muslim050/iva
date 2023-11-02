@@ -22,8 +22,8 @@ const Header = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{
         ease: "easeInOut",
-        duration: 0.5,
-        delay: 0.6,
+        duration: 0.3,
+        delay: 0.3,
       }}
       className={styles.header}
       style={{ backdropFilter: "blur(5px)", borderBottom: "1px solid #7a7979" }}

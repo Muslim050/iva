@@ -302,11 +302,24 @@ tr {
   padding-bottom: 50px;
 }
 
-.swiper-slide {
+.mySwiper .swiper-slide {
   background-position: center;
   background-size: cover;
   width: 600px !important;
   height: 350px !important;
+}
+
+.news_mySwiper .swiper-slide {
+  height: 510px !important;
+
+}
+
+.news_mySwiper .swiper-wrapper {
+  padding: 50px 0 !important;
+}
+
+.news_mySwiper .swiper-button-next .swiper-button-prev {
+  top: 96% !important;
 }
 
 
