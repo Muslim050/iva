@@ -12,11 +12,11 @@
   &__sidebar {
     transition-duration: 500ms;
     color: rgb(70, 70, 70);
-    padding: 32px;
+    padding: 15px;
     background-color: var(--background_cart);
 
     &__width {
-      width: 300px;
+      width: 270px;
     }
 
     &__widthh {
@@ -66,7 +66,7 @@
     }
 
     &__text {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
     }
   }
@@ -74,7 +74,7 @@
 
 
 .sidebar__link__active {
-  padding: 13px 20px;
+  padding: 5px 15px;
   display: flex;
   align-items: center;
   font-weight: 600;
@@ -105,7 +105,7 @@
 
 
   &__link {
-    padding: 5px 20px;
+    padding: 3px 13px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -219,7 +219,7 @@
 
 
     .sidebar__link__active {
-      padding: 5px 13px;
+      padding: 3px 13px;
     }
 
     .sidebar__link {
@@ -231,17 +231,37 @@
     }
 
     .section__burger {
-      margin-left: 10px;
+      margin-left: 5px;
 
     }
   }
 
+  .sidebar__link__active {
+    padding: 3px 13px;
+  }
+
+  .section__burger {
+    margin-bottom: 0px;
+  }
+
+  .sidebar__text {
+    font-size: 12px;
+  }
+
+  .section__burger__text {
+    font-size: 12px;
+  }
+
   .section__sidebar__width {
-    width: 250px;
+    width: 200px;
   }
 
   .section__sidebar {
     padding: 10px;
   }
+
+  // .section__burger__icon {
+  //   margin-left: 5px;
+  // }
 
 }

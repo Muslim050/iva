@@ -5,7 +5,6 @@ import style from "./SubHeader.module.scss";
 import Breadcrumbs from "./Breadcrumbs";
 import getTitle from "./RouteItems";
 import ButtonTable from "../ButtonTable/ButtonTable";
-import { ReactComponent as ArrowInv } from "src/assets/Table/arrowInv.svg";
 import { useDispatch } from "react-redux";
 import {
   showModalAdvertiser,

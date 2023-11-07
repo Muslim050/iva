@@ -25,28 +25,28 @@ import Eclipse from "src/assets/Site/Ellipse.png";
 const textData = [
   {
     id: "1",
-    title: "Title 1",
+    title: "Lorem ipsum dolor sit amet",
     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit Velit sunt ducimus earum ab illum hic nesciunt. Fugiat inventore suscipit corrupti hic cumque sequi et modi, at magni libero molestiae placeat?",
     more: "tetur adipisicing elit Velit sunt ducimus earum ab illum hic nesciunt. Fugiat inventore suscipit corrupti hic cumque sequi et modi, at magni libero molestiae placeat?",
     img: img1,
   },
   {
     id: "2",
-    title: "Title 2",
+    title: "Lorem ipsum dolor sit amet",
     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit Velit sunt ducimus earum ab illum hic nesciunt. Fugiat inventore suscipit corrupti hic cumque sequi et modi, at magni libero molestiae placeat?",
     more: "tetur adipisicing elit Velit sunt ducimus earum ab illum hic nesciunt. Fugiat inventore suscipit corrupti hic cumque sequi et modi, at magni libero molestiae placeat?",
     img: img2,
   },
   {
     id: "3",
-    title: "Title 3",
+    title: "Lorem ipsum dolor sit amet",
     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit Velit sunt ducimus earum ab illum hic nesciunt. Fugiat inventore suscipit corrupti hic cumque sequi et modi, at magni libero molestiae placeat?",
     more: "tetur adipisicing elit Velit sunt ducimus earum ab illum hic nesciunt. Fugiat inventore suscipit corrupti hic cumque sequi et modi, at magni libero molestiae placeat?",
     img: img3,
   },
   {
     id: "4",
-    title: "Title 4",
+    title: "Lorem ipsum dolor sit amet",
     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit Velit sunt ducimus earum ab illum hic nesciunt. Fugiat inventore suscipit corrupti hic cumque sequi et modi, at magni libero molestiae placeat?",
     more: "tetur adipisicing elit Velit sunt ducimus earum ab illum hic nesciunt. Fugiat inventore suscipit corrupti hic cumque sequi et modi, at magni libero molestiae placeat?",
     img: img4,
@@ -102,7 +102,7 @@ export default function News() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Swiper
-              slidesPerView={3}
+              slidesPerView={"auto"}
               spaceBetween={10}
               pagination={{
                 clickable: true,
@@ -113,7 +113,10 @@ export default function News() {
             >
               {textData.map((item) => (
                 <SwiperSlide key={item.id}>
-                  <div className={style.news__swiper}>
+                  <div
+                    className={style.news__swiper}
+                    onClick={() => openModal(item)}
+                  >
                     <div>
                       <h1 className={style.news__swiper__title}>
                         {item.title}
@@ -123,13 +126,32 @@ export default function News() {
                         {item.text}
                       </div>
                     </div>
-                    <Link
-                      className={style.news__swiper__links}
-                      onClick={() => openModal(item)} // Нажатие на "Подробнее" для открытия модального окна
+
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
                     >
-                      <div className={style.news__swiper__link}>Подробнее</div>
-                      <img src={arrow} alt="" />
-                    </Link>
+                      <div
+                        className={style.news__swiper__link}
+                        style={{ fontSize: "14px" }}
+                      >
+                        2023-03-01
+                      </div>
+                      <Link
+                        className={style.news__swiper__links}
+                        onClick={() => openModal(item)} // Нажатие на "Подробнее" для открытия модального окна
+                      >
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <div className={style.news__swiper__link}>
+                            Подробнее
+                          </div>
+                          <img src={arrow} alt="" />
+                        </div>
+                      </Link>
+                    </div>
                   </div>
                 </SwiperSlide>
               ))}
@@ -138,13 +160,14 @@ export default function News() {
         </div>
         <AnimatePresence>
           {modalData && (
-            <MyModal>
+            <MyModal style={{ background: "red" }}>
               <div>
                 <div
                   style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
+                    marginBottom: "12px",
                   }}
                 >
                   <h1 style={{ lineHeight: "30px" }}>{modalData.title}</h1>
@@ -164,7 +187,7 @@ export default function News() {
                 />
                 <div
                   style={{
-                    fontSize: "18px",
+                    fontSize: "14px",
                     marginTop: "22px",
                     color: "#2e2e2e",
                     fontWeight: "500",

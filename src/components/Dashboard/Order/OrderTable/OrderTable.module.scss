@@ -40,9 +40,11 @@
   .td_Order {
     border: none;
     border-bottom: 1px solid #eee;
-    position: relative;
-    padding-left: 50%;
+    // position: relative;
+    // padding-left: 50%;
     font-size: 12px;
+    display: flex;
+    justify-content: end;
 
     .btn_container {
       display: block;

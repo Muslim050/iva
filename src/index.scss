@@ -1,13 +1,9 @@
-// @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
-// @import url('https://fonts.cdnfonts.com/css/helvetica-neue-55?styles=16020,15983,16014,15991,30133');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@400;600;700&display=swap');
-// @import url('https://fonts.cdnfonts.com/css/helvetica-neue-5?styles=103506,103508,103502,103504,103500');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
 }
 
 a {
@@ -19,15 +15,18 @@ ul {
   list-style: none;
 }
 
+@mixin flexSpaceAlign {
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
 
 body {
   margin: 0;
   padding: 0;
   font-family: 'Montserrat', sans-serif;
-
   box-sizing: border-box;
   line-height: 1;
-
 }
 
 
@@ -36,14 +35,8 @@ body {
   --text-color: #61636b;
   --background_cart: #ffffff;
   --input_background: #EFF1F9;
-
-
-
-
   --primary_color: #5570F1;
   --primary_colorHover: #3950bf;
-
-
 }
 
 [data-theme="dark"] {
@@ -73,7 +66,6 @@ button {
 table {
   width: 100%;
   border-collapse: collapse;
-  // font-size: 14px;
 }
 
 thead {
@@ -315,14 +307,50 @@ tr {
 }
 
 .news_mySwiper .swiper-wrapper {
-  padding: 50px 0 !important;
+  padding: 50px 0 100px !important;
 }
 
-.news_mySwiper .swiper-button-next .swiper-button-prev {
-  top: 96% !important;
+.news_mySwiper .swiper-button-prev,
+.swiper-rtl .swiper-button-next {
+  top: 95% !important;
+  background: #03538d;
+  padding: 25px;
+  border-radius: 50%;
+  color: white;
+
+}
+
+.news_mySwiper .swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+  top: 95% !important;
+  background: #03538d;
+  padding: 25px;
+  border-radius: 50%;
+  color: white;
+}
+
+.news_mySwiper .swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+  top: 95% !important;
 }
 
 
+
+.news_mySwiper .swiper-button-next:after,
+.swiper-rtl .swiper-button-prev:after {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.news_mySwiper .swiper-button-prev:after,
+.swiper-rtl .swiper-button-next:after {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.news_mySwiper .swiper-slide {
+  width: auto;
+}
 
 .swiper-slide img {
   display: block;

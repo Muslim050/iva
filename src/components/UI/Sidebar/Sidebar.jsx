@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { ReactComponent as Сhevron } from "../../../assets/Sidebar/chevron.svg";
+import { ReactComponent as Sidebarr } from "../../../assets/Sidebar/sidebar.svg";
 import { ReactComponent as Logout } from "../../../assets/Sidebar/logout.svg";
 import { logout } from "../../../redux/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -93,6 +93,19 @@ function Sidebar() {
   const filteredInventoryPablisher = inventory.filter(
     (i) => i.status === "pre_booked"
   );
+  const handleScroll = () => {
+    setIsTooltipOpen({});
+  };
+
+  React.useEffect(() => {
+    const scrollListener = () => {
+      handleScroll();
+    };
+    window.addEventListener("scroll", scrollListener, true);
+    return () => {
+      window.removeEventListener("scroll", scrollListener, true);
+    };
+  }, []);
 
   return (
     <section className={style.section}>
@@ -108,7 +121,7 @@ function Sidebar() {
               open ? style.section__burger__icon__open : ""
             }`}
           >
-            <Сhevron />
+            <Sidebarr />
           </div>
           <div
             className={`${style.sidebar__text} ${

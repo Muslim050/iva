@@ -1,3 +1,5 @@
+@import "src/index.scss";
+
 .dflex {
   display: flex;
   justify-content: center;
@@ -95,9 +97,8 @@
     }
 
     a {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      @include flexSpaceAlign;
+
       color: white;
     }
 

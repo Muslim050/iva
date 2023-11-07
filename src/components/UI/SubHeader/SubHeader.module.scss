@@ -1,3 +1,6 @@
+@import "src/index.scss";
+
+
 .section {
   display: flex;
 
@@ -16,12 +19,10 @@
     }
 
     &__sub__wrapper {
-      display: flex;
-      align-items: center;
+      @include flexSpaceAlign;
       padding: 12px 20px;
       font-weight: 600;
       color: #45464E;
-      justify-content: space-between;
 
 
       font-size: 18px;
@@ -107,5 +108,22 @@
       margin-right: 10px;
     }
   }
+
+}
+
+
+@media screen and (max-width: 768px) {
+
+  .subHeader {
+
+
+    &__sub__wrapper {
+      padding: 5px 10px !important;
+      font-size: 14px !important;
+    }
+  }
+
+
+
 
 }
