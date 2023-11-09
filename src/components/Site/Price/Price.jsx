@@ -78,7 +78,7 @@ function Price() {
       />
       <div className={style.title_wrapper}>
         <span className={style.service_title}>
-          БРЕНДЫ С КОТОРЫМИ МЫ РАБОТАЕМ
+          РЕКЛАМА В ПОПУЛЯРНОМ КОНТЕНТЕ ОТ ВЕДУЩИХ ПРОИЗВОДИТЕЛЕЙ
         </span>
       </div>
 

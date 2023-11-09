@@ -11,13 +11,9 @@ import {
   MdOutlinePhoneInTalk,
   MdLocationOn,
 } from "react-icons/md";
-import { ImYoutube2 } from "react-icons/im";
 import Youtube from "src/assets/Site/youtube.png";
 
 import style from "./Footer.module.scss";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import Logo from "src/assets/Site/logo.png";
 
 function Footer() {
   return (
@@ -25,7 +21,7 @@ function Footer() {
       <div className={style.service_container}>
         <div className={style.service_card}>
           <div className={style.card}>
-            <div style={{ width: "100%", maxWidth: "370px" }}>
+            <div style={{ width: "100%", maxWidth: "340px" }}>
               <div
                 style={{
                   borderBottom: "2px solid grey",
@@ -47,7 +43,7 @@ function Footer() {
 
               <div
                 style={{
-                  fontSize: "21px",
+                  fontSize: "18px",
                   display: "flex",
                   justifyContent: "center",
                   color: "#cccccc",
@@ -93,7 +89,10 @@ function Footer() {
               >
                 <div className={style.service_icon}>
                   <IconContext.Provider
-                    value={{ color: "#14da8f", size: "35px" }}
+                    value={{
+                      color: "#14da8f",
+                      size: "35px",
+                    }}
                   >
                     <IoLogoInstagram />
                   </IconContext.Provider>
@@ -121,7 +120,7 @@ function Footer() {
                 </div>
               </div>
             </div>
-            <div style={{ width: "100%", maxWidth: "370px" }}>
+            <div style={{ width: "100%", maxWidth: "400px" }}>
               <div
                 style={{
                   borderBottom: "2px solid grey",
@@ -154,7 +153,7 @@ function Footer() {
                     <IconContext.Provider
                       value={{ color: "#14da8f", size: "30px" }}
                     >
-                      <MdOutlineEmail style={{}} />
+                      <MdOutlineEmail style={{ marginRight: "15px" }} />
                     </IconContext.Provider>
                     adtechmediainfo@gmail.com
                   </li>
@@ -169,7 +168,7 @@ function Footer() {
                     <IconContext.Provider
                       value={{ color: "#14da8f", size: "30px" }}
                     >
-                      <MdOutlinePhoneInTalk />
+                      <MdOutlinePhoneInTalk style={{ marginRight: "15px" }} />
                     </IconContext.Provider>
                     <a href="tel:90 550-50-505">+998 94 720 85 81</a>
                   </li>
@@ -183,7 +182,7 @@ function Footer() {
                     <IconContext.Provider
                       value={{ color: "#14da8f", size: "30px" }}
                     >
-                      <MdLocationOn />
+                      <MdLocationOn style={{ marginRight: "15px" }} />
                     </IconContext.Provider>
                     Ташкент, ул. Мустақиллик 88А, БЦ “Дархан”
                   </li>

@@ -7,6 +7,7 @@ import "swiper/scss/navigation";
 import "swiper/scss/pagination";
 import "swiper/scss/effect-coverflow";
 import Eclipse from "src/assets/Site/Ellipse.png";
+import Youtube from "../../../assets/Site/youtube.png";
 
 import video1 from "src/assets/Site/video1.mp4";
 import video2 from "src/assets/Site/video2.mp4";
@@ -44,22 +45,40 @@ function Slider() {
           modules={[Navigation, Pagination, EffectCoverflow]}
         >
           <SwiperSlide>
-            <video src={video1} autoPlay muted loop playsInline></video>
+            <div className={style.video_container}>
+              <img className={style.youtubeimg} src={Youtube} alt="" />
+              <video src={video1} autoPlay muted loop playsInline></video>
+            </div>
           </SwiperSlide>
           <SwiperSlide>
-            <video src={video2} autoPlay muted loop playsInline></video>
+            <div className={style.video_container}>
+              <img className={style.youtubeimg} src={Youtube} alt="" />
+              <video src={video2} autoPlay muted loop playsInline></video>
+            </div>
           </SwiperSlide>
           <SwiperSlide>
-            <video src={video3} autoPlay muted loop playsInline></video>
+            <div className={style.video_container}>
+              <img className={style.youtubeimg} src={Youtube} alt="" />
+              <video src={video3} autoPlay muted loop playsInline></video>
+            </div>
           </SwiperSlide>
           <SwiperSlide>
-            <video src={video4} autoPlay muted loop playsInline></video>
+            <div className={style.video_container}>
+              <img className={style.youtubeimg} src={Youtube} alt="" />
+              <video src={video4} autoPlay muted loop playsInline></video>
+            </div>
           </SwiperSlide>
           <SwiperSlide>
-            <video src={video5} autoPlay muted loop playsInline></video>
+            <div className={style.video_container}>
+              <img className={style.youtubeimg} src={Youtube} alt="" />
+              <video src={video5} autoPlay muted loop playsInline></video>
+            </div>
           </SwiperSlide>
           <SwiperSlide>
-            <video src={video6} autoPlay muted loop playsInline></video>
+            <div className={style.video_container}>
+              <img className={style.youtubeimg} src={Youtube} alt="" />
+              <video src={video6} autoPlay muted loop playsInline></video>
+            </div>
           </SwiperSlide>
         </Swiper>
       </div>

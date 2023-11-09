@@ -5,10 +5,28 @@
   width: 100%;
 }
 
+.video_container {
+  position: relative;
+  border-radius: 18px;
+  border: 2px solid #b12a00;
+  overflow: hidden;
+}
+
 video {
   width: 100%;
-  border-radius: 18px;
+  padding: 50px 0 0;
+  background: black;
 
+}
+
+.youtubeimg {
+  position: absolute;
+  z-index: 1;
+  width: 100px !important;
+  height: 50px !important;
+  top: 25px;
+  left: 70px;
+  transform: translate(-50%, -50%);
 }
 
 .service_container {
@@ -40,7 +58,7 @@ video {
       text-align: center;
       color: white;
       text-transform: uppercase;
-      font-size: 40px;
+      font-size: 36px;
       font-weight: 600;
       overflow: hidden;
       line-height: 55px;
