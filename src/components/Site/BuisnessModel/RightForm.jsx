@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./BuisnessModel.module.scss";
 import { useForm } from "react-hook-form";
-import FormPub from "src/assets/Site/formpub.png";
+import FormPub from "src/assets/Site/money.svg";
 
 function RightForm() {
   const [isLogin, setIsLogin] = React.useState(false);
@@ -36,7 +36,12 @@ function RightForm() {
       <div className={style.login__wrapper}>
         <div className={style.login__wrapper__table_header}>
           <div className={style.login__wrapper__table_title}>
-            <img src={FormPub} alt="" /> Монетизировать контент
+            <img
+              src={FormPub}
+              alt=""
+              style={{ width: "40px", marginRight: "5px" }}
+            />{" "}
+            Монетизировать контент
           </div>
           <div className={style.login__wrapper__table_subtitle}>
             Если вы владелец канала

@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import style from "./BuisnessModel.module.scss";
-import FormAdv from "src/assets/Site/formadv.png";
+import FormAdv from "src/assets/Site/cartOrder.svg";
 
 function LeftForm() {
   const [isLogin, setIsLogin] = React.useState(false);
@@ -36,7 +36,12 @@ function LeftForm() {
       <div className={style.login__wrapper}>
         <div className={style.login__wrapper__table_header}>
           <div className={style.login__wrapper__table_title}>
-            <img src={FormAdv} alt="" /> Заказать рекламу
+            <img
+              src={FormAdv}
+              alt=""
+              style={{ width: "40px", marginRight: "5px" }}
+            />{" "}
+            Заказать рекламу
           </div>
           <div className={style.login__wrapper__table_subtitle}>
             Если вы рекламодатель

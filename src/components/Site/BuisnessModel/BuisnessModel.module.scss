@@ -48,10 +48,10 @@
     .service_subtitle {
       display: block;
       text-align: center;
-      color: #FF5621;
+      color: #cccccc;
 
       font-size: 20px;
-      font-weight: 600;
+      font-weight: 500;
       overflow: hidden;
       line-height: 150%;
       max-width: 950px;
@@ -129,12 +129,14 @@
   &__table_title {
     color: rgb(255, 255, 255);
     padding: 0px 0px 5px 0px;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
     line-height: 30px;
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+
   }
 
   &__table_subtitle {

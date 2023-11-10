@@ -8,16 +8,18 @@
 .video_container {
   position: relative;
   border-radius: 18px;
-  border: 2px solid #b12a00;
+  border: 3px solid #b12a00;
   overflow: hidden;
+
+  video {
+    width: 100%;
+    padding: 50px 0 0;
+    background: black;
+
+  }
 }
 
-video {
-  width: 100%;
-  padding: 50px 0 0;
-  background: black;
 
-}
 
 .youtubeimg {
   position: absolute;
