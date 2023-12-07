@@ -104,6 +104,29 @@ export const fetchEditVideo = createAsyncThunk(
   }
 );
 
+export const DeleteVideo = createAsyncThunk(
+  "video/DeleteVideo",
+  async ({ id }) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await axios.delete(
+        `${backendURL}/inventory/video/${id}/`,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data.data;
+    } catch (error) {
+      throw new Error("Failed to fetch order");
+    }
+  }
+);
+
 // export const deleteInventory = createAsyncThunk(
 //   "inventory/deleteInventory",
 //   async ({ id }) => {

@@ -64,7 +64,7 @@ export default function EditInventoryModal({
       start_at: secondsToTime(currentOrder.start_at),
       expected_number_of_views: currentOrder.expected_number_of_views,
       expected_promo_duration: currentOrder.expected_promo_duration,
-      video_content: currentOrder.video_content.name,
+      video_content: currentOrder.video_content?.name || "", // Optional chaining
     },
     mode: "onBlur",
   });
@@ -301,7 +301,8 @@ export default function EditInventoryModal({
 
           <div style={{ display: "grid" }}>
             <label style={{ fontSize: "12px", color: "var(--text-color)" }}>
-              Текущее видео <strong>{currentOrder.video_content.name}</strong>
+              Текущее видео{" "}
+              <strong>{currentOrder.video_content?.name || "N/A"}</strong>
             </label>
             <select
               id="countries"

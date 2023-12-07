@@ -45,7 +45,7 @@ function TableInventoryData({
             <td className={style.table_td}>
               {inventor.channel === null ? "" : inventor.channel.name}
             </td>
-            <td className={style.table_td}>{inventor.video_content.name}</td>
+            <td className={style.table_td}> {inventor.video_content?.name}</td>
             <td className={style.table_td}>
               {(inventor.format === "preroll" && "Pre-roll") ||
                 (inventor.format === "midroll1" && "Mid-roll 1") ||
@@ -63,10 +63,10 @@ function TableInventoryData({
               {inventor.expected_promo_duration}
             </td>
             <td className={style.table_td}>
-              {inventor.video_content.category}
+              {inventor.video_content?.category}
             </td>
             <td className={style.table_td}>
-              {new Date(inventor.video_content.publication_time)
+              {new Date(inventor.video_content?.publication_time)
                 .toLocaleDateString("en-GB")
                 .replace(/\//g, ".")}
             </td>

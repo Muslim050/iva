@@ -30,7 +30,7 @@ function BindingOrderModalList({ inventor, selectedRows, setSelectedRows }) {
             </th>
 
             <th className={style.table__tr_th}>{advert.channel.name}</th>
-            <th className={style.table__tr_th}>{advert.video_content.name}</th>
+            <th className={style.table__tr_th}>{advert.video_content?.name}</th>
             <th className={style.table__tr_th}>
               {(advert.format === "preroll" && "Pre-roll") ||
                 ("midroll1" && "Mid-roll 1") ||
@@ -47,10 +47,10 @@ function BindingOrderModalList({ inventor, selectedRows, setSelectedRows }) {
             </th>
 
             <th className={style.table__tr_th}>
-              {advert.video_content.category}
+              {advert.video_content?.category}
             </th>
             <th className={style.table__tr_th}>
-              {new Date(advert.video_content.publication_time)
+              {new Date(advert.video_content?.publication_time)
                 .toLocaleDateString("en-GB")
                 .replace(/\//g, ".")}
             </th>

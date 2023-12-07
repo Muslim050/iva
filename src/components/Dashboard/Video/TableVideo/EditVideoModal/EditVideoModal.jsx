@@ -12,7 +12,11 @@ import {
   fetchInventory,
 } from "src/redux/inventory/inventorySlice";
 import { toastConfig } from "src/utils/toastConfig";
-import { fetchEditVideo, fetchVideos } from "src/redux/video/videoSlice";
+import {
+  DeleteVideo,
+  fetchEditVideo,
+  fetchVideos,
+} from "src/redux/video/videoSlice";
 
 // Функция для преобразования секунд в формат "часы:минуты:секунды"
 function secondsToTime(seconds) {
@@ -95,18 +99,17 @@ export default function EditVideoModal({
   };
 
   const handleRemoveInventory = () => {
-    console.log("currentOrdercurrentOrder", currentOrder);
     const confirmDelete = window.confirm("Вы уверены, что хотите удалить?");
     if (confirmDelete) {
-      dispatch(deleteInventory({ id: currentOrder.id }))
+      dispatch(DeleteVideo({ id: currentOrder.id }))
         .then(() => {
-          toast.success("Инвентарь успешно удален", toastConfig);
+          toast.success("Видео успешно удалено", toastConfig);
           setShowModalEditAdmin(false);
-          dispatch(fetchInventory());
+          dispatch(fetchVideos());
         })
         .catch((error) => {
           toast.error(error.message, toastConfig);
-          dispatch(fetchInventory());
+          dispatch(fetchVideos());
         });
     } else {
       toast.info("Операция отменена", toastConfig);
