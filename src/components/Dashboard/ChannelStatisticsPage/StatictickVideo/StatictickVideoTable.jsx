@@ -1,45 +1,44 @@
-import React from "react";
-import style from "./StatictickVideoTable.module.scss";
-import WrapperThead from "./components/DopTable/Thead/WrapperThead";
-import StatictickVideoThead from "./components/StatictickVideoThead";
-import StatictickVideoData from "./components/StatictickVideoData";
-import TheadAgeGenderGeo from "./components/TheadAgeGenderGeo";
-import GenderData from "./components/DopTable/Data/GenderData";
-import AgeData from "src/components/Dashboard/OrderChartTable/components/DopTable/Data/AgeData";
-import GeoData from "src/components/Dashboard/OrderChartTable/components/DopTable/Data/GeoData";
+import React from 'react'
+import style from './StatictickVideoTable.module.scss'
+import WrapperThead from './components/DopTable/Thead/WrapperThead'
+import StatictickVideoThead from './components/StatictickVideoThead'
+import StatictickVideoData from './components/StatictickVideoData'
+import TheadAgeGenderGeo from './components/TheadAgeGenderGeo'
+import GenderData from './components/DopTable/Data/GenderData'
+import AgeData from 'src/components/Dashboard/OrderChartTable/components/DopTable/Data/AgeData'
+import GeoData from 'src/components/Dashboard/OrderChartTable/components/DopTable/Data/GeoData'
 
 function StatictickVideoTable({ data, loading }) {
-  const [expandedRows, setExpandedRows] = React.useState("");
+  const [expandedRows, setExpandedRows] = React.useState('')
 
   const handleRowClick = (videoLink) => {
     setExpandedRows((prevExpandedRow) =>
-      prevExpandedRow === videoLink ? "" : videoLink
-    );
-  };
+      prevExpandedRow === videoLink ? '' : videoLink,
+    )
+  }
 
-  const genders = [];
-  console.log("data", data);
+  const genders = []
   data &&
     data.forEach((statistic) => {
       statistic.gender_percentages.forEach((gen) => {
         if (!genders.includes(gen.gender)) {
-          genders.push(gen.gender);
+          genders.push(gen.gender)
         }
-      });
-    });
+      })
+    })
   return (
     <>
-      <div className="tableWrapper" style={{ marginTop: "20px" }}>
+      <div className="tableWrapper" style={{ marginTop: '20px' }}>
         <div className="tableWrapper__table_title">
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             Статистика видео
           </div>
         </div>
 
         {loading ? (
-          <div className="loaderWrapper" style={{ height: "20vh" }}>
-            <div style={{ color: "var(--text-color, )" }}>
-              {" "}
+          <div className="loaderWrapper" style={{ height: '20vh' }}>
+            <div style={{ color: 'var(--text-color, )' }}>
+              {' '}
               Загрузка статистики &nbsp;
             </div>
             <div className="spinner"></div>
@@ -49,11 +48,11 @@ function StatictickVideoTable({ data, loading }) {
             {data.length === 0 ? (
               <div
                 style={{
-                  fontSize: "16px",
-                  lineHeight: "15px",
-                  color: "#fa8a00",
-                  textAlign: "center",
-                  fontWeight: "600",
+                  fontSize: '16px',
+                  lineHeight: '15px',
+                  color: '#fa8a00',
+                  textAlign: 'center',
+                  fontWeight: '600',
                 }}
               >
                 Видео отсуствуют или нужно обновить токен канала
@@ -90,7 +89,7 @@ function StatictickVideoTable({ data, loading }) {
                               className={`${style.list__item} ${
                                 expandedRows === statistic.video_link
                                   ? style.list__item__open
-                                  : ""
+                                  : ''
                               }`}
                             >
                               <div className="tableWrapper">
@@ -99,10 +98,10 @@ function StatictickVideoTable({ data, loading }) {
                                 statistic.geo_percentages.length === 0 ? (
                                   <div
                                     style={{
-                                      fontSize: "15px",
-                                      lineHeight: "15px",
-                                      color: "#fa8a00",
-                                      textAlign: "center",
+                                      fontSize: '15px',
+                                      lineHeight: '15px',
+                                      color: '#fa8a00',
+                                      textAlign: 'center',
                                     }}
                                   >
                                     Введется аналитика данных
@@ -118,7 +117,7 @@ function StatictickVideoTable({ data, loading }) {
                                     {/* Колонки  ГЕО Возраст ПОЛ доп таблица  */}
 
                                     {/* Колонки подробная инфа ГЕО Возраст ПОЛ */}
-                                    <thead style={{ borderTop: "0" }}>
+                                    <thead style={{ borderTop: '0' }}>
                                       <tr className={style.tableChart__tr}>
                                         <WrapperThead statistic={statistic} />
                                       </tr>
@@ -143,7 +142,7 @@ function StatictickVideoTable({ data, loading }) {
         )}
       </div>
     </>
-  );
+  )
 }
 
-export default StatictickVideoTable;
+export default StatictickVideoTable

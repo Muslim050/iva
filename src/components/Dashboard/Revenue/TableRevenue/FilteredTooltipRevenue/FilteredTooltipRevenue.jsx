@@ -1,6 +1,6 @@
-import React from "react";
-import style from "./FilteredTooltipRevenue.module.scss";
-import { ReactComponent as Close } from "src/assets/Close.svg";
+import React from 'react'
+import style from './FilteredTooltipRevenue.module.scss'
+import { ReactComponent as Close } from 'src/assets/Close.svg'
 
 function FilteredTooltipRevenue({
   isTooltip,
@@ -13,38 +13,36 @@ function FilteredTooltipRevenue({
   setIsTooltip,
 }) {
   const handleStartDateChange = (event) => {
-    setStartDate(event.target.value);
-  };
+    setStartDate(event.target.value)
+  }
 
   const handleEndDateChange = (event) => {
-    setEndDate(event.target.value);
-  };
+    setEndDate(event.target.value)
+  }
 
-  console.log("endDasdsadasdsate", endDate);
-
-  const canClcked = startDate && endDate;
+  const canClcked = startDate && endDate
   return (
     <>
       {isTooltip && (
         <div
           lassName={style.profile__wrapper__tooltip}
           style={{
-            position: "absolute",
-            right: "0px",
-            top: "65px",
-            backgroundColor: "#fff",
-            boxShadow: "0 0 5px #bbbbbb",
-            padding: "14px",
-            borderRadius: "10px",
-            zIndex: "2",
+            position: 'absolute',
+            right: '0px',
+            top: '65px',
+            backgroundColor: '#fff',
+            boxShadow: '0 0 5px #bbbbbb',
+            padding: '14px',
+            borderRadius: '10px',
+            zIndex: '2',
           }}
         >
           <div>
             <label
               style={{
-                fontSize: "10px",
-                color: "var(--text-color)",
-                fontWeight: "400",
+                fontSize: '10px',
+                color: 'var(--text-color)',
+                fontWeight: '400',
               }}
             >
               Дата начало
@@ -55,16 +53,16 @@ function FilteredTooltipRevenue({
               value={startDate}
               onChange={handleStartDateChange}
               style={{
-                width: "210px",
+                width: '210px',
               }}
             />
           </div>
           <div>
             <label
               style={{
-                fontSize: "10px",
-                color: "var(--text-color)",
-                fontWeight: "400",
+                fontSize: '10px',
+                color: 'var(--text-color)',
+                fontWeight: '400',
               }}
             >
               Дата конец
@@ -75,14 +73,14 @@ function FilteredTooltipRevenue({
               value={endDate}
               onChange={handleEndDateChange}
               style={{
-                width: "210px",
-                marginLeft: "6px",
-                marginTop: "10px",
+                width: '210px',
+                marginLeft: '6px',
+                marginTop: '10px',
               }}
             />
           </div>
 
-          <div style={{ display: "flex" }}>
+          <div style={{ display: 'flex' }}>
             <button
               className={style.btn_filtered}
               onClick={handleDateStatictick} // Добавляем проверку перед сортировкой
@@ -94,13 +92,13 @@ function FilteredTooltipRevenue({
               className={style.btn_filtered__close}
               onClick={() => setIsTooltip(!isTooltip)}
             >
-              <Close style={{ height: "30px" }} />
+              <Close style={{ height: '30px' }} />
             </button>
           </div>
         </div>
       )}
     </>
-  );
+  )
 }
 
-export default FilteredTooltipRevenue;
+export default FilteredTooltipRevenue

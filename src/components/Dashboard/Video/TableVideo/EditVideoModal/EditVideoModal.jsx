@@ -49,7 +49,6 @@ export default function EditVideoModal({
   );
   const [isOrderCreated, setIsOrderCreated] = React.useState(false);
   const [videoModal, setVideoModal] = React.useState([]);
-  console.log("currentOrder", currentOrder);
   const {
     register,
     formState: { errors },

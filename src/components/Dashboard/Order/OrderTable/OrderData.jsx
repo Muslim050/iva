@@ -1,69 +1,69 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchOrder } from "../../../../redux/order/orderSlice";
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchOrder } from '../../../../redux/order/orderSlice'
 import {
   fetchViewStatus,
   finishOrder,
-} from "../../../../redux/orderStatus/orderStatusSlice";
-import BindingOrderTable from "../BindingOrder/BindingOrderTable/BindingOrderTable";
-import FormatterBudjet from "../../../UI/formatter/FormatterBudjet";
-import style from "./OrderTable.module.scss";
-import { ReactComponent as Arrow } from "src/assets/Table/arrow.svg";
-import { ReactComponent as File } from "src/assets/Table/file.svg";
-import { ReactComponent as Finish } from "src/assets/Table/Finish.svg";
-import { ReactComponent as Chart } from "src/assets/Table/Chart.svg";
-import { ReactComponent as Edit } from "src/assets/Table/Edit.svg";
-import { Link } from "react-router-dom";
-import MyModal from "../../../UI/ModalComponents/ModalUI/ModalUI";
-import AdvertStatus from "src/components/UI/AdvertStatus/AdvertStatus";
-import ButtonBorder from "src/components/UI/ButtonBorder/ButtonBorder";
-import { toastConfig } from "src/utils/toastConfig";
-import { toast } from "react-toastify";
-import FormatterView from "src/components/UI/formatter/FormatterView";
-import CircularTable from "src/components/UI/Circular/CircularTable";
-import CircularBadge from "src/components/UI/Circular/CircularBadge";
-import PaymentOrderModal from "../PaymentOrderModal/PaymentOrderModal";
-import { AnimatePresence } from "framer-motion";
-import OrderPayment from "../components/OrderPayment";
-import EditOrderModal from "../EditOrderModalAdmin/EditOrderModal";
+} from '../../../../redux/orderStatus/orderStatusSlice'
+import BindingOrderTable from '../BindingOrder/BindingOrderTable/BindingOrderTable'
+import FormatterBudjet from '../../../UI/formatter/FormatterBudjet'
+import style from './OrderTable.module.scss'
+import { ReactComponent as Arrow } from 'src/assets/Table/arrow.svg'
+import { ReactComponent as File } from 'src/assets/Table/file.svg'
+import { ReactComponent as Finish } from 'src/assets/Table/Finish.svg'
+import { ReactComponent as Chart } from 'src/assets/Table/Chart.svg'
+import { ReactComponent as Edit } from 'src/assets/Table/Edit.svg'
+import { Link } from 'react-router-dom'
+import MyModal from '../../../UI/ModalComponents/ModalUI/ModalUI'
+import AdvertStatus from 'src/components/UI/AdvertStatus/AdvertStatus'
+import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
+import { toastConfig } from 'src/utils/toastConfig'
+import { toast } from 'react-toastify'
+import FormatterView from 'src/components/UI/formatter/FormatterView'
+import CircularTable from 'src/components/UI/Circular/CircularTable'
+import CircularBadge from 'src/components/UI/Circular/CircularBadge'
+import PaymentOrderModal from '../PaymentOrderModal/PaymentOrderModal'
+import { AnimatePresence } from 'framer-motion'
+import OrderPayment from '../components/OrderPayment'
+import EditOrderModal from '../EditOrderModalAdmin/EditOrderModal'
 
 function OrderData({ sortedData }) {
-  const dispatch = useDispatch();
-  const [expandedRows, setExpandedRows] = React.useState("");
-  const role = localStorage.getItem("role");
-  const [currentOrder, setCurrentOrder] = React.useState(null);
-  const [showModalEdit, setShowModalEdit] = React.useState(false);
-  const [showModalEditAdmin, setShowModalEditAdmin] = React.useState(false);
+  const dispatch = useDispatch()
+  const [expandedRows, setExpandedRows] = React.useState('')
+  const role = localStorage.getItem('role')
+  const [currentOrder, setCurrentOrder] = React.useState(null)
+  const [showModalEdit, setShowModalEdit] = React.useState(false)
+  const [showModalEditAdmin, setShowModalEditAdmin] = React.useState(false)
 
-  const { showPayment } = useSelector((state) => state.modal);
+  const { showPayment } = useSelector((state) => state.modal)
 
   const handleRowClick = (id) => {
-    setExpandedRows(id === expandedRows ? false : id);
+    setExpandedRows(id === expandedRows ? false : id)
 
-    const item = sortedData().find((item) => item.id === id);
-    if (item && item.status === "sent") {
-      dispatch(fetchViewStatus(id));
-      dispatch(fetchOrder());
+    const item = sortedData().find((item) => item.id === id)
+    if (item && item.status === 'sent') {
+      dispatch(fetchViewStatus(id))
+      dispatch(fetchOrder())
     }
-  };
+  }
 
   const handleFinishOrder = (id) => {
     const confirmFinish = window.confirm(
-      "Вы уверены, что хотите финишировать заказ?"
-    );
+      'Вы уверены, что хотите финишировать заказ?',
+    )
     if (confirmFinish) {
       dispatch(finishOrder({ id })).then(() => {
-        dispatch(fetchOrder());
-      });
+        dispatch(fetchOrder())
+      })
     } else {
-      toast.info("Операция отменена", toastConfig);
-      dispatch(fetchOrder());
+      toast.info('Операция отменена', toastConfig)
+      dispatch(fetchOrder())
     }
-  };
+  }
 
   React.useEffect(() => {
-    fetchOrder();
-  }, [dispatch]);
+    fetchOrder()
+  }, [dispatch])
 
   return (
     <>
@@ -90,115 +90,124 @@ function OrderData({ sortedData }) {
         <>
           <tr key={advert.id} className={style.tr_Order}>
             <td className={style.td_Order}>
-              <div style={{ display: "flex" }}>
+              <div style={{ display: 'flex' }}>
                 <div>{i + 1}</div>
-                {role === "advertiser" || role === "advertising_agency" ? (
+                {role === 'advertiser' || role === 'advertising_agency' ? (
                   <>
-                    {advert.status === "in_progress" ? <CircularTable /> : null}
+                    {advert.status === 'in_progress' ? <CircularTable /> : null}
                   </>
                 ) : null}
 
-                {role === "admin" && (
-                  <>{advert.status === "sent" ? <CircularTable /> : null}</>
+                {role === 'admin' && (
+                  <>{advert.status === 'sent' ? <CircularTable /> : null}</>
                 )}
               </div>
             </td>
             <td className={style.td_Order}>{advert.name}</td>
             <td className={style.td_Order}>
-              <div style={{ display: "flex" }}>
+              <div style={{ display: 'flex' }}>
                 <a
                   href={advert.promo_file}
                   target="_blank"
                   className={style.fileWrapper}
+                  rel="noreferrer"
                 >
                   Ролик
                   <File
-                    style={{ width: "18px", height: "18px", marginLeft: "5px" }}
+                    style={{
+                      width: '18px',
+                      height: '18px',
+                      marginLeft: '5px',
+                    }}
                   />
                 </a>
               </div>
             </td>
             <td className={style.td_Order}>
-              {(advert.format === "preroll" && "Pre-roll") ||
-                ("mixroll" && "Mix-roll")}
+              {(advert.format === 'preroll' && 'Pre-roll') ||
+                ('mixroll' && 'Mix-roll')}
             </td>
             <td className={style.td_Order}>
               {new Date(advert.expected_start_date)
-                .toLocaleDateString("en-GB")
-                .replace(/\//g, ".")}
+                .toLocaleDateString('en-GB')
+                .replace(/\//g, '.')}
             </td>
             <td className={style.td_Order}>
               {new Date(advert.expected_end_date)
-                .toLocaleDateString("en-GB")
-                .replace(/\//g, ".")}
+                .toLocaleDateString('en-GB')
+                .replace(/\//g, '.')}
             </td>
             <td className={style.td_Order}>
               <FormatterView data={advert.expected_number_of_views} />
             </td>
 
             <td className={style.td_Order}>
-              <div style={{ display: "flex" }}>
-                $ &nbsp; <FormatterBudjet budget={advert.budget} />
+              <div style={{ display: 'flex' }}>
+                <FormatterBudjet
+                  budget={advert.budget}
+                  data={advert.expected_start_date}
+                />
               </div>
             </td>
+
             <td className={style.td_Order}>
               <AdvertStatus status={advert.status}>
-                {role === "admin" || role === "advertising_agency" ? (
+                {role === 'admin' || role === 'advertising_agency' ? (
                   <>
-                    {role === "admin" || role === "advertising_agency" ? (
+                    {role === 'admin' || role === 'advertising_agency' ? (
                       <>
-                        {advert.status === "in_progress" ? (
+                        {advert.status === 'in_progress' ? (
                           <div
                             style={{
                               display: (() => {
                                 const ratie = Math.floor(
                                   (advert.online_views /
                                     advert.expected_number_of_views) *
-                                    100
-                                );
+                                    100,
+                                )
                                 if (ratie >= 1) {
-                                  return "initial";
+                                  return 'initial'
                                 }
-                                return "none";
+                                return 'none'
                               })(),
-                              padding: "1px 5px",
-                              borderRadius: "7px",
-                              fontWeight: "600",
+                              padding: '1px 5px',
+                              borderRadius: '7px',
+                              fontWeight: '600',
                               background: (() => {
                                 const ratie = Math.floor(
                                   (advert.online_views /
                                     advert.expected_number_of_views) *
-                                    100
-                                );
+                                    100,
+                                )
 
                                 if (ratie >= 100) {
-                                  return "#ec2020";
+                                  return '#ec2020'
                                 } else if (ratie >= 80) {
-                                  return "#fd8b00";
+                                  return '#fd8b00'
                                 } else if (ratie >= 50) {
-                                  return "rgba(50, 147, 111, 0.16)";
+                                  return 'rgba(50, 147, 111, 0.16)'
                                 } else if (ratie >= 1) {
-                                  return "rgb(86 112 241)";
+                                  return 'rgb(86 112 241)'
                                 }
-                                return "inherit";
+                                return 'inherit'
                               })(),
 
                               color: (() => {
                                 const ratio =
                                   (advert.online_views /
                                     advert.expected_number_of_views) *
-                                  100;
+                                  100
 
                                 if (ratio >= 100) {
-                                  return "#f8f8f8";
+                                  return '#f8f8f8'
                                 } else if (ratio >= 80) {
-                                  return "#764306";
+                                  return '#764306'
                                 } else if (ratio >= 50) {
-                                  return "#047f27";
+                                  return '#047f27'
                                 } else if (ratio >= 1) {
-                                  return "rgb(228 232 253)";
+                                  return 'rgb(228 232 253)'
                                 }
-                                return "inherit";
+                                return 'inherit'
                               })(),
                             }}
                           >
@@ -206,21 +215,21 @@ function OrderData({ sortedData }) {
                               Math.floor(
                                 (advert.online_views /
                                   advert.expected_number_of_views) *
-                                  100
+                                  100,
                               ) +
-                                " " +
-                                "%"}
+                                ' ' +
+                                '%'}
                           </div>
                         ) : null}
-                        {advert.status === "finished" ? (
+                        {advert.status === 'finished' ? (
                           <div
                             style={{
-                              display: "initial",
-                              padding: "1px 4px",
-                              borderRadius: "7px",
-                              background: "rgb(156 81 81)",
-                              color: "#eedede",
-                              marginLeft: "10px",
+                              display: 'initial',
+                              padding: '1px 4px',
+                              borderRadius: '7px',
+                              background: 'rgb(156 81 81)',
+                              color: '#eedede',
+                              marginLeft: '10px',
                             }}
                           >
                             100%
@@ -245,30 +254,30 @@ function OrderData({ sortedData }) {
 
             <td className={style.td_Order}>
               <div className={style.btn_container}>
-                {advert.status === "in_progress" ||
-                advert.status === "finished" ? (
+                {advert.status === 'in_progress' ||
+                advert.status === 'finished' ? (
                   <Link
                     to={`/chart-order-table/${advert.id}`}
-                    style={{ display: "contents" }}
+                    style={{ display: 'contents' }}
                   >
                     <button
                       className={style.dopBtnChart}
-                      style={{ marginRight: "5px" }}
+                      style={{ marginRight: '5px' }}
                     >
-                      <Chart style={{ width: "25px", height: "25px" }} />
+                      <Chart style={{ width: '25px', height: '25px' }} />
                     </button>
                   </Link>
                 ) : (
                   <>
-                    {role === "advertising_agency" || role === "advertiser" ? (
-                      ""
+                    {role === 'advertising_agency' || role === 'advertiser' ? (
+                      ''
                     ) : (
-                      <div style={{ width: "42px", height: "33px" }}></div>
+                      <div style={{ width: '42px', height: '33px' }}></div>
                     )}
                   </>
                 )}
 
-                {role === "admin" ? (
+                {role === 'admin' ? (
                   <button
                     className={style.dopBtn}
                     onClick={() => handleRowClick(advert.id)}
@@ -277,133 +286,133 @@ function OrderData({ sortedData }) {
                     <span className={style.arrow}>
                       <Arrow
                         className={`${style.arrow__icon} ${
-                          expandedRows === advert.id ? style.arrow__rotate : ""
+                          expandedRows === advert.id ? style.arrow__rotate : ''
                         }`}
                       />
                       {advert.inventories.filter(
                         (item) =>
                           item.video_content.link_to_video &&
-                          item.status === "booked"
+                          item.status === 'booked',
                       ).length > 0 ? (
                         <CircularBadge
                           style={{
-                            backgroundColor: "#d0c9fa",
-                            color: "#4833d0",
-                            width: "20px",
-                            height: "20px",
+                            backgroundColor: '#d0c9fa',
+                            color: '#4833d0',
+                            width: '20px',
+                            height: '20px',
                           }}
                           count={
                             advert.inventories.filter(
                               (item) =>
                                 item.video_content.link_to_video &&
-                                item.status === "booked"
+                                item.status === 'booked',
                             ).length
                           }
                         />
                       ) : (
                         <>
-                          {advert.status === "in_review" &&
+                          {advert.status === 'in_review' &&
                           advert.inventories.filter(
-                            (item) => item.status === "booked"
+                            (item) => item.status === 'booked',
                           ).length > 0 ? (
                             <CircularBadge
                               style={{
-                                backgroundColor: "#ff7d00",
-                                width: "15px",
-                                height: "15px",
+                                backgroundColor: '#ff7d00',
+                                width: '15px',
+                                height: '15px',
                               }}
-                              count={advert.status === "booked"}
+                              count={advert.status === 'booked'}
                             />
                           ) : (
-                            ""
+                            ''
                           )}
                         </>
                       )}
-                      {advert.status === "booked" ? (
+                      {advert.status === 'booked' ? (
                         <CircularBadge
                           style={{
-                            backgroundColor: "#ff7d00",
-                            width: "15px",
-                            height: "15px",
+                            backgroundColor: '#ff7d00',
+                            width: '15px',
+                            height: '15px',
                           }}
-                          count={advert.status === "booked"}
+                          count={advert.status === 'booked'}
                         />
                       ) : (
-                        ""
+                        ''
                       )}
                     </span>
                   </button>
                 ) : null}
 
-                {role === "admin" && advert.status === "in_progress" ? (
+                {role === 'admin' && advert.status === 'in_progress' ? (
                   <ButtonBorder onClick={() => handleFinishOrder(advert.id)}>
                     {(advert.online_views / advert.expected_number_of_views) *
                       100 >=
                       100 && (
                       <CircularBadge
                         style={{
-                          backgroundColor: "red",
-                          width: "15px",
-                          height: "15px",
+                          backgroundColor: 'red',
+                          width: '15px',
+                          height: '15px',
                         }}
                       />
                     )}
                     <Finish
                       style={{
-                        width: "17px",
-                        height: "17px",
-                        marginRight: "5px",
+                        width: '17px',
+                        height: '17px',
+                        marginRight: '5px',
                       }}
                     />
                     Завершить
                   </ButtonBorder>
                 ) : (
-                  ""
+                  ''
                 )}
 
-                {advert.status === "finished" ? (
+                {advert.status === 'finished' ? (
                   <td
                     className={style.td_Order}
                     style={{
-                      display: "contents",
+                      display: 'contents',
                     }}
                   >
                     <div>
-                      <div style={{ display: "flex", width: "100px" }}>
+                      <div style={{ display: 'flex', width: '100px' }}>
                         {advert.actual_end_date === null
                           ? null
-                          : advert.actual_end_date.split("T")[0]}
+                          : advert.actual_end_date.split('T')[0]}
                       </div>
                       <div>
                         {new Date(advert.actual_end_date).toLocaleTimeString(
                           [],
                           {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          }
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          },
                         )}
                       </div>
                     </div>
                   </td>
                 ) : (
-                  ""
+                  ''
                 )}
 
-                <td style={{ display: "contents" }}>
-                  {(role === "admin" ||
-                    role === "advertiser" ||
-                    role === "advertising_agency") &&
-                  advert.status === "accepted" ? (
+                <td style={{ display: 'contents' }}>
+                  {(role === 'admin' ||
+                    role === 'advertiser' ||
+                    role === 'advertising_agency') &&
+                  advert.status === 'accepted' ? (
                     <ButtonBorder
                       onClick={() => {
-                        setShowModalEditAdmin(true);
-                        setCurrentOrder(advert);
+                        setShowModalEditAdmin(true)
+                        setCurrentOrder(advert)
                       }}
                     >
                       <Edit
                         style={{
-                          width: "16px",
-                          height: "16px",
+                          width: '16px',
+                          height: '16px',
                         }}
                       />
                     </ButtonBorder>
@@ -411,8 +420,8 @@ function OrderData({ sortedData }) {
                 </td>
               </div>
             </td>
-            <td style={{ display: "inline-block" }}>
-              {role === "admin" ? (
+            <td style={{ display: 'inline-block' }}>
+              {role === 'admin' ? (
                 <>
                   <OrderPayment advert={advert} />
                 </>
@@ -425,7 +434,7 @@ function OrderData({ sortedData }) {
               <td
                 colSpan="12"
                 className={`${style.list__item} ${
-                  expandedRows === advert.id ? style.list__item__open : ""
+                  expandedRows === advert.id ? style.list__item__open : ''
                 }`}
               >
                 <BindingOrderTable
@@ -439,7 +448,7 @@ function OrderData({ sortedData }) {
         </>
       ))}
     </>
-  );
+  )
 }
 
-export default OrderData;
+export default OrderData

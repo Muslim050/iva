@@ -1,46 +1,43 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import TableVideoList from "./TableRevenueList";
-import TableRevenueList2 from "./TableRevenueList2";
-import TableRevenueList3 from "./TableRevenueList3";
-import { fetchRevenue } from "src/redux/revenueSlice";
-import style from "./TableRevenue.module.scss";
-import { ReactComponent as Filter } from "src/assets/Table/Filter.svg";
-import FilteredTooltipRevenue from "./FilteredTooltipRevenue/FilteredTooltipRevenue";
-import ButtonTable from "src/components/UI/ButtonTable/ButtonTable";
-import { ReactComponent as ArrowR } from "../../../../assets/arrow-right.svg";
-import { Link } from "react-router-dom";
-import ButtonBorder from "src/components/UI/ButtonBorder/ButtonBorder";
-import { ReactComponent as Delete } from "src/assets/Table/Delete.svg";
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import TableVideoList from './TableRevenueList'
+import TableRevenueList2 from './TableRevenueList2'
+import TableRevenueList3 from './TableRevenueList3'
+import { fetchRevenue } from 'src/redux/revenueSlice'
+import style from './TableRevenue.module.scss'
+import { ReactComponent as Filter } from 'src/assets/Table/Filter.svg'
+import FilteredTooltipRevenue from './FilteredTooltipRevenue/FilteredTooltipRevenue'
+import ButtonTable from 'src/components/UI/ButtonTable/ButtonTable'
+import { ReactComponent as ArrowR } from '../../../../assets/arrow-right.svg'
+import { Link } from 'react-router-dom'
+import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
+import { ReactComponent as Delete } from 'src/assets/Table/Delete.svg'
 
 function TableRevenue() {
-  const dispatch = useDispatch();
-  const { results } = useSelector((state) => state.revenue.revenue);
-  const [loading, setLoading] = React.useState(true);
-  const [isTooltip, setIsTooltip] = React.useState(false);
-  const [startDate, setStartDate] = React.useState("");
-  const [endDate, setEndDate] = React.useState("");
+  const dispatch = useDispatch()
+  const { results } = useSelector((state) => state.revenue.revenue)
+  const [loading, setLoading] = React.useState(true)
+  const [isTooltip, setIsTooltip] = React.useState(false)
+  const [startDate, setStartDate] = React.useState('')
+  const [endDate, setEndDate] = React.useState('')
   const handleProfileClick = () => {
-    setIsTooltip(!isTooltip);
-  };
+    setIsTooltip(!isTooltip)
+  }
   React.useEffect(() => {
-    dispatch(fetchRevenue()).then(() => setLoading(false));
-  }, [dispatch]);
-  console.log("sdad");
+    dispatch(fetchRevenue()).then(() => setLoading(false))
+  }, [dispatch])
 
   const handleDateStatictick = () => {
-    setLoading(true);
-    dispatch(fetchRevenue({ startDate, endDate })).then(() =>
-      setLoading(false)
-    );
-    setIsTooltip(false);
-  };
+    setLoading(true)
+    dispatch(fetchRevenue({ startDate, endDate })).then(() => setLoading(false))
+    setIsTooltip(false)
+  }
 
   const clearDate = () => {
-    setStartDate("");
-    setEndDate("");
-    dispatch(fetchRevenue());
-  };
+    setStartDate('')
+    setEndDate('')
+    dispatch(fetchRevenue())
+  }
 
   return (
     <>
@@ -52,40 +49,40 @@ function TableRevenue() {
         <>
           <div className={style.tableChartWrapper__table_title}>
             <div className={style.profile}>
-              <Link to={"/order"}>
+              <Link to={'/order'}>
                 <ButtonTable>
                   <ArrowR
                     style={{
-                      width: "18px",
-                      height: "15px",
-                      transform: "rotate(180deg)",
-                      marginRight: "5px",
+                      width: '18px',
+                      height: '15px',
+                      transform: 'rotate(180deg)',
+                      marginRight: '5px',
                     }}
                   />
                   Назад
                 </ButtonTable>
               </Link>
-              <div style={{ display: "flex" }}>
-                {startDate && endDate !== "" ? (
+              <div style={{ display: 'flex' }}>
+                {startDate && endDate !== '' ? (
                   <div
                     style={{
-                      alignItems: "center",
-                      display: "grid",
-                      padding: "10px",
-                      border: "1px solid rgb(245 174 86)",
-                      borderRadius: "8px",
+                      alignItems: 'center',
+                      display: 'grid',
+                      padding: '10px',
+                      border: '1px solid rgb(245 174 86)',
+                      borderRadius: '8px',
                     }}
                   >
-                    <div style={{ display: "-webkit-inline-box" }}>
-                      <div style={{ marginRight: "5px" }}>
+                    <div style={{ display: '-webkit-inline-box' }}>
+                      <div style={{ marginRight: '5px' }}>
                         <div>Выбранный период:</div>С {startDate} по {endDate}
                       </div>
                       <div>
                         <ButtonBorder onClick={() => clearDate()}>
                           <Delete
                             style={{
-                              width: "16px",
-                              height: "16px",
+                              width: '16px',
+                              height: '16px',
                             }}
                           />
                         </ButtonBorder>
@@ -93,18 +90,18 @@ function TableRevenue() {
                     </div>
                   </div>
                 ) : (
-                  ""
+                  ''
                 )}
 
-                <div style={{ display: "grid", marginLeft: "10px" }}>
-                  <div style={{ fontSize: "10px", marginBottom: "10px" }}>
+                <div style={{ display: 'grid', marginLeft: '10px' }}>
+                  <div style={{ fontSize: '10px', marginBottom: '10px' }}>
                     Выбрать период
                   </div>
                   <button
                     className={style.profile__wrapper}
                     onClick={handleProfileClick}
                   >
-                    <Filter style={{ width: "20px", height: "20px" }} />
+                    <Filter style={{ width: '20px', height: '20px' }} />
                   </button>
                 </div>
               </div>
@@ -203,7 +200,7 @@ function TableRevenue() {
         </>
       )}
     </>
-  );
+  )
 }
 
-export default TableRevenue;
+export default TableRevenue

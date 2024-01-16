@@ -1,36 +1,36 @@
-import axios from "axios";
-import React from "react";
-import { Controller, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { addOrder } from "../../../../redux/order/orderSlice";
-import { toastConfig } from "../../../../utils/toastConfig";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import InputUI from "../../../UI/InputUI/InputUI";
-import SelectUI from "../../../UI/SelectUI/SelectUI";
-import style from "./OrderModal.module.scss";
-import backendURL from "src/utils/url";
-import { hideModalOrder } from "src/redux/modalSlice";
-import { ReactComponent as Close } from "src/assets/Modal/Close.svg";
+import axios from 'axios'
+import React from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import { addOrder } from '../../../../redux/order/orderSlice'
+import { toastConfig } from '../../../../utils/toastConfig'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import InputUI from '../../../UI/InputUI/InputUI'
+import SelectUI from '../../../UI/SelectUI/SelectUI'
+import style from './OrderModal.module.scss'
+import backendURL from 'src/utils/url'
+import { hideModalOrder } from 'src/redux/modalSlice'
+import { ReactComponent as Close } from 'src/assets/Modal/Close.svg'
 
 const format = [
-  { value: "preroll", text: "Pre-roll" },
-  { value: "mixroll", text: "Mix-roll" },
-];
+  { value: 'preroll', text: 'Pre-roll' },
+  { value: 'mixroll', text: 'Mix-roll' },
+]
 export default function OrderModal({ setShowModal }) {
-  const dispatch = useDispatch();
-  const [selectedFile, setSelectedFile] = React.useState(null);
+  const dispatch = useDispatch()
+  const [selectedFile, setSelectedFile] = React.useState(null)
 
-  const [isOrderCreated, setIsOrderCreated] = React.useState(false);
-  const [advertiser, setAdvertiser] = React.useState([]);
-  const [cpm, setCpm] = React.useState([]);
-  const user = localStorage.getItem("role");
-  const cpms = cpm.map((cp) => cp.rate);
-  const [budgett, setBudgett] = React.useState(0);
-  const [selectedEndDate, setSelectedEndDate] = React.useState(null);
+  const [isOrderCreated, setIsOrderCreated] = React.useState(false)
+  const [advertiser, setAdvertiser] = React.useState([])
+  const [cpm, setCpm] = React.useState([])
+  const user = localStorage.getItem('role')
+  const cpms = cpm.map((cp) => cp.rate)
+  const [budgett, setBudgett] = React.useState(0)
+  const [selectedEndDate, setSelectedEndDate] = React.useState(null)
 
-  const today = new Date();
+  const today = new Date()
 
   const {
     register,
@@ -41,142 +41,153 @@ export default function OrderModal({ setShowModal }) {
     setValue,
   } = useForm({
     defaultValues: {
-      advertiserID: "",
-      name: "",
-      format: "",
-      expectedView: "",
+      advertiserID: '',
+      name: '',
+      format: '',
+      expectedView: '',
       budgett: 0,
       selectedFile: null,
     },
 
-    mode: "onBlur",
-  });
-  const selectedFormat = watch("format");
-  const expectedView = watch("expectedView");
+    mode: 'onBlur',
+  })
+  const selectedFormat = watch('format')
+  const expectedView = watch('expectedView')
 
+  // const calculateBudget = () => {
+  //   let newBudget = 0
+  //   if (selectedFormat === 'preroll') {
+  //     newBudget = (expectedView / 1000) * cpms[1]
+  //   } else if (selectedFormat === 'mixroll') {
+  //     newBudget = (expectedView / 1000) * cpms[0]
+  //   }
+  //   setBudgett(newBudget)
+  // }
   const calculateBudget = () => {
-    let newBudget = 0;
-    if (selectedFormat === "preroll") {
-      newBudget = (expectedView / 1000) * cpms[1];
-    } else if (selectedFormat === "mixroll") {
-      newBudget = (expectedView / 1000) * cpms[0];
+    let newBudget = 0
+
+    const selectedCpm = cpm.find((item) => item.format === selectedFormat)
+
+    if (selectedCpm) {
+      newBudget = (expectedView / 1000) * selectedCpm.rate
     }
-    setBudgett(newBudget);
-  };
+
+    setBudgett(newBudget)
+  }
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
+    setSelectedFile(event.target.files[0])
+  }
   const fetchCpm = async () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token')
 
     const response = await axios.get(
       `${backendURL}/order/cpm-rate/`,
 
       {
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      }
-    );
-    setCpm(response.data.data);
-  };
+      },
+    )
+    setCpm(response.data.data)
+  }
 
   const fetchAdvertiser = async () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token')
 
     const response = await axios.get(
       `${backendURL}/advertiser/`,
 
       {
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      }
-    );
-    setAdvertiser(response.data.data);
-  };
+      },
+    )
+    setAdvertiser(response.data.data)
+  }
 
   React.useEffect(() => {
-    fetchAdvertiser();
-    fetchCpm();
-  }, []);
+    fetchAdvertiser()
+    fetchCpm()
+  }, [])
 
   const onSubmit = async (data) => {
     try {
-      setIsOrderCreated(true);
-      const response = await dispatch(addOrder({ data }));
+      setIsOrderCreated(true)
+      const response = await dispatch(addOrder({ data }))
       if (response && !response.error) {
-        toast.success("Заказ успешно создан!", toastConfig);
-        dispatch(hideModalOrder());
+        toast.success('Заказ успешно создан!', toastConfig)
+        dispatch(hideModalOrder())
         setTimeout(() => {
-          window.location.reload();
-        }, 1500);
+          window.location.reload()
+        }, 1500)
       } else if (response.error.message) {
         toast.error(
-          "Что-то пошло не так!" + response.error.message,
-          toastConfig
-        );
-        dispatch(hideModalOrder());
+          'Что-то пошло не так!' + response.error.message,
+          toastConfig,
+        )
+        dispatch(hideModalOrder())
       }
     } catch (error) {
-      setIsOrderCreated(false);
+      setIsOrderCreated(false)
       if (error.message) {
-        toast.error(`Ошибка : ${error.message}`, toastConfig);
+        toast.error(`Ошибка : ${error.message}`, toastConfig)
       } else {
-        toast.error("Что-то пошло не так: " + error.message, toastConfig);
+        toast.error('Что-то пошло не так: ' + error.message, toastConfig)
       }
     }
-  };
+  }
 
   React.useEffect(() => {
-    setValue("budgett", budgett);
-  }, [budgett, setValue]);
+    setValue('budgett', budgett)
+  }, [budgett, setValue])
   React.useEffect(() => {
-    calculateBudget();
-  }, [selectedFormat, expectedView]);
+    calculateBudget()
+  }, [selectedFormat, expectedView])
 
   const getCurrentDate = () => {
-    const today = new Date();
-    today.setDate(today.getDate() + 4); // Добавляем 4 дня к текущей дате
-    const year = today.getFullYear();
-    let month = today.getMonth() + 1;
-    let day = today.getDate();
+    const today = new Date()
+    today.setDate(today.getDate() + 4) // Добавляем 4 дня к текущей дате
+    const year = today.getFullYear()
+    let month = today.getMonth() + 1
+    let day = today.getDate()
 
     if (month < 10) {
-      month = `0${month}`;
+      month = `0${month}`
     }
 
     if (day < 10) {
-      day = `0${day}`;
+      day = `0${day}`
     }
 
-    return `${year}-${month}-${day}`;
-  };
+    return `${year}-${month}-${day}`
+  }
   const getEndDate = (startDate) => {
-    const selectedDate = new Date(startDate);
-    selectedDate.setMonth(selectedDate.getMonth() + 1); // Добавляем 1 месяц к выбранной дате начала
-    const year = selectedDate.getFullYear();
-    let month = selectedDate.getMonth() + 1;
-    let day = selectedDate.getDate();
+    const selectedDate = new Date(startDate)
+    selectedDate.setMonth(selectedDate.getMonth() + 1) // Добавляем 1 месяц к выбранной дате начала
+    const year = selectedDate.getFullYear()
+    let month = selectedDate.getMonth() + 1
+    let day = selectedDate.getDate()
 
     if (month < 10) {
-      month = `0${month}`;
+      month = `0${month}`
     }
 
     if (day < 10) {
-      day = `0${day}`;
+      day = `0${day}`
     }
 
-    return `${year}-${month}-${day}`;
-  };
+    return `${year}-${month}-${day}`
+  }
   const handleButtonClick = () => {
-    dispatch(hideModalOrder());
-  };
+    dispatch(hideModalOrder())
+  }
 
   return (
     <>
@@ -190,18 +201,18 @@ export default function OrderModal({ setShowModal }) {
         </div>
 
         <div className="modalWindow">
-          {user === "advertising_agency" ? (
+          {user === 'advertising_agency' ? (
             <SelectUI
               label="рекламодателя"
               options={advertiser}
-              register={register("advertiserID", {
-                required: "Поле обязательно для заполнения",
+              register={register('advertiserID', {
+                required: 'Поле обязательно для заполнения',
               })}
               error={errors?.publisher?.message}
               inputWidth
             />
           ) : (
-            ""
+            ''
           )}
           <InputUI
             type="text"
@@ -215,22 +226,22 @@ export default function OrderModal({ setShowModal }) {
 
           <div
             className="modalWindow__wrapper_input"
-            style={{ marginBottom: "24px" }}
+            style={{ marginBottom: '24px' }}
           >
             <div>
-              <div style={{ display: "grid", marginRight: "10px" }}>
-                <label style={{ fontSize: "12px", color: "var(--text-color)" }}>
+              <div style={{ display: 'grid', marginRight: '10px' }}>
+                <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
                   Начало
                 </label>
                 <input
                   className={style.input}
                   type="date"
                   // min={getCurrentDate()}
-                  {...register("startdate", {
-                    required: "Поле обязательно к заполнению",
+                  {...register('startdate', {
+                    required: 'Поле обязательно к заполнению',
                   })}
                   style={{
-                    width: "210px",
+                    width: '210px',
                   }}
                 />
                 <span className={style.modalWindow__input_error}>
@@ -239,19 +250,19 @@ export default function OrderModal({ setShowModal }) {
               </div>
             </div>
             <div>
-              <div style={{ display: "grid" }}>
-                <label style={{ fontSize: "12px", color: "var(--text-color)" }}>
+              <div style={{ display: 'grid' }}>
+                <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
                   Конец
                 </label>
                 <input
                   className={style.input}
                   type="date"
                   // min={getEndDate(watch("startdate"))} // Use watch to get the value of the "startdate" field
-                  {...register("enddate", {
-                    required: "Поле обязательно к заполнению",
+                  {...register('enddate', {
+                    required: 'Поле обязательно к заполнению',
                   })}
                   style={{
-                    width: "210px",
+                    width: '210px',
                   }}
                 />
                 <span className={style.modalWindow__input_error}>
@@ -263,15 +274,15 @@ export default function OrderModal({ setShowModal }) {
 
           <div
             className="modalWindow__wrapper_input"
-            style={{ marginBottom: "24px" }}
+            style={{ marginBottom: '24px' }}
           >
-            <div style={{ width: "175px" }}>
+            <div style={{ width: '175px' }}>
               <select
                 id="countries"
                 className={style.select__select}
-                style={{ padding: "12px" }}
-                {...register("format", {
-                  required: "Поле обязательно",
+                style={{ padding: '12px' }}
+                {...register('format', {
+                  required: 'Поле обязательно',
                 })}
               >
                 <option value="">Выбрать Формат</option>
@@ -284,7 +295,7 @@ export default function OrderModal({ setShowModal }) {
               </select>
               <span className={style.select__error}>
                 {errors?.format && (
-                  <p style={{ lineHeight: "16px" }}>
+                  <p style={{ lineHeight: '16px' }}>
                     {errors?.format?.message}
                   </p>
                 )}
@@ -296,22 +307,22 @@ export default function OrderModal({ setShowModal }) {
                 name="expectedView"
                 control={control}
                 rules={{
-                  required: "Поле обязательно к заполнению",
+                  required: 'Поле обязательно к заполнению',
                 }}
                 defaultValue=""
                 render={({ field: { onChange, onBlur, value, name, ref } }) => (
                   <input
                     className={style.input}
                     type="text"
-                    value={value.toLocaleString("en-US")}
+                    value={value.toLocaleString('en-US')}
                     // onChange={handleView}
                     style={{
-                      width: "245px",
+                      width: '245px',
                     }}
                     onChange={(e) => {
-                      const rawValue = e.target.value.replace(/\D/g, "");
-                      const newValue = rawValue ? parseInt(rawValue, 10) : "";
-                      onChange(newValue);
+                      const rawValue = e.target.value.replace(/\D/g, '')
+                      const newValue = rawValue ? parseInt(rawValue, 10) : ''
+                      onChange(newValue)
                     }}
                     onBlur={onBlur}
                     name={name}
@@ -325,7 +336,7 @@ export default function OrderModal({ setShowModal }) {
               />
               <span className={style.modalWindow__input_error}>
                 {errors?.expectedView && (
-                  <p style={{ width: "240px", lineHeight: "1.4" }}>
+                  <p style={{ width: '240px', lineHeight: '1.4' }}>
                     {errors?.expectedView?.message}
                   </p>
                 )}
@@ -335,35 +346,35 @@ export default function OrderModal({ setShowModal }) {
 
           <div
             className="modalWindow__wrapper_input"
-            style={{ marginBottom: "24px" }}
+            style={{ marginBottom: '24px' }}
           >
-            <div style={{ display: "grid" }}>
-              <label style={{ fontSize: "12px", color: "var(--text-color)" }}>
-                Бюджет ($)
+            <div style={{ display: 'grid' }}>
+              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+                Бюджет (сум)
               </label>
               <input
                 className={style.input}
                 type="text"
                 style={{
-                  width: "150px",
+                  width: '150px',
                 }}
-                value={budgett.toLocaleString("en-US")}
+                value={budgett.toLocaleString('en-US')}
                 placeholder="Бюджет"
                 autoComplete="off"
                 disabled={true}
               />
             </div>
 
-            <div style={{ display: "grid" }}>
-              <label style={{ fontSize: "12px", color: "var(--text-color)" }}>
+            <div style={{ display: 'grid' }}>
+              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
                 Загрузить рекламный ролик
               </label>
               <input
                 type="file"
                 onChange={handleFileChange}
                 className={style.modalWindow__file}
-                {...register("selectedFile", {
-                  required: "Ролик обезателен",
+                {...register('selectedFile', {
+                  required: 'Ролик обезателен',
                 })}
               />
               <span className={style.modalWindow__input_error}>
@@ -374,7 +385,7 @@ export default function OrderModal({ setShowModal }) {
 
           <div className={style.btn__wrapper}>
             <button
-              style={{ display: "flex", alignItems: "center" }}
+              style={{ display: 'flex', alignItems: 'center' }}
               type="submit"
               disabled={!isValid || isOrderCreated}
               className={
@@ -398,5 +409,5 @@ export default function OrderModal({ setShowModal }) {
         </div>
       </form>
     </>
-  );
+  )
 }
