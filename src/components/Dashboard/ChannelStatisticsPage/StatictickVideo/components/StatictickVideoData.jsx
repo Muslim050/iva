@@ -1,8 +1,8 @@
-import React from "react";
-import style from "../StatictickVideoTable.module.scss";
-import { ReactComponent as Linkk } from "src/assets/link.svg";
-import FormatterView from "src/components/UI/formatter/FormatterView";
-import { ReactComponent as Arrow } from "src/assets/Table/arrow.svg";
+import React from 'react'
+import style from '../StatictickVideoTable.module.scss'
+import { ReactComponent as Linkk } from 'src/assets/link.svg'
+import FormatterView from 'src/components/UI/formatter/FormatterView'
+import { ReactComponent as Arrow } from 'src/assets/Table/arrow.svg'
 
 function StatictickVideoData({ statistic, index, handleRowClick, isExpanded }) {
   return (
@@ -11,16 +11,17 @@ function StatictickVideoData({ statistic, index, handleRowClick, isExpanded }) {
         {index + 1}
       </td>
 
-      <td className={style.table_td} style={{ display: "inline-block" }}>
+      <td className={style.table_td} style={{ display: 'inline-block' }}>
         <a
           target="_blank"
           href={statistic.video_link}
           className={style.linkWrapper__file}
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
           }}
+          rel="noreferrer"
         >
           {statistic.video_name}
           <Linkk className={style.linkk__svg} />
@@ -29,17 +30,17 @@ function StatictickVideoData({ statistic, index, handleRowClick, isExpanded }) {
 
       <td className={style.table_td}>
         {new Date(statistic.publication_time)
-          .toLocaleDateString("en-GB")
-          .replace(/\//g, ".")}
+          .toLocaleDateString('en-GB')
+          .replace(/\//g, '.')}
       </td>
 
       <td className={style.table_td}>
         {statistic.online_view_count === 0 ? (
           <div
             style={{
-              fontSize: "13px",
-              lineHeight: "15px",
-              color: "#fa8a00",
+              fontSize: '13px',
+              lineHeight: '15px',
+              color: '#fa8a00',
             }}
           >
             Введется <br /> аналитика
@@ -49,7 +50,7 @@ function StatictickVideoData({ statistic, index, handleRowClick, isExpanded }) {
         )}
       </td>
 
-      <td style={{ display: "inline-block" }} className={style.table_td}>
+      <td style={{ display: 'inline-block' }} className={style.table_td}>
         <button
           className={style.dopBtn}
           onClick={() => handleRowClick(statistic.video_link)}
@@ -58,14 +59,14 @@ function StatictickVideoData({ statistic, index, handleRowClick, isExpanded }) {
           <span className={style.arrow}>
             <Arrow
               className={`${style.arrow__icon} ${
-                isExpanded ? style.arrow__rotate : ""
+                isExpanded ? style.arrow__rotate : ''
               }`}
             />
           </span>
         </button>
       </td>
     </>
-  );
+  )
 }
 
-export default StatictickVideoData;
+export default StatictickVideoData

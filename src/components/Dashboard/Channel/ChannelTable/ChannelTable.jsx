@@ -143,6 +143,7 @@ function ChannelTable() {
                       <td className={style.table_td}>
                         <Link
                           to={`/statistics-channel/${channel.id}`}
+                          state={{ channel }}
                           style={{ display: 'contents' }}
                         >
                           <button className={style.dopBtnChart}>

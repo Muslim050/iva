@@ -15,7 +15,6 @@
     box-shadow: 0 0 5px var(--primary_color);
     color: white;
   }
-
 }
 
 .linkFile svg path {
@@ -72,3 +71,30 @@
 //     background-color: #7528fb;
 //   }
 // }
+.tooltiptext {
+  visibility: hidden;
+  /* другие стили */
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.table_td:hover .tooltiptext {
+  visibility: visible;
+  left: -40px;
+  bottom: 25px;
+  transform: translateX(-28%);
+  background-color: #4e4e4e;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.hidden {
+  display: none;
+}

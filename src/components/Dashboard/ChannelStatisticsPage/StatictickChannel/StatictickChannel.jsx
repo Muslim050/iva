@@ -1,32 +1,45 @@
-import React from "react";
-import style from "./StatictickChannelTable.module.scss";
-import TheadFirst from "./components/TheadDataDopTable/Thead/TheadFirst";
-import TheadSecondWrapper from "./components/TheadDataDopTable/Thead/TheadSecondWrapper";
-import StatictickData from "./components/StatictickData";
-import StatictickChannelThead from "./components/StatictickChannelThead";
-import DataDopTable from "./components/TheadDataDopTable/Data/DataDopTable";
+import React from 'react'
+import style from './StatictickChannelTable.module.scss'
+import TheadFirst from './components/TheadDataDopTable/Thead/TheadFirst'
+import TheadSecondWrapper from './components/TheadDataDopTable/Thead/TheadSecondWrapper'
+import StatictickData from './components/StatictickData'
+import StatictickChannelThead from './components/StatictickChannelThead'
+import DataDopTable from './components/TheadDataDopTable/Data/DataDopTable'
+import { useLocation } from 'react-router-dom'
 
 function StatictickChannel({ dataChannel, channel }) {
-  const [expandedRows, setExpandedRows] = React.useState("");
+  const location = useLocation()
+  const channelName = location.state?.channel
+  const [expandedRows, setExpandedRows] = React.useState('')
 
   const handleRowClick = (id) => {
     setExpandedRows((prevExpandedRows) =>
-      id === prevExpandedRows ? false : id
-    );
-  };
-
+      id === prevExpandedRows ? false : id,
+    )
+  }
   return (
     <>
-      <div className="tableWrapper" style={{ marginTop: "10px" }}>
+      <div className="tableWrapper" style={{ marginTop: '10px' }}>
         <div className="tableWrapper__table_title">
-          <div style={{ display: "flex", alignItems: "center" }}>
-            Статистика канала
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            Статистика канала{' '}
+            <div
+              style={{
+                marginLeft: '10px',
+                padding: '0 15px',
+                borderRadius: '8px',
+                background: '#FEF5EA',
+                border: '1px solid #ffd8a9',
+              }}
+            >
+              {channelName.name}
+            </div>
           </div>
         </div>
 
         {channel ? (
-          <div className="loaderWrapper" style={{ height: "20vh" }}>
-            <div style={{ color: "var(--text-color, )" }}>
+          <div className="loaderWrapper" style={{ height: '20vh' }}>
+            <div style={{ color: 'var(--text-color, )' }}>
               Загрузка статистики &nbsp;
             </div>
             <div className="spinner"></div>
@@ -36,11 +49,11 @@ function StatictickChannel({ dataChannel, channel }) {
             {dataChannel.length === 0 ? (
               <div
                 style={{
-                  fontSize: "16px",
-                  lineHeight: "15px",
-                  color: "#fa8a00",
-                  textAlign: "center",
-                  fontWeight: "600",
+                  fontSize: '16px',
+                  lineHeight: '15px',
+                  color: '#fa8a00',
+                  textAlign: 'center',
+                  fontWeight: '600',
                 }}
               >
                 Нужно обновить токен канала
@@ -73,7 +86,7 @@ function StatictickChannel({ dataChannel, channel }) {
                             expandedRows
                               ? // === statistic.id
                                 style.list__item__open
-                              : ""
+                              : ''
                           }`}
                         >
                           <div className="tableWrapper">
@@ -86,7 +99,7 @@ function StatictickChannel({ dataChannel, channel }) {
                                 {/* верхние столбцы доп таблицы*/}
                               </thead>
 
-                              <thead style={{ borderTop: "0" }}>
+                              <thead style={{ borderTop: '0' }}>
                                 {/* столбцы доп таблицы*/}
                                 <tr>
                                   <TheadSecondWrapper
@@ -112,7 +125,7 @@ function StatictickChannel({ dataChannel, channel }) {
         )}
       </div>
     </>
-  );
+  )
 }
 
-export default StatictickChannel;
+export default StatictickChannel

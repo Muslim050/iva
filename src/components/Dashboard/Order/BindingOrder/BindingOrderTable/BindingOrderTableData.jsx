@@ -1,16 +1,16 @@
-import React from "react";
-import FormatterView from "../../../../UI/formatter/FormatterView";
-import style from "./BindingOrderTable.module.scss";
+import React from 'react'
+import FormatterView from '../../../../UI/formatter/FormatterView'
+import style from './BindingOrderTable.module.scss'
 
-import { AnimatePresence } from "framer-motion";
-import VerifyModal from "../VerifyModal/VerifyModal";
-import { ReactComponent as Linkk } from "src/assets/link.svg";
-import AdvertStatus from "src/components/UI/AdvertStatus/AdvertStatus";
-import { useDispatch, useSelector } from "react-redux";
-import { showModalVerify } from "src/redux/modalSlice";
-import ModalUI from "src/components/UI/ModalComponents/ModalUI/ModalUI";
-import FormatterTimeTwoDigit from "src/components/UI/formatter/FormatterTimeTwoDigit";
-import ButtonContainer from "./ButtonContainer";
+import { AnimatePresence } from 'framer-motion'
+import VerifyModal from '../VerifyModal/VerifyModal'
+import { ReactComponent as Linkk } from 'src/assets/link.svg'
+import AdvertStatus from 'src/components/UI/AdvertStatus/AdvertStatus'
+import { useDispatch, useSelector } from 'react-redux'
+import { showModalVerify } from 'src/redux/modalSlice'
+import ModalUI from 'src/components/UI/ModalComponents/ModalUI/ModalUI'
+import FormatterTimeTwoDigit from 'src/components/UI/formatter/FormatterTimeTwoDigit'
+import ButtonContainer from './ButtonContainer'
 
 function BindingOrderTableData({
   getOrder,
@@ -22,27 +22,28 @@ function BindingOrderTableData({
   sortedData,
 }) {
   const [showModalSelectingVerify, setShowModalSelectingVerify] =
-    React.useState(false);
-  const [selectedInventoryId, setSelectedInventoryId] = React.useState("");
+    React.useState(false)
+  const [selectedInventoryId, setSelectedInventoryId] = React.useState('')
+  const [activeTooltip, setActiveTooltip] = React.useState(null)
 
   const handleInventoryPrebook = (inventory_id) => {
-    onInventoryPrebook(expandedRows, inventory_id);
-  };
+    onInventoryPrebook(expandedRows, inventory_id)
+  }
 
   const handleDeactivateInventory = (inventory_id) => {
-    onRemoveDeactivate(inventory_id);
-  };
+    onRemoveDeactivate(inventory_id)
+  }
   const handleRemoveInventory = (inventory_id) => {
-    onRemoveInventory(expandedRows, inventory_id);
-  };
+    onRemoveInventory(expandedRows, inventory_id)
+  }
   const filteredVideoLink = getOrder.find(
-    (item) => item.id === selectedInventoryId
-  );
-  const { showVerify } = useSelector((state) => state.modal);
-  const dispatch = useDispatch();
+    (item) => item.id === selectedInventoryId,
+  )
+  const { showVerify } = useSelector((state) => state.modal)
+  const dispatch = useDispatch()
   const showButtonClick = () => {
-    dispatch(showModalVerify());
-  };
+    dispatch(showModalVerify())
+  }
 
   return (
     <>
@@ -63,15 +64,41 @@ function BindingOrderTableData({
       {sortedData().map((invetar, i) => (
         <tr key={i}>
           <td className={style.table_td}>{i + 1}</td>
-          <td className={style.table_td}>{invetar.channel.name}</td>
-          <td className={style.table_td}>{invetar.video_content.name}</td>
+          <td
+            style={{ position: 'relative' }}
+            className={style.table_td}
+            onMouseEnter={() => setActiveTooltip(i)}
+            onMouseLeave={() => setActiveTooltip(null)}
+          >
+            {invetar.channel.name}
+
+            <span
+              className={activeTooltip === i ? style.tooltiptext : style.hidden}
+            >
+              ID:{invetar.id}
+            </span>
+          </td>
+          <td
+            style={{ position: 'relative' }}
+            className={style.table_td}
+            onMouseEnter={() => setActiveTooltip(i)}
+            onMouseLeave={() => setActiveTooltip(null)}
+          >
+            {invetar.video_content.name}
+            <span
+              className={activeTooltip === i ? style.tooltiptext : style.hidden}
+            >
+              ID:{invetar.video_content.id}
+            </span>
+          </td>
+
           <td className={style.table_td}>
-            {(invetar.format === "preroll" && "Pre-roll") ||
-              ("mixroll" && "Mix-roll")}
+            {(invetar.format === 'preroll' && 'Pre-roll') ||
+              ('mixroll' && 'Mix-roll')}
           </td>
           <td className={style.table_td}>
-            {" "}
-            <FormatterTimeTwoDigit data={invetar.start_at} />{" "}
+            {' '}
+            <FormatterTimeTwoDigit data={invetar.start_at} />{' '}
           </td>
           <td className={style.table_td}>
             <FormatterView data={invetar.expected_number_of_views} />
@@ -84,13 +111,13 @@ function BindingOrderTableData({
               href={`${invetar.video_content.link_to_video}&t=${invetar.start_at}`}
               target="_blank"
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
                 cursor:
                   invetar.video_content.link_to_video === null
-                    ? "not-allowed"
-                    : "pointer",
+                    ? 'not-allowed'
+                    : 'pointer',
               }}
               className={
                 invetar.video_content.link_to_video === null
@@ -99,21 +126,22 @@ function BindingOrderTableData({
               }
               onClick={(e) => {
                 if (invetar.video_content.link_to_video === null) {
-                  e.preventDefault();
+                  e.preventDefault()
                 }
               }}
+              rel="noreferrer"
             >
               Ссылка
               <Linkk
-                style={{ width: "18px", height: "18px", marginLeft: "5px" }}
+                style={{ width: '18px', height: '18px', marginLeft: '5px' }}
               />
             </a>
           </td>
           <td className={style.table_td}>{invetar.video_content.category}</td>
           <td className={style.table_td}>
             {new Date(invetar.video_content.publication_time)
-              .toLocaleDateString("en-GB")
-              .replace(/\//g, ".")}
+              .toLocaleDateString('en-GB')
+              .replace(/\//g, '.')}
           </td>
 
           {invetar.online_views > 1 ? (
@@ -143,7 +171,7 @@ function BindingOrderTableData({
         </tr>
       ))}
     </>
-  );
+  )
 }
 
-export default BindingOrderTableData;
+export default BindingOrderTableData
