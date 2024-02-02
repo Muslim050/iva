@@ -213,8 +213,10 @@ export function InfoCardsBottom({
               </div>
             ) : (
               <>
-                $
-                <FormatterBudjet budget={totalBudget} />
+                <FormatterBudjet
+                  budget={totalBudget}
+                  data={getOrder.expected_start_date}
+                />
               </>
             )}
           </div>

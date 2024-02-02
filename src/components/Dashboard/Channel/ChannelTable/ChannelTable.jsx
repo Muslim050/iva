@@ -37,6 +37,7 @@ function ChannelTable() {
   const [connectG, setConnectG] = React.useState(data.is_connected)
   const user = localStorage.getItem('role')
   const [loading, setLoading] = React.useState(true)
+  const [activeTooltip, setActiveTooltip] = React.useState(null)
 
   React.useEffect(() => {
     dispatch(fetchChannel()).then(() => setLoading(false))
@@ -139,7 +140,25 @@ function ChannelTable() {
                           ) : null}
                         </div>
                       </td>
-                      <td className={style.table_td}>{channel.name}</td>
+                      <td
+                        className={style.table_td}
+                        style={{ position: 'relative' }}
+                        onMouseEnter={() => setActiveTooltip(i)}
+                        onMouseLeave={() => setActiveTooltip(null)}
+                      >
+                        {channel.name}
+                        {user === 'admin' && (
+                          <span
+                            className={
+                              activeTooltip === i
+                                ? style.tooltiptext
+                                : style.hidden
+                            }
+                          >
+                            ID:{channel.id}
+                          </span>
+                        )}
+                      </td>
                       <td className={style.table_td}>
                         <Link
                           to={`/statistics-channel/${channel.id}`}
@@ -151,10 +170,27 @@ function ChannelTable() {
                           </button>
                         </Link>
                       </td>
-                      <td className={style.table_td}>
+                      <td
+                        className={style.table_td}
+                        style={{ position: 'relative' }}
+                        onMouseEnter={() => setActiveTooltip(i)}
+                        onMouseLeave={() => setActiveTooltip(null)}
+                      >
                         {channel.publisher && channel.publisher.name
                           ? channel.publisher.name
                           : '-------'}
+
+                        {user === 'admin' && (
+                          <span
+                            className={
+                              activeTooltip === i
+                                ? style.tooltiptext
+                                : style.hidden
+                            }
+                          >
+                            ID:{channel.publisher.id}
+                          </span>
+                        )}
                       </td>
                       <td className={style.table_td}>{channel.email}</td>
                       <td className={style.table_td}>

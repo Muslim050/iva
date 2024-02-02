@@ -1,38 +1,37 @@
-import React, { useRef, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { ReactComponent as Profile } from "../../../assets/Sidebar/Profile.svg";
-import style from "./SubHeader.module.scss";
-import Breadcrumbs from "./Breadcrumbs";
-import getTitle from "./RouteItems";
-import ButtonTable from "../ButtonTable/ButtonTable";
-import { useDispatch } from "react-redux";
+import React, { useRef, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
+import { ReactComponent as Profile } from '../../../assets/Sidebar/Profile.svg'
+import style from './SubHeader.module.scss'
+import Breadcrumbs from './Breadcrumbs'
+import getTitle from './RouteItems'
+import ButtonTable from '../ButtonTable/ButtonTable'
+import { useDispatch } from 'react-redux'
 import {
   showModalAdvertiser,
   showModalChangePassword,
-} from "src/redux/modalSlice";
-import { ReactComponent as Lock } from "src/assets/Table/Lock.svg";
+} from 'src/redux/modalSlice'
+import { ReactComponent as Lock } from 'src/assets/Table/Lock.svg'
 
 function SubHeader() {
-  const route = useLocation().pathname.split("/").slice(1);
+  const route = useLocation().pathname.split('/').slice(1)
   // const { id } = useParams();
 
-  const title = route[0];
-  const id = route[1];
-  const transformedTitle = getTitle(title, id);
-  const username = localStorage.getItem("username");
-  const [isTooltip, setIsTooltip] = React.useState(false);
-  const tooltipRef = useRef(null);
-  const profileWrapperRef = useRef(null);
-
-  const dispatch = useDispatch();
-
+  const title = route[0]
+  const id = route[1]
+  const transformedTitle = getTitle(title, id)
+  const username = localStorage.getItem('username')
+  const [isTooltip, setIsTooltip] = React.useState(false)
+  const tooltipRef = useRef(null)
+  const profileWrapperRef = useRef(null)
+  const dispatch = useDispatch()
+  console.log('transformedTitle', transformedTitle)
   const handleChangePClick = () => {
-    dispatch(showModalChangePassword());
-  };
+    dispatch(showModalChangePassword())
+  }
 
   const handleProfileClick = () => {
-    setIsTooltip(!isTooltip);
-  };
+    setIsTooltip(!isTooltip)
+  }
 
   React.useEffect(() => {
     const handleClickOutside = (event) => {
@@ -42,15 +41,15 @@ function SubHeader() {
         profileWrapperRef.current &&
         !profileWrapperRef.current.contains(event.target)
       ) {
-        setIsTooltip(false);
+        setIsTooltip(false)
       }
-    };
+    }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   return (
     <>
@@ -68,7 +67,7 @@ function SubHeader() {
                   className={style.profile__wrapper}
                   onClick={handleProfileClick}
                 >
-                  <Profile style={{ width: "15px" }} />
+                  <Profile style={{ width: '15px' }} />
                 </div>
               </div>
               {isTooltip && (
@@ -78,9 +77,9 @@ function SubHeader() {
                 >
                   <div
                     style={{
-                      fontSize: "14px",
-                      lineHeight: "14px",
-                      marginBottom: "10px",
+                      fontSize: '14px',
+                      lineHeight: '14px',
+                      marginBottom: '10px',
                     }}
                   >
                     Пользователь
@@ -88,9 +87,9 @@ function SubHeader() {
                   <ButtonTable onClick={handleChangePClick}>
                     <Lock
                       style={{
-                        width: "18px",
-                        height: "17px",
-                        marginRight: "5px",
+                        width: '18px',
+                        height: '17px',
+                        marginRight: '5px',
                       }}
                     />
                     Сменить пароль
@@ -108,7 +107,7 @@ function SubHeader() {
         </div>
       </section>
     </>
-  );
+  )
 }
 
-export default SubHeader;
+export default SubHeader

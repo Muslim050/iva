@@ -1,108 +1,105 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { fetchStatistics } from "../../../redux/statisticsSlice";
-import FormatterView from "../../UI/formatter/FormatterView";
-import style from "./OrderChartTable.module.scss";
-import axios from "axios";
-import backendURL from "src/utils/url";
-import { ReactComponent as Filter } from "src/assets/Table/Filter.svg";
-import TheadAgeGenderGeo from "./components/DopTable/SecondTheadAgeGenderGeo";
-import WrapperThead from "./components/DopTable/FirstTheadAgeGeoGender/WrapperThead";
-import OrderChartThead from "./OrderChartThead";
-import OrderChartData from "./OrderChartData";
-import { ReactComponent as Eye } from "src/assets/eye.svg";
-import DownloadReport from "./components/DownloadReport";
-import {
-  InfoCardsBottom,
-  InfoCardsTop,
-} from "./components/InfoCards/InfoCards";
-import FilteredTooltip from "./components/FilteredTooltip/FilteredTooltip";
-import GenderData from "./components/DopTable/Data/GenderData";
-import AgeData from "./components/DopTable/Data/AgeData";
-import GeoData from "./components/DopTable/Data/GeoData";
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { fetchStatistics } from '../../../redux/statisticsSlice'
+import FormatterView from '../../UI/formatter/FormatterView'
+import style from './OrderChartTable.module.scss'
+import axios from 'axios'
+import backendURL from 'src/utils/url'
+import { ReactComponent as Filter } from 'src/assets/Table/Filter.svg'
+import TheadAgeGenderGeo from './components/DopTable/SecondTheadAgeGenderGeo'
+import WrapperThead from './components/DopTable/FirstTheadAgeGeoGender/WrapperThead'
+import OrderChartThead from './OrderChartThead'
+import OrderChartData from './OrderChartData'
+import { ReactComponent as Eye } from 'src/assets/eye.svg'
+import DownloadReport from './components/DownloadReport'
+import { InfoCardsBottom, InfoCardsTop } from './components/InfoCards/InfoCards'
+import FilteredTooltip from './components/FilteredTooltip/FilteredTooltip'
+import GenderData from './components/DopTable/Data/GenderData'
+import AgeData from './components/DopTable/Data/AgeData'
+import GeoData from './components/DopTable/Data/GeoData'
 
 function OrderChartTable() {
-  const dispatch = useDispatch();
-  const [expandedRows, setExpandedRows] = React.useState("");
-  const { id } = useParams();
-  const [loading, setLoading] = React.useState(true);
-  const data = useSelector((state) => state.statistics.statistics.results);
-  const [getOrder, setGetOrder] = React.useState([]);
-  const [isTooltip, setIsTooltip] = React.useState(false);
+  const dispatch = useDispatch()
+  const [expandedRows, setExpandedRows] = React.useState('')
+  const { id } = useParams()
+  const [loading, setLoading] = React.useState(true)
+  const data = useSelector((state) => state.statistics.statistics.results)
+  const [getOrder, setGetOrder] = React.useState([])
+  const [isTooltip, setIsTooltip] = React.useState(false)
 
-  const [startDate, setStartDate] = React.useState("");
-  const [endDate, setEndDate] = React.useState("");
+  const [startDate, setStartDate] = React.useState('')
+  const [endDate, setEndDate] = React.useState('')
 
   const handleRowClick = (videoLink) => {
     setExpandedRows((prevExpandedRow) =>
-      prevExpandedRow === videoLink ? "" : videoLink
-    );
-  };
+      prevExpandedRow === videoLink ? '' : videoLink,
+    )
+  }
 
   // Отправка запроса с фильтра
   const handleDateStatictick = () => {
-    setLoading(true);
+    setLoading(true)
     dispatch(fetchStatistics({ id, startDate, endDate })).then(() =>
-      setLoading(false)
-    );
-    setIsTooltip(false);
-  };
+      setLoading(false),
+    )
+    setIsTooltip(false)
+  }
   // Отправка запроса с фильтра
 
   const fetchGetOrder = async () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token')
 
     const response = await axios.get(
       `${backendURL}/order/${id}/`,
 
       {
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      }
-    );
-    setGetOrder(response.data.data);
+      },
+    )
+    setGetOrder(response.data.data)
     const { actual_start_date, actual_end_date, expected_end_date } =
-      response.data.data;
+      response.data.data
 
     // Format actual_start_date and actual_end_date into Date objects
-    const startDateObj = new Date(actual_start_date);
+    const startDateObj = new Date(actual_start_date)
     const endDateObj = actual_end_date
       ? new Date(actual_end_date)
-      : new Date(expected_end_date);
+      : new Date(expected_end_date)
 
     // Convert Date objects to ISO string to set as min and max attributes of date inputs
-    const minDate = startDateObj.toISOString().split("T")[0];
-    const maxDate = endDateObj.toISOString().split("T")[0];
+    const minDate = startDateObj.toISOString().split('T')[0]
+    const maxDate = endDateObj.toISOString().split('T')[0]
 
     // Set the initial values of startDate and endDate
-    setStartDate(minDate);
-    setEndDate(maxDate);
-  };
+    setStartDate(minDate)
+    setEndDate(maxDate)
+  }
   const handleProfileClick = () => {
-    setIsTooltip(!isTooltip);
-  };
+    setIsTooltip(!isTooltip)
+  }
   React.useEffect(() => {
-    fetchGetOrder();
-  }, [data]);
+    fetchGetOrder()
+  }, [data])
 
   React.useEffect(() => {
-    dispatch(fetchStatistics({ id })).then(() => setLoading(false));
-  }, [dispatch]);
+    dispatch(fetchStatistics({ id })).then(() => setLoading(false))
+  }, [dispatch])
 
-  let totalViews = 0;
-  let totalBudget = 0;
-  let totalAnalitickView = 0;
+  let totalViews = 0
+  let totalBudget = 0
+  let totalAnalitickView = 0
 
   return (
     <>
       {loading ? (
         <div className="loaderWrapper">
-          <div style={{ color: "var(--text-color, )" }}>
-            {" "}
+          <div style={{ color: 'var(--text-color, )' }}>
+            {' '}
             Загрузка статистики &nbsp;
           </div>
           <div className="spinner"></div>
@@ -111,7 +108,10 @@ function OrderChartTable() {
         <div className="tableWrapper">
           <div className={style.tableChartWrapper__table_title}>
             {/* Ячейки с инфо Бюджет,План показов, План бюджета */}
-            <InfoCardsTop getOrder={getOrder} />
+            <div>
+              <div>{getOrder.name}</div>
+              <InfoCardsTop getOrder={getOrder} />
+            </div>
             {/* Ячейки с инфо Бюджет,План показов, План бюджета */}
             <div className={style.profile}>
               <DownloadReport
@@ -120,13 +120,13 @@ function OrderChartTable() {
                 endDate={endDate}
               />
 
-              <div style={{ display: "grid", marginLeft: "10px" }}>
-                <div style={{ fontSize: "10px" }}>Выбрать период</div>
+              <div style={{ display: 'grid', marginLeft: '10px' }}>
+                <div style={{ fontSize: '10px' }}>Выбрать период</div>
                 <button
                   className={style.profile__wrapper}
                   onClick={handleProfileClick}
                 >
-                  <Filter style={{ width: "20px", height: "20px" }} />
+                  <Filter style={{ width: '20px', height: '20px' }} />
                 </button>
               </div>
 
@@ -152,9 +152,9 @@ function OrderChartTable() {
             <tbody>
               {data &&
                 data.map((statistic, index) => {
-                  totalViews += statistic.online_view_count;
-                  totalBudget += statistic.budget;
-                  totalAnalitickView += statistic.online_view_count;
+                  totalViews += statistic.online_view_count
+                  totalBudget += statistic.budget
+                  totalAnalitickView += statistic.online_view_count
                   return (
                     <React.Fragment key={statistic.video_link}>
                       {/* Данные таблицы  */}
@@ -179,7 +179,7 @@ function OrderChartTable() {
                             className={`${style.list__item} ${
                               expandedRows === statistic.video_link
                                 ? style.list__item__open
-                                : ""
+                                : ''
                             }`}
                           >
                             <div className="tableWrapper">
@@ -188,10 +188,10 @@ function OrderChartTable() {
                               statistic.geo_percentages.length === 0 ? (
                                 <div
                                   style={{
-                                    fontSize: "15px",
-                                    lineHeight: "15px",
-                                    color: "#fa8a00",
-                                    textAlign: "center",
+                                    fontSize: '15px',
+                                    lineHeight: '15px',
+                                    color: '#fa8a00',
+                                    textAlign: 'center',
                                   }}
                                 >
                                   Введется аналитика данных
@@ -209,14 +209,14 @@ function OrderChartTable() {
                                     {/* Колонки ГЕО Возраст ПОЛ доп таблица  */}
                                   </thead>
 
-                                  <thead style={{ borderTop: "0" }}>
+                                  <thead style={{ borderTop: '0' }}>
                                     {/* Колонки подробная инфа ГЕО Возраст ПОЛ */}
                                     <tr className={style.tableChart__tr}>
-                                      <th style={{ textAlign: "center" }}>
+                                      <th style={{ textAlign: 'center' }}>
                                         <Eye
                                           style={{
-                                            width: "25px",
-                                            height: "25px",
+                                            width: '25px',
+                                            height: '25px',
                                           }}
                                         />
                                       </th>
@@ -227,7 +227,7 @@ function OrderChartTable() {
 
                                   <td
                                     data-label="Показов"
-                                    style={{ textAlign: "center" }}
+                                    style={{ textAlign: 'center' }}
                                   >
                                     <FormatterView
                                       data={statistic.online_view_count}
@@ -245,7 +245,7 @@ function OrderChartTable() {
                       )}
                       {/* Дополнительная таблица */}
                     </React.Fragment>
-                  );
+                  )
                 })}
             </tbody>
 
@@ -263,7 +263,7 @@ function OrderChartTable() {
         </div>
       )}
     </>
-  );
+  )
 }
 
-export default OrderChartTable;
+export default OrderChartTable

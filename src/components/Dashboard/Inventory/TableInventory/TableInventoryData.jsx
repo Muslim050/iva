@@ -18,6 +18,7 @@ function TableInventoryData({
   const user = localStorage.getItem('role')
   const [expandedRows, setExpandedRows] = React.useState('')
   const [activeTooltip, setActiveTooltip] = React.useState(null)
+  const [activeTooltipp, setActiveTooltipp] = React.useState(null)
 
   const handleRowClick = (id) => {
     setExpandedRows(id === expandedRows ? false : id)
@@ -50,16 +51,35 @@ function TableInventoryData({
               onMouseLeave={() => setActiveTooltip(null)}
             >
               {inventor.channel === null ? '' : inventor.channel.name}
-              <span
-                className={
-                  activeTooltip === i ? style.tooltiptext : style.hidden
-                }
-              >
-                ID:{inventor.id}
-              </span>
+              {user === 'admin' && (
+                <span
+                  className={
+                    activeTooltip === i ? style.tooltiptext : style.hidden
+                  }
+                >
+                  ID:{inventor.id}
+                </span>
+              )}
             </td>
 
-            <td className={style.table_td}> {inventor.video_content?.name}</td>
+            <td
+              style={{ position: 'relative' }}
+              className={style.table_td}
+              onMouseEnter={() => setActiveTooltip(i)}
+              onMouseLeave={() => setActiveTooltip(null)}
+            >
+              {inventor.video_content?.name}
+              {user === 'admin' && (
+                <span
+                  className={
+                    activeTooltip === i ? style.tooltiptext : style.hidden
+                  }
+                >
+                  ID:{inventor.video_content.id}
+                </span>
+              )}
+            </td>
+
             <td className={style.table_td}>
               {(inventor.format === 'preroll' && 'Pre-roll') ||
                 (inventor.format === 'midroll1' && 'Mid-roll 1') ||

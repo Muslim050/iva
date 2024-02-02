@@ -34,6 +34,7 @@ function OrderData({ sortedData }) {
   const [currentOrder, setCurrentOrder] = React.useState(null)
   const [showModalEdit, setShowModalEdit] = React.useState(false)
   const [showModalEditAdmin, setShowModalEditAdmin] = React.useState(false)
+  const [activeTooltip, setActiveTooltip] = React.useState(null)
 
   const { showPayment } = useSelector((state) => state.modal)
 
@@ -103,7 +104,23 @@ function OrderData({ sortedData }) {
                 )}
               </div>
             </td>
-            <td className={style.td_Order}>{advert.name}</td>
+            <td
+              style={{ position: 'relative' }}
+              className={style.td_Order}
+              onMouseEnter={() => setActiveTooltip(i)}
+              onMouseLeave={() => setActiveTooltip(null)}
+            >
+              {advert.name}
+              {role === 'admin' && (
+                <span
+                  className={
+                    activeTooltip === i ? style.tooltiptext : style.hidden
+                  }
+                >
+                  ID:{advert.id}
+                </span>
+              )}
+            </td>
             <td className={style.td_Order}>
               <div style={{ display: 'flex' }}>
                 <a

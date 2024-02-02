@@ -44,13 +44,15 @@ function TableVideoList({
               onMouseLeave={() => setActiveTooltip(null)}
             >
               {video.name}
-              <span
-                className={
-                  activeTooltip === i ? style.tooltiptext : style.hidden
-                }
-              >
-                ID:{video.id}
-              </span>
+              {user === 'admin' && (
+                <span
+                  className={
+                    activeTooltip === i ? style.tooltiptext : style.hidden
+                  }
+                >
+                  ID:{video.id}
+                </span>
+              )}
             </td>
             {/* <td>{video.name}</td> */}
             <td>{video.category}</td>

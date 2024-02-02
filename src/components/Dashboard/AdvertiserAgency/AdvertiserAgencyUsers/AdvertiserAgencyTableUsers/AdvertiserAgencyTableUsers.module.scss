@@ -1,6 +1,5 @@
 @media only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-width: 1024px) {
-
+  (min-device-width: 768px) and (max-width: 1024px) {
   table,
   thead,
   tbody,
@@ -41,42 +40,66 @@
   // }
 
   td:nth-of-type(2):before {
-    content: "Username";
+    content: 'Username';
   }
 
   td:nth-of-type(3):before {
-    content: "Рекламодатель";
+    content: 'Рекламодатель';
   }
 
   td:nth-of-type(4):before {
-    content: "Имя";
+    content: 'Имя';
   }
 
   td:nth-of-type(5):before {
-    content: "Фамилия";
+    content: 'Фамилия';
   }
 
   td:nth-of-type(6):before {
-    content: "Email";
+    content: 'Email';
   }
 
-
   td:nth-of-type(7):before {
-    content: "Роль";
+    content: 'Роль';
   }
 
   td:nth-of-type(8):before {
-    content: "Номер";
+    content: 'Номер';
   }
-
-
 }
-
 
 .sortButton {
   display: flex;
   align-items: center;
-  color: #2C2D33;
+  color: #2c2d33;
   font-weight: 400;
   font-size: 14px;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  /* другие стили */
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.table_td:hover .tooltiptext {
+  visibility: visible;
+  left: -40px;
+  bottom: 15px;
+  transform: translateX(-28%);
+  background-color: #4e4e4e;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.hidden {
+  display: none;
 }
