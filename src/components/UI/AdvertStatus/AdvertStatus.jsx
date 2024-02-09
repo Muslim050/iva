@@ -19,9 +19,7 @@ const statusTexts = {
 
 const AdvertStatus = ({ status, children, endDate }) => {
   const statusText = statusTexts[status] || 'Неизвестный статус'
-  const wrapperStyles = endDate
-    ? { flexDirection: 'column', width: 'max-content' }
-    : {}
+  const wrapperStyles = endDate ? { width: 'max-content' } : {}
   return (
     <div
       className={`${style.wrapper__status} ${style[status]} `}
@@ -32,7 +30,7 @@ const AdvertStatus = ({ status, children, endDate }) => {
       {children}
 
       {endDate && (
-        <div style={{ color: 'red' }}>
+        <div style={{ color: 'red', fontSize: '11px', marginLeft: '5px' }}>
           <div>{endDate.split('T')[0]}</div>
           <div>
             {new Date(endDate).toLocaleTimeString([], {
