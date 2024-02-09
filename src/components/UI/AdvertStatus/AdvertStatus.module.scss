@@ -6,7 +6,6 @@
   border-radius: 8px;
   justify-content: space-evenly;
 
-
   &.sent {
     background-color: #f1d5a6;
     color: rgb(134, 98, 0);
@@ -33,8 +32,8 @@
   }
 
   &.in_progress {
-    background-color: #E4E8FD;
-    color: #5570F1;
+    background-color: #e4e8fd;
+    color: #5570f1;
   }
 
   &.unused {
@@ -43,8 +42,8 @@
   }
 
   &.open {
-    background-color: #FFF2E2;
-    color: #1C1D22;
+    background-color: #fff2e2;
+    color: #1c1d22;
   }
 
   &.pre_booked {
@@ -58,8 +57,8 @@
   }
 
   &.in_use {
-    background-color: #DEEEE8;
-    color: #519C66;
+    background-color: #deeee8;
+    color: #519c66;
   }
 
   &.inactive {

@@ -154,7 +154,10 @@ function BindingOrderTableData({
 
           <td className={style.table_td}>
             <div>
-              <AdvertStatus status={invetar.status} />
+              <AdvertStatus
+                status={invetar.status}
+                endDate={invetar.deactivation_date}
+              />
             </div>
           </td>
           <td className={style.table_td}>

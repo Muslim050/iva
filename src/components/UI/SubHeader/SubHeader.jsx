@@ -24,7 +24,6 @@ function SubHeader() {
   const tooltipRef = useRef(null)
   const profileWrapperRef = useRef(null)
   const dispatch = useDispatch()
-  console.log('transformedTitle', transformedTitle)
   const handleChangePClick = () => {
     dispatch(showModalChangePassword())
   }

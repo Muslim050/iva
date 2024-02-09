@@ -1,75 +1,74 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchInventory } from "../../../../redux/inventory/inventorySlice";
-import { sortData } from "src/utils/SortData";
-import ButtonTable from "src/components/UI/ButtonTable/ButtonTable";
-import { ReactComponent as Reload } from "src/assets/Table/reload.svg";
-import { ReactComponent as Add } from "src/assets/Table/add.svg";
-import { SortButton } from "src/utils/SortButton";
-import { showModalInventory } from "src/redux/modalSlice";
-import { AnimatePresence } from "framer-motion";
-import MyModal from "../../../UI/ModalComponents/ModalUI/ModalUI";
-import TableInventoryData from "./TableInventoryData";
-import EditInventoryModal from "../EditInventoryModal/EditInventoryModal";
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchInventory } from '../../../../redux/inventory/inventorySlice'
+import { sortData } from 'src/utils/SortData'
+import ButtonTable from 'src/components/UI/ButtonTable/ButtonTable'
+import { ReactComponent as Reload } from 'src/assets/Table/reload.svg'
+import { ReactComponent as Add } from 'src/assets/Table/add.svg'
+import { SortButton } from 'src/utils/SortButton'
+import { showModalInventory } from 'src/redux/modalSlice'
+import { AnimatePresence } from 'framer-motion'
+import MyModal from '../../../UI/ModalComponents/ModalUI/ModalUI'
+import TableInventoryData from './TableInventoryData'
+import EditInventoryModal from '../EditInventoryModal/EditInventoryModal'
 
 const headers = [
-  { key: "id", label: "№" },
-  { key: "channel.name", label: "Канал" },
-  { key: "video_content.name", label: "Контент" },
-  { key: "format", label: "Формат" },
-  { key: "start_at", label: "Тайм код" },
+  { key: 'id', label: '№' },
+  { key: 'channel.name', label: 'Канал' },
+  { key: 'video_content.name', label: 'Контент' },
+  { key: 'format', label: 'Формат' },
+  { key: 'start_at', label: 'Тайм код' },
   {
-    key: "expected_number_of_views",
-    label: "Прогноз",
+    key: 'expected_number_of_views',
+    label: 'Прогноз',
   },
-  { key: "expected_promo_duration", label: "Хронометраж" },
-  { key: "category", label: "Категория" },
+  { key: 'expected_promo_duration', label: 'Хронометраж' },
+  { key: 'category', label: 'Категория' },
 
-  { key: "publication_time", label: "Дата начала" },
-  { key: "status", label: "Статус" },
-  { key: "status", label: "Действия" },
-];
+  { key: 'publication_time', label: 'Дата начала' },
+  { key: 'status', label: 'Статус' },
+]
 
 function TableInventory() {
-  const dispatch = useDispatch();
-  const data = useSelector((state) => state.inventory.inventory);
-  const status = useSelector((state) => state.status.status);
-  const [sortKey, setSortKey] = React.useState("last_name");
-  const [sort, setSort] = React.useState("desc");
-  const [loading, setLoading] = React.useState(true);
-  const user = localStorage.getItem("role");
-  const [showModalEditAdmin, setShowModalEditAdmin] = React.useState(false);
+  const dispatch = useDispatch()
+  const data = useSelector((state) => state.inventory.inventory)
+  const status = useSelector((state) => state.status.status)
+  const [sortKey, setSortKey] = React.useState('last_name')
+  const [sort, setSort] = React.useState('desc')
+  const [loading, setLoading] = React.useState(true)
+  const user = localStorage.getItem('role')
+  const [showModalEditAdmin, setShowModalEditAdmin] = React.useState(false)
 
-  const [expandedRows, setExpandedRows] = React.useState("");
-  const [currentOrder, setCurrentOrder] = React.useState(null);
+  const [expandedRows, setExpandedRows] = React.useState('')
+  const [currentOrder, setCurrentOrder] = React.useState(null)
 
   React.useEffect(() => {
-    if (status === "succeeded") {
-      fetchInventory();
+    if (status === 'succeeded') {
+      fetchInventory()
     }
-    dispatch(fetchInventory()).then(() => setLoading(false));
-  }, [dispatch, status]);
+    dispatch(fetchInventory()).then(() => setLoading(false))
+  }, [dispatch, status])
 
   const sortedData = React.useCallback(
     () =>
       sortData({
         tableData: data,
         sortKey,
-        reverse: sort === "desc",
+        reverse: sort === 'desc',
       }),
-    [data, sortKey, sort]
-  );
+    [data, sortKey, sort],
+  )
   function changeSort(key) {
-    setSort(sort === "ascn" ? "desc" : "ascn");
-    setSortKey(key);
+    setSort(sort === 'ascn' ? 'desc' : 'ascn')
+    setSortKey(key)
   }
 
   const handleButtonClick = () => {
-    dispatch(showModalInventory());
-  };
+    dispatch(showModalInventory())
+  }
   const handleReload = () => {
-    dispatch(fetchInventory());
-  };
+    dispatch(fetchInventory())
+  }
 
   return (
     <>
@@ -90,31 +89,34 @@ function TableInventory() {
       ) : (
         <div className="tableWrapper">
           <div className="tableWrapper__table_title">
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
               Инвентарь &nbsp;
               <ButtonTable onClick={handleReload}>
-                <Reload style={{ width: "23px", height: "23px" }} />
+                <Reload style={{ width: '23px', height: '23px' }} />
               </ButtonTable>
             </div>
-            {user === "admin" ? (
-              ""
+            {user === 'admin' ? (
+              ''
             ) : (
               <ButtonTable onClick={handleButtonClick}>
-                <Add style={{ width: "25px", height: "23px" }} />
+                <Add style={{ width: '25px', height: '23px' }} />
                 Создать инвентарь
               </ButtonTable>
             )}
           </div>
 
           {data && data.length ? (
-            <table style={{ width: "100%" }}>
+            <table style={{ width: '100%' }}>
               <thead>
                 <tr>
                   {headers.map((row) => {
-                    const user = localStorage.getItem("role");
-                    const showStatusColumn = user !== "admin";
-                    if (row.key === "is_connected" && !showStatusColumn) {
-                      return null;
+                    const user = localStorage.getItem('role')
+                    const showStatusColumn = user !== 'admin'
+                    if (row.key === 'is_connected' && !showStatusColumn) {
+                      return null
+                    }
+                    if (data.status === 'open') {
+                      headers.push({ key: 'status', label: 'Действия' })
                     }
                     return (
                       <th key={row.key}>
@@ -126,7 +128,7 @@ function TableInventory() {
                           sortKey={sortKey}
                         />
                       </th>
-                    );
+                    )
                   })}
                 </tr>
               </thead>
@@ -144,7 +146,7 @@ function TableInventory() {
         </div>
       )}
     </>
-  );
+  )
 }
 
-export default TableInventory;
+export default TableInventory

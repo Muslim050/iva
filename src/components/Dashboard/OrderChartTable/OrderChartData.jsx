@@ -6,6 +6,7 @@ import FormatterBudjet from 'src/components/UI/formatter/FormatterBudjet'
 import { ReactComponent as Arrow } from 'src/assets/Table/arrow.svg'
 
 function OrderChartData({ statistic, index, handleRowClick, isExpanded }) {
+  const user = localStorage.getItem('role')
   return (
     <>
       <td className={style.table_td}>{index + 1}</td>
@@ -58,13 +59,29 @@ function OrderChartData({ statistic, index, handleRowClick, isExpanded }) {
             </div>
           </div>
         </div>
-        {/* {new Date(statistic.publication_date)
-          .toLocaleDateString("en-GB")
-          .replace(/\//g, ".")} */}
       </td>
+
       <td className={style.table_td}>
-        {(statistic.status === 'in_use' && 'Активный') ||
-          (statistic.status === 'inactive' && 'Завершен')}
+        {statistic.status === 'in_use' && 'Активный'}
+        {statistic.status === 'inactive' && (
+          <>
+            Завершен
+            {statistic.deactivation_date && (
+              <div style={{ color: 'red' }}>
+                <div>{statistic.deactivation_date.split('T')[0]}</div>
+                <div>
+                  {new Date(statistic.deactivation_date).toLocaleTimeString(
+                    [],
+                    {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    },
+                  )}
+                </div>
+              </div>
+            )}
+          </>
+        )}
       </td>
 
       <td className={style.table_td}>

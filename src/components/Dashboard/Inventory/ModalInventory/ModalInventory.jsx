@@ -46,6 +46,7 @@ export default function ModalInventory() {
   })
 
   const cId = watch('channelID')
+  const watchVideo = watch('video')
 
   const fetchChannel = async () => {
     const token = localStorage.getItem('token')
@@ -150,6 +151,7 @@ export default function ModalInventory() {
             control={control}
             isValid={isValid}
             cId={cId}
+            watchVideo={watchVideo}
           />
         </div>
       </form>

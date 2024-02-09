@@ -131,6 +131,7 @@ function OrderChartTable() {
               </div>
 
               <FilteredTooltip
+                getOrder={getOrder}
                 isTooltip={isTooltip}
                 handleDateStatictick={handleDateStatictick}
                 startDate={startDate}
@@ -155,6 +156,7 @@ function OrderChartTable() {
                   totalViews += statistic.online_view_count
                   totalBudget += statistic.budget
                   totalAnalitickView += statistic.online_view_count
+
                   return (
                     <React.Fragment key={statistic.video_link}>
                       {/* Данные таблицы  */}

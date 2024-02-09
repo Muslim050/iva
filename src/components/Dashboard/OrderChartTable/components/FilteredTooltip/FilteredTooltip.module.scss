@@ -15,8 +15,6 @@
   z-index: 2;
 }
 
-
-
 .input {
   border: 0;
   color: var(--text-color);
@@ -26,7 +24,7 @@
   width: 100%;
   padding: 8px;
   height: 38px;
-  border: 1px solid #E1E2E9;
+  border: 1px solid #e1e2e9;
 
   &:focus {
     outline: none !important;
@@ -41,17 +39,18 @@
   width: 85%;
   padding: 7px;
   border-radius: 8px;
-  margin-top: 15px;
+  margin-right: 5px;
 }
 
 .btn_filtered__close {
+  position: absolute;
+  top: 0;
+  right: 10px;
   color: white;
   border-radius: 8px;
   margin-top: 15px;
   display: flex;
   background: inherit;
-
-
 }
 
 @media only screen and (max-width: 1024px) {

@@ -9,7 +9,6 @@ function Breadcrumbs({ title, route, id }) {
 
   const user = localStorage.getItem('role')
   const transformedTitle = getTitle(title, id)
-  console.log(routes, 'routes')
 
   return (
     <div className={style.breadcrumbs}>

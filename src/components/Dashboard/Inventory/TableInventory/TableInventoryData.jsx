@@ -57,7 +57,7 @@ function TableInventoryData({
                     activeTooltip === i ? style.tooltiptext : style.hidden
                   }
                 >
-                  ID:{inventor.id}
+                  ID:{inventor?.id}
                 </span>
               )}
             </td>
@@ -75,7 +75,7 @@ function TableInventoryData({
                     activeTooltip === i ? style.tooltiptext : style.hidden
                   }
                 >
-                  ID:{inventor.video_content.id}
+                  ID:{inventor.video_content?.id}
                 </span>
               )}
             </td>
@@ -106,7 +106,10 @@ function TableInventoryData({
             </td>
             <td className={style.table_td}>
               <div>
-                <AdvertStatus status={inventor.status} />
+                <AdvertStatus
+                  status={inventor.status}
+                  endDate={inventor.deactivation_date}
+                />
               </div>
             </td>
 
@@ -143,35 +146,6 @@ function TableInventoryData({
             ) : null}
 
             <td>
-              {inventor.status === 'inactive' ? (
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginLeft: '7px',
-                    marginRight: '10px',
-                    width: '100%',
-                    lineHeight: '9px',
-                    textAlign: 'center',
-                  }}
-                >
-                  <div>
-                    <div>{inventor.deactivation_date.split('T')[0]}</div>
-                    <br />
-                    <div>
-                      {new Date(inventor.deactivation_date).toLocaleTimeString(
-                        [],
-                        {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        },
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                ''
-              )}
               {(user === 'admin' ||
                 user === 'advertiser' ||
                 user === 'advertising_agency') &&
