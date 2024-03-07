@@ -118,6 +118,21 @@
   }
 }
 
+.fileWrapperDownload {
+  padding: 3px;
+  cursor: pointer;
+  background: #c4c4c7;
+  border: 1px solid white;
+  border-radius: 8px;
+
+  &:hover {
+    border: 1px solid #8b8d97;
+    border-radius: 8px;
+    box-shadow: 0 0 5px #e8e8e9;
+    background: #8b8d97;
+  }
+}
+
 .doprow {
   background-color: var(--tablebg-color);
   overflow-x: auto;

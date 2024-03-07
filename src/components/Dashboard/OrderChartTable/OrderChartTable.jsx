@@ -18,6 +18,7 @@ import FilteredTooltip from './components/FilteredTooltip/FilteredTooltip'
 import GenderData from './components/DopTable/Data/GenderData'
 import AgeData from './components/DopTable/Data/AgeData'
 import GeoData from './components/DopTable/Data/GeoData'
+import { ReactComponent as Close } from 'src/assets/Modal/Close.svg'
 
 function OrderChartTable() {
   const dispatch = useDispatch()
@@ -27,9 +28,9 @@ function OrderChartTable() {
   const data = useSelector((state) => state.statistics.statistics.results)
   const [getOrder, setGetOrder] = React.useState([])
   const [isTooltip, setIsTooltip] = React.useState(false)
-
   const [startDate, setStartDate] = React.useState('')
   const [endDate, setEndDate] = React.useState('')
+  const [dataFiltered, setDataFiltered] = React.useState(false)
 
   const handleRowClick = (videoLink) => {
     setExpandedRows((prevExpandedRow) =>
@@ -40,12 +41,12 @@ function OrderChartTable() {
   // Отправка запроса с фильтра
   const handleDateStatictick = () => {
     setLoading(true)
+    setDataFiltered(true)
     dispatch(fetchStatistics({ id, startDate, endDate })).then(() =>
       setLoading(false),
     )
     setIsTooltip(false)
   }
-  // Отправка запроса с фильтра
 
   const fetchGetOrder = async () => {
     const token = localStorage.getItem('token')
@@ -65,27 +66,42 @@ function OrderChartTable() {
     const { actual_start_date, actual_end_date, expected_end_date } =
       response.data.data
 
-    // Format actual_start_date and actual_end_date into Date objects
     const startDateObj = new Date(actual_start_date)
     const endDateObj = actual_end_date
       ? new Date(actual_end_date)
       : new Date(expected_end_date)
 
-    // Convert Date objects to ISO string to set as min and max attributes of date inputs
     const minDate = startDateObj.toISOString().split('T')[0]
     const maxDate = endDateObj.toISOString().split('T')[0]
 
-    // Set the initial values of startDate and endDate
     setStartDate(minDate)
     setEndDate(maxDate)
   }
   const handleProfileClick = () => {
     setIsTooltip(!isTooltip)
+    fetchGetOrder()
+      .then(() => {})
+      .catch((error) => {
+        console.error('Ошибка при получении данных заказа:', error)
+      })
+  }
+  const closeH = () => {
+    setIsTooltip(!isTooltip)
+    fetchGetOrder()
+      .then(() => {})
+      .catch((error) => {
+        console.error('Ошибка при получении данных заказа:', error)
+      })
+    setStartDate(startDate)
+    setEndDate(endDate)
   }
   React.useEffect(() => {
     fetchGetOrder()
-  }, [data])
-
+  }, [])
+  const dataFilteredClose = () => {
+    setDataFiltered(false)
+    dispatch(fetchStatistics({ id })).then(() => setLoading(true))
+  }
   React.useEffect(() => {
     dispatch(fetchStatistics({ id })).then(() => setLoading(false))
   }, [dispatch])
@@ -93,7 +109,6 @@ function OrderChartTable() {
   let totalViews = 0
   let totalBudget = 0
   let totalAnalitickView = 0
-
   return (
     <>
       {loading ? (
@@ -114,11 +129,49 @@ function OrderChartTable() {
             </div>
             {/* Ячейки с инфо Бюджет,План показов, План бюджета */}
             <div className={style.profile}>
-              <DownloadReport
+              {dataFiltered && (
+                <div
+                  style={{
+                    padding: '10px',
+                    borderRadius: '8px',
+                    background: '#FEF5EA',
+                    border: '1px solid #ffd8a9',
+                    marginRight: '5px',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: '13px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    Выбранный период
+                    <div style={{ marginTop: '4px' }}>
+                      {startDate} - {endDate}
+                    </div>
+                  </div>
+
+                  <Close
+                    onClick={dataFilteredClose}
+                    style={{
+                      cursor: 'pointer',
+                      border: 'solid 1px orange',
+                      marginLeft: '10px',
+                      borderRadius: '8px',
+                    }}
+                  />
+                </div>
+              )}
+
+              {/* <DownloadReport
                 getOrder={getOrder}
                 startDate={startDate}
                 endDate={endDate}
-              />
+              /> */}
 
               <div style={{ display: 'grid', marginLeft: '10px' }}>
                 <div style={{ fontSize: '10px' }}>Выбрать период</div>
@@ -139,6 +192,8 @@ function OrderChartTable() {
                 endDate={endDate}
                 setEndDate={setEndDate}
                 setIsTooltip={setIsTooltip}
+                closeH={closeH}
+                fetchGetOrder={fetchGetOrder}
               />
             </div>
           </div>
@@ -185,7 +240,7 @@ function OrderChartTable() {
                             }`}
                           >
                             <div className="tableWrapper">
-                              {statistic.age_group_percentages.length === 0 &&
+                              {/* {statistic.age_group_percentages.length === 0 &&
                               statistic.gender_percentages.length === 0 &&
                               statistic.geo_percentages.length === 0 ? (
                                 <div
@@ -198,49 +253,49 @@ function OrderChartTable() {
                                 >
                                   Введется аналитика данных
                                 </div>
-                              ) : (
-                                <table className="tableWrapper">
-                                  <thead style={{ border: 0 }}>
-                                    {/* Колонки  ГЕО Возраст ПОЛ доп таблица  */}
-                                    <tr>
-                                      <TheadAgeGenderGeo
-                                        data={data}
-                                        statistic={statistic}
-                                      />
-                                    </tr>
-                                    {/* Колонки ГЕО Возраст ПОЛ доп таблица  */}
-                                  </thead>
-
-                                  <thead style={{ borderTop: '0' }}>
-                                    {/* Колонки подробная инфа ГЕО Возраст ПОЛ */}
-                                    <tr className={style.tableChart__tr}>
-                                      <th style={{ textAlign: 'center' }}>
-                                        <Eye
-                                          style={{
-                                            width: '25px',
-                                            height: '25px',
-                                          }}
-                                        />
-                                      </th>
-                                      <WrapperThead statistic={statistic} />
-                                    </tr>
-                                    {/* Колонки подробная инфа ГЕО Возраст ПОЛ */}
-                                  </thead>
-
-                                  <td
-                                    data-label="Показов"
-                                    style={{ textAlign: 'center' }}
-                                  >
-                                    <FormatterView
-                                      data={statistic.online_view_count}
+                              ) : ( */}
+                              <table className="tableWrapper">
+                                <thead style={{ border: 0 }}>
+                                  {/* Колонки  ГЕО Возраст ПОЛ доп таблица  */}
+                                  <tr>
+                                    <TheadAgeGenderGeo
+                                      data={data}
+                                      statistic={statistic}
                                     />
-                                  </td>
+                                  </tr>
+                                  {/* Колонки ГЕО Возраст ПОЛ доп таблица  */}
+                                </thead>
 
-                                  <GenderData statistic={statistic} />
-                                  <AgeData statistic={statistic} />
-                                  <GeoData statistic={statistic} />
-                                </table>
-                              )}
+                                <thead style={{ borderTop: '0' }}>
+                                  {/* Колонки подробная инфа ГЕО Возраст ПОЛ */}
+                                  <tr className={style.tableChart__tr}>
+                                    <th style={{ textAlign: 'center' }}>
+                                      <Eye
+                                        style={{
+                                          width: '25px',
+                                          height: '25px',
+                                        }}
+                                      />
+                                    </th>
+                                    <WrapperThead statistic={statistic} />
+                                  </tr>
+                                  {/* Колонки подробная инфа ГЕО Возраст ПОЛ */}
+                                </thead>
+
+                                <td
+                                  data-label="Показов"
+                                  style={{ textAlign: 'center' }}
+                                >
+                                  <FormatterView
+                                    data={statistic.online_view_count}
+                                  />
+                                </td>
+
+                                <GenderData statistic={statistic} />
+                                <AgeData statistic={statistic} />
+                                <GeoData statistic={statistic} />
+                              </table>
+                              {/* )} */}
                             </div>
                           </td>
                         </tr>

@@ -1,24 +1,24 @@
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer, { refreshAccessToken } from "../redux/auth/authSlice";
-import publisher from "../redux/publisher/publisherSlice";
-import inventory from "../redux/inventory/inventorySlice";
+import { configureStore } from '@reduxjs/toolkit'
+import authReducer, { refreshAccessToken } from '../redux/auth/authSlice'
+import publisher from '../redux/publisher/publisherSlice'
+import inventory from '../redux/inventory/inventorySlice'
 
-import googleauthSlice from "./googleauth/googleauthSlice";
-import videoSlice from "./video/videoSlice";
-import advertiserSlice from "./advertiser/advertiserSlice";
-import publisherUsersSlice from "./publisherUsers/publisherUsersSlice";
-import advertiserUsersSlice from "./advertiserUsers/advertiserUsersSlice";
-import orderSlice from "./order/orderSlice";
-import statusSlice from "./orderStatus/orderStatusSlice";
-import orderTableSlice from "./orderTableSlice/orderTableSlice";
-import inventoryStatusSlice from "./inventoryStatus/inventoryStatusSlice";
-import channelSlice from "./channel/channelSlice";
-import channelUsersSlice from "./channelUsers/channelUsersSlice";
-import advertiserAgencySlice from "./AgencySlice/advertiserAgency/advertiserAgencySlice";
-import advertiserAgencyUsersSlice from "./AgencySlice/advertiserAgencyUsers/advertiserAgencyUsersSlice";
-import statisticsSlice from "./statisticsSlice";
-import modalSlice from "./modalSlice";
-import revenueSlice from "./revenueSlice";
+import googleauthSlice from './googleauth/googleauthSlice'
+import videoSlice from './video/videoSlice'
+import advertiserSlice from './advertiser/advertiserSlice'
+import publisherUsersSlice from './publisherUsers/publisherUsersSlice'
+import advertiserUsersSlice from './advertiserUsers/advertiserUsersSlice'
+import orderSlice from './order/orderSlice'
+import statusSlice from './orderStatus/orderStatusSlice'
+import orderTableSlice from './orderTableSlice/orderTableSlice'
+import inventoryStatusSlice from './inventoryStatus/inventoryStatusSlice'
+import channelSlice from './channel/channelSlice'
+import channelUsersSlice from './channelUsers/channelUsersSlice'
+import advertiserAgencySlice from './AgencySlice/advertiserAgency/advertiserAgencySlice'
+import advertiserAgencyUsersSlice from './AgencySlice/advertiserAgencyUsers/advertiserAgencyUsersSlice'
+import statisticsSlice from './statisticsSlice'
+import modalSlice from './modalSlice'
+import revenueSlice from './revenueSlice'
 
 const store = configureStore({
   reducer: {
@@ -45,7 +45,7 @@ const store = configureStore({
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware().concat(authMiddleware),
-});
+})
 // store.dispatch(refreshAccessToken());
 
-export default store;
+export default store

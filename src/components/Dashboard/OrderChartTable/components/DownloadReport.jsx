@@ -4,8 +4,13 @@ import { ReactComponent as Download } from 'src/assets/Table/Download.svg'
 import axios from 'axios'
 import backendURL from 'src/utils/url'
 
-function DownloadReport({ getOrder, startDate, endDate, setIsTooltip }) {
-  const [excelExport, setExcelExport] = React.useState('')
+function DownloadReport({
+  getOrder,
+  startDate,
+  endDate,
+  setIsTooltip,
+  fetchGetOrder,
+}) {
   const [loading, setLoading] = React.useState(false)
   const exportExcel = async (id) => {
     try {
@@ -34,6 +39,11 @@ function DownloadReport({ getOrder, startDate, endDate, setIsTooltip }) {
       link.setAttribute('download', `${getOrder.name}.xlsx`)
       link.click()
       setIsTooltip(false)
+      // fetchGetOrder()
+      //   .then(() => {})
+      //   .catch((error) => {
+      //     console.error('Ошибка при получении данных заказа:', error)
+      //   })
     } catch (error) {
       console.error(error)
     } finally {
@@ -45,7 +55,7 @@ function DownloadReport({ getOrder, startDate, endDate, setIsTooltip }) {
     <>
       <ButtonTable onClick={() => exportExcel(getOrder.id)} disabled={loading}>
         {loading ? (
-          <div className="loaderWrapper" style={{ height: '0' }}>
+          <div className="loaderWrapper" style={{ height: '30px' }}>
             <div
               className="spinner"
               style={{

@@ -169,9 +169,13 @@ function OrderData({ sortedData }) {
 
             <td className={style.td_Order}>
               <AdvertStatus status={advert.status}>
-                {role === 'admin' || role === 'advertising_agency' ? (
+                {role === 'admin' ||
+                role === 'advertising_agency' ||
+                role === 'advertiser' ? (
                   <>
-                    {role === 'admin' || role === 'advertising_agency' ? (
+                    {role === 'admin' ||
+                    role === 'advertising_agency' ||
+                    role === 'advertiser' ? (
                       <>
                         {advert.status === 'in_progress' ? (
                           <div

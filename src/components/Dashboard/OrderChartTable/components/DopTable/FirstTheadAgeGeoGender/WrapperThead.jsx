@@ -1,7 +1,7 @@
-import React from "react";
-import TheadAge from "./TheadAge";
-import TheadGender from "./TheadGender";
-import TheadGeo from "./TheadGeo";
+import React from 'react'
+import TheadAge from './TheadAge'
+import TheadGender from './TheadGender'
+import TheadGeo from './TheadGeo'
 function WrapperThead({ statistic }) {
   return (
     <>
@@ -9,7 +9,7 @@ function WrapperThead({ statistic }) {
       <TheadAge statistic={statistic} />
       <TheadGeo statistic={statistic} />
     </>
-  );
+  )
 }
 
-export default WrapperThead;
+export default WrapperThead

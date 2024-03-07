@@ -1,34 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import style from './FilteredTooltip.module.scss'
 import { ReactComponent as Close } from 'src/assets/Close.svg'
 import DownloadReport from '../DownloadReport'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 function FilteredTooltip({
   isTooltip,
   handleDateStatictick,
-  actualStartDate,
-  actualEndDate,
   startDate,
   setStartDate,
   endDate,
   setEndDate,
   setIsTooltip,
   getOrder,
+  closeH,
+  fetchGetOrder,
 }) {
-  const handleStartDateChange = (event) => {
-    setStartDate(event.target.value)
+  const handleStartDateChange = (date) => {
+    setStartDate(date.toISOString().slice(0, 10)) // Преобразование даты в строку формата YYYY-MM-DD
   }
 
-  const handleEndDateChange = (event) => {
-    setEndDate(event.target.value)
+  const handleEndDateChange = (date) => {
+    setEndDate(date.toISOString().slice(0, 10)) // Аналогично для конечной даты
   }
 
-  React.useEffect(() => {
-    setStartDate(actualStartDate)
-  }, [actualStartDate])
-  React.useEffect(() => {
-    setEndDate(actualEndDate)
-  }, [actualEndDate])
   return (
     <>
       {isTooltip && (
@@ -41,18 +37,20 @@ function FilteredTooltip({
             backgroundColor: '#fff',
             boxShadow: '0 0 5px #bbbbbb',
             padding: '40px 14px 14px',
-
             borderRadius: '10px',
             zIndex: '2',
+            width: '200px',
           }}
         >
-          <button
-            className={style.btn_filtered__close}
-            onClick={() => setIsTooltip(!isTooltip)}
-          >
+          <button className={style.btn_filtered__close} onClick={closeH}>
             <Close style={{ height: '30px' }} />
           </button>
-          <div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
             <label
               style={{
                 fontSize: '10px',
@@ -62,20 +60,25 @@ function FilteredTooltip({
             >
               Дата начало
             </label>
-            <input
-              className={style.input}
-              type="date"
-              value={startDate}
+            <DatePicker
+              selected={startDate ? new Date(startDate) : null}
               onChange={handleStartDateChange}
-              min={startDate} // Set the min attribute to restrict the selectable range
-              max={endDate} // Set the max attribute to restrict the selectable range
-              style={{
-                width: '210px',
-              }}
+              selectsStart
+              startDate={startDate ? new Date(startDate) : null}
+              endDate={endDate ? new Date(endDate) : null}
+              minDate={new Date(startDate)} // Устанавливаем minDate равным startDate
+              maxDate={new Date(endDate)} // Устанавливаем maxDate равным endDate
+              className={style.input}
             />
           </div>
 
-          <div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              marginTop: '5px',
+            }}
+          >
             <label
               style={{
                 fontSize: '10px',
@@ -85,16 +88,15 @@ function FilteredTooltip({
             >
               Дата конец
             </label>
-            <input
-              className={style.input}
-              type="date"
-              value={endDate}
+            <DatePicker
+              selected={endDate ? new Date(endDate) : null}
               onChange={handleEndDateChange}
-              min={startDate}
-              max={endDate}
-              style={{
-                width: '210px',
-              }}
+              selectsEnd
+              startDate={startDate ? new Date(startDate) : null}
+              endDate={endDate ? new Date(endDate) : null}
+              minDate={new Date(startDate)} // Устанавливаем minDate равным startDate
+              maxDate={new Date(endDate)} // Устанавливаем maxDate равным endDate
+              className={style.input}
             />
           </div>
 
@@ -110,6 +112,7 @@ function FilteredTooltip({
               startDate={startDate}
               endDate={endDate}
               setIsTooltip={setIsTooltip}
+              fetchGetOrder={fetchGetOrder}
             />
           </div>
         </div>
