@@ -18,7 +18,7 @@ const format = [
   { value: 'preroll', text: 'Pre-roll' },
   { value: 'mixroll', text: 'Mix-roll' },
 ]
-export default function OrderModal({ setShowModal }) {
+export default function OrderModal() {
   const dispatch = useDispatch()
   const [selectedFile, setSelectedFile] = React.useState(null)
 
@@ -26,9 +26,7 @@ export default function OrderModal({ setShowModal }) {
   const [advertiser, setAdvertiser] = React.useState([])
   const [cpm, setCpm] = React.useState([])
   const user = localStorage.getItem('role')
-  const cpms = cpm.map((cp) => cp.rate)
   const [budgett, setBudgett] = React.useState(0)
-  const [selectedEndDate, setSelectedEndDate] = React.useState(null)
 
   const today = new Date()
 
@@ -54,36 +52,27 @@ export default function OrderModal({ setShowModal }) {
   const selectedFormat = watch('format')
   const expectedView = watch('expectedView')
 
-  // const calculateBudget = () => {
-  //   let newBudget = 0
-  //   if (selectedFormat === 'preroll') {
-  //     newBudget = (expectedView / 1000) * cpms[1]
-  //   } else if (selectedFormat === 'mixroll') {
-  //     newBudget = (expectedView / 1000) * cpms[0]
-  //   }
-  //   setBudgett(newBudget)
-  // }
   const calculateBudget = () => {
     let newBudget = 0
 
-    const selectedCpm = cpm.find((item) => item.format === selectedFormat)
-
-    if (selectedCpm) {
-      newBudget = (expectedView / 1000) * selectedCpm.rate
+    if (cpm[selectedFormat]) {
+      newBudget = (expectedView / 1000) * cpm[selectedFormat]
     }
 
     setBudgett(newBudget)
   }
 
+  let advID
+  advertiser.forEach((item) => {
+    advID = item?.id
+  })
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0])
   }
   const fetchCpm = async () => {
     const token = localStorage.getItem('token')
-
     const response = await axios.get(
-      `${backendURL}/order/cpm-rate/`,
-
+      `${backendURL}/order/cpm/?advertiser=${advID}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -114,9 +103,12 @@ export default function OrderModal({ setShowModal }) {
 
   React.useEffect(() => {
     fetchAdvertiser()
-    fetchCpm()
-  }, [])
-
+  }, [dispatch])
+  React.useEffect(() => {
+    if (advID) {
+      fetchCpm()
+    }
+  }, [advID])
   const onSubmit = async (data) => {
     try {
       setIsOrderCreated(true)
@@ -308,6 +300,10 @@ export default function OrderModal({ setShowModal }) {
                 control={control}
                 rules={{
                   required: 'Поле обязательно к заполнению',
+                  min: {
+                    value: 1000000,
+                    message: 'Минимальное количество, 1 000 000 просмотров',
+                  },
                 }}
                 defaultValue=""
                 render={({ field: { onChange, onBlur, value, name, ref } }) => (
