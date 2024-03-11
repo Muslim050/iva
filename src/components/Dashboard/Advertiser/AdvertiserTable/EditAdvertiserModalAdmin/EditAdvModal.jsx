@@ -154,7 +154,7 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
                   <input
                     className={style.input}
                     type="text"
-                    value={value.toLocaleString('en-US')}
+                    value={value?.toLocaleString('en-US')}
                     onChange={(e) => {
                       const rawValue = e.target.value.replace(/\D/g, '')
                       const newValue = rawValue ? parseInt(rawValue, 10) : ''
@@ -163,7 +163,7 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
                     onBlur={onBlur}
                     name={name}
                     ref={ref}
-                    placeholder="Прогноз показов"
+                    placeholder="cpm_preroll"
                     autoComplete="off"
                     step="1000"
                   />
@@ -186,7 +186,7 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
                   <input
                     className={style.input}
                     type="text"
-                    value={value.toLocaleString('en-US')}
+                    value={value?.toLocaleString('en-US')}
                     onChange={(e) => {
                       const rawValue = e.target.value.replace(/\D/g, '')
                       const newValue = rawValue ? parseInt(rawValue, 10) : ''
@@ -195,7 +195,7 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
                     onBlur={onBlur}
                     name={name}
                     ref={ref}
-                    placeholder="Прогноз показов"
+                    placeholder="cpm_mixroll"
                     autoComplete="off"
                     step="1000"
                   />
@@ -208,23 +208,6 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
           </div>
 
           <div className={style.btn__wrapper}>
-            {role === 'admin' ? (
-              <ButtonBorder
-                onClick={() => {
-                  handleRemoveAdv()
-                }}
-              >
-                <Delete
-                  style={{
-                    width: '16px',
-                    height: '16px',
-                    marginRight: '10px',
-                  }}
-                />
-                Удалить
-              </ButtonBorder>
-            ) : null}
-
             <button
               style={{ display: 'flex', alignItems: 'center' }}
               type="submit"

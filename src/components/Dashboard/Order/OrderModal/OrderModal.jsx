@@ -302,6 +302,10 @@ export default function OrderModal({ setShowModal }) {
                 control={control}
                 rules={{
                   required: 'Поле обязательно к заполнению',
+                  min: {
+                    value: 1000000,
+                    message: 'Минимальное значение - 1 000 000',
+                  },
                 }}
                 defaultValue=""
                 render={({ field: { onChange, onBlur, value, name, ref } }) => (
@@ -309,7 +313,6 @@ export default function OrderModal({ setShowModal }) {
                     className={style.input}
                     type="text"
                     value={value.toLocaleString('en-US')}
-                    // onChange={handleView}
                     style={{
                       width: '245px',
                     }}
