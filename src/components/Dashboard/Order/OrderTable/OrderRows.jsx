@@ -20,7 +20,7 @@ function OrderRows({ data, sort, sortKey, changeSort }) {
     { key: 'expected_start_date', label: 'Начало' },
     { key: 'expected_end_date', label: 'Конец' },
     { key: 'expected_number_of_views', label: 'Показы' },
-    { key: 'budget', label: '$Бюджет' },
+    { key: 'budget', label: 'Бюджет' },
     { key: 'status', label: 'Статус' },
     { key: 'ostatok', label: 'Остаток' },
     { key: 'deistvia', label: 'Детали' },

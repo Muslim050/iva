@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import {
   deleteOrder,
@@ -30,8 +30,7 @@ export default function EditOrderModal({
   const [cpm, setCpm] = React.useState([])
   const [budgett, setBudgett] = React.useState(0)
   const role = localStorage.getItem('role')
-
-  const cpms = cpm.map((cp) => cp.rate)
+  const { order } = useSelector((state) => state.order)
 
   const [isOrderCreated, setIsOrderCreated] = React.useState(false)
 
@@ -56,6 +55,7 @@ export default function EditOrderModal({
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0])
   }
+  const advID = localStorage.getItem('advertiser')
 
   const editName = watch('name')
   // const viewValue = watch("view");
@@ -64,19 +64,22 @@ export default function EditOrderModal({
 
   const calculateBudget = () => {
     let newBudget = 0
-    if (selectedFormat === 'preroll') {
-      newBudget = (expectedView / 1000) * cpms[1]
-    } else if (selectedFormat === 'mixroll') {
-      newBudget = (expectedView / 1000) * cpms[0]
+
+    if (cpm[selectedFormat]) {
+      newBudget = (expectedView / 1000) * cpm[selectedFormat]
     }
+
     setBudgett(newBudget)
   }
-
+  let advId
+  order.forEach((item) => {
+    advId = item.advertiser.id // Присваиваем значение свойства name текущего элемента массива
+  })
   const fetchCpm = async () => {
     const token = localStorage.getItem('token')
 
     const response = await axios.get(
-      `${backendURL}/order/cpm-rate/`,
+      `${backendURL}/order/cpm/?advertiser=${advID === null ? advID : advId}`,
 
       {
         headers: {
@@ -90,10 +93,13 @@ export default function EditOrderModal({
   }
   React.useEffect(() => {
     calculateBudget()
-  }, [selectedFormat, expectedView])
+  }, [selectedFormat, cpm, expectedView])
+
   React.useEffect(() => {
-    fetchCpm()
-  }, [])
+    if (advID) {
+      fetchCpm()
+    }
+  }, [advID])
 
   React.useEffect(() => {
     setValue('budgett', budgett)
@@ -301,7 +307,12 @@ export default function EditOrderModal({
                 defaultValue=""
                 render={({ field: { onChange, onBlur, value, name, ref } }) => (
                   <input
-                    className={style.modalWindow__inputU}
+                    // className={style.modalWindow__inputU}
+                    className={
+                      role === 'admin'
+                        ? style.modalWindow__inputU
+                        : style.modalWindow__input
+                    }
                     type="text"
                     value={value.toLocaleString('en-US')}
                     style={{
@@ -318,7 +329,8 @@ export default function EditOrderModal({
                     placeholder="Количество показов"
                     autoComplete="off"
                     step="1000"
-                    disabled={!selectedFormat}
+                    // disabled={!selectedFormat}
+                    disabled={role !== 'admin' || !selectedFormat}
                   />
                 )}
               />
@@ -360,7 +372,7 @@ export default function EditOrderModal({
 
             <div style={{ display: 'grid' }}>
               <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
-                Бюджет ($)
+                Бюджет (сум)
               </label>
               <input
                 className={style.modalWindow__input}

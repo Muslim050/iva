@@ -9,10 +9,18 @@ import { sortData } from 'src/utils/SortData'
 import ButtonTable from 'src/components/UI/ButtonTable/ButtonTable'
 import FormatterPhone from 'src/components/UI/formatter/FormatterPhone'
 import { ReactComponent as Reload } from 'src/assets/Table/reload.svg'
+import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
+import { ReactComponent as Edit } from 'src/assets/Table/Edit.svg'
+import { AnimatePresence } from 'framer-motion'
+import MyModal from '../../../UI/ModalComponents/ModalUI/ModalUI'
+import EditAdvModal from './EditAdvertiserModalAdmin/EditAdvModal'
 
 const headers = [
   { key: 'id', label: '№' },
   { key: 'name', label: 'Наименование Компании' },
+  { key: 'cpm_mixroll', label: 'cpm_mixroll' },
+  { key: 'cpm_preroll', label: 'cpm_preroll' },
+
   { key: 'email', label: 'Email' },
   { key: 'phone_number', label: 'Номер телефона' },
   { key: 'advertising_agency', label: 'Рекламное агенство' },
@@ -22,6 +30,9 @@ function AdvertiserTable() {
   const [sortKey, setSortKey] = React.useState('last_name')
   const [sort, setSort] = React.useState('ascn')
   const [loading, setLoading] = React.useState(true)
+  const role = localStorage.getItem('role')
+  const [showModalEditAdmin, setShowModalEditAdmin] = React.useState(false)
+  const [currentAdv, setCurrentAdv] = React.useState(null)
 
   const data = useSelector((state) => state.advertiser.advertisers)
   const dispatch = useDispatch()
@@ -54,6 +65,16 @@ function AdvertiserTable() {
 
   return (
     <>
+      <AnimatePresence>
+        {showModalEditAdmin && (
+          <MyModal>
+            <EditAdvModal
+              setShowModalEditAdmin={setShowModalEditAdmin}
+              currentOrder={currentAdv}
+            />
+          </MyModal>
+        )}
+      </AnimatePresence>
       {loading ? (
         <div className="loaderWrapper" style={{ height: '20vh' }}>
           <div className="spinner"></div>
@@ -98,6 +119,8 @@ function AdvertiserTable() {
                     <tr key={person.id} className={style.table__tr}>
                       <td>{i + 1}</td>
                       <td>{person.name}</td>
+                      <td>{person.cpm_mixroll}</td>
+                      <td>{person.cpm_preroll}</td>
                       <td>{person.email}</td>
                       <td>
                         <FormatterPhone phoneNumber={person.phone_number} />
@@ -109,6 +132,23 @@ function AdvertiserTable() {
                         ) : (
                           <>------</>
                         )}
+                      </td>
+                      <td style={{ display: 'contents' }}>
+                        {role === 'admin' ? (
+                          <ButtonBorder
+                            onClick={() => {
+                              setShowModalEditAdmin(true)
+                              setCurrentAdv(person)
+                            }}
+                          >
+                            <Edit
+                              style={{
+                                width: '16px',
+                                height: '16px',
+                              }}
+                            />
+                          </ButtonBorder>
+                        ) : null}
                       </td>
                     </tr>
                   )

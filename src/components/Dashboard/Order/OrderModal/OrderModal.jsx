@@ -18,7 +18,7 @@ const format = [
   { value: 'preroll', text: 'Pre-roll' },
   { value: 'mixroll', text: 'Mix-roll' },
 ]
-export default function OrderModal() {
+export default function OrderModal({ setShowModal }) {
   const dispatch = useDispatch()
   const [selectedFile, setSelectedFile] = React.useState(null)
 
@@ -27,9 +27,14 @@ export default function OrderModal() {
   const [cpm, setCpm] = React.useState([])
   const user = localStorage.getItem('role')
   const [budgett, setBudgett] = React.useState(0)
+  const [selectedEndDate, setSelectedEndDate] = React.useState(null)
+  const advID = localStorage.getItem('advertiser')
 
   const today = new Date()
-
+  let advId
+  advertiser.forEach((item) => {
+    advId = item.id // Присваиваем значение свойства name текущего элемента массива
+  })
   const {
     register,
     formState: { errors, isValid },
@@ -62,17 +67,14 @@ export default function OrderModal() {
     setBudgett(newBudget)
   }
 
-  let advID
-  advertiser.forEach((item) => {
-    advID = item?.id
-  })
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0])
   }
   const fetchCpm = async () => {
     const token = localStorage.getItem('token')
+
     const response = await axios.get(
-      `${backendURL}/order/cpm/?advertiser=${advID}`,
+      `${backendURL}/order/cpm/?advertiser=${advID === null ? advID : advId}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -100,15 +102,15 @@ export default function OrderModal() {
     )
     setAdvertiser(response.data.data)
   }
-
   React.useEffect(() => {
     fetchAdvertiser()
-  }, [dispatch])
+  }, [])
+
   React.useEffect(() => {
-    if (advID) {
+    if (advId) {
       fetchCpm()
     }
-  }, [advID])
+  }, [advId])
   const onSubmit = async (data) => {
     try {
       setIsOrderCreated(true)
@@ -300,10 +302,6 @@ export default function OrderModal() {
                 control={control}
                 rules={{
                   required: 'Поле обязательно к заполнению',
-                  min: {
-                    value: 1000000,
-                    message: 'Минимальное количество, 1 000 000 просмотров',
-                  },
                 }}
                 defaultValue=""
                 render={({ field: { onChange, onBlur, value, name, ref } }) => (
