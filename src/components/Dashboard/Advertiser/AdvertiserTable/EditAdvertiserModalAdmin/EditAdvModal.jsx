@@ -14,8 +14,6 @@ import { ReactComponent as Close } from 'src/assets/Modal/Close.svg'
 import { ReactComponent as File } from 'src/assets/Table/file.svg'
 import backendURL from 'src/utils/url'
 import axios from 'axios'
-import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
-import { ReactComponent as Delete } from 'src/assets/Table/Delete.svg'
 import {
   editAdvertiser,
   fetchAdvertiser,
@@ -35,7 +33,6 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
   const role = localStorage.getItem('role')
 
   const [isOrderCreated, setIsOrderCreated] = React.useState(false)
-  console.log('currentOrder', currentOrder)
   const {
     register,
     formState: { errors, isValid },

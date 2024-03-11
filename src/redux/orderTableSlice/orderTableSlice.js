@@ -1,62 +1,62 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { toast } from "react-toastify";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const initialState = {
-  status: "idle",
+  status: 'idle',
   error: null,
   getOrder: [],
-};
+}
 
 export const fetchGetOrder = createAsyncThunk(
-  "orderTableSlice/fetchGetOrder",
+  'orderTableSlice/fetchGetOrder',
   async ({ expandedRows }) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token')
 
     try {
       const response = await axios.get(
-        `https://adtechmedia.pythonanywhere.com/order/1/`,
+        `https://adtechmedia.pythonanywhere.com/order/`,
         {
           headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
             Authorization: `Bearer ${token}`,
           },
-        }
-      );
-      return response.data.data;
+        },
+      )
+      return response.data.data
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
-        const errorMessage = error.response.data.error;
+        const errorMessage = error.response.data.error
         if (errorMessage.detail) {
-          toast.error(errorMessage.detail); // Отображение деталей ошибки с помощью toast
+          toast.error(errorMessage.detail) // Отображение деталей ошибки с помощью toast
         }
       } else {
-        toast.error("Ошибка при загрузке"); // Общее сообщение об ошибке, если детали не доступны
+        toast.error('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
       }
-      throw error;
+      throw error
     }
-  }
-);
+  },
+)
 
 const orderTableSlice = createSlice({
-  name: "order",
+  name: 'order',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchGetOrder.pending, (state) => {
-        state.status = "loading";
+        state.status = 'loading'
       })
       .addCase(fetchGetOrder.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.getOrder = action.payload;
+        state.status = 'succeeded'
+        state.getOrder = action.payload
       })
       .addCase(fetchGetOrder.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+        state.status = 'failed'
+        state.error = action.error.message
+      })
   },
-});
+})
 
-export default orderTableSlice.reducer;
+export default orderTableSlice.reducer

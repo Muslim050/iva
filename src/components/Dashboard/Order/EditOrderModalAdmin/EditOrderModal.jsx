@@ -16,6 +16,7 @@ import backendURL from 'src/utils/url'
 import axios from 'axios'
 import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
 import { ReactComponent as Delete } from 'src/assets/Table/Delete.svg'
+import { useParams } from 'react-router-dom'
 
 const format = [
   { value: 'preroll', text: 'Pre-roll' },
@@ -31,9 +32,7 @@ export default function EditOrderModal({
   const [budgett, setBudgett] = React.useState(0)
   const role = localStorage.getItem('role')
   const { order } = useSelector((state) => state.order)
-
   const [isOrderCreated, setIsOrderCreated] = React.useState(false)
-
   const {
     register,
     formState: { errors, isValid },
@@ -71,15 +70,20 @@ export default function EditOrderModal({
 
     setBudgett(newBudget)
   }
+  console.log('currentOrder', currentOrder)
+
   let advId
   order.forEach((item) => {
-    advId = item.advertiser.id // Присваиваем значение свойства name текущего элемента массива
+    advId = item.advertiser.id
   })
+
   const fetchCpm = async () => {
     const token = localStorage.getItem('token')
 
     const response = await axios.get(
-      `${backendURL}/order/cpm/?advertiser=${advID === null ? advID : advId}`,
+      `${backendURL}/order/cpm/?advertiser=${
+        advID === null ? advID : currentOrder.advertiser.id
+      }`,
 
       {
         headers: {
