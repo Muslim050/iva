@@ -1,70 +1,98 @@
-import React from "react";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import axios from "axios";
-import { addAdvertiser } from "src/redux/advertiser/advertiserSlice";
-import { useForm } from "react-hook-form";
-import { toastConfig } from "src/utils/toastConfig";
-import InputUI from "src/components/UI/InputUI/InputUI";
-import SelectUI from "src/components/UI/SelectUI/SelectUI";
-import { hideModalAdvertiser } from "src/redux/modalSlice";
-import { ButtonModal } from "src/components/UI/ButtonUI/ButtonUI";
-import { ReactComponent as Close } from "src/assets/Modal/Close.svg";
-import backendURL from "src/utils/url";
+import React from 'react'
+import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import axios from 'axios'
+import { addAdvertiser } from 'src/redux/advertiser/advertiserSlice'
+import { useForm, Controller } from 'react-hook-form'
+import { toastConfig } from 'src/utils/toastConfig'
+import InputUI from 'src/components/UI/InputUI/InputUI'
+import SelectUI from 'src/components/UI/SelectUI/SelectUI'
+import { hideModalAdvertiser } from 'src/redux/modalSlice'
+import { ButtonModal } from 'src/components/UI/ButtonUI/ButtonUI'
+import { ReactComponent as Close } from 'src/assets/Modal/Close.svg'
+import backendURL from 'src/utils/url'
 
 export default function AdvertiserModal() {
-  const [advertiserModal, setAdvertiserModal] = React.useState([]);
+  const [advertiserModal, setAdvertiserModal] = React.useState([])
+  const [cpm, setCpm] = React.useState([])
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const {
     register,
     formState: { errors, isValid },
     handleSubmit,
+    control,
+    setValue,
   } = useForm({
     defaultValues: {
-      name: "",
-      phone: "",
-      email: "",
-      agency: "",
+      name: '',
+      phone: '',
+      email: '',
+      agency: '',
+      cpm_mixroll: '',
+      cpm_preroll: '',
     },
-    mode: "onBlur",
-  });
+    mode: 'onBlur',
+  })
 
   const fetchAdvertiser = async () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token')
     const response = await axios.get(
       `${backendURL}/advertiser/advertising-agency/`,
 
       {
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      }
-    );
-    setAdvertiserModal(response.data.data);
-  };
+      },
+    )
+    setAdvertiserModal(response.data.data)
+  }
+  const fetchCpm = async () => {
+    const token = localStorage.getItem('token')
+
+    const response = await axios.get(
+      `${backendURL}/order/cpm/`,
+
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    setCpm(response.data.data)
+    setValue('cpm_mixroll', response.data.data.mixroll)
+    setValue('cpm_preroll', response.data.data.preroll)
+  }
 
   React.useEffect(() => {
-    fetchAdvertiser();
-  }, []);
+    fetchAdvertiser()
+  }, [])
+
+  React.useEffect(() => {
+    fetchCpm()
+  }, [])
+  console.log('cpm', cpm)
 
   const onSubmit = (data) => {
-    const adv = dispatch(addAdvertiser({ data }));
+    const adv = dispatch(addAdvertiser({ data }))
     if (adv) {
-      toast.success("Рекламадатель успешно создан!", toastConfig);
-      dispatch(hideModalAdvertiser());
+      toast.success('Рекламадатель успешно создан!', toastConfig)
+      dispatch(hideModalAdvertiser())
       setTimeout(() => {
-        window.location.reload();
-      }, 1500);
+        window.location.reload()
+      }, 1500)
     } else {
-      toast.error("Что то пошло не так!", toastConfig);
+      toast.error('Что то пошло не так!', toastConfig)
     }
-  };
+  }
   const handleButtonClick = () => {
-    dispatch(hideModalAdvertiser());
-  };
+    dispatch(hideModalAdvertiser())
+  }
 
   return (
     <>
@@ -110,15 +138,77 @@ export default function AdvertiserModal() {
             inputWidth="inputSmall"
           />
 
+          <div
+            className="modalWindow__wrapper_input"
+            style={{ marginBottom: '15px' }}
+          >
+            <div style={{ width: '210px' }}>
+              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+                cpm_preroll
+              </label>
+              <Controller
+                name="cpm_preroll"
+                control={control}
+                rules={{ required: 'Поле обязательно к заполнению' }}
+                defaultValue=""
+                render={({ field: { onChange, onBlur, value, name, ref } }) => (
+                  <input
+                    type="text"
+                    value={value?.toLocaleString('en-US')}
+                    onChange={(e) => {
+                      const rawValue = e.target.value.replace(/\D/g, '')
+                      const newValue = rawValue ? parseInt(rawValue, 10) : ''
+                      onChange(newValue)
+                    }}
+                    onBlur={onBlur}
+                    name={name}
+                    ref={ref}
+                    placeholder="cpm_preroll"
+                    autoComplete="off"
+                    step="1000"
+                  />
+                )}
+              />
+            </div>
+            <div style={{ width: '210px' }}>
+              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+                cpm_mixroll
+              </label>
+              <Controller
+                name="cpm_mixroll"
+                control={control}
+                rules={{ required: 'Поле обязательно к заполнению' }}
+                defaultValue=""
+                render={({ field: { onChange, onBlur, value, name, ref } }) => (
+                  <input
+                    type="text"
+                    value={value?.toLocaleString('en-US')}
+                    onChange={(e) => {
+                      const rawValue = e.target.value.replace(/\D/g, '')
+                      const newValue = rawValue ? parseInt(rawValue, 10) : ''
+                      onChange(newValue)
+                    }}
+                    onBlur={onBlur}
+                    name={name}
+                    ref={ref}
+                    placeholder="cpm_mixroll"
+                    autoComplete="off"
+                    step="1000"
+                  />
+                )}
+              />
+            </div>
+          </div>
+
           <SelectUI
             label="Рекламное агенство"
             options={advertiserModal}
-            register={register("agency")}
+            register={register('agency')}
             error={errors?.advertiser?.message}
             inputWidth
           />
 
-          <div style={{ display: "flex", justifyContent: "end" }}>
+          <div style={{ display: 'flex', justifyContent: 'end' }}>
             <ButtonModal isValid={true} disabled={!isValid}>
               Создать
             </ButtonModal>
@@ -126,5 +216,5 @@ export default function AdvertiserModal() {
         </div>
       </form>
     </>
-  );
+  )
 }

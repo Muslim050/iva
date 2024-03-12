@@ -18,9 +18,8 @@ import EditAdvModal from './EditAdvertiserModalAdmin/EditAdvModal'
 const headers = [
   { key: 'id', label: '№' },
   { key: 'name', label: 'Наименование Компании' },
-  { key: 'cpm_mixroll', label: 'cpm_mixroll' },
-  { key: 'cpm_preroll', label: 'cpm_preroll' },
-
+  { key: 'cpm_preroll', label: 'CPM_Preroll' },
+  { key: 'cpm_mixroll', label: 'CPM_Mixroll' },
   { key: 'email', label: 'Email' },
   { key: 'phone_number', label: 'Номер телефона' },
   { key: 'advertising_agency', label: 'Рекламное агенство' },
@@ -133,7 +132,7 @@ function AdvertiserTable() {
                           <>------</>
                         )}
                       </td>
-                      <td style={{ display: 'contents' }}>
+                      <td>
                         {role === 'admin' ? (
                           <ButtonBorder
                             onClick={() => {

@@ -51,6 +51,8 @@ export const addAdvertiser = createAsyncThunk(
           name: data.name,
           email: data.email,
           phone_number: data.phone,
+          cpm_mixroll: data.cpm_mixroll,
+          cpm_preroll: data.cpm_preroll,
         },
         {
           headers: {

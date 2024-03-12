@@ -126,7 +126,7 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="modalWindow__title">
-          Редактировать Рекламодателя
+          Редактировать
           <Close
             className="modalWindow__title__button"
             onClick={() => setShowModalEditAdmin(false)}
@@ -138,9 +138,9 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
             className="modalWindow__wrapper_input"
             style={{ marginBottom: '15px' }}
           >
-            <div style={{ width: '210px' }}>
+            <div style={{ width: '150px' }}>
               <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
-                cpm_preroll
+                CPM_Preroll
               </label>
               <Controller
                 name="cpm_preroll"
@@ -160,7 +160,6 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
                     onBlur={onBlur}
                     name={name}
                     ref={ref}
-                    placeholder="cpm_preroll"
                     autoComplete="off"
                     step="1000"
                   />
@@ -170,9 +169,9 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
                 {errors?.numberview && <p>{errors?.numberview?.message}</p>}
               </span>
             </div>
-            <div style={{ width: '210px' }}>
+            <div style={{ width: '150px', marginLeft: '10px' }}>
               <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
-                cpm_mixroll
+                CPM_Mixroll
               </label>
               <Controller
                 name="cpm_mixroll"
@@ -192,7 +191,6 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
                     onBlur={onBlur}
                     name={name}
                     ref={ref}
-                    placeholder="cpm_mixroll"
                     autoComplete="off"
                     step="1000"
                   />
