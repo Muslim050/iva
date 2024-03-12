@@ -126,7 +126,7 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="modalWindow__title">
-          Редактировать
+          Редактировать CPM
           <Close
             className="modalWindow__title__button"
             onClick={() => setShowModalEditAdmin(false)}
@@ -140,7 +140,7 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
           >
             <div style={{ width: '150px' }}>
               <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
-                CPM_Preroll
+                Preroll
               </label>
               <Controller
                 name="cpm_preroll"
@@ -171,7 +171,7 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
             </div>
             <div style={{ width: '150px', marginLeft: '10px' }}>
               <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
-                CPM_Mixroll
+                Mixroll
               </label>
               <Controller
                 name="cpm_mixroll"
