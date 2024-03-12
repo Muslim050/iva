@@ -138,64 +138,30 @@ export default function AdvertiserModal() {
             inputWidth="inputSmall"
           />
 
-          <div
-            className="modalWindow__wrapper_input"
-            style={{ marginBottom: '15px' }}
-          >
-            <div style={{ width: '210px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div>
               <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
-                cpm_preroll
+                CPM_Preroll
               </label>
-              <Controller
+              <InputUI
+                type="text"
+                autoComplete="off"
+                register={register}
                 name="cpm_preroll"
-                control={control}
-                rules={{ required: 'Поле обязательно к заполнению' }}
-                defaultValue=""
-                render={({ field: { onChange, onBlur, value, name, ref } }) => (
-                  <input
-                    type="text"
-                    value={value?.toLocaleString('en-US')}
-                    onChange={(e) => {
-                      const rawValue = e.target.value.replace(/\D/g, '')
-                      const newValue = rawValue ? parseInt(rawValue, 10) : ''
-                      onChange(newValue)
-                    }}
-                    onBlur={onBlur}
-                    name={name}
-                    ref={ref}
-                    placeholder="cpm_preroll"
-                    autoComplete="off"
-                    step="1000"
-                  />
-                )}
+                errors={errors.cpm_preroll}
               />
             </div>
-            <div style={{ width: '210px' }}>
+
+            <div>
               <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
-                cpm_mixroll
+                CPM_Mixroll
               </label>
-              <Controller
+              <InputUI
+                type="text"
+                autoComplete="off"
+                register={register}
                 name="cpm_mixroll"
-                control={control}
-                rules={{ required: 'Поле обязательно к заполнению' }}
-                defaultValue=""
-                render={({ field: { onChange, onBlur, value, name, ref } }) => (
-                  <input
-                    type="text"
-                    value={value?.toLocaleString('en-US')}
-                    onChange={(e) => {
-                      const rawValue = e.target.value.replace(/\D/g, '')
-                      const newValue = rawValue ? parseInt(rawValue, 10) : ''
-                      onChange(newValue)
-                    }}
-                    onBlur={onBlur}
-                    name={name}
-                    ref={ref}
-                    placeholder="cpm_mixroll"
-                    autoComplete="off"
-                    step="1000"
-                  />
-                )}
+                errors={errors.cpm_mixroll}
               />
             </div>
           </div>
