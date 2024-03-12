@@ -118,8 +118,8 @@ function AdvertiserTable() {
                     <tr key={person.id} className={style.table__tr}>
                       <td>{i + 1}</td>
                       <td>{person.name}</td>
-                      <td>{person.cpm_mixroll}</td>
                       <td>{person.cpm_preroll}</td>
+                      <td>{person.cpm_mixroll}</td>
                       <td>{person.email}</td>
                       <td>
                         <FormatterPhone phoneNumber={person.phone_number} />
