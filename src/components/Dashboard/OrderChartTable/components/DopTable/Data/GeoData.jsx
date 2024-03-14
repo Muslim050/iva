@@ -35,23 +35,32 @@ function GeoData({ statistic }) {
           { country: 'KG', percentage: 2.7 },
           { country: 'Other', percentage: 2.7 },
         ]
+      : statistic.budget === 591825
+      ? [
+          { country: 'UZ', percentage: 51.2 },
+          { country: 'RU', percentage: 25.8 },
+          { country: 'KG', percentage: 11.5 },
+          { country: 'Other', percentage: 6.9 },
+        ]
       : statistic.geo_percentages
 
   return (
     <>
-      {uniqueGeo.map((geo, index) => (
-        <>
-          <td
-            key={`geo-${index}`}
-            data-label="Гео"
-            style={{
-              textAlign: 'center',
-            }}
-          >
-            {geo.percentage}%
-          </td>
-        </>
-      ))}
+      {uniqueGeo.length > 0
+        ? uniqueGeo.map((geo, index) => (
+            <>
+              <td
+                key={`geo-${index}`}
+                data-label="Гео"
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                {geo.percentage}%
+              </td>
+            </>
+          ))
+        : null}
     </>
   )
 }

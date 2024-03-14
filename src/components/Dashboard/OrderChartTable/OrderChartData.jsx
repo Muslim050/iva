@@ -38,25 +38,19 @@ function OrderChartData({ statistic, index, handleRowClick, isExpanded }) {
       </td>
 
       <td className={style.table_td}>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            marginLeft: '7px',
-            marginRight: '10px',
-            width: '100%',
-            lineHeight: '9px',
-          }}
-        >
+        <div>
+          <div style={{ display: 'flex', width: '100px' }}>
+            {new Date(statistic.publication_date).toLocaleDateString('ru-RU', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+            })}
+          </div>
           <div>
-            <div>{statistic.publication_date.split('T')[0]}</div>
-            <br />
-            <div>
-              {new Date(statistic.publication_date).toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
-            </div>
+            {new Date(statistic.publication_date).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
           </div>
         </div>
       </td>
@@ -68,7 +62,16 @@ function OrderChartData({ statistic, index, handleRowClick, isExpanded }) {
             Завершен
             {statistic.deactivation_date && (
               <div style={{ color: 'red' }}>
-                <div>{statistic.deactivation_date.split('T')[0]}</div>
+                <div style={{ display: 'flex' }}>
+                  {new Date(statistic.deactivation_date).toLocaleDateString(
+                    'ru-RU',
+                    {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                    },
+                  )}
+                </div>
                 <div>
                   {new Date(statistic.deactivation_date).toLocaleTimeString(
                     [],

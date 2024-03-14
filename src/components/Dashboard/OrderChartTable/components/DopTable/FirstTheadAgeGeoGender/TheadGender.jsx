@@ -53,38 +53,50 @@ function OrderChartTwoThead({ statistic }) {
             ].map((gen) => gen.gender),
           ),
         )
+      : statistic.budget === 591825
+      ? Array.from(
+          new Set(
+            [
+              { gender: 'female', percentage: 56.4 },
+              { gender: 'male', percentage: 43.6 },
+              { gender: 'Other', percentage: 0 },
+            ].map((gen) => gen.gender),
+          ),
+        )
       : Array.from(
           new Set(statistic.gender_percentages.map((gen) => gen.gender)),
         )
 
   return (
     <>
-      {uniqueGenders.map((gender, index) => (
-        <th
-          key={index}
-          className={style.tableChart__tdd}
-          style={{
-            fontSize: '14px',
-          }}
-        >
-          {gender === 'female' ? (
-            'Ж'
-          ) : gender === 'male' ? (
-            'М'
-          ) : gender === 'Other' ? (
-            <div
+      {uniqueGenders.length > 0
+        ? uniqueGenders.map((gender, index) => (
+            <th
+              key={index}
+              className={style.tableChart__tdd}
               style={{
-                display: 'flex',
-                justifyContent: 'center',
+                fontSize: '14px',
               }}
             >
-              <img src={Anonim} alt="Anonim" style={{ width: '20px' }} />
-            </div>
-          ) : (
-            <>{gender}</>
-          )}
-        </th>
-      ))}
+              {gender === 'female' ? (
+                'Ж'
+              ) : gender === 'male' ? (
+                'М'
+              ) : gender === 'Other' ? (
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <img src={Anonim} alt="Anonim" style={{ width: '20px' }} />
+                </div>
+              ) : (
+                <>{gender}</>
+              )}
+            </th>
+          ))
+        : null}
     </>
   )
 }

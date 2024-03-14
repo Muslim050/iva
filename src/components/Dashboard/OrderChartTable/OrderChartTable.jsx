@@ -25,6 +25,8 @@ function OrderChartTable() {
   const [expandedRows, setExpandedRows] = React.useState('')
   const { id } = useParams()
   const [loading, setLoading] = React.useState(true)
+  const [loadingClose, setLoadingClose] = React.useState(false)
+
   const data = useSelector((state) => state.statistics.statistics.results)
   const [getOrder, setGetOrder] = React.useState([])
   const [isTooltip, setIsTooltip] = React.useState(false)
@@ -63,10 +65,10 @@ function OrderChartTable() {
       },
     )
     setGetOrder(response.data.data)
-    const { actual_start_date, actual_end_date, expected_end_date } =
+    const { expected_start_date, actual_end_date, expected_end_date } =
       response.data.data
 
-    const startDateObj = new Date(actual_start_date)
+    const startDateObj = new Date(expected_start_date)
     const endDateObj = actual_end_date
       ? new Date(actual_end_date)
       : new Date(expected_end_date)
@@ -100,7 +102,8 @@ function OrderChartTable() {
   }, [])
   const dataFilteredClose = () => {
     setDataFiltered(false)
-    dispatch(fetchStatistics({ id })).then(() => setLoading(true))
+    setLoadingClose(true)
+    dispatch(fetchStatistics({ id })).then(() => setLoadingClose(false))
   }
   React.useEffect(() => {
     dispatch(fetchStatistics({ id })).then(() => setLoading(false))
@@ -109,6 +112,7 @@ function OrderChartTable() {
   let totalViews = 0
   let totalBudget = 0
   let totalAnalitickView = 0
+  console.log('loadingClose', loadingClose)
   return (
     <>
       {loading ? (
@@ -151,7 +155,17 @@ function OrderChartTable() {
                   >
                     Выбранный период
                     <div style={{ marginTop: '4px' }}>
-                      {startDate} - {endDate}
+                      {new Date(startDate).toLocaleDateString('ru-RU', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                      })}
+                      -
+                      {new Date(endDate).toLocaleDateString('ru-RU', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                      })}
                     </div>
                   </div>
 
@@ -164,6 +178,14 @@ function OrderChartTable() {
                       borderRadius: '8px',
                     }}
                   />
+                </div>
+              )}
+              {loadingClose && (
+                <div className="loaderWrapper" style={{ height: '6vh' }}>
+                  <div
+                    className="spinner"
+                    style={{ width: '25px', height: '25px' }}
+                  ></div>
                 </div>
               )}
 

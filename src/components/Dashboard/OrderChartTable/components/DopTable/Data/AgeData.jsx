@@ -49,20 +49,33 @@ function AgeData({ statistic }) {
           { age_group: 'age55-64', percentage: 5.1 },
           { age_group: 'age65-', percentage: 1.3 },
         ]
+      : statistic.budget === 591825
+      ? [
+          { age_group: 'age13-17', percentage: 1.7 },
+          { age_group: 'age18-24', percentage: 18.1 },
+          { age_group: 'age25-34', percentage: 40.9 },
+          { age_group: 'age35-44', percentage: 23.1 },
+          { age_group: 'age45-54', percentage: 8.4 },
+          { age_group: 'age55-64', percentage: 5.3 },
+          { age_group: 'age65-', percentage: 2.6 },
+        ]
       : statistic.age_group_percentages
+
   return (
     <>
-      {uniqueAge.map((age, index) => (
-        <td
-          key={`age-${index}`}
-          data-label="Возраст"
-          style={{
-            textAlign: 'center',
-          }}
-        >
-          {age.percentage}%
-        </td>
-      ))}
+      {uniqueAge.length > 0
+        ? uniqueAge.map((age, index) => (
+            <td
+              key={`age-${index}`}
+              data-label="Возраст"
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              {age.percentage}%
+            </td>
+          ))
+        : null}
     </>
   )
 }

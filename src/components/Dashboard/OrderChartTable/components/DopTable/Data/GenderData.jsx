@@ -31,22 +31,30 @@ function GenderData({ statistic }) {
           { gender: 'male', percentage: 80.7 },
           { gender: 'Other', percentage: 0 },
         ]
+      : statistic.budget === 591825
+      ? [
+          { gender: 'female', percentage: 56.4 },
+          { gender: 'male', percentage: 43.6 },
+          { gender: 'Other', percentage: 0 },
+        ]
       : statistic.gender_percentages
   return (
     <>
-      {uniqueGenders.map((gender, index) => (
-        <>
-          <td
-            key={`gender-${index}`}
-            data-label="Пол"
-            style={{
-              textAlign: 'center',
-            }}
-          >
-            {gender.percentage}%
-          </td>
-        </>
-      ))}
+      {uniqueGenders.length > 0
+        ? uniqueGenders.map((gender, index) => (
+            <>
+              <td
+                key={`gender-${index}`}
+                data-label="Пол"
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                {gender.percentage}%
+              </td>
+            </>
+          ))
+        : null}
     </>
   )
 }

@@ -29,12 +29,11 @@ export default function OrderModal({ setShowModal }) {
   const [budgett, setBudgett] = React.useState(0)
   const [selectedEndDate, setSelectedEndDate] = React.useState(null)
   const advID = localStorage.getItem('advertiser')
-
   const today = new Date()
-  let advId
-  advertiser.forEach((item) => {
-    advId = item.id // Присваиваем значение свойства name текущего элемента массива
-  })
+  // let advId
+  // advertiser.forEach((item) => {
+  //   advId = item.id // Присваиваем значение свойства name текущего элемента массива
+  // })
   const {
     register,
     formState: { errors, isValid },
@@ -57,6 +56,10 @@ export default function OrderModal({ setShowModal }) {
   const selectedFormat = watch('format')
   const expectedView = watch('expectedView')
 
+  const agencyAdvId = watch('advertiserID')
+
+  console.log(',agencyAdvId', agencyAdvId)
+  console.log('advID', advID)
   const calculateBudget = () => {
     let newBudget = 0
 
@@ -74,7 +77,7 @@ export default function OrderModal({ setShowModal }) {
     const token = localStorage.getItem('token')
 
     const response = await axios.get(
-      `${backendURL}/order/cpm/?advertiser=${advID === null ? advID : advId}`,
+      `${backendURL}/order/cpm/?advertiser=${agencyAdvId || advID}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -107,10 +110,17 @@ export default function OrderModal({ setShowModal }) {
   }, [])
 
   React.useEffect(() => {
-    if (advId) {
+    if (agencyAdvId) {
       fetchCpm()
     }
-  }, [advId])
+  }, [agencyAdvId])
+
+  // Effect hook for advID changes
+  React.useEffect(() => {
+    if (advID) {
+      fetchCpm()
+    }
+  }, [advID])
   const onSubmit = async (data) => {
     try {
       setIsOrderCreated(true)

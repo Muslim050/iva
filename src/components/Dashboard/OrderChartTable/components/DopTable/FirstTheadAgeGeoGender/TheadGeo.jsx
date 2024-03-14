@@ -56,22 +56,34 @@ function OrderChartGeo({ statistic }) {
             ].map((gen) => gen.country),
           ),
         )
+      : statistic.budget === 591825
+      ? Array.from(
+          new Set(
+            [
+              { country: 'UZ', percentage: 51.2 },
+              { country: 'RU', percentage: 25.8 },
+              { country: 'KG', percentage: 11.5 },
+              { country: 'Other', percentage: 6.9 },
+            ].map((gen) => gen.country),
+          ),
+        )
       : Array.from(new Set(statistic.geo_percentages.map((geo) => geo.country)))
 
-  console.log('uniqueGenders', uniqueGenders)
   return (
     <>
-      {uniqueGenders.map((geo, index) => (
-        <th
-          key={index}
-          className={style.tableChart__tdd}
-          style={{
-            fontSize: '14px',
-          }}
-        >
-          {geo}
-        </th>
-      ))}
+      {uniqueGenders.length > 0
+        ? uniqueGenders.map((geo, index) => (
+            <th
+              key={index}
+              className={style.tableChart__tdd}
+              style={{
+                fontSize: '14px',
+              }}
+            >
+              {geo}
+            </th>
+          ))
+        : null}
     </>
   )
 }

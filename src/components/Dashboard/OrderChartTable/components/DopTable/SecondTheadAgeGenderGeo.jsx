@@ -35,6 +35,12 @@ function OrderChartTheadAgeGenderGeo({ statistic, getOrder }) {
           { gender: 'male', percentage: 80.7 },
           { gender: 'Other', percentage: 0 },
         ]
+      : statistic.budget === 591825
+      ? [
+          { gender: 'female', percentage: 56.4 },
+          { gender: 'male', percentage: 43.6 },
+          { gender: 'Other', percentage: 0 },
+        ]
       : statistic && statistic.gender_percentages
       ? removeDuplicates(statistic.gender_percentages.map((gen) => gen.gender))
       : []
@@ -86,6 +92,16 @@ function OrderChartTheadAgeGenderGeo({ statistic, getOrder }) {
           { age_group: 'age55-64', percentage: 5.1 },
           { age_group: 'age65-', percentage: 1.3 },
         ]
+      : statistic.budget === 591825
+      ? [
+          { age_group: 'age13-17', percentage: 1.7 },
+          { age_group: 'age18-24', percentage: 18.1 },
+          { age_group: 'age25-34', percentage: 40.9 },
+          { age_group: 'age35-44', percentage: 23.1 },
+          { age_group: 'age45-54', percentage: 8.4 },
+          { age_group: 'age55-64', percentage: 5.3 },
+          { age_group: 'age65-', percentage: 2.6 },
+        ]
       : statistic && statistic.age_group_percentages
       ? removeDuplicates(
           statistic.age_group_percentages.map((age) => age.age_group),
@@ -126,6 +142,13 @@ function OrderChartTheadAgeGenderGeo({ statistic, getOrder }) {
           { country: 'KG', percentage: 2.7 },
           { country: 'Other', percentage: 2.7 },
         ]
+      : statistic.budget === 591825
+      ? [
+          { country: 'UZ', percentage: 51.2 },
+          { country: 'RU', percentage: 25.8 },
+          { country: 'KG', percentage: 11.5 },
+          { country: 'Other', percentage: 6.9 },
+        ]
       : statistic && statistic.geo_percentages
       ? removeDuplicates(statistic.geo_percentages.map((geo) => geo.country))
       : []
@@ -133,6 +156,7 @@ function OrderChartTheadAgeGenderGeo({ statistic, getOrder }) {
   const genderColSpan = uniqueGenders.length
   const ageColSpan = uniqueAge.length
   const geoColSpan = uniqueGeo.length
+
   console.log('genderColSpan', genderColSpan)
   return (
     <>
@@ -148,42 +172,49 @@ function OrderChartTheadAgeGenderGeo({ statistic, getOrder }) {
       >
         Показы
       </td>
-      <td
-        className={style.tableChart__td}
-        colSpan={genderColSpan}
-        style={{
-          textAlign: 'center',
-          background: '#5570f263',
-          borderRadius: '10px',
-          borderRight: '3px solid white',
-        }}
-      >
-        Пол
-      </td>
+      {genderColSpan ? (
+        <td
+          className={style.tableChart__td}
+          colSpan={genderColSpan}
+          style={{
+            textAlign: 'center',
+            background: '#5570f263',
+            borderRadius: '10px',
+            borderRight: '3px solid white',
+          }}
+        >
+          Пол
+        </td>
+      ) : null}
 
-      <td
-        className={style.tableChart__td}
-        colSpan={ageColSpan}
-        style={{
-          textAlign: 'center',
-          background: '#5570f263',
-          borderRadius: '10px',
-          borderRight: '3px solid white',
-        }}
-      >
-        Возраст
-      </td>
-      <td
-        className={style.tableChart__td}
-        colSpan={geoColSpan}
-        style={{
-          textAlign: 'center',
-          background: '#5570f263',
-          borderRadius: '10px',
-        }}
-      >
-        Гео
-      </td>
+      {ageColSpan ? (
+        <td
+          className={style.tableChart__td}
+          colSpan={ageColSpan}
+          style={{
+            textAlign: 'center',
+            background: '#5570f263',
+            borderRadius: '10px',
+            borderRight: '3px solid white',
+          }}
+        >
+          Возраст
+        </td>
+      ) : null}
+
+      {geoColSpan ? (
+        <td
+          className={style.tableChart__td}
+          colSpan={geoColSpan}
+          style={{
+            textAlign: 'center',
+            background: '#5570f263',
+            borderRadius: '10px',
+          }}
+        >
+          Гео
+        </td>
+      ) : null}
     </>
   )
 }

@@ -1,28 +1,24 @@
 .tableChart__td {
-  color: #2C2D33;
+  color: #2c2d33;
   line-height: 16.94px;
   font-weight: 400;
   font-size: 14px;
 }
 
 .tableChart__td {
-  color: #2C2D33;
+  color: #2c2d33;
   line-height: 16.94px;
   font-weight: 400;
   font-size: 14px;
 }
 
-
 .tableChart__tdd {
-  color: #2C2D33;
+  color: #2c2d33;
   line-height: 16.94px;
   font-weight: 400;
   font-size: 11px;
   text-align: center;
 }
-
-
-
 
 .tableChartWrapper__table_header {
   width: 100%;
@@ -34,9 +30,8 @@
   padding: 15px 0px 0px 0px;
 }
 
-
 .tableChartWrapper__table_title {
-  color: var(--text-color, );
+  color: var(--text-color);
   padding: 0px 0px 15px 0px;
   display: block;
   font-size: 16px;
@@ -48,71 +43,62 @@
   justify-content: space-between;
   // display: flex;
   align-items: center;
-
 }
 
 .adaptiveColspan {
   grid-column: span var(--colspan);
 }
 
-
 .s_th {
-  color: #2C2D33;
+  color: #2c2d33;
   line-height: 16.94px;
   font-weight: 400;
   font-size: 14px;
 }
 
-
 .tableChart {
   border-collapse: collapse;
 
   &__th {
-    color: #2C2D33;
+    color: #2c2d33;
     line-height: 16.94px;
     font-weight: 400;
     font-size: 14px;
   }
 
   &__thh {
-    color: #2C2D33;
+    color: #2c2d33;
     line-height: 16.94px;
     font-weight: 400;
     font-size: 11px;
     text-align: center;
   }
-
-
 }
-
-
-
 
 .thead_dop {
   color: #717377;
-  border: 2px solid var(--border-color, );
+  border: 2px solid var(--border-color);
 
   &__tr {
     transition: background-color 0.3s ease, color 0.3s ease;
 
     // border-bottom: 2px solid var(--border-color, );
-    padding: .35em;
+    padding: 0.35em;
   }
 
   &__th {
-    font-size: .85em;
-    letter-spacing: .1em;
+    font-size: 0.85em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
 
     font-size: 12px;
     background: var(--thead-color);
-    color: var(--text-color, );
+    color: var(--text-color);
   }
 }
 
 @media only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-width: 1024px) {
-
+  (min-device-width: 768px) and (max-width: 1024px) {
   .tableWrapper,
   thead,
   tbody,
@@ -149,55 +135,49 @@
   }
 
   .table_td:nth-of-type(1):before {
-    content: "№";
+    content: '№';
   }
 
-
   .table_td:nth-of-type(2):before {
-    content: "Канал";
+    content: 'Канал';
   }
 
   .table_td:nth-of-type(3):before {
-    content: "Название видео";
+    content: 'Название видео';
   }
 
   .table_td:nth-of-type(4):before {
-    content: "Формат";
+    content: 'Формат';
   }
 
   .table_td:nth-of-type(5):before {
-    content: "Начало";
+    content: 'Начало';
   }
 
   .table_td:nth-of-type(6):before {
-    content: "Статус";
+    content: 'Статус';
   }
 
   .table_td:nth-of-type(7):before {
-    content: "Показы онлайн";
+    content: 'Показы онлайн';
   }
 
   .table_td:nth-of-type(8):before {
-    content: "Бюджет";
+    content: 'Бюджет';
   }
 
   .table_td:nth-of-type(9):before {
-    content: "Анализ аудитории";
+    content: 'Анализ аудитории';
   }
-
 }
-
-
 
 .linkk__svg {
   width: 25px;
   height: 25px;
-
-
 }
 
 .linkk__svg path {
-  stroke: var(--text-color, )
+  stroke: var(--text-color);
 }
 
 .list__item__open {
@@ -206,16 +186,12 @@
   transition: max-height 0.5s ease-in;
   background-color: var(--tablebg-color);
   transition: background-color 0.3s ease, color 0.3s ease;
-  border-bottom: 2px solid var(--border-color, );
+  // border-bottom: 2px solid var(--border-color, );
 
   background: #efefef;
   border-radius: 10px;
   max-height: 100%;
-
-
 }
-
-
 
 .doprow {
   background-color: var(--tablebg-color);
@@ -240,9 +216,7 @@
 
   &:hover {
     box-shadow: 0 0 5px #e8e8e9;
-
   }
-
 
   .arrow {
     display: inline-block;
@@ -270,7 +244,7 @@
 }
 
 .linkWrapper {
-  color: var(--text-color, );
+  color: var(--text-color);
   font-size: 14px;
   white-space: nowrap;
   padding: 16px 24px 16px 24px;
@@ -281,24 +255,21 @@
     font-size: 14px;
     line-height: 16.94px;
     padding: 3.5px 11px;
-    background: #F2F3F3;
+    background: #f2f3f3;
     cursor: pointer;
     color: #294fe9;
     border: 1px solid white;
     border-radius: 8px;
 
-
     &:hover {
       border: 1px solid #294fe9;
       border-radius: 8px;
-      box-shadow: 0 0 5px #CEE5DD;
+      box-shadow: 0 0 5px #cee5dd;
 
       svg path {
         stroke: #294fe9;
       }
     }
-
-
   }
 }
 
@@ -307,10 +278,7 @@
   font-size: 14px;
   position: relative;
 
-
-
   &__wrapper {
-
     // width: 32px;
     // height: 32px;
     padding: 15px;
@@ -338,8 +306,7 @@
   z-index: 99999;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease,
-    visibility 0s linear 0.3s;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
 }
 
 .profile__wrapper__tooltip {
@@ -348,8 +315,6 @@
   transition-delay: 0s;
   /* Отменяем задержку */
 }
-
-
 
 @media only screen and (max-width: 1024px) {
   .list__item__open {

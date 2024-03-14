@@ -74,15 +74,30 @@ function OrderChartAge({ statistic, getOrder }) {
             ].map((age) => age.age_group),
           ),
         )
+      : statistic.budget === 591825
+      ? Array.from(
+          new Set(
+            [
+              { age_group: 'age13-17', percentage: 1.7 },
+              { age_group: 'age18-24', percentage: 18.1 },
+              { age_group: 'age25-34', percentage: 40.9 },
+              { age_group: 'age35-44', percentage: 23.1 },
+              { age_group: 'age45-54', percentage: 8.4 },
+              { age_group: 'age55-64', percentage: 5.3 },
+              { age_group: 'age65-', percentage: 2.6 },
+            ].map((age) => age.age_group),
+          ),
+        )
       : Array.from(
           new Set(statistic.age_group_percentages.map((age) => age.age_group)),
         )
+
+  console.log('uniqueGenders', uniqueGenders)
+
   return (
     <>
-      {uniqueGenders.map(
-        (genderData, index) => (
-          console.log(',genderData', genderData),
-          (
+      {uniqueGenders.length > 0
+        ? uniqueGenders.map((genderData, index) => (
             <td
               key={index}
               className={style.tableChart__tdd}
@@ -92,9 +107,8 @@ function OrderChartAge({ statistic, getOrder }) {
             >
               {genderData.substring(3)}
             </td>
-          )
-        ),
-      )}
+          ))
+        : null}
     </>
   )
 }
