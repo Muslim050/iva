@@ -49,6 +49,7 @@ export default function OrderModal({ setShowModal }) {
       expectedView: '',
       budgett: 0,
       selectedFile: null,
+      notes: '',
     },
 
     mode: 'onBlur',
@@ -128,9 +129,9 @@ export default function OrderModal({ setShowModal }) {
       if (response && !response.error) {
         toast.success('Заказ успешно создан!', toastConfig)
         dispatch(hideModalOrder())
-        setTimeout(() => {
-          window.location.reload()
-        }, 1500)
+        // setTimeout(() => {
+        //   window.location.reload()
+        // }, 1500)
       } else if (response.error.message) {
         toast.error(
           'Что-то пошло не так!' + response.error.message,
@@ -389,6 +390,14 @@ export default function OrderModal({ setShowModal }) {
               </span>
             </div>
           </div>
+
+          <textarea
+            placeholder="Комментарий к заказу"
+            autoComplete="off"
+            className={style.modalWindow__textarea}
+            {...register('notes')}
+            style={{ width: '100%' }}
+          ></textarea>
 
           <div className={style.btn__wrapper}>
             <button

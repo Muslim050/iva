@@ -1,16 +1,16 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import ComplitedTable from "src/components/Dashboard/Confirmed-ComplitedOrder/ComplitedOrders/ComplitedTable";
-import CircularBadge from "src/components/UI/Circular/CircularBadge";
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useLocation } from 'react-router-dom'
+import ComplitedTable from 'src/components/Dashboard/Confirmed-ComplitedOrder/ComplitedOrders/ComplitedTable'
+import CircularBadge from 'src/components/UI/Circular/CircularBadge'
 import {
   fetchComplitedInventory,
   fetchConfirmedIInventory,
-} from "src/redux/inventory/inventorySlice";
+} from 'src/redux/inventory/inventorySlice'
 
 function CompletedOrder({ filteredComplitedI, filteredConfirmedI }) {
-  const location = useLocation();
-  const dispatch = useDispatch();
+  const location = useLocation()
+  const dispatch = useDispatch()
 
   return (
     <div>
@@ -18,19 +18,19 @@ function CompletedOrder({ filteredComplitedI, filteredConfirmedI }) {
         <Link
           to="/confirmed-order"
           className={`toggle__swipper__text ${
-            location.pathname === "/confirmed-order" ? "active" : ""
+            location.pathname === '/confirmed-order' ? 'active' : ''
           }`}
         >
           Подтвержденные
-          <div style={{ position: "relative" }}>
+          <div style={{ position: 'relative' }}>
             {filteredConfirmedI.length > 0 && (
               <CircularBadge
                 count={filteredConfirmedI.length}
                 style={{
-                  top: "-40px",
-                  right: "-33px",
-                  backgroundColor: "red",
-                  color: "white",
+                  top: '-40px',
+                  right: '-33px',
+                  backgroundColor: 'red',
+                  color: 'white',
                 }}
               />
             )}
@@ -40,12 +40,12 @@ function CompletedOrder({ filteredComplitedI, filteredConfirmedI }) {
         <Link
           to="/complited-order"
           className={`toggle__swipper__text ${
-            location.pathname === "/complited-order" ? "activeR" : ""
+            location.pathname === '/complited-order' ? 'activeR' : ''
           }`}
         >
           Завершенные
-          <div style={{ position: "relative" }}>
-            {filteredComplitedI.length > 0 && (
+          <div style={{ position: 'relative' }}>
+            {/* {filteredComplitedI.length > 0 && (
               <CircularBadge
                 count={filteredComplitedI.length}
                 style={{
@@ -55,14 +55,14 @@ function CompletedOrder({ filteredComplitedI, filteredConfirmedI }) {
                   color: "white",
                 }}
               />
-            )}
+            )} */}
           </div>
         </Link>
       </div>
 
       <ComplitedTable />
     </div>
-  );
+  )
 }
 
-export default CompletedOrder;
+export default CompletedOrder

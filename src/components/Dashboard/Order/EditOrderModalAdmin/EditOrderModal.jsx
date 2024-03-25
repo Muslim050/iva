@@ -17,6 +17,7 @@ import axios from 'axios'
 import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
 import { ReactComponent as Delete } from 'src/assets/Table/Delete.svg'
 import { useParams } from 'react-router-dom'
+import InputUI from 'src/components/UI/InputUI/InputUI'
 
 const format = [
   { value: 'preroll', text: 'Pre-roll' },
@@ -47,6 +48,7 @@ export default function EditOrderModal({
       selectedFile: null,
       expectedView: currentOrder.expected_number_of_views,
       budgett: 0,
+      notes: currentOrder.notes,
     },
     mode: 'onBlur',
   })
@@ -397,7 +399,7 @@ export default function EditOrderModal({
           </div>
 
           <div className="modalWindow__wrapper_input">
-            <div>
+            <div style={{ marginBottom: '20px' }}>
               <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
                 Загрузить новый ролик
               </label>
@@ -412,6 +414,13 @@ export default function EditOrderModal({
               </span>
             </div>
           </div>
+          <textarea
+            placeholder="Комментарий к заказу"
+            autoComplete="off"
+            className={style.modalWindow__textarea}
+            {...register('notes')}
+            style={{ width: '100%' }}
+          ></textarea>
           <div className={style.btn__wrapper}>
             {role === 'admin' ? (
               <ButtonBorder

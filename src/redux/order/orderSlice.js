@@ -65,6 +65,7 @@ export const fetchConfirmedOrder = createAsyncThunk(
 )
 
 export const addOrder = createAsyncThunk('order/addOrder', async ({ data }) => {
+  console.log('data', data)
   const token = localStorage.getItem('token')
 
   try {
@@ -79,6 +80,7 @@ export const addOrder = createAsyncThunk('order/addOrder', async ({ data }) => {
         expected_number_of_views: data.expectedView,
         budget: data.budgett,
         promo_file: data.selectedFile[0],
+        notes: data.notes,
       },
       {
         headers: {
@@ -154,6 +156,9 @@ export const fetchEditOrder = createAsyncThunk(
     }
     if (data.enddate && data.enddate !== null) {
       requestData.expected_end_date = data.enddate
+    }
+    if (data.notes && data.notes !== null) {
+      requestData.notes = data.notes
     }
 
     try {

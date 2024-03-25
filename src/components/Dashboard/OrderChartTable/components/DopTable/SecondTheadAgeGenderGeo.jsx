@@ -1,8 +1,10 @@
 import React from 'react'
 import style from '../../OrderChartTable.module.scss'
+import { MdInfoOutline } from 'react-icons/md'
 
 function OrderChartTheadAgeGenderGeo({ statistic, getOrder }) {
   const removeDuplicates = (arr) => Array.from(new Set(arr))
+  const [activeTooltip, setActiveTooltip] = React.useState(false)
 
   const uniqueGenders =
     statistic.budget === 170550
@@ -157,7 +159,6 @@ function OrderChartTheadAgeGenderGeo({ statistic, getOrder }) {
   const ageColSpan = uniqueAge.length
   const geoColSpan = uniqueGeo.length
 
-  console.log('genderColSpan', genderColSpan)
   return (
     <>
       <td
@@ -166,11 +167,36 @@ function OrderChartTheadAgeGenderGeo({ statistic, getOrder }) {
           textAlign: 'center',
           background: '#5570f263',
           borderRadius: '8px',
-          width: '100px',
+          width: '150px',
           borderRight: '3px solid white',
+          position: 'relative',
         }}
+        onMouseEnter={() => setActiveTooltip(true)}
+        onMouseLeave={() => setActiveTooltip(false)}
       >
-        Показы
+        <span className={activeTooltip ? style.tooltiptext : style.hidden}>
+          Предварительная Аналитика
+        </span>
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+          }}
+        >
+          <MdInfoOutline
+            style={{
+              marginRight: '10px',
+              fontSize: '25px',
+              color: 'red',
+              boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+              borderRadius: '50%',
+            }}
+          />
+          Показы
+        </div>
       </td>
       {genderColSpan ? (
         <td

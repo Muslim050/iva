@@ -321,3 +321,30 @@
     display: contents;
   }
 }
+
+.tooltiptext {
+  visibility: hidden;
+  /* другие стили */
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.tableChart__td:hover .tooltiptext {
+  visibility: visible;
+  bottom: 40px;
+  transform: translateX(-28%);
+  background-color: #4e4e4e;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.hidden {
+  display: none;
+}

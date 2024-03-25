@@ -5,16 +5,13 @@
     margin-bottom: 8px;
     font-size: 15px;
     font-weight: 600;
-    color: var(--text-color, );
-
+    color: var(--text-color);
   }
-
 
   &__input {
     border: 1px solid rgb(153, 153, 153);
-    color: var(--tablelabel-color, );
+    color: var(--tablelabel-color);
     font-weight: 600;
-
 
     font-size: 14px;
     line-height: 1.25rem;
@@ -26,19 +23,37 @@
     padding: 10px;
   }
 
+  &__textarea {
+    border: 1px solid rgb(153, 153, 153);
+    color: var(--tablelabel-color);
+    font-weight: 600;
+    color: var(--text-color);
+
+    font-size: 13px;
+    line-height: 1.25rem;
+    border-radius: 10px;
+    background-color: var(--tablebg-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: block;
+    width: 100%;
+    padding: 10px;
+  }
   input::placeholder {
-    color: var(--tablelabel-color, );
-
-
+    color: var(--tablelabel-color);
   }
 
-  input[type="date"]::-webkit-calendar-picker-indicator {
+  input[type='date']::-webkit-calendar-picker-indicator {
     padding-left: 80px;
-    cursor: pointer
+    cursor: pointer;
+  }
+  textarea::placeholder {
+    color: var(--tablelabel-color);
   }
 
-
-
+  textarea[type='date']::-webkit-calendar-picker-indicator {
+    padding-left: 80px;
+    cursor: pointer;
+  }
 
   &__input_error {
     font-size: 12px;
@@ -72,7 +87,6 @@
       padding: 16px;
       border-radius: 10px;
       cursor: pointer;
-
     }
   }
 }
@@ -81,7 +95,6 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
-
 
   &__btn {
     color: white;
@@ -96,8 +109,6 @@
     &:hover {
       background: rgb(4, 109, 213);
     }
-
-
   }
 
   &__disabled {
@@ -112,8 +123,6 @@
   }
 }
 
-
-
 .inputError {
   font-size: 12px;
   color: red;
@@ -126,11 +135,10 @@
   line-height: 1.25rem;
   border-radius: 8px;
   width: 100%;
-  background-color: #F6F7FB;
+  background-color: #f6f7fb;
   padding: 16px;
   height: 52px;
   border: 1px solid white;
-
 
   &:focus {
     outline: none !important;
@@ -148,13 +156,11 @@
   position: absolute;
   bottom: -20px;
   left: 0;
-
 }
 
 .inputError.show {
   opacity: 1;
 }
-
 
 .select__select {
   color: var(--text-color);
@@ -163,7 +169,7 @@
   line-height: 1.25rem;
   border-radius: 8px;
   cursor: pointer;
-  background-color: #F6F7FB;
+  background-color: #f6f7fb;
   transition: background-color 0.3s ease, color 0.3s ease;
   display: block;
   width: 100%;
@@ -171,8 +177,6 @@
 
   padding: 16px;
   height: 52px;
-
-
 
   &:focus {
     outline: none !important;
@@ -195,8 +199,6 @@
 .select__error.show {
   opacity: 1;
 }
-
-
 
 .loaderWrapper {
   display: flex;

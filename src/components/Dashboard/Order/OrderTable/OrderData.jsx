@@ -13,6 +13,8 @@ import { ReactComponent as File } from 'src/assets/Table/file.svg'
 import { ReactComponent as Finish } from 'src/assets/Table/Finish.svg'
 import { ReactComponent as Chart } from 'src/assets/Table/Chart.svg'
 import { ReactComponent as Edit } from 'src/assets/Table/Edit.svg'
+import { ReactComponent as Comment } from 'src/assets/Table/comment.svg'
+
 import { Link } from 'react-router-dom'
 import MyModal from '../../../UI/ModalComponents/ModalUI/ModalUI'
 import AdvertStatus from 'src/components/UI/AdvertStatus/AdvertStatus'
@@ -26,6 +28,7 @@ import PaymentOrderModal from '../PaymentOrderModal/PaymentOrderModal'
 import { AnimatePresence } from 'framer-motion'
 import OrderPayment from '../components/OrderPayment'
 import EditOrderModal from '../EditOrderModalAdmin/EditOrderModal'
+import CommentModal from '../CommentModal/CommentModal'
 
 function OrderData({ sortedData }) {
   const dispatch = useDispatch()
@@ -34,6 +37,8 @@ function OrderData({ sortedData }) {
   const [currentOrder, setCurrentOrder] = React.useState(null)
   const [showModalEdit, setShowModalEdit] = React.useState(false)
   const [showModalEditAdmin, setShowModalEditAdmin] = React.useState(false)
+  const [showKomment, setShowKomment] = React.useState(false)
+
   const [activeTooltip, setActiveTooltip] = React.useState(null)
 
   const { showPayment } = useSelector((state) => state.modal)
@@ -83,6 +88,17 @@ function OrderData({ sortedData }) {
         {showPayment && (
           <MyModal>
             <PaymentOrderModal />
+          </MyModal>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showKomment && (
+          <MyModal>
+            <CommentModal
+              setShowKomment={setShowKomment}
+              currentOrder={currentOrder}
+            />
           </MyModal>
         )}
       </AnimatePresence>
@@ -431,6 +447,24 @@ function OrderData({ sortedData }) {
                       }}
                     >
                       <Edit
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                        }}
+                      />
+                    </ButtonBorder>
+                  ) : null}
+                </td>
+
+                <td style={{ display: 'contents' }}>
+                  {advert.notes.length ? (
+                    <ButtonBorder
+                      onClick={() => {
+                        setShowKomment(true)
+                        setCurrentOrder(advert)
+                      }}
+                    >
+                      <Comment
                         style={{
                           width: '16px',
                           height: '16px',

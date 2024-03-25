@@ -188,7 +188,7 @@ function ChannelTable() {
                                 : style.hidden
                             }
                           >
-                            ID:{channel.publisher.id}
+                            ID:{channel.publisher?.id}
                           </span>
                         )}
                       </td>

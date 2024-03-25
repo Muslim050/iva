@@ -1,5 +1,5 @@
-import React from "react";
-import style from "../StatictickVideoTable.module.scss";
+import React from 'react'
+import style from '../StatictickVideoTable.module.scss'
 
 function StatictickVideoThead() {
   return (
@@ -12,7 +12,7 @@ function StatictickVideoThead() {
           Название видео
         </th>
         <th className={style.tableChart__th} rowspan="2">
-          Дата публикаций{" "}
+          Дата публикаций{' '}
         </th>
         <th className={style.tableChart__th} rowspan="2">
           Показы
@@ -22,7 +22,7 @@ function StatictickVideoThead() {
         </th>
       </tr>
     </>
-  );
+  )
 }
 
-export default StatictickVideoThead;
+export default StatictickVideoThead
