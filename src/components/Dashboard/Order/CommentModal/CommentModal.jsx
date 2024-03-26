@@ -18,12 +18,6 @@ const CommentModal = ({ setShowKomment, currentOrder }) => {
         </div>
 
         <div>{currentOrder.notes}</div>
-        <div>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse itaque
-          soluta earum, molestiae, eligendi deserunt harum quidem nobis et
-          perspiciatis, voluptatibus quis obcaecati quasi numquam architecto
-          molestias quam nostrum adipisci.
-        </div>
       </div>
     </>
   )

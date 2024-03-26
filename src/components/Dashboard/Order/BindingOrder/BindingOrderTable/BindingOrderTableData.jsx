@@ -148,9 +148,8 @@ function BindingOrderTableData({
             <td className={style.table_td}>
               <FormatterView data={invetar.online_views} />
             </td>
-          ) : (
-            <td className={style.table_td}></td>
-          )}
+          ) : // <td className={style.table_td}></td>
+          null}
 
           <td className={style.table_td}>
             <div>
