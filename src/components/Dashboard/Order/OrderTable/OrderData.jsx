@@ -456,23 +456,25 @@ function OrderData({ sortedData }) {
                   ) : null}
                 </td>
 
-                <td style={{ display: 'contents' }}>
-                  {advert.notes.length ? (
-                    <ButtonBorder
-                      onClick={() => {
-                        setShowKomment(true)
-                        setCurrentOrder(advert)
-                      }}
-                    >
-                      <Comment
-                        style={{
-                          width: '16px',
-                          height: '16px',
+                {role === 'admin' && advert.status === 'in_progress' ? null : (
+                  <td style={{ display: 'contents' }}>
+                    {advert.notes.length ? (
+                      <ButtonBorder
+                        onClick={() => {
+                          setShowKomment(true)
+                          setCurrentOrder(advert)
                         }}
-                      />
-                    </ButtonBorder>
-                  ) : null}
-                </td>
+                      >
+                        <Comment
+                          style={{
+                            width: '16px',
+                            height: '16px',
+                          }}
+                        />
+                      </ButtonBorder>
+                    ) : null}
+                  </td>
+                )}
               </div>
             </td>
             <td style={{ display: 'inline-block' }}>

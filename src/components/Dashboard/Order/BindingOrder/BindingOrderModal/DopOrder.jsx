@@ -5,6 +5,11 @@ import FormatterData from '../../../../UI/formatter/FormatterData'
 import style from './DopOrder.module.scss'
 import AdvertStatus from 'src/components/UI/AdvertStatus/AdvertStatus'
 import FormatterView from 'src/components/UI/formatter/FormatterView'
+import { AnimatePresence } from 'framer-motion'
+import { ReactComponent as Comment } from 'src/assets/Table/comment.svg'
+import MyModal from '../../../../UI/ModalComponents/ModalUI/ModalUI'
+import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
+import CommentModal from '../../CommentModal/CommentModal'
 
 const headers = [
   { key: 'id', label: '№' },
@@ -14,12 +19,26 @@ const headers = [
   { key: 'advertising_agency', label: 'Дата конец' },
   { key: 'advertising_agency', label: 'Количество просмотров' },
   { key: 'advertising_agency', label: 'Бюджет' },
+  { key: 'comment', label: 'Комментарий' },
   { key: 'advertising_agency', label: 'Статус' },
 ]
 
 function DopOrder({ onceOrder }) {
+  const [showKomment, setShowKomment] = React.useState(false)
+  const [currentOrder, setCurrentOrder] = React.useState(null)
+
   return (
     <>
+      <AnimatePresence>
+        {showKomment && (
+          <MyModal>
+            <CommentModal
+              setShowKomment={setShowKomment}
+              currentOrder={currentOrder}
+            />
+          </MyModal>
+        )}
+      </AnimatePresence>
       <table>
         <thead>
           <tr>
@@ -62,7 +81,23 @@ function DopOrder({ onceOrder }) {
                   data={onceOrder.expected_start_date}
                 />
               </td>
-
+              {onceOrder.notes.length ? (
+                <td style={{ display: 'flex', justifyContent: 'center' }}>
+                  <ButtonBorder
+                    onClick={() => {
+                      setShowKomment(true)
+                      setCurrentOrder(onceOrder)
+                    }}
+                  >
+                    <Comment
+                      style={{
+                        width: '16px',
+                        height: '16px',
+                      }}
+                    />
+                  </ButtonBorder>
+                </td>
+              ) : null}
               <td>
                 <div>
                   <AdvertStatus status={onceOrder.status} />
