@@ -1,87 +1,88 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import style from "./BindingInventoryOrderTable.module.scss";
-import SelectRows from "./BindingInventoryOrderTableRows";
-import axios from "axios";
-import { confirmByChannel } from "../../../../redux/orderStatus/orderStatusSlice";
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import style from './BindingInventoryOrderTable.module.scss'
+import SelectRows from './BindingInventoryOrderTableRows'
+import axios from 'axios'
+import { confirmByChannel } from '../../../../redux/orderStatus/orderStatusSlice'
 
-import BindingInventoryOrderTableData from "./BindingInventoryOrderTableData";
-import { toastConfig } from "../../../../utils/toastConfig";
-import { fetchInventory } from "../../../../redux/inventory/inventorySlice";
-import backendURL from "src/utils/url";
-import { SortButton } from "src/utils/SortButton";
-import { sortData } from "src/utils/SortData";
+import BindingInventoryOrderTableData from './BindingInventoryOrderTableData'
+import { toastConfig } from '../../../../utils/toastConfig'
+import { fetchInventory } from '../../../../redux/inventory/inventorySlice'
+import backendURL from 'src/utils/url'
+import { SortButton } from 'src/utils/SortButton'
+import { sortData } from 'src/utils/SortData'
 
 const headers = [
-  { key: "id", label: "№" },
-  { key: "format", label: "Формат рекламы" },
-  { key: "expected_number_of_views", label: "Прогноз показов" },
-  { key: "expected_start_date", label: " Ожидаемая дата начало" },
-  { key: "expected_end_date", label: "Ожидаемая дата окончания" },
-  { key: "promo_file", label: "Ролик" },
-];
+  { key: 'id', label: '№' },
+  { key: 'format', label: 'Формат рекламы' },
+  { key: 'expected_number_of_views', label: 'Прогноз показов' },
+  { key: 'expected_start_date', label: ' Ожидаемая дата начало' },
+  { key: 'expected_end_date', label: 'Ожидаемая дата окончания' },
+  { key: 'promo_file', label: 'Ролик' },
+  { key: 'promo_file', label: 'Комментарий' },
+]
 
 function BindingInventoryOrderTable({ expandedRows }) {
-  const dispatch = useDispatch();
-  const [sortKey, setSortKey] = React.useState("last_name");
-  const [sort, setSort] = React.useState("ascn");
-  const [getInventory, setGetInventory] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const dispatch = useDispatch()
+  const [sortKey, setSortKey] = React.useState('last_name')
+  const [sort, setSort] = React.useState('ascn')
+  const [getInventory, setGetInventory] = React.useState([])
+  const [isLoading, setIsLoading] = React.useState(false)
 
   const fetchGetInventory = async () => {
-    setIsLoading(true);
-    const token = localStorage.getItem("token");
+    setIsLoading(true)
+    const token = localStorage.getItem('token')
 
     const response = await axios.get(
       `${backendURL}/inventory/${expandedRows}/`,
 
       {
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      }
-    );
-    setGetInventory([response.data.data]);
-    setIsLoading(false);
-  };
+      },
+    )
+    setGetInventory([response.data.data])
+    setIsLoading(false)
+  }
 
   function handleConfirmInventoryByChannel(inventory) {
     const confirmInventoryByChannel = window.confirm(
-      "Статус меняется на confirm by channel?"
-    );
+      'Статус меняется на confirm by channel?',
+    )
     if (confirmInventoryByChannel) {
       dispatch(confirmByChannel({ expandedRows, inventory }))
         .then(() => {
-          toast.success("Статус успешно изменился!", toastConfig);
-          fetchGetInventory();
+          toast.success('Статус успешно изменился!', toastConfig)
+          fetchGetInventory()
         })
         .catch((error) => {
-          toast.error(error.message, toastConfig);
-          fetchGetInventory();
-        });
+          toast.error(error.message, toastConfig)
+          fetchGetInventory()
+        })
     } else {
-      toast.info("Операция отменена", toastConfig);
+      toast.info('Операция отменена', toastConfig)
     }
   }
   React.useEffect(() => {
-    fetchGetInventory();
-  }, [dispatch]);
+    fetchGetInventory()
+  }, [dispatch])
 
   const sortedData = React.useCallback(
     () =>
       sortData({
         tableData: getInventory,
         sortKey,
-        reverse: sort === "desc",
+        reverse: sort === 'desc',
       }),
-    [getInventory, sortKey, sort]
-  );
+    [getInventory, sortKey, sort],
+  )
   function changeSort(key) {
-    setSort(sort === "ascn" ? "desc" : "ascn");
-    setSortKey(key);
+    setSort(sort === 'ascn' ? 'desc' : 'ascn')
+    setSortKey(key)
   }
 
   return (
@@ -110,7 +111,7 @@ function BindingInventoryOrderTable({ expandedRows }) {
                         sortKey={sortKey}
                       />
                     </th>
-                  );
+                  )
                 })}
               </tr>
             </thead>
@@ -125,7 +126,7 @@ function BindingInventoryOrderTable({ expandedRows }) {
         </div>
       )}
     </>
-  );
+  )
 }
 
-export default BindingInventoryOrderTable;
+export default BindingInventoryOrderTable

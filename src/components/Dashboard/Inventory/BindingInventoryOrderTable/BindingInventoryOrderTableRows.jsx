@@ -1,5 +1,5 @@
-import React from "react";
-import style from "./BindingInventoryOrderTable.module.scss";
+import React from 'react'
+import style from './BindingInventoryOrderTable.module.scss'
 
 function BindingInventoryOrderTableRows() {
   return (
@@ -26,9 +26,12 @@ function BindingInventoryOrderTableRows() {
         <th scope="col" className={style.table__th}>
           Ролик
         </th>
+        <th scope="col" className={style.table__th}>
+          Ролик
+        </th>
       </tr>
     </>
-  );
+  )
 }
 
-export default BindingInventoryOrderTableRows;
+export default BindingInventoryOrderTableRows

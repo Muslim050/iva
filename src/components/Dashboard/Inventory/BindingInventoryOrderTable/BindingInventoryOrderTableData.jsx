@@ -7,15 +7,31 @@ import { ReactComponent as File } from 'src/assets/Table/file.svg'
 import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
 import { ReactComponent as Send } from 'src/assets/Table/Send.svg'
 import CircularBadge from 'src/components/UI/Circular/CircularBadge'
+import { AnimatePresence } from 'framer-motion'
+import CommentModal from '../../Order/CommentModal/CommentModal'
+import MyModal from '../../../UI/ModalComponents/ModalUI/ModalUI'
+import { ReactComponent as Comment } from 'src/assets/Table/comment.svg'
 
 function BindingInventoryOrderTableData({
   sortedData,
   onInventoryConfirmByChannel,
 }) {
   const role = localStorage.getItem('role')
+  const [showKomment, setShowKomment] = React.useState(false)
+  const [currentOrder, setCurrentOrder] = React.useState(null)
 
   return (
     <>
+      <AnimatePresence>
+        {showKomment && (
+          <MyModal>
+            <CommentModal
+              setShowKomment={setShowKomment}
+              currentOrder={currentOrder}
+            />
+          </MyModal>
+        )}
+      </AnimatePresence>
       {sortedData().map((inventar, index) => (
         <tr>
           <td>{index + 1}</td>
@@ -56,6 +72,25 @@ function BindingInventoryOrderTableData({
                 />
               </a>
             </div>
+          </td>
+          <td>
+            {inventar.assigned_order.notes ? (
+              <ButtonBorder
+                onClick={() => {
+                  setShowKomment(true)
+                  setCurrentOrder(inventar.assigned_order)
+                }}
+              >
+                <Comment
+                  style={{
+                    width: '16px',
+                    height: '16px',
+                  }}
+                />
+              </ButtonBorder>
+            ) : (
+              <div>Комментариев нет</div>
+            )}
           </td>
 
           {role === 'admin' ||
