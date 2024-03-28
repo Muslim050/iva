@@ -81,7 +81,7 @@ function DopOrder({ onceOrder }) {
                   data={onceOrder.expected_start_date}
                 />
               </td>
-              {onceOrder.notes.length ? (
+              {onceOrder?.notes ? (
                 <td style={{ display: 'flex', justifyContent: 'center' }}>
                   <ButtonBorder
                     onClick={() => {
