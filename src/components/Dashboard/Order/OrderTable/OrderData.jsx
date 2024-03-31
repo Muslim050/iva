@@ -458,7 +458,7 @@ function OrderData({ sortedData }) {
 
                 {role === 'admin' && advert.status === 'in_progress' ? null : (
                   <td style={{ display: 'contents' }}>
-                    {advert.notes.length ? (
+                    {advert?.notes ? (
                       <ButtonBorder
                         onClick={() => {
                           setShowKomment(true)

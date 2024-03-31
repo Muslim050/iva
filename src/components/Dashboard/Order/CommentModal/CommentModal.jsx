@@ -1,11 +1,23 @@
 import React from 'react'
-
 import 'react-datepicker/dist/react-datepicker.css'
-// import style from './EditOrderModal.module.scss'
+import { toast } from 'react-toastify'
 import { ReactComponent as Close } from 'src/assets/Modal/Close.svg'
+import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
+import { toastConfig } from 'src/utils/toastConfig'
+import { ReactComponent as Copy } from 'src/assets/copy.svg'
+import style from './CommentModal.module.scss'
 
 const CommentModal = ({ setShowKomment, currentOrder }) => {
-  console.log('currentOrder', currentOrder)
+  const copyToClipboard = () => {
+    navigator.clipboard
+      .writeText(currentOrder.notes)
+      .then(() => {
+        toast.success('Комментарий скопирован в буфер обмена', toastConfig)
+      })
+      .catch((err) => {
+        toast.error('Не удалось скопировать комментарий', toastConfig)
+      })
+  }
   return (
     <>
       <div style={{ width: '400px' }}>
@@ -16,8 +28,17 @@ const CommentModal = ({ setShowKomment, currentOrder }) => {
             onClick={() => setShowKomment(false)}
           />
         </div>
-
         <div>{currentOrder.notes}</div>
+        <div className={style.button}>
+          <button className={style.button__wrapper} onClick={copyToClipboard}>
+            <Copy
+              style={{
+                width: '20px',
+                height: '20px',
+              }}
+            />
+          </button>
+        </div>
       </div>
     </>
   )

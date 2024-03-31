@@ -156,40 +156,13 @@ export default function OrderModal({ setShowModal }) {
     calculateBudget()
   }, [selectedFormat, expectedView])
 
-  const getCurrentDate = () => {
-    const today = new Date()
-    today.setDate(today.getDate() + 4) // Добавляем 4 дня к текущей дате
-    const year = today.getFullYear()
-    let month = today.getMonth() + 1
-    let day = today.getDate()
+  const [notes, setNotes] = React.useState('') // Состояние для хранения текста заметок
+  const maxChars = 100 // Максимальное количество символов
 
-    if (month < 10) {
-      month = `0${month}`
-    }
-
-    if (day < 10) {
-      day = `0${day}`
-    }
-
-    return `${year}-${month}-${day}`
+  const handleNotesChange = (event) => {
+    setNotes(event.target.value.substring(0, maxChars)) // Обновляем текст, обрезая его до максимальной длины
   }
-  const getEndDate = (startDate) => {
-    const selectedDate = new Date(startDate)
-    selectedDate.setMonth(selectedDate.getMonth() + 1) // Добавляем 1 месяц к выбранной дате начала
-    const year = selectedDate.getFullYear()
-    let month = selectedDate.getMonth() + 1
-    let day = selectedDate.getDate()
 
-    if (month < 10) {
-      month = `0${month}`
-    }
-
-    if (day < 10) {
-      day = `0${day}`
-    }
-
-    return `${year}-${month}-${day}`
-  }
   const handleButtonClick = () => {
     dispatch(hideModalOrder())
   }
@@ -397,7 +370,18 @@ export default function OrderModal({ setShowModal }) {
             className={style.modalWindow__textarea}
             {...register('notes')}
             style={{ width: '100%' }}
+            onChange={handleNotesChange} // Обработка изменений
+            maxLength={maxChars}
           ></textarea>
+          <div
+            style={{
+              fontSize: '12px',
+              marginTop: '3px',
+              color: notes.length === maxChars ? 'red' : 'black',
+            }}
+          >
+            {notes.length}/{maxChars} символов
+          </div>
 
           <div className={style.btn__wrapper}>
             <button
