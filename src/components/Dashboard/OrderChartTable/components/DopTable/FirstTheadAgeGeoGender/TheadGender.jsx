@@ -63,6 +63,26 @@ function OrderChartTwoThead({ statistic }) {
             ].map((gen) => gen.gender),
           ),
         )
+      : statistic.budget === 160300
+      ? Array.from(
+          new Set(
+            [
+              { gender: 'female', percentage: 79 },
+              { gender: 'male', percentage: 21 },
+              { gender: 'Other', percentage: 0 },
+            ].map((gen) => gen.gender),
+          ),
+        )
+      : statistic.budget === 204382.5
+      ? Array.from(
+          new Set(
+            [
+              { gender: 'female', percentage: 53.5 },
+              { gender: 'male', percentage: 46.5 },
+              { gender: 'Other', percentage: 0.1 },
+            ].map((gen) => gen.gender),
+          ),
+        )
       : Array.from(
           new Set(statistic.gender_percentages.map((gen) => gen.gender)),
         )

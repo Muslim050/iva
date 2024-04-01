@@ -59,6 +59,26 @@ function AgeData({ statistic }) {
           { age_group: 'age55-64', percentage: 5.3 },
           { age_group: 'age65-', percentage: 2.6 },
         ]
+      : statistic.budget === 160300 //YangiKulgu Official
+      ? [
+          { age_group: 'age13-17', percentage: 1 },
+          { age_group: 'age18-24', percentage: 11.2 },
+          { age_group: 'age25-34', percentage: 20.2 },
+          { age_group: 'age35-44', percentage: 18.3 },
+          { age_group: 'age45-54', percentage: 15.1 },
+          { age_group: 'age55-64', percentage: 19.5 },
+          { age_group: 'age65-', percentage: 14.7 },
+        ]
+      : statistic.budget === 204382.5 //YangiKulgu Official
+      ? [
+          { age_group: 'age13-17', percentage: 4.3 },
+          { age_group: 'age18-24', percentage: 24.2 },
+          { age_group: 'age25-34', percentage: 41.7 },
+          { age_group: 'age35-44', percentage: 19.6 },
+          { age_group: 'age45-54', percentage: 6 },
+          { age_group: 'age55-64', percentage: 3.1 },
+          { age_group: 'age65-', percentage: 1 },
+        ]
       : statistic.age_group_percentages
 
   return (

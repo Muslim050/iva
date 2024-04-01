@@ -93,22 +93,11 @@ export function InfoCardsBottom({
           {getOrder.status === 'in_progress' ? (
             <div
               style={{
-                // display: (() => {
-                //   const ratie = Math.floor(
-                //     (getOrder.online_views / getOrder.assigned_views) * 100
-                //   );
-                //   if (ratie >= 1) {
-                //     return "initial";
-                //   }
-                //   return "none";
-                // })(),
                 display: 'flex',
                 justifyContent: 'space-around',
                 marginTop: '5px',
-
                 padding: '3px 5px',
                 borderRadius: '7px',
-
                 background: (() => {
                   const ratie = Math.floor(
                     (getOrder.online_views /

@@ -43,6 +43,18 @@ function OrderChartTheadAgeGenderGeo({ statistic, getOrder }) {
           { gender: 'male', percentage: 43.6 },
           { gender: 'Other', percentage: 0 },
         ]
+      : statistic.budget === 160300 //YangiKulgu Official
+      ? [
+          { gender: 'female', percentage: 79 },
+          { gender: 'male', percentage: 21 },
+          { gender: 'Other', percentage: 0 },
+        ]
+      : statistic.budget === 204382.5 //YangiKulgu Official
+      ? [
+          { gender: 'female', percentage: 53.5 },
+          { gender: 'male', percentage: 46.5 },
+          { gender: 'Other', percentage: 0.1 },
+        ]
       : statistic && statistic.gender_percentages
       ? removeDuplicates(statistic.gender_percentages.map((gen) => gen.gender))
       : []
@@ -104,6 +116,26 @@ function OrderChartTheadAgeGenderGeo({ statistic, getOrder }) {
           { age_group: 'age55-64', percentage: 5.3 },
           { age_group: 'age65-', percentage: 2.6 },
         ]
+      : statistic.budget === 160300 //YangiKulgu Official
+      ? [
+          { age_group: 'age13-17', percentage: 1 },
+          { age_group: 'age18-24', percentage: 11.2 },
+          { age_group: 'age25-34', percentage: 20.2 },
+          { age_group: 'age35-44', percentage: 18.3 },
+          { age_group: 'age45-54', percentage: 15.1 },
+          { age_group: 'age55-64', percentage: 19.5 },
+          { age_group: 'age65-', percentage: 14.7 },
+        ]
+      : statistic.budget === 204382.5 //YangiKulgu Official
+      ? [
+          { age_group: 'age13-17', percentage: 4.3 },
+          { age_group: 'age18-24', percentage: 24.2 },
+          { age_group: 'age25-34', percentage: 41.7 },
+          { age_group: 'age35-44', percentage: 19.6 },
+          { age_group: 'age45-54', percentage: 6 },
+          { age_group: 'age55-64', percentage: 3.1 },
+          { age_group: 'age65-', percentage: 1 },
+        ]
       : statistic && statistic.age_group_percentages
       ? removeDuplicates(
           statistic.age_group_percentages.map((age) => age.age_group),
@@ -150,6 +182,18 @@ function OrderChartTheadAgeGenderGeo({ statistic, getOrder }) {
           { country: 'RU', percentage: 25.8 },
           { country: 'KG', percentage: 11.5 },
           { country: 'Other', percentage: 6.9 },
+        ]
+      : statistic.budget === 160300 //YangiKulgu Official
+      ? [
+          { country: 'RU', percentage: 61.6 },
+          { country: 'KZ', percentage: 8.7 },
+          { country: 'UA', percentage: 5.6 },
+          { country: 'Other', percentage: 21.7 },
+        ]
+      : statistic.budget === 204382.5 //YangiKulgu Official
+      ? [
+          { country: 'UZ', percentage: 99.9 },
+          { country: 'Other', percentage: 0 },
         ]
       : statistic && statistic.geo_percentages
       ? removeDuplicates(statistic.geo_percentages.map((geo) => geo.country))

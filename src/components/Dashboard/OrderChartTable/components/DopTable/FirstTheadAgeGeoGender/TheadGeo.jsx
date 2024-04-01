@@ -67,6 +67,26 @@ function OrderChartGeo({ statistic }) {
             ].map((gen) => gen.country),
           ),
         )
+      : statistic.budget === 160300
+      ? Array.from(
+          new Set(
+            [
+              { country: 'RU', percentage: 61.6 },
+              { country: 'KZ', percentage: 8.7 },
+              { country: 'UA', percentage: 5.6 },
+              { country: 'Other', percentage: 21.7 },
+            ].map((gen) => gen.country),
+          ),
+        )
+      : statistic.budget === 204382.5
+      ? Array.from(
+          new Set(
+            [
+              { country: 'UZ', percentage: 99.9 },
+              { country: 'Other', percentage: 0 },
+            ].map((gen) => gen.country),
+          ),
+        )
       : Array.from(new Set(statistic.geo_percentages.map((geo) => geo.country)))
 
   return (

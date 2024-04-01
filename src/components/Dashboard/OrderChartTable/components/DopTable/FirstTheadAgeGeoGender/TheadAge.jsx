@@ -88,6 +88,34 @@ function OrderChartAge({ statistic, getOrder }) {
             ].map((age) => age.age_group),
           ),
         )
+      : statistic.budget === 160300 //YangiKulgu Official
+      ? Array.from(
+          new Set(
+            [
+              { age_group: 'age13-17', percentage: 1 },
+              { age_group: 'age18-24', percentage: 11.2 },
+              { age_group: 'age25-34', percentage: 20.2 },
+              { age_group: 'age35-44', percentage: 18.3 },
+              { age_group: 'age45-54', percentage: 15.1 },
+              { age_group: 'age55-64', percentage: 19.5 },
+              { age_group: 'age65-', percentage: 14.7 },
+            ].map((age) => age.age_group),
+          ),
+        )
+      : statistic.budget === 204382.5 //YangiKulgu Official
+      ? Array.from(
+          new Set(
+            [
+              { age_group: 'age13-17', percentage: 4.3 },
+              { age_group: 'age18-24', percentage: 24.2 },
+              { age_group: 'age25-34', percentage: 41.7 },
+              { age_group: 'age35-44', percentage: 19.6 },
+              { age_group: 'age45-54', percentage: 6 },
+              { age_group: 'age55-64', percentage: 3.1 },
+              { age_group: 'age65-', percentage: 1 },
+            ].map((age) => age.age_group),
+          ),
+        )
       : Array.from(
           new Set(statistic.age_group_percentages.map((age) => age.age_group)),
         )

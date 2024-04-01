@@ -42,6 +42,18 @@ function GeoData({ statistic }) {
           { country: 'KG', percentage: 11.5 },
           { country: 'Other', percentage: 6.9 },
         ]
+      : statistic.budget === 160300 //YangiKulgu Official
+      ? [
+          { country: 'RU', percentage: 61.6 },
+          { country: 'KZ', percentage: 8.7 },
+          { country: 'UA', percentage: 5.6 },
+          { country: 'Other', percentage: 21.7 },
+        ]
+      : statistic.budget === 204382.5 //YangiKulgu Official
+      ? [
+          { country: 'UZ', percentage: 99.9 },
+          { country: 'Other', percentage: 0 },
+        ]
       : statistic.geo_percentages
 
   return (

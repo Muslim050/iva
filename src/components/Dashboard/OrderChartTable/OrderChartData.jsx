@@ -88,7 +88,13 @@ function OrderChartData({ statistic, index, handleRowClick, isExpanded }) {
       </td>
 
       <td className={style.table_td}>
-        <FormatterView data={statistic.online_view_count} />
+        {statistic.budget === 160300 ? (
+          <FormatterView data={'201 000'} />
+        ) : statistic.budget === 204382.5 ? (
+          <FormatterView data={'301 306'} />
+        ) : (
+          <FormatterView data={statistic.online_view_count} />
+        )}
       </td>
 
       <td className={style.table_td}>

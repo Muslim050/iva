@@ -37,6 +37,18 @@ function GenderData({ statistic }) {
           { gender: 'male', percentage: 43.6 },
           { gender: 'Other', percentage: 0 },
         ]
+      : statistic.budget === 160300 //YangiKulgu Official
+      ? [
+          { gender: 'female', percentage: 79 },
+          { gender: 'male', percentage: 21 },
+          { gender: 'Other', percentage: 0 },
+        ]
+      : statistic.budget === 204382.5 //YangiKulgu Official
+      ? [
+          { gender: 'female', percentage: 53.5 },
+          { gender: 'male', percentage: 46.5 },
+          { gender: 'Other', percentage: 0.1 },
+        ]
       : statistic.gender_percentages
   return (
     <>
