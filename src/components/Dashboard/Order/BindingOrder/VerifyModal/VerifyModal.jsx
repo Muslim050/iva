@@ -1,16 +1,16 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { toastConfig } from "../../../../../utils/toastConfig";
-import { ReactComponent as Close } from "src/assets/Modal/Close.svg";
-import { inventoryVerify } from "../../../../../redux/inventoryStatus/inventoryStatusSlice";
-import { toast } from "react-toastify";
-import { fetchOrder } from "../../../../../redux/order/orderSlice";
-import { ReactComponent as Linkk } from "src/assets/link.svg";
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { toastConfig } from '../../../../../utils/toastConfig'
+import { ReactComponent as Close } from 'src/assets/Modal/Close.svg'
+import { inventoryVerify } from '../../../../../redux/inventoryStatus/inventoryStatusSlice'
+import { toast } from 'react-toastify'
+import { fetchOrder } from '../../../../../redux/order/orderSlice'
+import { ReactComponent as Linkk } from 'src/assets/link.svg'
 
-import style from "./VerifyModal.module.scss";
-import { hideModalVerify } from "src/redux/modalSlice";
-import { ButtonModal } from "src/components/UI/ButtonUI/ButtonUI";
+import style from './VerifyModal.module.scss'
+import { hideModalVerify } from 'src/redux/modalSlice'
+import { ButtonModal } from 'src/components/UI/ButtonUI/ButtonUI'
 
 function VerifyModal({
   setShowModalSelectingVerify,
@@ -18,7 +18,7 @@ function VerifyModal({
   selectedInventoryId,
   videoLink,
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const {
     register,
@@ -26,41 +26,41 @@ function VerifyModal({
     handleSubmit,
   } = useForm({
     defaultValues: {
-      linkvideo: "",
+      linkvideo: '',
       inventory: selectedInventoryId,
       order: expandedRows,
     },
-    mode: "onBlur",
-  });
+    mode: 'onBlur',
+  })
 
   const onSubmit = (data) => {
     const confirmVerify = window.confirm(
-      "Данная ссылка будет прикреплена к данному инвентарю?"
-    );
+      'Данная ссылка будет прикреплена к данному инвентарю?',
+    )
     if (confirmVerify) {
       dispatch(inventoryVerify({ data }))
         .then((response) => {
           // Проверка на наличие ошибки в ответе
           if (!response.error) {
-            toast.success("Ссылка успешно прикреплена!", toastConfig);
-            setShowModalSelectingVerify(false);
+            toast.success('Ссылка успешно прикреплена!', toastConfig)
+            setShowModalSelectingVerify(false)
             setTimeout(() => {
-              window.location.reload();
-            }, 1500);
-            fetchOrder();
+              window.location.reload()
+            }, 1500)
+            fetchOrder()
           }
         })
         .catch((error) => {
-          toast.error(error.message, toastConfig);
-        });
+          toast.error(error.message, toastConfig)
+        })
     } else {
-      toast.error("Попробуйте еще раз", toastConfig);
+      toast.error('Попробуйте еще раз', toastConfig)
     }
-  };
+  }
 
   const handleButtonClick = () => {
-    dispatch(hideModalVerify());
-  };
+    dispatch(hideModalVerify())
+  }
 
   return (
     <>
@@ -75,12 +75,12 @@ function VerifyModal({
           </div>
 
           <div className="modalWindow">
-            <div style={{ marginBottom: "8px" }}>
-              <div style={{ display: "flex", alignItems: "baseline" }}>
+            <div style={{ marginBottom: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'baseline' }}>
                 <div className={style.modalWindow__label}>
                   Ссылка на Видео для проверки: &nbsp;
                 </div>
-                <div style={{ display: "flex" }}>
+                <div style={{ display: 'flex' }}>
                   <a
                     href={
                       videoLink.video_content.link_to_video === null
@@ -90,9 +90,9 @@ function VerifyModal({
                     target="_blank"
                     disabled={videoLink === null}
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      cursor: videoLink === null ? "not-allowed" : "pointer",
+                      display: 'flex',
+                      alignItems: 'center',
+                      cursor: videoLink === null ? 'not-allowed' : 'pointer',
                     }}
                     className={
                       videoLink === null
@@ -101,30 +101,31 @@ function VerifyModal({
                     }
                     onClick={(e) => {
                       if (videoLink === null) {
-                        e.preventDefault();
+                        e.preventDefault()
                       }
                     }}
+                    rel="noreferrer"
                   >
                     Ссылка
                     <Linkk
                       style={{
-                        width: "18px",
-                        height: "18px",
-                        marginLeft: "5px",
+                        width: '18px',
+                        height: '18px',
+                        marginLeft: '5px',
                       }}
                     />
                   </a>
                 </div>
               </div>
 
-              <div style={{ marginTop: "20px", marginBottom: "30px" }}>
+              <div style={{ marginTop: '20px', marginBottom: '30px' }}>
                 <input
                   className={style.modalWindow__input}
                   type="text"
                   placeholder="Ссылка на Видео"
                   autoComplete="off"
-                  {...register("linkvideo", {
-                    required: "Поле обезательно к заполнению",
+                  {...register('linkvideo', {
+                    required: 'Поле обезательно к заполнению',
                   })}
                 />
                 <span className={style.modalWindow__input_error}>
@@ -133,7 +134,7 @@ function VerifyModal({
               </div>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "end" }}>
+            <div style={{ display: 'flex', justifyContent: 'end' }}>
               <ButtonModal isValid={true} disabled={!isValid}>
                 Прикрепить
               </ButtonModal>
@@ -142,7 +143,7 @@ function VerifyModal({
         </form>
       </div>
     </>
-  );
+  )
 }
 
-export default VerifyModal;
+export default VerifyModal
