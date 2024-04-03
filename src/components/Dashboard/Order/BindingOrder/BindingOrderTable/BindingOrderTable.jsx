@@ -167,7 +167,8 @@ function BindingOrderTable({ expandedRows, statusOr, advert }) {
 
   //Итого онлайн просмотров
   let totalOnlineView = 0
-  totalOnlineView += advert.online_views
+
+  totalOnlineView += advert?.online_views
 
   //Итого онлайн просмотров
 

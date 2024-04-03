@@ -92,7 +92,6 @@ export const inventoryPublish = createAsyncThunk(
         {
           id: data.selectedId,
           link_to_video: data.linkvideo,
-          video_id: data.videoId,
         },
         {
           headers: {

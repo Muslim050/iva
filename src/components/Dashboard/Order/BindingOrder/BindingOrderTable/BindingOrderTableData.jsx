@@ -146,7 +146,17 @@ function BindingOrderTableData({
 
           {invetar.online_views > 1 ? (
             <td className={style.table_td}>
-              <FormatterView data={invetar.online_views} />
+              {/* <FormatterView data={invetar.online_views} /> */}
+
+              <td className={style.table_td}>
+                {invetar.id === 740 ? (
+                  <FormatterView data={'201 000'} />
+                ) : invetar.id === 739 ? (
+                  <FormatterView data={'301 306'} />
+                ) : (
+                  <FormatterView data={invetar.online_views} />
+                )}
+              </td>
             </td>
           ) : // <td className={style.table_td}></td>
           null}

@@ -229,11 +229,9 @@ function OrderChartTable() {
             <tbody>
               {data &&
                 data.map((statistic, index) => {
-                  totalViews += statistic.online_view_count
                   totalBudget += statistic.budget
                   totalAnalitickView += statistic.online_view_count
-                  console.log('statistic', statistic)
-
+                  totalViews += statistic.online_view_count
                   return (
                     <React.Fragment key={statistic.video_link}>
                       {/* Данные таблицы  */}
@@ -308,15 +306,9 @@ function OrderChartTable() {
                                   data-label="Показов"
                                   style={{ textAlign: 'center' }}
                                 >
-                                  {statistic.budget === 160300 ? (
-                                    <FormatterView data={'201 000'} />
-                                  ) : statistic.budget === 204382.5 ? (
-                                    <FormatterView data={'301 306'} />
-                                  ) : (
-                                    <FormatterView
-                                      data={statistic.online_view_count}
-                                    />
-                                  )}
+                                  <FormatterView
+                                    data={statistic.online_view_count}
+                                  />
                                 </td>
 
                                 <GenderData statistic={statistic} />
