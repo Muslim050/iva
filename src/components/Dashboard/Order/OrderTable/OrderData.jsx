@@ -456,7 +456,8 @@ function OrderData({ sortedData }) {
                   ) : null}
                 </td>
 
-                {role === 'admin' && advert.status === 'in_progress' ? null : (
+                {advert.status === 'in_progress' ||
+                advert.status === 'finished' ? null : (
                   <td style={{ display: 'contents' }}>
                     {advert?.notes ? (
                       <ButtonBorder

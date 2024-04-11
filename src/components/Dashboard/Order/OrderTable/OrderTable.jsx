@@ -79,6 +79,7 @@ function OrderTable() {
     <>
       {loading ? (
         <div className="loaderWrapper">
+          <div style={{ marginRight: '10px' }}>Загрузка заказов</div>
           <div className="spinner"></div>
         </div>
       ) : (

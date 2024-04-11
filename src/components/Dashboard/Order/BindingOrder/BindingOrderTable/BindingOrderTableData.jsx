@@ -115,17 +115,17 @@ function BindingOrderTableData({
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 cursor:
-                  invetar.video_content.link_to_video === null
+                  invetar.verified_link_with_timecode === null
                     ? 'not-allowed'
                     : 'pointer',
               }}
               className={
-                invetar.video_content.link_to_video === null
+                invetar.verified_link_with_timecode === null
                   ? style.linkWrapper__dis
                   : style.linkWrapper__file
               }
               onClick={(e) => {
-                if (invetar.video_content.link_to_video === null) {
+                if (invetar.verified_link_with_timecode === null) {
                   e.preventDefault()
                 }
               }}
@@ -139,7 +139,7 @@ function BindingOrderTableData({
           </td>
           <td className={style.table_td}>{invetar.video_content.category}</td>
           <td className={style.table_td}>
-            {new Date(invetar.video_content.publication_time)
+            {new Date(invetar.video_content?.actual_publication_time)
               .toLocaleDateString('en-GB')
               .replace(/\//g, '.')}
           </td>
@@ -149,13 +149,7 @@ function BindingOrderTableData({
               {/* <FormatterView data={invetar.online_views} /> */}
 
               <td className={style.table_td}>
-                {invetar.id === 740 ? (
-                  <FormatterView data={'201 000'} />
-                ) : invetar.id === 739 ? (
-                  <FormatterView data={'301 306'} />
-                ) : (
-                  <FormatterView data={invetar.online_views} />
-                )}
+                <FormatterView data={invetar.online_views} />
               </td>
             </td>
           ) : // <td className={style.table_td}></td>
