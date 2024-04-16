@@ -29,10 +29,14 @@ const headers = [
   { key: 'commission_rate', label: 'Комиссия AdTech Media' },
   { key: 'commission_rate', label: 'Бюджет' },
 ]
+const formatV = [
+  { value: 'preroll', text: 'Pre-roll' },
+  { value: 'mixroll', text: 'Mix-roll' },
+]
 
 function PublisherReportTable() {
   const [loading, setLoading] = React.useState(true)
-  const [filterLoading, setFilterLoading] = React.useState(false) // Corrected spelling
+  const [filterLoading, setFilterLoading] = React.useState(false)
 
   const data = useSelector((state) => state.publisher.publisherReport)
   const dispatch = useDispatch()
@@ -43,6 +47,8 @@ function PublisherReportTable() {
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem)
   const channel = useSelector((state) => state.channel.channel)
   const [selectedAdvertiser, setSelectedAdvertiser] = React.useState(null)
+  const [selectedFormat, setSelectedFormat] = React.useState('')
+
   const [startDate, setStartDate] = React.useState(null)
   const [endDate, setEndDate] = React.useState(null)
 
@@ -81,6 +87,7 @@ function PublisherReportTable() {
           id: selectedAdvertiser,
           startDate: formattedStartDate,
           endDate: formattedEndDate,
+          format: selectedFormat,
         }),
       )
         .then(() => {
@@ -98,7 +105,12 @@ function PublisherReportTable() {
     setSelectedAdvertiser(event.target.value)
   }
 
+  const handleSelectFormat = (event) => {
+    setSelectedFormat(event.target.value)
+  }
+
   const handleClear = () => {
+    setFilterLoading(true)
     setSelectedAdvertiser('')
     setStartDate(null)
     setEndDate(null)
@@ -126,7 +138,14 @@ function PublisherReportTable() {
               </ButtonTable>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'end', gap: '10px' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'end',
+                gap: '10px',
+                overflow: 'hidden',
+              }}
+            >
               {filterLoading && (
                 <div className="loaderWrapper" style={{ height: '5vh' }}>
                   <div
@@ -135,6 +154,7 @@ function PublisherReportTable() {
                   ></div>
                 </div>
               )}
+
               <div style={{ width: '300px' }}>
                 <label
                   style={{
@@ -178,7 +198,7 @@ function PublisherReportTable() {
                 <DatePicker
                   selected={startDate}
                   onChange={handleStartDateChange}
-                  dateFormat="yyyy-MM-dd"
+                  dateFormat="dd-MM-yyyy"
                   className={style.input}
                 />
               </div>
@@ -202,11 +222,41 @@ function PublisherReportTable() {
                   selected={endDate}
                   onChange={handleEndDateChange}
                   className={style.input}
-                  dateFormat="yyyy-MM-dd"
+                  dateFormat="dd-MM-yyyy"
                 />
               </div>
 
-              {showClearButton && (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <label
+                  style={{
+                    fontSize: '12px',
+                    color: 'var(--text-color)',
+                    fontWeight: '400',
+                  }}
+                >
+                  Выбрать формат
+                </label>
+
+                <select
+                  id="countries"
+                  className={style.input}
+                  onChange={handleSelectFormat}
+                >
+                  <option value="">Формат</option>
+
+                  {formatV.map((option, index) => (
+                    <option key={index} value={option.value}>
+                      {option.text}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {(selectedAdvertiser || startDate || endDate) && (
                 <ButtonTable onClick={handleClear}>
                   <Close style={{ width: '23px', height: '23px' }} />
                 </ButtonTable>
@@ -292,7 +342,9 @@ function PublisherReportTable() {
               </tbody>
             </table>
           ) : (
-            <div className="empty_list">Список пустой</div>
+            <div className="empty_list">
+              Установите фильтр или по данным пораметрам не найдены данные!
+            </div>
           )}
           <div className={style.pagination}>
             {Array.from(
