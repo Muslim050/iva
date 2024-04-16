@@ -31,6 +31,8 @@ export default function getTitle(title, id) {
     return `Статистика канала`
   } else if (title.startsWith(`revenue`)) {
     return `Revenue`
+  } else if (title.startsWith(`publisher-report`)) {
+    return `Отчет`
   }
 
   return ''

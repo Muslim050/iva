@@ -9,9 +9,13 @@ function FormatterBudjet(props) {
   const isPastDate = orderDate < currentDate
   return (
     <div>
-      <div>
-        {formattedNumber} {isPastDate ? '$' : 'сум'}
-      </div>
+      {formattedNumber ? (
+        <div>
+          {formattedNumber} {isPastDate ? '$' : 'сум'}
+        </div>
+      ) : (
+        '---'
+      )}
     </div>
   )
 }

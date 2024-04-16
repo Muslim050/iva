@@ -11,12 +11,17 @@ import { SortButton } from 'src/utils/SortButton'
 import ButtonTable from 'src/components/UI/ButtonTable/ButtonTable'
 import FormatterPhone from 'src/components/UI/formatter/FormatterPhone'
 import style from './AdvertiserAgencyTable.module.scss'
-
+import { ReactComponent as Edit } from 'src/assets/Table/Edit.svg'
+import { AnimatePresence } from 'framer-motion'
+import MyModal from '../../../UI/ModalComponents/ModalUI/ModalUI'
+import EditAdvertiserAgencyModal from './EditAdvertiserAgencyModalAdmin/EditAdvertiserAgencyModal'
+import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
 const headers = [
   { key: 'id', label: '№' },
   { key: 'name', label: 'Наименование Компании ' },
   { key: 'email', label: 'Email' },
   { key: 'phone_number', label: 'Номер телефона' },
+  { key: 'commission_rate', label: 'Комиссияы' },
 ]
 
 function AdvertiserAgencyTable() {
@@ -25,6 +30,9 @@ function AdvertiserAgencyTable() {
   const [sortKey, setSortKey] = React.useState('last_name')
   const [sort, setSort] = React.useState('ascn')
   const [loading, setLoading] = React.useState(true)
+  const [showModalEditAdmin, setShowModalEditAdmin] = React.useState(false)
+  const [currentAdv, setCurrentAdv] = React.useState(null)
+  const role = localStorage.getItem('role')
 
   const sortedData = React.useCallback(
     () =>
@@ -52,6 +60,16 @@ function AdvertiserAgencyTable() {
 
   return (
     <>
+      <AnimatePresence>
+        {showModalEditAdmin && (
+          <MyModal>
+            <EditAdvertiserAgencyModal
+              setShowModalEditAdmin={setShowModalEditAdmin}
+              currentOrder={currentAdv}
+            />
+          </MyModal>
+        )}
+      </AnimatePresence>
       {loading ? (
         <div className="loaderWrapper">
           <div className="spinner"></div>
@@ -100,6 +118,24 @@ function AdvertiserAgencyTable() {
                         <td>{advert.email}</td>
                         <td>
                           <FormatterPhone phoneNumber={advert.phone_number} />
+                        </td>
+                        <td>{advert.commission_rate}</td>
+                        <td>
+                          {role === 'admin' ? (
+                            <ButtonBorder
+                              onClick={() => {
+                                setShowModalEditAdmin(true)
+                                setCurrentAdv(advert)
+                              }}
+                            >
+                              <Edit
+                                style={{
+                                  width: '16px',
+                                  height: '16px',
+                                }}
+                              />
+                            </ButtonBorder>
+                          ) : null}
                         </td>
                       </tr>
                     </>

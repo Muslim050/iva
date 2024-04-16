@@ -1,0 +1,100 @@
+@media only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-width: 1024px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border-bottom: 2px solid #ccc;
+  }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+  td:nth-of-type(1):before {
+    content: '№';
+  }
+
+  td:nth-of-type(2):before {
+    content: 'Имя';
+  }
+
+  td:nth-of-type(3):before {
+    content: 'Email';
+  }
+
+  td:nth-of-type(4):before {
+    content: 'Номер телефона';
+  }
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.button {
+  background-color: #5570f1; // Зеленый фон
+  color: white;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #8fa1f8; // Темно-зеленый фон при наведении
+  }
+
+  &.active {
+    background-color: #666;
+    color: white;
+  }
+}
+
+.input {
+  border: 0;
+  color: var(--text-color);
+  font-size: 16px;
+  line-height: 1.25rem;
+  border-radius: 8px;
+  width: 100%;
+  padding: 8px;
+  height: 38px;
+  border: 1px solid #e1e2e9;
+
+  &:focus {
+    outline: none !important;
+    border: 1px solid #efeff0;
+    box-shadow: 0 0 5px #e8e8e9;
+  }
+}

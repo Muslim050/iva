@@ -1,50 +1,51 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import Advertiser from "./pages/Dashboard/Advertiser/AdvertiserPage/advertiser/advertiser";
-import AdvertiserUsers from "./pages/Dashboard/Advertiser/AdvertiserPage/advertiserUsers/advertiserUsers";
-import Home from "./pages/Home/Home";
-import Inventory from "./pages/Dashboard/Inventory/Inventory";
-import Loginn from "./pages/Login/Loginn";
-import Video from "./pages/Dashboard/video/video";
-import Protected from "./Protected";
-import Order from "./pages/Dashboard/Order/Order";
-import Channel from "./pages/Dashboard/ChannelPage/channel/channel";
-import ChannelUsers from "./pages/Dashboard/ChannelPage/channelUsers/channelUsers";
-import OrderChart from "./pages/Dashboard/OrderChart/OrderChart";
-import AdvertiserAgency from "./pages/Dashboard/Advertiser/AdvertiserAgencyPage/advertiserAgency/advertiserAgency";
-import AdvertiserAgencyUsers from "./pages/Dashboard/Advertiser/AdvertiserAgencyPage/advertiserAgencyUsers/advertiserAgencyUsers";
-import PublisherUsers from "./pages/Dashboard/Pablisher/publisherUsers/publisherUsers";
-import Publisher from "./pages/Dashboard/Pablisher/publishers/publishers";
-import ChannelStatistics from "./pages/Dashboard/ChannelStatistics/ChannelStatistics";
-import NotFound from "./pages/NotFound";
-import ConfirmedOrder from "./pages/Dashboard/ConfirmedOrders/confirmed/confirmedOrder";
-import CompletedOrder from "./pages/Dashboard/ConfirmedOrders/completed/completedOrder";
-import { useDispatch, useSelector } from "react-redux";
+import React from 'react'
+import { Route, Routes } from 'react-router-dom'
+import Advertiser from './pages/Dashboard/Advertiser/AdvertiserPage/advertiser/advertiser'
+import AdvertiserUsers from './pages/Dashboard/Advertiser/AdvertiserPage/advertiserUsers/advertiserUsers'
+import Home from './pages/Home/Home'
+import Inventory from './pages/Dashboard/Inventory/Inventory'
+import Loginn from './pages/Login/Loginn'
+import Video from './pages/Dashboard/video/video'
+import Protected from './Protected'
+import Order from './pages/Dashboard/Order/Order'
+import Channel from './pages/Dashboard/ChannelPage/channel/channel'
+import ChannelUsers from './pages/Dashboard/ChannelPage/channelUsers/channelUsers'
+import OrderChart from './pages/Dashboard/OrderChart/OrderChart'
+import AdvertiserAgency from './pages/Dashboard/Advertiser/AdvertiserAgencyPage/advertiserAgency/advertiserAgency'
+import AdvertiserAgencyUsers from './pages/Dashboard/Advertiser/AdvertiserAgencyPage/advertiserAgencyUsers/advertiserAgencyUsers'
+import PublisherUsers from './pages/Dashboard/Pablisher/publisherUsers/publisherUsers'
+import Publisher from './pages/Dashboard/Pablisher/publishers/publishers'
+import ChannelStatistics from './pages/Dashboard/ChannelStatistics/ChannelStatistics'
+import NotFound from './pages/NotFound'
+import ConfirmedOrder from './pages/Dashboard/ConfirmedOrders/confirmed/confirmedOrder'
+import CompletedOrder from './pages/Dashboard/ConfirmedOrders/completed/completedOrder'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchComplitedInventory,
   fetchConfirmedIInventory,
-} from "./redux/inventory/inventorySlice";
-import Revenue from "./pages/Dashboard/Revenue/Revenue";
-import News from "./components/Site/News/News";
+} from './redux/inventory/inventorySlice'
+import Revenue from './pages/Dashboard/Revenue/Revenue'
+import News from './components/Site/News/News'
+import PublisherReport from './pages/Dashboard/PublisherReport/PublisherReport'
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const { сomplitedInventories } = useSelector((state) => state.inventory);
-  const { сonfirmedInventories } = useSelector((state) => state.inventory);
-  const user = localStorage.getItem("role");
+  const { сomplitedInventories } = useSelector((state) => state.inventory)
+  const { сonfirmedInventories } = useSelector((state) => state.inventory)
+  const user = localStorage.getItem('role')
 
   React.useEffect(() => {
-    if (user === "publisher" || user === "channel") {
-      dispatch(fetchComplitedInventory());
-      dispatch(fetchConfirmedIInventory());
+    if (user === 'publisher' || user === 'channel') {
+      dispatch(fetchComplitedInventory())
+      dispatch(fetchConfirmedIInventory())
     }
-  }, [dispatch]);
+  }, [dispatch])
 
   const filteredComplitedI = сomplitedInventories.filter(
-    (i) => i.removal_date === null
-  );
-  const filteredConfirmedI = сonfirmedInventories.filter((i) => i);
+    (i) => i.removal_date === null,
+  )
+  const filteredConfirmedI = сonfirmedInventories.filter((i) => i)
   return (
     <>
       <Routes>
@@ -53,11 +54,11 @@ function App() {
           element={
             <Protected
               allowedRoles={[
-                "admin",
-                "advertising_agency",
-                "advertiser",
-                "publisher",
-                "channel",
+                'admin',
+                'advertising_agency',
+                'advertiser',
+                'publisher',
+                'channel',
               ]}
             >
               <Home />
@@ -69,7 +70,7 @@ function App() {
             index
             element={
               <Protected
-                allowedRoles={["admin", "advertising_agency", "advertiser"]}
+                allowedRoles={['admin', 'advertising_agency', 'advertiser']}
               >
                 <Order />
               </Protected>
@@ -79,7 +80,7 @@ function App() {
             path="/confirmed-order"
             index
             element={
-              <Protected allowedRoles={["publisher", "channel"]}>
+              <Protected allowedRoles={['publisher', 'channel']}>
                 <ConfirmedOrder
                   filteredComplitedI={filteredComplitedI}
                   filteredConfirmedI={filteredConfirmedI}
@@ -91,7 +92,7 @@ function App() {
             path="/complited-order"
             index
             element={
-              <Protected allowedRoles={["publisher", "channel"]}>
+              <Protected allowedRoles={['publisher', 'channel']}>
                 <CompletedOrder
                   filteredComplitedI={filteredComplitedI}
                   filteredConfirmedI={filteredConfirmedI}
@@ -102,7 +103,7 @@ function App() {
           <Route
             path="/inventory"
             element={
-              <Protected allowedRoles={["channel", "publisher", "admin"]}>
+              <Protected allowedRoles={['channel', 'publisher', 'admin']}>
                 <Inventory />
               </Protected>
             }
@@ -110,7 +111,7 @@ function App() {
           <Route
             path="/revenue"
             element={
-              <Protected allowedRoles={["admin"]}>
+              <Protected allowedRoles={['admin']}>
                 <Revenue />
               </Protected>
             }
@@ -118,7 +119,7 @@ function App() {
           <Route
             path="/publisher"
             element={
-              <Protected allowedRoles={["publisher", "admin"]}>
+              <Protected allowedRoles={['publisher', 'admin']}>
                 <Publisher />
               </Protected>
             }
@@ -126,7 +127,7 @@ function App() {
           <Route
             path="/publisher-users"
             element={
-              <Protected allowedRoles={["publisher", "admin"]}>
+              <Protected allowedRoles={['publisher', 'admin']}>
                 <PublisherUsers />
               </Protected>
             }
@@ -134,7 +135,7 @@ function App() {
           <Route
             path="/video"
             element={
-              <Protected allowedRoles={["channel", "publisher", "admin"]}>
+              <Protected allowedRoles={['channel', 'publisher', 'admin']}>
                 <Video />
               </Protected>
             }
@@ -142,7 +143,7 @@ function App() {
           <Route
             path="/advertiser"
             element={
-              <Protected allowedRoles={["admin", "advertising_agency"]}>
+              <Protected allowedRoles={['admin', 'advertising_agency']}>
                 <Advertiser />
               </Protected>
             }
@@ -150,7 +151,7 @@ function App() {
           <Route
             path="/advertiser-users"
             element={
-              <Protected allowedRoles={["admin", "advertising_agency"]}>
+              <Protected allowedRoles={['admin', 'advertising_agency']}>
                 <AdvertiserUsers />
               </Protected>
             }
@@ -159,7 +160,7 @@ function App() {
           <Route
             path="/advertiser-agency"
             element={
-              <Protected allowedRoles={["admin"]}>
+              <Protected allowedRoles={['admin']}>
                 <AdvertiserAgency />
               </Protected>
             }
@@ -168,7 +169,7 @@ function App() {
           <Route
             path="/advertiser-agency-users"
             element={
-              <Protected allowedRoles={["admin"]}>
+              <Protected allowedRoles={['admin']}>
                 <AdvertiserAgencyUsers />
               </Protected>
             }
@@ -176,7 +177,7 @@ function App() {
           <Route
             path="/channel"
             element={
-              <Protected allowedRoles={["publisher", "admin", "channel"]}>
+              <Protected allowedRoles={['publisher', 'admin', 'channel']}>
                 <Channel />
               </Protected>
             }
@@ -184,7 +185,7 @@ function App() {
           <Route
             path="/channel-users"
             element={
-              <Protected allowedRoles={["publisher", "admin", "channel"]}>
+              <Protected allowedRoles={['publisher', 'admin', 'channel']}>
                 <ChannelUsers />
               </Protected>
             }
@@ -195,11 +196,11 @@ function App() {
             element={
               <Protected
                 allowedRoles={[
-                  "publisher",
-                  "admin",
-                  "channel",
-                  "advertising_agency",
-                  "advertiser",
+                  'publisher',
+                  'admin',
+                  'channel',
+                  'advertising_agency',
+                  'advertiser',
                 ]}
               >
                 <OrderChart />
@@ -211,14 +212,23 @@ function App() {
             element={
               <Protected
                 allowedRoles={[
-                  "admin",
-                  "advertising_agency",
-                  "advertiser",
-                  "publisher",
-                  "channel",
+                  'admin',
+                  'advertising_agency',
+                  'advertiser',
+                  'publisher',
+                  'channel',
                 ]}
               >
                 <ChannelStatistics />
+              </Protected>
+            }
+          />
+
+          <Route
+            path="/publisher-report"
+            element={
+              <Protected allowedRoles={['publisher', 'admin']}>
+                <PublisherReport />
               </Protected>
             }
           />
@@ -233,7 +243,7 @@ function App() {
         {/* Login and NotFound routes */}
       </Routes>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -71,6 +71,27 @@ function OrderData({ sortedData }) {
     fetchOrder()
   }, [dispatch])
 
+  // function fetchFile(url) {
+  //   const downloadBtn = document.querySelector(`.${style.fileWrapper}`) // Ensure this selects the correct button
+  //   fetch(url)
+  //     .then((res) => res.blob())
+  //     .then((file) => {
+  //       const tempUrl = URL.createObjectURL(file)
+  //       const aTag = document.createElement('a')
+  //       aTag.href = tempUrl
+  //       aTag.download = url.replace(/^.*[\\\/]/, '')
+  //       document.body.appendChild(aTag)
+  //       aTag.click()
+  //       downloadBtn.innerText = 'Download File' // Optional: Change text to indicate completion
+  //       URL.revokeObjectURL(tempUrl)
+  //       aTag.remove()
+  //     })
+  //     .catch(() => {
+  //       alert('Failed to download file!')
+  //       downloadBtn.innerText = 'Download Failed' // Optional: Change text on error
+  //     })
+  // }
+
   return (
     <>
       <AnimatePresence>
