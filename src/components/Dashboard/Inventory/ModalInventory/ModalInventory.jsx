@@ -87,10 +87,11 @@ export default function ModalInventory() {
   }
 
   React.useEffect(() => {
-    if (!cId) {
+    if (cId) {
       fetchVideo(cId)
     }
   }, [cId])
+
   React.useEffect(() => {
     if (user === 'channel') {
       fetchVideo()

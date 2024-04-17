@@ -84,7 +84,8 @@ export const addPublisher = createAsyncThunk(
 
 export const addPublisherReport = createAsyncThunk(
   'publisher/addPublisherReport',
-  async ({ id, startDate, endDate, format }) => {
+  async ({ id, startDate, endDate, format, advertiser }) => {
+    console.log('advertiser', advertiser)
     const token = localStorage.getItem('token')
     let url = new URL(`${backendURL}/publisher/report/`)
     const params = new URLSearchParams()
@@ -100,7 +101,11 @@ export const addPublisherReport = createAsyncThunk(
     if (format) {
       params.append('order_format', format)
     }
+    if (advertiser) {
+      params.append('advertiser_id', advertiser)
+    }
     url.search = params.toString()
+    console.log('url.href', url.href)
     try {
       const response = await axios.get(url.href, {
         headers: {
@@ -136,11 +141,11 @@ export const deletePublisher = createAsyncThunk(
 const publisherSlice = createSlice({
   name: 'publisher',
   initialState,
-    reducers: {
-        resetPublisherReport(state) {
-            state.publisherReport = []; // Resets to an empty array
-        }
+  reducers: {
+    resetPublisherReport(state) {
+      state.publisherReport = [] // Resets to an empty array
     },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPublisher.pending, (state) => {
@@ -186,6 +191,6 @@ const publisherSlice = createSlice({
     // })
   },
 })
-export const { resetPublisherReport } = publisherSlice.actions;
+export const { resetPublisherReport } = publisherSlice.actions
 
 export default publisherSlice.reducer

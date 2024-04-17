@@ -5,13 +5,17 @@ import ButtonTable from 'src/components/UI/ButtonTable/ButtonTable'
 import { ReactComponent as Reload } from 'src/assets/Table/reload.svg'
 import { ReactComponent as Filter } from 'src/assets/Table/Filter.svg'
 
-import publisherSlice, {addPublisherReport, resetPublisherReport} from 'src/redux/publisher/publisherSlice'
+import publisherSlice, {
+  addPublisherReport,
+  resetPublisherReport,
+} from 'src/redux/publisher/publisherSlice'
 import FormatterView from 'src/components/UI/formatter/FormatterView'
 import FormatterBudjet from 'src/components/UI/formatter/FormatterBudjet'
 import { fetchChannel } from 'src/redux/channel/channelSlice'
 import { format } from 'date-fns'
-import FilteredTooltip from "./FilteredTooltip/FilteredTooltip";
-import {InfoCardsBottom} from "src/components/Dashboard/PublisherReport/PublisherReportTable/InfoCards/InfoCards";
+import FilteredTooltip from './FilteredTooltip/FilteredTooltip'
+import { InfoCardsBottom } from 'src/components/Dashboard/PublisherReport/PublisherReportTable/InfoCards/InfoCards'
+import { fetchAdvertiser } from 'src/redux/advertiser/advertiserSlice'
 
 const headers = [
   { key: 'id', label: 'ID' },
@@ -34,6 +38,7 @@ function PublisherReportTable() {
   const [loading, setLoading] = React.useState(true)
   const [filterLoading, setFilterLoading] = React.useState(false)
   const data = useSelector((state) => state.publisher.publisherReport)
+  const advdata = useSelector((state) => state.advertiser.advertisers)
   const dispatch = useDispatch()
   const itemsPerPage = 100
   const [currentPage, setCurrentPage] = React.useState(1)
@@ -41,21 +46,28 @@ function PublisherReportTable() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem)
   const channel = useSelector((state) => state.channel.channel)
-  const [selectedAdvertiser, setSelectedAdvertiser] = React.useState(null)
-  const [selectedAdvertiserName, setSelectedAdvertiserName] = React.useState(null)
-  const [selectedOption, setSelectedOption] = React.useState('');
+
+  const [selectedChannel, setSelectedChannel] = React.useState(null)
+  const [selectedChannelName, setSelectedChannelName] = React.useState(null)
+  const [selectedOptionChannel, setSelectedOptionChannel] = React.useState('')
+
+  const [selectedAdv, setSetSelectedAdv] = React.useState(null)
+  const [selectedAdvName, setSelectedAdvName] = React.useState(null)
+  const [selectedOptionAdv, setSelectedOptionAdv] = React.useState('')
 
   const [selectedFormat, setSelectedFormat] = React.useState('')
   const [isTooltip, setIsTooltip] = React.useState(false)
 
   const [startDate, setStartDate] = React.useState(null)
   const [endDate, setEndDate] = React.useState(null)
-  const [dataFiltered, setDataFiltered] = React.useState(false)
 
   // Функция для изменения страницы
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
   React.useEffect(() => {
     dispatch(addPublisherReport()).then(() => setLoading(false))
+  }, [dispatch])
+  React.useEffect(() => {
+    dispatch(fetchAdvertiser()).then(() => setLoading(false))
   }, [dispatch])
 
   const handleStartDateChange = (date) => {
@@ -71,23 +83,23 @@ function PublisherReportTable() {
   React.useEffect(() => {
     dispatch(fetchChannel())
   }, [dispatch])
-
+  console.log('selectedAdv', selectedAdv)
   const handleSearch = () => {
-    if (selectedAdvertiser) {
-      setFilterLoading(true) // Set loading to true right before dispatch
+    if (selectedChannel || selectedAdv) {
+      setFilterLoading(true)
       const formattedStartDate = startDate
         ? format(startDate, 'yyyy-MM-dd')
         : undefined
       const formattedEndDate = endDate
         ? format(endDate, 'yyyy-MM-dd')
         : undefined
-
       dispatch(
         addPublisherReport({
-          id: selectedAdvertiser,
+          id: selectedChannel,
           startDate: formattedStartDate,
           endDate: formattedEndDate,
           format: selectedFormat,
+          advertiser: selectedAdv,
         }),
       )
         .then(() => {
@@ -97,49 +109,50 @@ function PublisherReportTable() {
           setFilterLoading(false) // Ensure loading is reset on error
         })
       setIsTooltip(!isTooltip)
-
     } else {
       console.log('No advertiser selected')
     }
   }
   const handleSelectChange = (event) => {
-    setSelectedOption(event.target.value);
+    setSelectedOptionChannel(event.target.value)
 
-    const option = JSON.parse(event.target.value);
-    setSelectedAdvertiser(option.id);
-    setSelectedAdvertiserName(option.name);
-  };
+    const option = JSON.parse(event.target.value)
+    setSelectedChannel(option.id)
+    setSelectedChannelName(option.name)
+  }
+  const handleSelectChangeADV = (event) => {
+    setSelectedOptionAdv(event.target.value)
+    const option = JSON.parse(event.target.value)
+    setSetSelectedAdv(option.id)
+    setSelectedAdvName(option.name)
+  }
   const handleSelectFormat = (event) => {
     setSelectedFormat(event.target.value)
   }
 
   const handleClear = () => {
     setFilterLoading(true)
-    setSelectedAdvertiser('')
+    setSelectedChannel('')
+    setSelectedChannelName('')
+    setSelectedAdvName('')
     setStartDate(null)
     setEndDate(null)
     setSelectedFormat('')
-    dispatch(resetPublisherReport()); // Dispatch the reset action
-    setFilterLoading(false);
-    setSelectedAdvertiserName('')
+    dispatch(resetPublisherReport()) // Dispatch the reset action
+    setFilterLoading(false)
     setIsTooltip(!isTooltip)
-  }
-  const closeH = () => {
-    setIsTooltip(!isTooltip)
-    setStartDate(startDate)
-    setEndDate(endDate)
   }
   const handleProfileClick = () => {
     setIsTooltip(!isTooltip)
+    setStartDate(startDate)
+    setEndDate(endDate)
   }
   let totalViews = 0
   let totalBudget = 0
   let totalComisy = 0
   let totalComisyAdtech = 0
   let totalbudjetChannel = 0
-let channelName = ''
-
-  console.log(selectedAdvertiserName)
+  let channelName = ''
   return (
     <>
       {loading ? (
@@ -158,174 +171,206 @@ let channelName = ''
             </div>
 
             <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'end',
-                  gap: '10px',
-
-                }}
+              style={{
+                display: 'flex',
+                alignItems: 'end',
+                gap: '10px',
+              }}
             >
               {filterLoading && (
-                  <div className="loaderWrapper" style={{height: '5vh'}}>
-                    <div
-                        className="spinner"
-                        style={{width: '25px', height: '25px'}}
-                    ></div>
-                  </div>
+                <div className="loaderWrapper" style={{ height: '5vh' }}>
+                  <div
+                    className="spinner"
+                    style={{ width: '25px', height: '25px' }}
+                  ></div>
+                </div>
               )}
 
               <div className={style.profile}>
-                {(selectedAdvertiserName ) && (
+                {selectedAdvName && (
+                  <div
+                    style={{
+                      padding: '10px',
+                      borderRadius: '8px',
+                      background: '#FEF5EA',
+                      border: '1px solid #ffd8a9',
+                      marginRight: '5px',
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
                     <div
-                        style={{
-                          padding: '10px',
-                          borderRadius: '8px',
-                          background: '#FEF5EA',
-                          border: '1px solid #ffd8a9',
-                          marginRight: '5px',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
+                      style={{
+                        fontSize: '13px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                      }}
                     >
-                      <div
-                          style={{
-                            fontSize: '13px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                          }}
-                      >
-                        Канал
-                        <div style={{ marginTop: '4px' }}>
-                          {selectedAdvertiserName}
-
-                        </div>
-                      </div>
-
-
+                      Рекламодатель
+                      <div style={{ marginTop: '4px' }}>{selectedAdvName}</div>
                     </div>
+                  </div>
+                )}
+                {selectedChannelName && (
+                  <div
+                    style={{
+                      padding: '10px',
+                      borderRadius: '8px',
+                      background: '#FEF5EA',
+                      border: '1px solid #ffd8a9',
+                      marginRight: '5px',
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: '13px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      Канал
+                      <div style={{ marginTop: '4px' }}>
+                        {selectedChannelName}
+                      </div>
+                    </div>
+                  </div>
                 )}
                 {(startDate || endDate) && (
+                  <div
+                    style={{
+                      padding: '10px',
+                      borderRadius: '8px',
+                      background: '#FEF5EA',
+                      border: '1px solid #ffd8a9',
+                      marginRight: '5px',
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
                     <div
-                        style={{
-                          padding: '10px',
-                          borderRadius: '8px',
-                          background: '#FEF5EA',
-                          border: '1px solid #ffd8a9',
-                          marginRight: '5px',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
+                      style={{
+                        fontSize: '13px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                      }}
                     >
-                      <div
-                          style={{
-                            fontSize: '13px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                          }}
-                      >
-                        Выбранный период
-                        <div style={{ marginTop: '4px' }}>
-
-                          {
-                            startDate && <>
-                                {startDate.toLocaleDateString('en-GB').replaceAll('/', '-')}</>
-                          }
-                          &nbsp;&nbsp;
-                          {endDate &&
-                            <>
-                              {endDate.toLocaleDateString('en-GB').replaceAll('/', '-')}</>
-                          }
-
-                        </div>
+                      Выбранный период
+                      <div style={{ marginTop: '4px' }}>
+                        {startDate && (
+                          <>
+                            {startDate
+                              .toLocaleDateString('en-GB')
+                              .replaceAll('/', '-')}
+                          </>
+                        )}
+                        &nbsp;&nbsp;
+                        {endDate && (
+                          <>
+                            {endDate
+                              .toLocaleDateString('en-GB')
+                              .replaceAll('/', '-')}
+                          </>
+                        )}
                       </div>
                     </div>
+                  </div>
                 )}
-                {(selectedFormat) && (
+                {selectedFormat && (
+                  <div
+                    style={{
+                      padding: '10px',
+                      borderRadius: '8px',
+                      background: '#FEF5EA',
+                      border: '1px solid #ffd8a9',
+                      marginRight: '5px',
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
                     <div
-                        style={{
-                          padding: '10px',
-                          borderRadius: '8px',
-                          background: '#FEF5EA',
-                          border: '1px solid #ffd8a9',
-                          marginRight: '5px',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
+                      style={{
+                        fontSize: '13px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                      }}
                     >
-                      <div
-                          style={{
-                            fontSize: '13px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                          }}
-                      >
-                        Формат
-                        <div style={{ marginTop: '4px' }}>
-
-                          {selectedFormat }
-
-                        </div>
-                      </div>
+                      Формат
+                      <div style={{ marginTop: '4px' }}>{selectedFormat}</div>
                     </div>
+                  </div>
                 )}
               </div>
 
               <div>
-                <div style={{display: 'grid', marginLeft: '10px'}}>
-                  <div style={{fontSize: '10px'}}>Выбрать период</div>
+                <div style={{ display: 'grid', marginLeft: '10px' }}>
+                  <div style={{ fontSize: '10px' }}>Выбрать период</div>
                   <button
-                      className={style.profile__wrapper}
-                      onClick={handleProfileClick}
+                    className={style.profile__wrapper}
+                    onClick={handleProfileClick}
                   >
-                    <Filter style={{width: '20px', height: '20px'}}/>
+                    <Filter style={{ width: '20px', height: '20px' }} />
                   </button>
                 </div>
-                <div style={{position: "absolute"}}>
+                <div style={{ position: 'absolute' }}>
                   <FilteredTooltip
-                      isTooltip={isTooltip}
-                      startDate={startDate}
-                      setStartDate={setStartDate}
-                      endDate={endDate}
-                      setEndDate={setEndDate}
-                      closeH={closeH}
-                      handleSelectFormat={handleSelectFormat}
-                      selectedAdvertiser={selectedAdvertiser}
-                      handleSelectChange={handleSelectChange}
-                      channel={channel}
-                      handleClear={handleClear}
-                      handleSearch={handleSearch}
-                      handleEndDateChange={handleEndDateChange}
-                      handleStartDateChange={handleStartDateChange}
-                      selectedFormat={selectedFormat}
-                      selectedAdvertiserName={selectedAdvertiserName}
-                      selectedOption={selectedOption}
+                    isTooltip={isTooltip}
+                    //
+                    startDate={startDate}
+                    endDate={endDate}
+                    //
+                    handleSelectFormat={handleSelectFormat}
+                    selectedFormat={selectedFormat}
+                    //
+                    handleProfileClick={handleProfileClick}
+                    //
+                    channel={channel}
+                    advdata={advdata}
+                    //
+                    selectedChannel={selectedChannel}
+                    //
+                    selectedAdv={selectedAdv}
+                    //
+                    handleSelectChange={handleSelectChange}
+                    handleSelectChangeADV={handleSelectChangeADV}
+                    //
+                    handleClear={handleClear}
+                    handleSearch={handleSearch}
+                    //
+                    handleEndDateChange={handleEndDateChange}
+                    handleStartDateChange={handleStartDateChange}
+                    //
+                    selectedOptionChannel={selectedOptionChannel}
+                    selectedOptionAdv={selectedOptionAdv}
                   />
                 </div>
               </div>
             </div>
           </div>
           {data && data.length ? (
-              <table style={{width: '100%'}}>
-                <thead>
+            <table style={{ width: '100%' }}>
+              <thead>
                 <tr>
                   {headers.map((row) => (
-                      <th
-                          key={row.key}
-                          style={{
-                            fontSize: '14px',
-                            fontWeight: '400',
-                            color: '#2C2D33',
-                          }}
-                      >
-                        {row.label}
-                      </th>
+                    <th
+                      key={row.key}
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '400',
+                        color: '#2C2D33',
+                      }}
+                    >
+                      {row.label}
+                    </th>
                   ))}
                 </tr>
-                </thead>
-                <tbody>
+              </thead>
+              <tbody>
                 {currentItems.map((person, i) => {
                   totalBudget += person.budget_fact
                   totalViews += person.recorded_view_count
@@ -335,8 +380,8 @@ let channelName = ''
 
                   channelName = person.channel_name
 
-
-                    return (<tr key={person.id}>
+                  return (
+                    <tr key={person.id}>
                       <td>{indexOfFirstItem + i + 1}</td>
 
                       <td>{person.order_name}</td>
@@ -349,74 +394,76 @@ let channelName = ''
 
                       <td>
                         {new Date(person.order_start_date)
-                            .toLocaleDateString('en-GB')
-                            .replace(/\//g, '.')}
+                          .toLocaleDateString('en-GB')
+                          .replace(/\//g, '.')}
                       </td>
                       <td>
                         {new Date(person.order_end_date)
-                            .toLocaleDateString('en-GB')
-                            .replace(/\//g, '.')}
+                          .toLocaleDateString('en-GB')
+                          .replace(/\//g, '.')}
                       </td>
 
                       <td>
-                        <FormatterView data={person.recorded_view_count}/>
+                        <FormatterView data={person.recorded_view_count} />
                       </td>
 
                       <td>
-                        <div style={{display: 'flex'}}>
-                          <FormatterBudjet budget={person.budget_fact}/>
+                        <div style={{ display: 'flex' }}>
+                          <FormatterBudjet budget={person.budget_fact} />
                         </div>
                       </td>
                       <td>
-                        <div style={{display: 'flex'}}>
+                        <div style={{ display: 'flex' }}>
                           <FormatterBudjet
-                              budget={person.agency_commission_total}
+                            budget={person.agency_commission_total}
                           />
                         </div>
                       </td>
                       <td>
-                        <div style={{display: 'flex'}}>
+                        <div style={{ display: 'flex' }}>
                           <FormatterBudjet
-                              budget={person.adtechmedia_commission_total}
+                            budget={person.adtechmedia_commission_total}
                           />
                         </div>
                       </td>
 
                       <td>
-                        <div style={{display: 'flex'}}>
-                          <FormatterBudjet budget={person.channel_budget_total}/>
+                        <div style={{ display: 'flex' }}>
+                          <FormatterBudjet
+                            budget={person.channel_budget_total}
+                          />
                         </div>
                       </td>
                     </tr>
-                )
+                  )
                 })}
-                </tbody>
+              </tbody>
 
-                <thead style={{border: 0}}>
+              <thead style={{ border: 0 }}>
                 {/* Ячейки с инфо Итого:	 */}
                 <InfoCardsBottom
-                    totalViews={totalViews}
-                    totalBudget={totalBudget}
-                    totalComisy={totalComisy}
-                    currentItems={currentItems}
-                    totalComisyAdtech={totalComisyAdtech}
-                    totalbudjetChannel={totalbudjetChannel}
-                    channelName={channelName}
+                  totalViews={totalViews}
+                  totalBudget={totalBudget}
+                  totalComisy={totalComisy}
+                  currentItems={currentItems}
+                  totalComisyAdtech={totalComisyAdtech}
+                  totalbudjetChannel={totalbudjetChannel}
+                  channelName={channelName}
                 />
                 {/* Ячейки с инфо Итого:	 */}
-                </thead>
-              </table>
+              </thead>
+            </table>
           ) : (
-              <div className="empty_list">
-                Установите фильтр или по данным пораметрам не найдены данные!
-              </div>
+            <div className="empty_list">
+              Установите фильтр или по данным пораметрам не найдены данные!
+            </div>
           )}
           <div className={style.pagination}>
             {Array.from(
-                {length: Math.ceil(data.length / itemsPerPage)},
-                (_, index) => (
-                    <button
-                        key={index + 1}
+              { length: Math.ceil(data.length / itemsPerPage) },
+              (_, index) => (
+                <button
+                  key={index + 1}
                   onClick={() => paginate(index + 1)}
                   className={`${style.button} ${
                     currentPage === index + 1 ? style.active : ''

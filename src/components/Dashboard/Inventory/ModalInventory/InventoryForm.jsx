@@ -17,7 +17,7 @@ function InventoryForm({
   watchVideo,
 }) {
   const user = localStorage.getItem('role')
-
+  console.log('cId,cId', cId)
   return (
     <>
       {user === 'publisher' || user === 'channel' ? (

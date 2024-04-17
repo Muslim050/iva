@@ -1,9 +1,9 @@
 .infoCart {
-  color: #45464E;
+  color: #45464e;
   font-size: 15px;
   line-height: 16px;
   font-weight: 400;
-  background: #FFF2E2;
+  background: #fff2e2;
   padding: 7px;
   border-radius: 8px;
   margin-right: 5px;
@@ -17,23 +17,23 @@
   }
 }
 
-
 .infoCards_bottom_th {
   background: #6780f994;
-  color: #45464E;
+  color: #45464e;
   border-radius: 10px;
-  background: #FFF2E2;
+  background: #fff2e2;
 
   &__toptext {
-    color: #45464E;
+    color: #45464e;
     font-size: 13px;
     line-height: 16px;
-    font-weight: 400;
-    background: #FFF2E2;
+    font-weight: 600;
+    background: #fff2e2;
     border-radius: 8px;
   }
 
   &__bottomtext {
     line-height: 15px;
+    font-weight: 400;
   }
 }

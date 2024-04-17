@@ -29,6 +29,12 @@ export const menuItems = [
     icon: <Confirm />,
   },
   {
+    roles: ['publisher', 'admin'],
+    label: 'Отчет',
+    to: '/publisher-report',
+    icon: <PublisherReport />,
+  },
+  {
     roles: ['channel', 'publisher', 'admin'],
     label: 'Инвентарь',
     to: '/inventory',
@@ -40,12 +46,7 @@ export const menuItems = [
     to: '/video',
     icon: <Video />,
   },
-  {
-    roles: ['publisher', 'admin'],
-    label: 'Отчет',
-    to: '/publisher-report',
-    icon: <PublisherReport />,
-  },
+
   {
     roles: ['channel', 'publisher', 'admin'],
     label: 'Каналы',
