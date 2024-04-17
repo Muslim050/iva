@@ -136,7 +136,11 @@ export const deletePublisher = createAsyncThunk(
 const publisherSlice = createSlice({
   name: 'publisher',
   initialState,
-  reducers: {},
+    reducers: {
+        resetPublisherReport(state) {
+            state.publisherReport = []; // Resets to an empty array
+        }
+    },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPublisher.pending, (state) => {
@@ -182,5 +186,6 @@ const publisherSlice = createSlice({
     // })
   },
 })
+export const { resetPublisherReport } = publisherSlice.actions;
 
 export default publisherSlice.reducer
