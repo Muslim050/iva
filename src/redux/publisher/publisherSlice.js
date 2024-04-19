@@ -85,7 +85,6 @@ export const addPublisher = createAsyncThunk(
 export const addPublisherReport = createAsyncThunk(
   'publisher/addPublisherReport',
   async ({ id, startDate, endDate, format, advertiser }) => {
-    console.log('advertiser', advertiser)
     const token = localStorage.getItem('token')
     let url = new URL(`${backendURL}/publisher/report/`)
     const params = new URLSearchParams()
@@ -105,7 +104,6 @@ export const addPublisherReport = createAsyncThunk(
       params.append('advertiser_id', advertiser)
     }
     url.search = params.toString()
-    console.log('url.href', url.href)
     try {
       const response = await axios.get(url.href, {
         headers: {
@@ -113,6 +111,7 @@ export const addPublisherReport = createAsyncThunk(
           Accept: 'application/json',
           Authorization: `Bearer ${token}`,
         },
+
       })
 
       return response.data.data

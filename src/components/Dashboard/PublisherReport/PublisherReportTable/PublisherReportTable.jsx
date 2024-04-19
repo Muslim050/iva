@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import ButtonTable from 'src/components/UI/ButtonTable/ButtonTable'
 import { ReactComponent as Reload } from 'src/assets/Table/reload.svg'
 import { ReactComponent as Filter } from 'src/assets/Table/Filter.svg'
-
 import publisherSlice, {
   addPublisherReport,
   resetPublisherReport,
@@ -16,12 +15,13 @@ import { format } from 'date-fns'
 import FilteredTooltip from './FilteredTooltip/FilteredTooltip'
 import { InfoCardsBottom } from 'src/components/Dashboard/PublisherReport/PublisherReportTable/InfoCards/InfoCards'
 import { fetchAdvertiser } from 'src/redux/advertiser/advertiserSlice'
+import { ReactComponent as Linkk } from 'src/assets/link.svg'
 
 const headers = [
   { key: 'id', label: 'ID' },
   { key: 'company', label: 'Компания' },
   { key: 'name', label: 'Рекламодатель' },
-  { key: 'email', label: 'Агентство' },
+
   { key: 'phone_number', label: 'Канал' },
   { key: 'commission_rate', label: 'Название Видео' },
   { key: 'commission_rate', label: 'Формат' },
@@ -61,29 +61,39 @@ function PublisherReportTable() {
   const [startDate, setStartDate] = React.useState(null)
   const [endDate, setEndDate] = React.useState(null)
 
+  const [startDateMonth, setStartDateMonth] = React.useState(null)
+  const [endDateMonth, setEndDateMonth] = React.useState(null)
+  const [dateRange, setDateRange] = React.useState([]);
+  const currentMonth = new Date();
+  const startOfCurrentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
+  const [selectedMonth, setSelectedMonth] = React.useState(startOfCurrentMonth);
+
   // Функция для изменения страницы
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
   React.useEffect(() => {
     dispatch(addPublisherReport()).then(() => setLoading(false))
   }, [dispatch])
   React.useEffect(() => {
-    dispatch(fetchAdvertiser()).then(() => setLoading(false))
+    dispatch(fetchChannel())
   }, [dispatch])
-
+  React.useEffect(() => {
+    if (selectedChannel) { // Проверка на наличие значения
+      dispatch(fetchAdvertiser({ id: selectedChannel })).then(() => setLoading(false));
+    }
+  }, [dispatch, selectedChannel]);
+  React.useEffect(() => {
+    setStartDateMonth(dateRange[0]);
+    setEndDateMonth(dateRange[1]);
+  }, [dateRange]);
   const handleStartDateChange = (date) => {
     setStartDate(date) // Keep the Date object for DatePicker
   }
-
   const handleEndDateChange = (date) => {
     setEndDate(date) // Keep the Date object for DatePicker
   }
   const handleReload = () => {
     dispatch(addPublisherReport())
   }
-  React.useEffect(() => {
-    dispatch(fetchChannel())
-  }, [dispatch])
-  console.log('selectedAdv', selectedAdv)
   const handleSearch = () => {
     if (selectedChannel || selectedAdv) {
       setFilterLoading(true)
@@ -93,11 +103,25 @@ function PublisherReportTable() {
       const formattedEndDate = endDate
         ? format(endDate, 'yyyy-MM-dd')
         : undefined
+
+      const formattedStartDateMonth = startDateMonth
+          ? format(startDateMonth, 'yyyy-MM-dd')
+          : undefined
+      const formattedEndDateMonth = endDateMonth
+          ? format(endDateMonth, 'yyyy-MM-dd')
+          : undefined
+
+      const useMonthBasedDates = startDateMonth !== undefined;
+
+      console.log("Sending dates:", {
+        startDate: useMonthBasedDates ? formattedStartDateMonth : formattedStartDate,
+        endDate: useMonthBasedDates ? formattedEndDateMonth : formattedEndDate,
+      });
       dispatch(
         addPublisherReport({
           id: selectedChannel,
-          startDate: formattedStartDate,
-          endDate: formattedEndDate,
+          startDate: useMonthBasedDates ? formattedStartDateMonth : formattedStartDate,
+          endDate: useMonthBasedDates ? formattedEndDateMonth : formattedEndDate,
           format: selectedFormat,
           advertiser: selectedAdv,
         }),
@@ -114,33 +138,46 @@ function PublisherReportTable() {
     }
   }
   const handleSelectChange = (event) => {
-    setSelectedOptionChannel(event.target.value)
-
-    const option = JSON.parse(event.target.value)
-    setSelectedChannel(option.id)
-    setSelectedChannelName(option.name)
+    const value = event.target.value;
+    setSelectedOptionChannel(value)
+    if (value) {
+      const option = JSON.parse(value);
+      setSelectedChannel(option.id);
+      setSelectedChannelName(option.name);
+    } else {
+      setSelectedChannel(null);
+      setSelectedChannelName("");
+    }
   }
   const handleSelectChangeADV = (event) => {
-    setSelectedOptionAdv(event.target.value)
-    const option = JSON.parse(event.target.value)
-    setSetSelectedAdv(option.id)
-    setSelectedAdvName(option.name)
-  }
+    const value = event.target.value;
+    setSelectedOptionAdv(value);
+
+    if (value) {
+      const option = JSON.parse(value);
+      setSetSelectedAdv(option.id);
+      setSelectedAdvName(option.name);
+    } else {
+      setSetSelectedAdv(null);
+      setSelectedAdvName("");
+    }
+  };
   const handleSelectFormat = (event) => {
     setSelectedFormat(event.target.value)
   }
-
   const handleClear = () => {
     setFilterLoading(true)
-    setSelectedChannel('')
-    setSelectedChannelName('')
+    setSelectedChannel(null)
+    setSelectedOptionChannel('')
     setSelectedAdvName('')
+    setSelectedChannelName(null)
     setStartDate(null)
     setEndDate(null)
     setSelectedFormat('')
+    setDateRange([])
+    setSelectedMonth(startOfCurrentMonth);  // Сброс выбранной даты в DatePicker
     dispatch(resetPublisherReport()) // Dispatch the reset action
     setFilterLoading(false)
-    setIsTooltip(!isTooltip)
   }
   const handleProfileClick = () => {
     setIsTooltip(!isTooltip)
@@ -153,6 +190,8 @@ function PublisherReportTable() {
   let totalComisyAdtech = 0
   let totalbudjetChannel = 0
   let channelName = ''
+
+
   return (
     <>
       {loading ? (
@@ -239,6 +278,33 @@ function PublisherReportTable() {
                     </div>
                   </div>
                 )}
+                {dateRange && (
+                    <div
+                        style={{
+                          padding: '10px',
+                          borderRadius: '8px',
+                          background: '#FEF5EA',
+                          border: '1px solid #ffd8a9',
+                          marginRight: '5px',
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                    >
+                      <div
+                          style={{
+                            fontSize: '13px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                          }}
+                      >
+                        Месяц
+                        <div style={{ marginTop: '4px' }}>
+                          {selectedMonth.toLocaleString('ru-RU', { month: 'long' }).toLowerCase()}
+                        </div>
+                      </div>
+                    </div>
+                )}
                 {(startDate || endDate) && (
                   <div
                     style={{
@@ -261,14 +327,7 @@ function PublisherReportTable() {
                     >
                       Выбранный период
                       <div style={{ marginTop: '4px' }}>
-                        {startDate && (
-                          <>
-                            {startDate
-                              .toLocaleDateString('en-GB')
-                              .replaceAll('/', '-')}
-                          </>
-                        )}
-                        &nbsp;&nbsp;
+
                         {endDate && (
                           <>
                             {endDate
@@ -347,6 +406,16 @@ function PublisherReportTable() {
                     //
                     selectedOptionChannel={selectedOptionChannel}
                     selectedOptionAdv={selectedOptionAdv}
+                    //
+                    setStartDateMonth={setStartDateMonth}
+                    setEndDateMonth={setEndDateMonth}
+                    startDateMonth={startDateMonth}
+                    endDateMonth={endDateMonth}
+                    //
+                    setDateRange={setDateRange}
+                    dateRange={dateRange}
+                    setSelectedMonth={setSelectedMonth}
+                    selectedMonth={selectedMonth}
                   />
                 </div>
               </div>
@@ -381,67 +450,84 @@ function PublisherReportTable() {
                   channelName = person.channel_name
 
                   return (
-                    <tr key={person.id}>
-                      <td>{indexOfFirstItem + i + 1}</td>
+                      <tr key={person.id}>
+                        <td>{indexOfFirstItem + i + 1}</td>
 
-                      <td>{person.order_name}</td>
-                      <td>{person.advertiser_name}</td>
+                        <td>{person.order_name}</td>
+                        <td>{person.advertiser_name}</td>
 
-                      <td>{person.advertising_agency_name}</td>
-                      <td>{person.channel_name}</td>
-                      <td>{person.video_content_name}</td>
-                      <td>{person.format}</td>
+                        <td>{person.channel_name}</td>
+                        {/*<td>{person.video_content_name}</td>*/}
+                        <td
+                            style={{display: 'inline-block', width: '100%'}}
+                            className={style.table_td}
+                        >
+                          <a
+                              target="_blank"
+                              href={person.video_content_name}
+                              className={`${style.linkWrapper__file} truncate`} // Добавьте класс truncate
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                              }}
+                              rel="noreferrer"
+                          >
+                            {person.video_content_name}
+                          </a>
+                        </td>
+                        <td>{person.format}</td>
 
-                      <td>
-                        {new Date(person.order_start_date)
-                          .toLocaleDateString('en-GB')
-                          .replace(/\//g, '.')}
-                      </td>
-                      <td>
-                        {new Date(person.order_end_date)
-                          .toLocaleDateString('en-GB')
-                          .replace(/\//g, '.')}
-                      </td>
+                        <td>
+                          {new Date(person.order_start_date)
+                              .toLocaleDateString('en-GB')
+                              .replace(/\//g, '.')}
+                        </td>
+                        <td>
+                          {new Date(person.order_end_date)
+                              .toLocaleDateString('en-GB')
+                              .replace(/\//g, '.')}
+                        </td>
 
-                      <td>
-                        <FormatterView data={person.recorded_view_count} />
-                      </td>
+                        <td>
+                          <FormatterView data={person.recorded_view_count}/>
+                        </td>
 
-                      <td>
-                        <div style={{ display: 'flex' }}>
-                          <FormatterBudjet budget={person.budget_fact} />
-                        </div>
-                      </td>
-                      <td>
-                        <div style={{ display: 'flex' }}>
-                          <FormatterBudjet
-                            budget={person.agency_commission_total}
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div style={{ display: 'flex' }}>
-                          <FormatterBudjet
-                            budget={person.adtechmedia_commission_total}
-                          />
-                        </div>
-                      </td>
+                        <td>
+                          <div style={{display: 'flex'}}>
+                            <FormatterBudjet budget={person.budget_fact}/>
+                          </div>
+                        </td>
+                        <td>
+                          <div style={{display: 'flex'}}>
+                            <FormatterBudjet
+                                budget={person.agency_commission_total}
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div style={{display: 'flex'}}>
+                            <FormatterBudjet
+                                budget={person.adtechmedia_commission_total}
+                            />
+                          </div>
+                        </td>
 
-                      <td>
-                        <div style={{ display: 'flex' }}>
-                          <FormatterBudjet
-                            budget={person.channel_budget_total}
-                          />
-                        </div>
-                      </td>
-                    </tr>
+                        <td>
+                          <div style={{display: 'flex'}}>
+                            <FormatterBudjet
+                                budget={person.channel_budget_total}
+                            />
+                          </div>
+                        </td>
+                      </tr>
                   )
                 })}
               </tbody>
 
-              <thead style={{ border: 0 }}>
-                {/* Ячейки с инфо Итого:	 */}
-                <InfoCardsBottom
+              <thead style={{border: 0}}>
+              {/* Ячейки с инфо Итого:	 */}
+              <InfoCardsBottom
                   totalViews={totalViews}
                   totalBudget={totalBudget}
                   totalComisy={totalComisy}

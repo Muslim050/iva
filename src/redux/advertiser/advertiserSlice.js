@@ -11,19 +11,19 @@ const initialState = {
 }
 
 export const fetchAdvertiser = createAsyncThunk(
-  'advertiser/fetchAdvertiser',
-  async () => {
-    const token = localStorage.getItem('token')
-
-    try {
-      const response = await axios.get(`${backendURL}/advertiser/`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      return response.data.data
+    'advertiser/fetchAdvertiser',
+    async ({ id } = {}, { rejectWithValue }) => { // Указываем, что параметр может быть не предоставлен
+        const token = localStorage.getItem('token');
+        try {
+            const url = id ? `${backendURL}/advertiser/?channel_id=${id}` : `${backendURL}/advertiser/`;
+            const response = await axios.get(url, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data.data;
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
         const errorMessage = error.response.data.error

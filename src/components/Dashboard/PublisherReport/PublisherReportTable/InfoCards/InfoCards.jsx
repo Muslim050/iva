@@ -68,7 +68,7 @@ export function InfoCardsBottom({
                   color: '#fa8a00',
                 }}
               >
-                Введется <br /> аналитика
+                ---
               </div>
             ) : (
               <>
@@ -102,7 +102,7 @@ export function InfoCardsBottom({
                   color: '#fa8a00',
                 }}
               >
-                Введется <br /> аналитика
+                ---
               </div>
             ) : (
               <>
@@ -170,7 +170,7 @@ export function InfoCardsBottom({
                   color: '#fa8a00',
                 }}
               >
-                Введется <br /> аналитика
+                ---
               </div>
             ) : (
               <>
