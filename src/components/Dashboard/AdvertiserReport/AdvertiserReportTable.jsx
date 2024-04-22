@@ -19,6 +19,8 @@ import GenderData from './components/DopTable/Data/GenderData'
 import AgeData from './components/DopTable/Data/AgeData'
 import GeoData from './components/DopTable/Data/GeoData'
 import { ReactComponent as Close } from 'src/assets/Modal/Close.svg'
+import {fetchShortList} from "../../../redux/order/orderSlice";
+import {fetchAdvertiser} from "../../../redux/advertiser/advertiserSlice";
 
 function AdvertiserReportTable() {
     const dispatch = useDispatch()
@@ -27,7 +29,11 @@ function AdvertiserReportTable() {
     const [loading, setLoading] = React.useState(true)
     const [loadingClose, setLoadingClose] = React.useState(false)
 
+//
     const data = useSelector((state) => state.statistics.statistics.results)
+    const ShortListdata = useSelector((state) => state.order.shortListData)
+    const advdata = useSelector((state) => state.advertiser.advertisers)
+//
     const [getOrder, setGetOrder] = React.useState([])
     const [isTooltip, setIsTooltip] = React.useState(false)
     const [startDate, setStartDate] = React.useState('')
@@ -40,6 +46,10 @@ function AdvertiserReportTable() {
         )
     }
 
+    React.useEffect(() => {
+        dispatch(fetchAdvertiser({})).then(() => setLoading(false));
+    }, [dispatch]);
+    console.log("ShortListdata", ShortListdata)
     // Отправка запроса с фильтра
     const handleDateStatictick = () => {
         setLoading(true)
@@ -100,6 +110,11 @@ function AdvertiserReportTable() {
     React.useEffect(() => {
         fetchGetOrder()
     }, [])
+    React.useEffect(() => {
+
+    }, [])
+
+
     const dataFilteredClose = () => {
         setDataFiltered(false)
         setLoadingClose(true)

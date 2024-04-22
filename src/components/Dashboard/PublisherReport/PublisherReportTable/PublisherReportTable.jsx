@@ -259,14 +259,14 @@ function PublisherReportTable() {
               )}
 
               <div className={style.profile}>
-                {currentItems.length > 0 &&
-                 <div style={{marginRight: "10px", display: 'flex'}}><ButtonTable onClick={() => download()}>
-                   <Download
-                       style={{ width: "25px", height: "30px" }}
-                   />
-                 </ButtonTable></div>
+                {/*{currentItems.length > 0 &&*/}
+                {/* <div style={{marginRight: "10px", display: 'flex'}}><ButtonTable onClick={() => download()}>*/}
+                {/*   <Download*/}
+                {/*       style={{ width: "25px", height: "30px" }}*/}
+                {/*   />*/}
+                {/* </ButtonTable></div>*/}
 
-                }
+                {/*}*/}
                 {selectedAdvName && (
                   <div
                     style={{
@@ -502,7 +502,7 @@ function PublisherReportTable() {
                         <td>{person.channel_name}</td>
                         {/*<td>{person.video_content_name}</td>*/}
                         <td
-                            style={{display: 'inline-block', width: '100%', color: "blue"}}
+                            style={{ width: 'inherit', color: "blue"}}
                             className={style.table_td}
                         >
                           {person.video_content_name}
@@ -526,13 +526,16 @@ function PublisherReportTable() {
 
                         <td>
                           <div style={{display: 'flex'}}>
-                            <FormatterBudjet budget={person.budget_fact}/>
+                            <FormatterBudjet budget={person.budget_fact}
+                                data={person.order_start_date}
+                            />
                           </div>
                         </td>
                         <td>
                           <div style={{display: 'flex'}}>
                             <FormatterBudjet
                                 budget={person.agency_commission_total}
+                                data={person.order_start_date}
                             />
                           </div>
                         </td>
@@ -540,6 +543,7 @@ function PublisherReportTable() {
                           <div style={{display: 'flex'}}>
                             <FormatterBudjet
                                 budget={person.adtechmedia_commission_total}
+                                data={person.order_start_date}
                             />
                           </div>
                         </td>
@@ -548,6 +552,7 @@ function PublisherReportTable() {
                           <div style={{display: 'flex'}}>
                             <FormatterBudjet
                                 budget={person.channel_budget_total}
+                                data={person.order_start_date}
                             />
                           </div>
                         </td>

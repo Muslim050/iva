@@ -35,12 +35,12 @@ export const menuItems = [
     to: '/publisher-report',
     icon: <PublisherReport />,
   },
-  {
-    roles: ['advertiser', 'advertising_agency', 'admin'],
-    label: 'Отчет-Рекламодателя',
-    to: '/advertiser-report',
-    icon: <AdvertiserReport />,
-  },
+  // {
+  //   roles: ['advertiser', 'advertising_agency', 'admin'],
+  //   label: 'Отчет-Рекламодателя',
+  //   to: '/advertiser-report',
+  //   icon: <AdvertiserReport />,
+  // },
   {
     roles: ['channel', 'publisher', 'admin'],
     label: 'Инвентарь',

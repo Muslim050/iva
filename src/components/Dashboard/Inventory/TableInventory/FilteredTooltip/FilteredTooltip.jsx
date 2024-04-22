@@ -51,7 +51,30 @@ function FilteredTooltip({
               <Close style={{height: '30px'}}/>
             </button>
 
-
+            <div style={{width: '300px'}}>
+              <label
+                  style={{
+                    fontSize: '12px',
+                    color: 'var(--text-color)',
+                    fontWeight: '400',
+                  }}
+              >
+                Выбрать канал
+                <select
+                    value={selectedOptionChannel} // Используйте ID, а не имя, для value
+                    onChange={handleSelectChange}
+                    style={{width: '100%'}}
+                    className={style.input}
+                >
+                  <option value="">Выберите канал</option>
+                  {channel.map((option) => (
+                      <option key={option.id} value={JSON.stringify(option)}>
+                        {option.name}
+                      </option>
+                  ))}
+                </select>
+              </label>
+            </div>
             <div>
               <label
                   style={{
@@ -77,30 +100,7 @@ function FilteredTooltip({
                 ))}
               </select>
             </div>
-            <div style={{width: '300px'}}>
-              <label
-                  style={{
-                    fontSize: '12px',
-                    color: 'var(--text-color)',
-                    fontWeight: '400',
-                  }}
-              >
-                Выбрать канал
-                <select
-                    value={selectedOptionChannel} // Используйте ID, а не имя, для value
-                    onChange={handleSelectChange}
-                    style={{width: '100%'}}
-                    className={style.input}
-                >
-                  <option value="">Выберите канал</option>
-                  {channel.map((option) => (
-                      <option key={option.id} value={JSON.stringify(option)}>
-                        {option.name}
-                      </option>
-                  ))}
-                </select>
-              </label>
-            </div>
+
             <div style={{display: 'flex', marginTop: '20px', gap: '10px'}}>
               {(selectedChannel || selectedFormat) && <div style={{width: '100%'}}>
                 <ButtonTable

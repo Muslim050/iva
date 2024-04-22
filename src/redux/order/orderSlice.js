@@ -11,6 +11,7 @@ const initialState = {
   exportExcelOrder: '',
   confirmedOrders: [],
   exportConfirmed: [],
+    shortListData: null
 }
 
 export const fetchOrder = createAsyncThunk('order/fetchOrder', async () => {
@@ -126,6 +127,35 @@ export const confirmPayment = createAsyncThunk(
       throw error
     }
   },
+)
+
+export const fetchShortList = createAsyncThunk(
+    'order/fetchShortList',
+    async ({ id }) => {
+        const token = localStorage.getItem('token')
+
+        try {
+            const response = await axios.get(
+                `${backendURL}/order/short-list/`,
+                {
+                    advertiser_id: id,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            )
+            return response.data
+        } catch (error) {
+            if (error.response && error.response.status === 403) {
+                throw new Error('Ошибка 403: Доступ запрещен')
+            }
+            throw error
+        }
+    },
 )
 
 export const fetchEditOrder = createAsyncThunk(
@@ -256,6 +286,16 @@ const orderSlice = createSlice({
       .addCase(deleteOrder.rejected, (state, action) => {
         state.status = 'failed'
       })
+        .addCase(fetchShortList.pending, (state) => {
+            state.status = 'loading'
+        })
+        .addCase(fetchShortList.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.shortListData = action.payload
+        })
+        .addCase(fetchShortList.rejected, (state, action) => {
+            state.status = 'failed'
+        })
   },
 })
 
