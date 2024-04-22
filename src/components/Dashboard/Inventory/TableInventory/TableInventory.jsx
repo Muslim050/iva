@@ -11,16 +11,16 @@ import { AnimatePresence } from 'framer-motion'
 import MyModal from '../../../UI/ModalComponents/ModalUI/ModalUI'
 import TableInventoryData from './TableInventoryData'
 import EditInventoryModal from '../EditInventoryModal/EditInventoryModal'
-import style from "../../PublisherReport/PublisherReportTable/FilteredTooltip/FilteredTooltip.module.scss";
+import style from "./TableInventory.module.scss";
 import {fetchChannel} from "../../../../redux/channel/channelSlice";
 import {fetchAdvertiser} from "../../../../redux/advertiser/advertiserSlice";
 import {addPublisherReport, resetPublisherReport} from "../../../../redux/publisher/publisherSlice";
 import { ReactComponent as Delete } from 'src/assets/Delete.svg'
 import { ReactComponent as Search } from 'src/assets/Search.svg'
-const formatV = [
-  { value: 'preroll', text: 'Pre-roll' },
-  { value: 'mixroll', text: 'Mix-roll' },
-]
+import { ReactComponent as Filter } from 'src/assets/Table/Filter.svg'
+
+import FilteredTooltip from "./FilteredTooltip/FilteredTooltip";
+
 
 const headers = [
   { key: 'id', label: '№' },
@@ -49,6 +49,7 @@ function TableInventory() {
   const [sort, setSort] = React.useState('desc')
   const [loading, setLoading] = React.useState(true)
   const [loadingClear, setLoadingClear] = React.useState(true)
+  const [isTooltip, setIsTooltip] = React.useState(false)
 
   const user = localStorage.getItem('role')
   const [showModalEditAdmin, setShowModalEditAdmin] = React.useState(false)
@@ -113,7 +114,10 @@ function TableInventory() {
     setFilterLoading(false)
     setLoading(true)
     dispatch(fetchInventory({})).then(() => setLoading(false))
-
+    setIsTooltip(!isTooltip)
+  }
+  const handleProfileClick = () => {
+    setIsTooltip(!isTooltip)
   }
 
   const handleSearch = () => {
@@ -130,6 +134,7 @@ function TableInventory() {
           .catch(() => {
             setFilterLoading(false) // Ensure loading is reset on error
           })
+    setIsTooltip(!isTooltip)
   }
   React.useEffect(() => {
     dispatch(fetchChannel())
@@ -179,76 +184,95 @@ function TableInventory() {
                       ></div>
                     </div>
                 )}
-                <div style={{width: '300px'}}>
-                  <label
-                      style={{
-                        fontSize: '12px',
-                        color: 'var(--text-color)',
-                        fontWeight: '400',
-                      }}
-                  >
-                    Выбрать канал
-                    <select
-                        value={selectedOptionChannel} // Используйте ID, а не имя, для value
-                        onChange={handleSelectChange}
-                        style={{width: '100%'}}
-                        className={style.input}
-                    >
-                      <option value="">Выберите канал</option>
-                      {channel.map((option) => (
-                          <option key={option.id} value={JSON.stringify(option)}>
-                            {option.name}
-                          </option>
-                      ))}
-                    </select>
-                  </label>
+
+                <div style={{display: 'flex'}}>
+
+
+                  <div style={{display: 'flex'}}>
+                    {selectedFormat && (
+                        <div
+                            style={{
+                              padding: '10px',
+                              borderRadius: '8px',
+                              background: '#FEF5EA',
+                              border: '1px solid #ffd8a9',
+                              marginRight: '5px',
+                              display: 'flex',
+                              alignItems: 'center',
+                            }}
+                        >
+                          <div
+                              style={{
+                                fontSize: '13px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                              }}
+                          >
+                            Формат
+                            <div style={{marginTop: '4px'}}>{selectedFormat}</div>
+                          </div>
+                        </div>
+                    )}
+                    {selectedChannelName && (
+                        <div
+                            style={{
+                              padding: '10px',
+                              borderRadius: '8px',
+                              background: '#FEF5EA',
+                              border: '1px solid #ffd8a9',
+                              marginRight: '5px',
+                              display: 'flex',
+                              alignItems: 'center',
+                            }}
+                        >
+                          <div
+                              style={{
+                                fontSize: '13px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                              }}
+                          >
+                            Канал
+                            <div style={{marginTop: '4px'}}>
+                              {selectedChannelName}
+                            </div>
+                          </div>
+                        </div>
+                    )}
+
+                  </div>
+
+
                 </div>
+
 
                 <div>
-                  <label
-                      style={{
-                        fontSize: '12px',
-                        color: 'var(--text-color)',
-                        fontWeight: '400',
-                      }}
-                  >
-                    Формат
-                  </label>
-                  <select
-                      id="countries"
-                      value={selectedFormat}
-                      className={style.input}
-                      onChange={handleSelectFormat}
-                  >
-                    <option value="">All</option>
-
-                    {formatV.map((option, index) => (
-                        <option key={index} value={option.value}>
-                          {option.text}
-                        </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div style={{display: 'flex', marginTop: '20px', gap: '10px'}}>
-                  {(selectedChannel || selectedFormat) && <div style={{width: '100%'}}>
-                    <ButtonTable
-                        onClick={handleSearch}
-                        Customstyle={{width: '100%', justifyContent: 'center'}}
+                  <div style={{display: 'grid', marginLeft: '10px'}}>
+                    <div style={{fontSize: '10px'}}>Выбрать период</div>
+                    <button
+                        className={style.profile__wrapper}
+                        onClick={handleProfileClick}
                     >
-                      <Search style={{width: '23px', height: '23px'}}/>
-                    </ButtonTable>
-                  </div>}
-                  {(selectedChannel || selectedFormat) && (
-                      <div style={{width: '100%'}}>
-                        <ButtonTable
-                            onClick={handleClear}
-                            Customstyle={{width: '100%', justifyContent: 'center'}}
-                        >
-                        <Delete style={{width: '23px', height: '23px'}}/>
-                        </ButtonTable>
-                      </div>
-                  )}
+                      <Filter style={{width: '20px', height: '20px'}}/>
+                    </button>
+                  </div>
+                  <div style={{position: 'absolute'}}>
+                    <FilteredTooltip
+                        isTooltip={isTooltip}
+                        channel={channel}
+                        selectedOptionChannel={selectedOptionChannel}
+                        handleProfileClick={handleProfileClick}
+                        selectedFormat={selectedFormat}
+                        handleSelectFormat={handleSelectFormat}
+                        handleSelectChange={handleSelectChange}
+                        selectedChannel={selectedChannel}
+                        handleSearch={handleSearch}
+                        selectedChannel={selectedChannel}
+                        handleClear={handleClear}
+                    />
+                  </div>
                 </div>
                 {user === 'admin' ? (
                     ''
@@ -264,7 +288,7 @@ function TableInventory() {
 
           </div>
 
-          {data ? (
+          {data && data.length ? (
               <table style={{width: '100%'}}>
                 <thead>
                 <tr>

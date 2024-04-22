@@ -353,3 +353,46 @@
 .hidden {
   display: none;
 }
+
+.profile {
+  display: flex;
+  font-size: 14px;
+  position: relative;
+
+  &__wrapper {
+    // width: 32px;
+    // height: 32px;
+    padding: 15px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 8px;
+    background: rgb(255, 242, 226);
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 0 5px rgb(250, 203, 145);
+    }
+  }
+}
+
+.profile__wrapper__tooltip {
+  position: absolute;
+  bottom: -45px;
+  right: 3px;
+  background-color: #fff;
+  box-shadow: 0 0 5px #bbbbbb;
+  padding: 10px;
+  border-radius: 12px;
+  z-index: 99999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.profile__wrapper__tooltip {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+  /* Отменяем задержку */
+}
