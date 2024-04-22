@@ -33,6 +33,8 @@ export default function getTitle(title, id) {
     return `Revenue`
   } else if (title.startsWith(`publisher-report`)) {
     return `Отчет`
+  }else if (title.startsWith(`advertiser-report`)) {
+    return `Отчет - Рекламодателя`
   }
 
   return ''

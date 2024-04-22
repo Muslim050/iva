@@ -13,39 +13,50 @@ const initialState = {
 }
 
 export const fetchInventory = createAsyncThunk(
-  'inventory/fetchInventory',
-  async () => {
-    const token = localStorage.getItem('token')
-
-    try {
-      const response = await axios.get(
-        `${backendURL}/inventory/`,
-
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
-      return response.data.data
-    } catch (error) {
-      if (error.response.status === 401) {
-        window.location.href = 'login'
-      }
-      if (error.response && error.response.data && error.response.data.error) {
-        const errorMessage = error.response.data.error
-        if (errorMessage.detail) {
-          toast.error(errorMessage.detail) // Отображение деталей ошибки с помощью toast
+    'inventory/fetchInventory',
+    async ({ id, format }) => {
+        const token = localStorage.getItem('token');
+        let url = new URL(`${backendURL}/inventory/`);
+        const params = new URLSearchParams();
+        if (id) {
+            params.append('channel_id', id);
         }
-      } else {
-        toast.error('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
-      }
-      throw error
-    }
-  },
-)
+        if (format) {
+            params.append('inventory_format', format);
+        }
+        url.search = params.toString();
+
+        try {
+            const response = await axios.get(url.href, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            return response.data.data;
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 401) {
+                    window.location.href = 'login';
+                }
+                if (error.response.data && error.response.data.error) {
+                    const errorMessage = error.response.data.error;
+                    if (errorMessage.detail) {
+                        toast.error(errorMessage.detail); // Отображение деталей ошибки с помощью toast
+                    }
+                } else {
+                    toast.error('Ошибка при загрузке'); // Общее сообщение об ошибке, если детали не доступны
+                }
+            } else {
+                toast.error('Network error'); // Сообщение об ошибке при сетевой проблеме
+            }
+            throw error;
+        }
+    },
+);
+
 
 export const addInventory = createAsyncThunk(
   'inventory/addInventory',
@@ -241,7 +252,11 @@ export const reloadInventory = createAsyncThunk(
 const inventorySlice = createSlice({
   name: 'inventory',
   initialState,
-  reducers: {},
+    reducers: {
+        resetInventory(state) {
+            state.inventory = [] // Resets to an empty array
+        },
+    },
 
   extraReducers: (builder) => {
     builder
@@ -313,5 +328,6 @@ const inventorySlice = createSlice({
       })
   },
 })
+export const { resetInventory } = inventorySlice.actions
 
 export default inventorySlice.reducer

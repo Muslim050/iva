@@ -8,6 +8,7 @@ import { ReactComponent as AdvertiserAgency } from '../../../assets/Sidebar/adve
 import { ReactComponent as Video } from '../../../assets/Sidebar/video.svg'
 import { ReactComponent as Wallet } from '../../../assets/Sidebar/Wallet.svg'
 import { ReactComponent as PublisherReport } from '../../../assets/Sidebar/publisherReport.svg'
+import { ReactComponent as AdvertiserReport } from '../../../assets/Sidebar/advreport.svg'
 
 export const menuItems = [
   {
@@ -29,11 +30,17 @@ export const menuItems = [
     icon: <Confirm />,
   },
   {
-    roles: ['publisher', 'admin'],
+    roles: ['publisher', 'channel', 'admin'],
     label: 'Отчет',
     to: '/publisher-report',
     icon: <PublisherReport />,
   },
+  // {
+  //   roles: ['advertiser', 'advertising_agency', 'admin'],
+  //   label: 'Отчет-Рекламодателя',
+  //   to: '/advertiser-report',
+  //   icon: <AdvertiserReport />,
+  // },
   {
     roles: ['channel', 'publisher', 'admin'],
     label: 'Инвентарь',

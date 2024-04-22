@@ -11,11 +11,10 @@ export function InfoCardsBottom({
   currentItems,
   totalComisyAdtech,
   totalbudjetChannel,
-  channelName,
+  channelName, uniqueChannelNameFiltered
 }) {
   return (
     <tr align="center">
-      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -157,7 +156,7 @@ export function InfoCardsBottom({
         }}
       >
         <div className={style.infoCards_bottom_th__toptext}>
-          Комиссия
+          Комиссия - {uniqueChannelNameFiltered}
           <div
             className={style.infoCards_bottom_th__bottomtext}
             style={{ display: 'flex' }}

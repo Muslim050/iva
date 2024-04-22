@@ -16,7 +16,7 @@
     background-color: var(--background_cart);
 
     &__width {
-      width: 270px;
+      width: 300px;
     }
 
     &__widthh {
@@ -156,6 +156,7 @@
     transition-duration: 500ms;
     font-size: 16px;
     margin-left: 16px;
+
   }
 
   .wrapper__icon {
@@ -167,6 +168,7 @@
     opacity: 0;
     transform: translateX(7rem);
     overflow: hidden;
+
   }
 
 

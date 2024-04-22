@@ -27,6 +27,7 @@ import {
 import Revenue from './pages/Dashboard/Revenue/Revenue'
 import News from './components/Site/News/News'
 import PublisherReport from './pages/Dashboard/PublisherReport/PublisherReport'
+import AdvertiserReport from "./pages/Dashboard/AdvertiserReport/AdvertiserReport";
 
 function App() {
   const dispatch = useDispatch()
@@ -227,11 +228,19 @@ function App() {
           <Route
             path="/publisher-report"
             element={
-              <Protected allowedRoles={['publisher', 'admin']}>
+              <Protected allowedRoles={['publisher', 'channel', 'admin']}>
                 <PublisherReport />
               </Protected>
             }
           />
+            <Route
+                path="/advertiser-report"
+                element={
+                    <Protected allowedRoles={['advertiser', 'advertising_agency', 'admin']}>
+                        <AdvertiserReport />
+                    </Protected>
+                }
+            />
 
           {/* Other routes */}
         </Route>

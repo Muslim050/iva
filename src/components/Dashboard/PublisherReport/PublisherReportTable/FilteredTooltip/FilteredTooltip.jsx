@@ -47,7 +47,8 @@ function FilteredTooltip({
                            setEndDateMonth,
                            setStartDateMonth,endDateMonth, startDateMonth,
                            setDateRange,
-                           dateRange,setSelectedMonth,selectedMonth
+                           dateRange,setSelectedMonth,selectedMonth,
+                           download
 }) {
 
 
@@ -231,6 +232,7 @@ function FilteredTooltip({
                   <div style={{marginLeft: '5px'}}>Сортировать</div>
                 </ButtonTable>
               </div>
+
               {(selectedChannel || startDate || endDate || selectedFormat || startDateMonth || endDateMonth) && (
                   <div style={{width: '100%'}}>
                     <ButtonTable

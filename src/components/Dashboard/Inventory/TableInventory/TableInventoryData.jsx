@@ -29,70 +29,73 @@ function TableInventoryData({
         <>
           <tr className={style.table__tr}>
             <td className={style.table_td}>
-              <div style={{ display: 'flex' }}>
+              <div style={{display: 'flex'}}>
                 <div>{i + 1}</div>
                 {user === 'publisher' || user === 'channel' ? (
-                  <>
-                    {inventor.status === 'pre_booked' ? (
-                      <CircularTable />
-                    ) : null}
-                  </>
+                    <>
+                      {inventor.status === 'pre_booked' ? (
+                          <CircularTable/>
+                      ) : null}
+                    </>
                 ) : null}
 
                 {user === 'admin' ? (
-                  <>{inventor.status === 'open' ? <CircularTable /> : null}</>
+                    <>{inventor.status === 'open' ? <CircularTable/> : null}</>
                 ) : null}
               </div>
             </td>
             <td
-              style={{ position: 'relative' }}
-              className={style.table_td}
-              onMouseEnter={() => setActiveTooltip(i)}
-              onMouseLeave={() => setActiveTooltip(null)}
+                style={{position: 'relative'}}
+                className={style.table_td}
+                onMouseEnter={() => setActiveTooltip(i)}
+                onMouseLeave={() => setActiveTooltip(null)}
             >
               {inventor.channel === null ? '' : inventor.channel.name}
               {user === 'admin' && (
-                <span
-                  className={
-                    activeTooltip === i ? style.tooltiptext : style.hidden
-                  }
-                >
+                  <span
+                      className={
+                        activeTooltip === i ? style.tooltiptext : style.hidden
+                      }
+                  >
                   ID:{inventor?.id}
                 </span>
               )}
             </td>
 
             <td
-              style={{ position: 'relative' }}
-              className={style.table_td}
-              onMouseEnter={() => setActiveTooltip(i)}
-              onMouseLeave={() => setActiveTooltip(null)}
+                style={{position: 'relative'}}
+                className={style.table_td}
+                onMouseEnter={() => setActiveTooltip(i)}
+                onMouseLeave={() => setActiveTooltip(null)}
             >
               {inventor.video_content?.name}
               {user === 'admin' && (
-                <span
-                  className={
-                    activeTooltip === i ? style.tooltiptext : style.hidden
-                  }
-                >
+                  <span
+                      className={
+                        activeTooltip === i ? style.tooltiptext : style.hidden
+                      }
+                  >
                   ID:{inventor.video_content?.id}
                 </span>
               )}
             </td>
-
+            {/**/}
             <td className={style.table_td}>
               {(inventor.format === 'preroll' && 'Pre-roll') ||
-                (inventor.format === 'midroll1' && 'Mid-roll 1') ||
-                (inventor.format === 'midroll2' && 'Mid-roll 2') ||
-                (inventor.format === 'midroll3' && 'Mid-roll 3') ||
-                (inventor.format === 'midroll4' && 'Mid-roll 4')}
+                  (inventor.format === 'midroll1' && 'Mid-roll 1') ||
+                  (inventor.format === 'midroll2' && 'Mid-roll 2') ||
+                  (inventor.format === 'midroll3' && 'Mid-roll 3') ||
+                  (inventor.format === 'midroll4' && 'Mid-roll 4')}
             </td>
+
             <td className={style.table_td}>
-              <FormatterTime data={inventor.start_at} />
+              <FormatterTime data={inventor.start_at}/>
             </td>
+
             <td className={style.table_td}>
-              <FormatterView data={inventor.expected_number_of_views} />
+              <FormatterView data={inventor.expected_number_of_views}/>
             </td>
+
             <td className={style.table_td}>
               {inventor.expected_promo_duration}
             </td>
@@ -101,76 +104,79 @@ function TableInventoryData({
             </td>
             <td className={style.table_td}>
               {new Date(inventor.video_content?.publication_time)
-                .toLocaleDateString('en-GB')
-                .replace(/\//g, '.')}
+                  .toLocaleDateString('en-GB')
+                  .replace(/\//g, '.')}
             </td>
             <td className={style.table_td}>
               <div>
                 <AdvertStatus
-                  status={inventor.status}
-                  endDate={inventor.deactivation_date}
+                    status={inventor.status}
+                    endDate={inventor.deactivation_date}
                 />
               </div>
             </td>
 
             {inventor.status === 'pre_booked' ||
             inventor.status === 'booked' ? (
-              <td className={style.table_td}>
-                <button
-                  className={style.dopBtn}
-                  onClick={() => handleRowClick(inventor.id)}
-                  style={{ position: 'relative' }}
-                >
-                  Открыть
-                  <span className={style.arrow}>
+                <td className={style.table_td}>
+                  <button
+                      className={style.dopBtn}
+                      onClick={() => handleRowClick(inventor.id)}
+                      style={{position: 'relative'}}
+                  >
+                    Открыть
+                    <span className={style.arrow}>
                     <Arrow
-                      className={`${style.arrow__icon} ${
-                        expandedRows === inventor.id ? style.arrow__rotate : ''
-                      }`}
+                        className={`${style.arrow__icon} ${
+                            expandedRows === inventor.id ? style.arrow__rotate : ''
+                        }`}
                     />
                   </span>
-                  {inventor.status === 'pre_booked' ? (
-                    <CircularBadge
-                      style={{
-                        backgroundColor: '#ff7d00',
-                        color: '#4833d0',
-                        width: '15px',
-                        height: '15px',
-                        top: '-5px',
-                        right: '-5px',
-                      }}
-                    />
-                  ) : null}
-                </button>
-              </td>
+                    {inventor.status === 'pre_booked' ? (
+                        <CircularBadge
+                            style={{
+                              backgroundColor: '#ff7d00',
+                              color: '#4833d0',
+                              width: '15px',
+                              height: '15px',
+                              top: '-5px',
+                              right: '-5px',
+                            }}
+                        />
+                    ) : null}
+                  </button>
+                </td>
             ) : null}
+            <td className={style.table_td}>
+              <FormatterView data={inventor.online_views}/>
+            </td>
 
             <td>
               {(user === 'admin' ||
-                user === 'advertiser' ||
-                user === 'advertising_agency') &&
+                  user === 'advertiser' ||
+                  user === 'advertising_agency') &&
               inventor.status === 'open' ? (
-                <ButtonBorder
-                  onClick={() => {
-                    setShowModalEditAdmin(true)
-                    setCurrentOrder(inventor)
-                  }}
-                >
-                  <Edit
-                    style={{
-                      width: '16px',
-                      height: '16px',
-                    }}
-                  />
-                </ButtonBorder>
+                  <ButtonBorder
+                      onClick={() => {
+                        setShowModalEditAdmin(true)
+                        setCurrentOrder(inventor)
+                      }}
+                  >
+                    <Edit
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                        }}
+                    />
+                  </ButtonBorder>
               ) : null}
             </td>
           </tr>
 
           {expandedRows === inventor.id && (
-            <tr className={style.doprow}>
-              <td
-                colSpan="11"
+              <tr className={style.doprow}>
+                <td
+                    colSpan="11"
                 className={`${style.list__item} ${
                   expandedRows === inventor.id ? style.list__item__open : ''
                 }`}

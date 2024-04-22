@@ -16,23 +16,11 @@ import FilteredTooltip from './FilteredTooltip/FilteredTooltip'
 import { InfoCardsBottom } from 'src/components/Dashboard/PublisherReport/PublisherReportTable/InfoCards/InfoCards'
 import { fetchAdvertiser } from 'src/redux/advertiser/advertiserSlice'
 import { ReactComponent as Linkk } from 'src/assets/link.svg'
+import { ReactComponent as Download } from "src/assets/Table/Download.svg";
 
-const headers = [
-  { key: 'id', label: 'ID' },
-  { key: 'company', label: 'Компания' },
-  { key: 'name', label: 'Рекламодатель' },
+import * as XLSX from "xlsx";
 
-  { key: 'phone_number', label: 'Канал' },
-  { key: 'commission_rate', label: 'Название Видео' },
-  { key: 'commission_rate', label: 'Формат' },
-  { key: 'commission_rate', label: 'Начало' },
-  { key: 'commission_rate', label: 'Конец' },
-  { key: 'commission_rate', label: 'Показы факт' },
-  { key: 'commission_rate', label: 'Бюджет компании' },
-  { key: 'commission_rate', label: 'Комиссия Агенства' },
-  { key: 'commission_rate', label: 'Комиссия AdTech Media' },
-  { key: 'commission_rate', label: 'Бюджет' },
-]
+
 
 function PublisherReportTable() {
   const [loading, setLoading] = React.useState(true)
@@ -94,6 +82,41 @@ function PublisherReportTable() {
   const handleReload = () => {
     dispatch(addPublisherReport())
   }
+  const uniqueChannelName = new Set(data.map(item => item.channel_name));
+  const uniqueChannelNameFiltered = Array.from(uniqueChannelName)
+  const download = () => {
+    const newData = data.map((report, index) => {
+      return {
+        id: indexOfFirstItem + index + 1,
+        Компания: report.order_name,
+        Рекламодатель: report.advertiser_name,
+        Канал: report.channel_name,
+        Название_Видео: report.video_content_name,
+        Формат: report.format,
+        Начало: new Date(report.order_start_date)
+              .toLocaleDateString('en-GB')
+              .replace(/\//g, '.'),
+        Конец: new Date(report.order_end_date)
+            .toLocaleDateString('en-GB')
+            .replace(/\//g, '.'),
+        Показы_факт:  report.recorded_view_count.toLocaleString("ru-RU"),
+        Бюджет_компании: report.budget_fact.toLocaleString('ru-RU'),
+        Комиссия_Агенства: report.agency_commission_total,
+        Комиссия_AdTech_Media: report.adtechmedia_commission_total.toLocaleString('ru-RU'),
+        [`Бюджет - ${uniqueChannelNameFiltered}`]: report.channel_budget_total
+      };
+    });
+    const workSheet = XLSX.utils.json_to_sheet(newData);
+    const workBook = XLSX.utils.book_new();
+    const wrapTextStyle = {
+      alignment: { wrapText: true },
+    };
+    XLSX.utils.book_append_sheet(workBook, workSheet, "students");
+    let buf = XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
+    XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
+
+    XLSX.writeFile(workBook, "confirmed_order.xlsx");
+  };
   const handleSearch = () => {
     if (selectedChannel || selectedAdv) {
       setFilterLoading(true)
@@ -112,11 +135,6 @@ function PublisherReportTable() {
           : undefined
 
       const useMonthBasedDates = startDateMonth !== undefined;
-
-      console.log("Sending dates:", {
-        startDate: useMonthBasedDates ? formattedStartDateMonth : formattedStartDate,
-        endDate: useMonthBasedDates ? formattedEndDateMonth : formattedEndDate,
-      });
       dispatch(
         addPublisherReport({
           id: selectedChannel,
@@ -191,7 +209,22 @@ function PublisherReportTable() {
   let totalbudjetChannel = 0
   let channelName = ''
 
+  const headers = [
+    { key: 'id', label: 'ID' },
+    { key: 'company', label: 'Компания' },
+    { key: 'name', label: 'Рекламодатель' },
 
+    { key: 'phone_number', label: 'Канал' },
+    { key: 'commission_rate', label: 'Название Видео' },
+    { key: 'commission_rate', label: 'Формат' },
+    { key: 'commission_rate', label: 'Начало' },
+    { key: 'commission_rate', label: 'Конец' },
+    { key: 'commission_rate', label: 'Показы факт' },
+    { key: 'commission_rate', label: 'Бюджет компании' },
+    { key: 'commission_rate', label: 'Комиссия Агенства' },
+    { key: 'commission_rate', label: 'Комиссия AdTech Media' },
+    { key: 'commission_rate', label: `Бюджет - ${uniqueChannelNameFiltered}` },
+  ]
   return (
     <>
       {loading ? (
@@ -226,6 +259,14 @@ function PublisherReportTable() {
               )}
 
               <div className={style.profile}>
+                {currentItems.length > 0 &&
+                 <div style={{marginRight: "10px", display: 'flex'}}><ButtonTable onClick={() => download()}>
+                   <Download
+                       style={{ width: "25px", height: "30px" }}
+                   />
+                 </ButtonTable></div>
+
+                }
                 {selectedAdvName && (
                   <div
                     style={{
@@ -416,6 +457,8 @@ function PublisherReportTable() {
                     dateRange={dateRange}
                     setSelectedMonth={setSelectedMonth}
                     selectedMonth={selectedMonth}
+                    //
+                    download={download}
                   />
                 </div>
               </div>
@@ -459,22 +502,10 @@ function PublisherReportTable() {
                         <td>{person.channel_name}</td>
                         {/*<td>{person.video_content_name}</td>*/}
                         <td
-                            style={{display: 'inline-block', width: '100%'}}
+                            style={{display: 'inline-block', width: '100%', color: "blue"}}
                             className={style.table_td}
                         >
-                          <a
-                              target="_blank"
-                              href={person.video_content_name}
-                              className={`${style.linkWrapper__file} truncate`} // Добавьте класс truncate
-                              style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                              }}
-                              rel="noreferrer"
-                          >
-                            {person.video_content_name}
-                          </a>
+                          {person.video_content_name}
                         </td>
                         <td>{person.format}</td>
 
@@ -535,6 +566,7 @@ function PublisherReportTable() {
                   totalComisyAdtech={totalComisyAdtech}
                   totalbudjetChannel={totalbudjetChannel}
                   channelName={channelName}
+                  uniqueChannelNameFiltered={uniqueChannelNameFiltered}
                 />
                 {/* Ячейки с инфо Итого:	 */}
               </thead>

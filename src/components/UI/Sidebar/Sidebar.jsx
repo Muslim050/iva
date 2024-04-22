@@ -159,6 +159,7 @@ function Sidebar() {
                     className={`${style.sidebar__text} ${
                       !open && style.sidebar__textlink
                     }`}
+
                   >
                     {item.label}
                   </h2>
