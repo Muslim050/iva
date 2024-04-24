@@ -21,7 +21,7 @@ const headers = [
   { key: 'name', label: 'Наименование Компании ' },
   { key: 'email', label: 'Email' },
   { key: 'phone_number', label: 'Номер телефона' },
-  { key: 'commission_rate', label: 'Комиссияы' },
+  { key: 'commission_rate', label: 'Комиссия %' },
 ]
 
 function AdvertiserAgencyTable() {
@@ -119,7 +119,7 @@ function AdvertiserAgencyTable() {
                         <td>
                           <FormatterPhone phoneNumber={advert.phone_number} />
                         </td>
-                        <td>{advert.commission_rate}</td>
+                        <td>{advert.commission_rate} %</td>
                         <td>
                           {role === 'admin' ? (
                             <ButtonBorder

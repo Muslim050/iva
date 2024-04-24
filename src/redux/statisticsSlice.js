@@ -16,7 +16,7 @@ export const fetchStatistics = createAsyncThunk(
   "statistics/fetchStatistics",
   async ({ id, startDate, endDate }) => {
     const token = localStorage.getItem("token");
-    let url = `${backendURL}/order/statistics/`;
+    let url = `${backendURL}/order/statistics/?order_id=${id}`;
 
     if (startDate && endDate) {
       url += `&start_date=${startDate}&end_date=${endDate}`;
@@ -24,9 +24,7 @@ export const fetchStatistics = createAsyncThunk(
       url += `&start_date=${startDate}`;
     } else if (endDate) {
       url += `&end_date=${endDate}`;
-    } else if (id) {
-      url += `?order_id=${id}`;
-    }
+    } 
     try {
       const response = await axios.get(url, {
         headers: {

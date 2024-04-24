@@ -11,7 +11,7 @@ const initialState = {
   exportExcelOrder: '',
   confirmedOrders: [],
   exportConfirmed: [],
-    shortListData: null
+    shortListData: []
 }
 
 export const fetchOrder = createAsyncThunk('order/fetchOrder', async () => {
@@ -131,15 +131,12 @@ export const confirmPayment = createAsyncThunk(
 
 export const fetchShortList = createAsyncThunk(
     'order/fetchShortList',
-    async ({ id }) => {
+    async ({id}) => {
         const token = localStorage.getItem('token')
 
         try {
             const response = await axios.get(
-                `${backendURL}/order/short-list/`,
-                {
-                    advertiser_id: id,
-                },
+                `${backendURL}/order/short-list/?advertiser=${id}`,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -148,7 +145,8 @@ export const fetchShortList = createAsyncThunk(
                     },
                 },
             )
-            return response.data
+
+            return response.data.data
         } catch (error) {
             if (error.response && error.response.status === 403) {
                 throw new Error('Ошибка 403: Доступ запрещен')

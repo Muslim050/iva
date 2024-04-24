@@ -4,6 +4,13 @@ import { ReactComponent as Linkk } from 'src/assets/link.svg'
 import FormatterView from 'src/components/UI/formatter/FormatterView'
 import FormatterBudjet from 'src/components/UI/formatter/FormatterBudjet'
 import { ReactComponent as Arrow } from 'src/assets/Table/arrow.svg'
+import OrderChartAge from "./components/DopTable/FirstTheadAgeGeoGender/TheadAge";
+import GenderData from "./components/DopTable/Data/GenderData";
+import AgeData from "./components/DopTable/Data/AgeData";
+import GeoData from "./components/DopTable/Data/GeoData";
+import TheadGender from "./components/DopTable/FirstTheadAgeGeoGender/TheadGender";
+import TheadAge from "./components/DopTable/FirstTheadAgeGeoGender/TheadAge";
+import TheadGeo from "./components/DopTable/FirstTheadAgeGeoGender/TheadGeo";
 
 function AdvChartData({ statistic, index, handleRowClick, isExpanded }) {
   const user = localStorage.getItem('role')
@@ -13,23 +20,12 @@ function AdvChartData({ statistic, index, handleRowClick, isExpanded }) {
       <td className={style.table_td}>{statistic.channel_name}</td>
 
       <td
-        style={{ display: 'inline-block', width: '100%' }}
+        style={{display: 'table-cell', width: '100%', color: "blue"}}
         className={style.table_td}
       >
-        <a
-          target="_blank"
-          href={statistic.video_link}
-          className={style.linkWrapper__file}
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-          rel="noreferrer"
-        >
+
           {statistic.video_name}
-          <Linkk className={style.linkk__svg} />
-        </a>
+
       </td>
 
       <td className={style.table_td}>
@@ -39,7 +35,7 @@ function AdvChartData({ statistic, index, handleRowClick, isExpanded }) {
 
       <td className={style.table_td}>
         <div>
-          <div style={{ display: 'flex', width: '100px' }}>
+          <div style={{display: 'flex', width: '100px'}}>
             {new Date(statistic.publication_date).toLocaleDateString('ru-RU', {
               day: '2-digit',
               month: '2-digit',
@@ -54,41 +50,27 @@ function AdvChartData({ statistic, index, handleRowClick, isExpanded }) {
           </div>
         </div>
       </td>
-
       <td className={style.table_td}>
-        {statistic.status === 'in_use' && 'Активный'}
-        {statistic.status === 'inactive' && (
-          <>
-            Завершен
-            {statistic.deactivation_date && (
-              <div style={{ color: 'red' }}>
-                <div style={{ display: 'flex' }}>
-                  {new Date(statistic.deactivation_date).toLocaleDateString(
-                    'ru-RU',
-                    {
-                      day: '2-digit',
-                      month: '2-digit',
-                      year: 'numeric',
-                    },
-                  )}
-                </div>
-                <div>
-                  {new Date(statistic.deactivation_date).toLocaleTimeString(
-                    [],
-                    {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    },
-                  )}
-                </div>
-              </div>
-            )}
-          </>
-        )}
+        <div>
+          <div style={{display: 'flex', width: '100px'}}>
+            {new Date(statistic.deactivation_date).toLocaleDateString('ru-RU', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+            })}
+          </div>
+          <div>
+            {new Date(statistic.deactivation_date).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </div>
+        </div>
       </td>
 
+
       <td className={style.table_td}>
-        <FormatterView data={statistic.online_view_count} />
+        <FormatterView data={statistic.online_view_count}/>
       </td>
 
       <td className={style.table_td}>
@@ -106,7 +88,7 @@ function AdvChartData({ statistic, index, handleRowClick, isExpanded }) {
                 color: '#fa8a00',
               }}
             >
-              Введется <br /> аналитика
+              Введется <br/> аналитика
             </div>
           ) : (
             <>
@@ -118,20 +100,19 @@ function AdvChartData({ statistic, index, handleRowClick, isExpanded }) {
           )}
         </div>
       </td>
-      <td style={{ display: 'inline-block' }} className={style.table_td}>
-        <button
-          className={style.dopBtn}
-          onClick={() => handleRowClick(statistic.video_link)}
-        >
-          Показать
-          <span className={style.arrow}>
-            <Arrow
-              className={`${style.arrow__icon} ${
-                isExpanded ? style.arrow__rotate : ''
-              }`}
-            />
-          </span>
-        </button>
+      <td style={{padding: "0px", borderLeft: "1px solid #f3f0f0"}}>
+        <div>
+          <TheadGender statistic={statistic} />
+        </div>
+      </td>
+
+      <td style={{padding: "0px", borderLeft: "1px solid #f3f0f0", borderRight: "1px solid #e3e3e3"}}>
+        <TheadAge statistic={statistic}/>
+      </td>
+
+      <td style={{padding: "0px", borderRight: "1px solid #f3f0f0"}}>
+        <TheadGeo statistic={statistic}/>
+
       </td>
     </>
   )

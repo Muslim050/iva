@@ -156,7 +156,7 @@ export function InfoCardsBottom({
         }}
       >
         <div className={style.infoCards_bottom_th__toptext}>
-          Комиссия - {uniqueChannelNameFiltered}
+          К оплате - {uniqueChannelNameFiltered}
           <div
             className={style.infoCards_bottom_th__bottomtext}
             style={{ display: 'flex' }}

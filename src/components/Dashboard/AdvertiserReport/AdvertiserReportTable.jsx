@@ -6,7 +6,6 @@ import FormatterView from '../../UI/formatter/FormatterView'
 import style from './AdvChartTable.module.scss'
 import axios from 'axios'
 import backendURL from 'src/utils/url'
-import { ReactComponent as Filter } from 'src/assets/Table/Filter.svg'
 import TheadAgeGenderGeo from './components/DopTable/SecondTheadAgeGenderGeo'
 import WrapperThead from './components/DopTable/FirstTheadAgeGeoGender/WrapperThead'
 import OrderChartThead from './AdvChartThead'
@@ -21,13 +20,22 @@ import GeoData from './components/DopTable/Data/GeoData'
 import { ReactComponent as Close } from 'src/assets/Modal/Close.svg'
 import {fetchShortList} from "../../../redux/order/orderSlice";
 import {fetchAdvertiser} from "../../../redux/advertiser/advertiserSlice";
+import FilteredTooltipMain from "./components/FilteredTooltip/FilteredTooltipMain";
+import TheadGender from "./components/DopTable/FirstTheadAgeGeoGender/TheadGender";
+import TheadAge from "./components/DopTable/FirstTheadAgeGeoGender/TheadAge";
+import TheadGeo from "./components/DopTable/FirstTheadAgeGeoGender/TheadGeo";
+import {resetPublisherReport} from "../../../redux/publisher/publisherSlice";
 
 function AdvertiserReportTable() {
     const dispatch = useDispatch()
     const [expandedRows, setExpandedRows] = React.useState('')
-    const { id } = useParams()
     const [loading, setLoading] = React.useState(true)
+
     const [loadingClose, setLoadingClose] = React.useState(false)
+    const [loadingDots, setLoadingDots] = React.useState(false)
+
+    const user = localStorage.getItem('role')
+    const AdvID = localStorage.getItem('advertiser')
 
 //
     const data = useSelector((state) => state.statistics.statistics.results)
@@ -40,96 +48,144 @@ function AdvertiserReportTable() {
     const [endDate, setEndDate] = React.useState('')
     const [dataFiltered, setDataFiltered] = React.useState(false)
 
+    //
+    const [selectedAdv, setSetSelectedAdv] = React.useState(null)
+    const [selectedAdvName, setSelectedAdvName] = React.useState(null)
+    const [selectedOptionAdv, setSelectedOptionAdv] = React.useState('')
+    //
+    const [selectedOrder, setSetSelectedOrder] = React.useState(null)
+    const [selectedOrderName, setSelectedOrderName] = React.useState(null)
+    const [selectedOptionOrder, setSelectedOptionOrder] = React.useState('')
+
     const handleRowClick = (videoLink) => {
         setExpandedRows((prevExpandedRow) =>
             prevExpandedRow === videoLink ? '' : videoLink,
         )
     }
+    const handleSelectChangeADV = (event) => {
+        const value = event.target.value;
+        setSelectedOptionAdv(value);
 
+        if (value) {
+            const option = JSON.parse(value);
+            setSetSelectedAdv(option.id);
+            setSelectedAdvName(option.name);
+        } else {
+            setSetSelectedAdv(null);
+            setSelectedAdvName("");
+        }
+    };
+    const handleSelectChangeOrder = (event) => {
+        const value = event.target.value;
+        setSelectedOptionOrder(value);
+
+        if (value) {
+            const option = JSON.parse(value);
+            setSetSelectedOrder(option.id);
+            setSelectedOrderName(option.name);
+        } else {
+            setSetSelectedOrder(null);
+            setSelectedOrderName("");
+        }
+    };
     React.useEffect(() => {
         dispatch(fetchAdvertiser({})).then(() => setLoading(false));
+        // dispatch(fetchShortList({id: AdvID})).then(() => setLoading(false));
+     }, [dispatch]);
+    React.useEffect(() => {
+        if(selectedAdv){
+            dispatch(fetchShortList({id: selectedAdv})).then(() => setLoading(false));
+        }
+    }, [dispatch, selectedAdv]);
+
+    const fetchGetOrder = async () => {
+        const id = selectedOrder
+        const token = localStorage.getItem('token')
+
+        const response = await axios.get(
+          `${backendURL}/order/${id}/`,
+
+          {
+              headers: {
+                  'Content-Type': 'application/json',
+                  Accept: 'application/json',
+                  Authorization: `Bearer ${token}`,
+              },
+          },
+        )
+        setGetOrder(response.data.data)
+        const { expected_start_date, actual_end_date, expected_end_date } =
+          response.data.data
+
+        const startDateObj = new Date(expected_start_date)
+        const endDateObj = actual_end_date
+          ? new Date(actual_end_date)
+          : new Date(expected_end_date)
+
+        const minDate = startDateObj.toISOString().split('T')[0]
+        const maxDate = endDateObj.toISOString().split('T')[0]
+
+        setStartDate(minDate)
+        setEndDate(maxDate)
+    }
+    React.useEffect(() => {
+        if(selectedOrder){
+            setLoadingDots(true)
+            fetchGetOrder(selectedOrder)
+              .then(() => setLoadingDots(false))
+        }
+    }, [dispatch, selectedOrder]);
+
+    React.useEffect(() => {
+        dispatch(fetchShortList()).then(() => setLoading(false));
     }, [dispatch]);
-    console.log("ShortListdata", ShortListdata)
     // Отправка запроса с фильтра
     const handleDateStatictick = () => {
         setLoading(true)
         setDataFiltered(true)
-        dispatch(fetchStatistics({ id, startDate, endDate })).then(() =>
-            setLoading(false),
-        )
+        dispatch(fetchStatistics({ id: selectedOrder}))
+          .unwrap()
+          .then(() => setLoading(false))
         setIsTooltip(false)
-    }
-
-    const fetchGetOrder = async () => {
-        const token = localStorage.getItem('token')
-        setLoading(true)
-        const response = await axios.get(
-            `${backendURL}/order/`,
-
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-            },
-        )
-        setGetOrder(response.data.data)
-        const { expected_start_date, actual_end_date, expected_end_date } =
-            response.data.data
-
-        const startDateObj = new Date(expected_start_date)
-        const endDateObj = actual_end_date
-            ? new Date(actual_end_date)
-            : new Date(expected_end_date)
-        setLoading(false)
-        // const minDate = startDateObj.toISOString().split('T')[0]
-        // const maxDate = endDateObj.toISOString().split('T')[0]
-
-        // setStartDate(minDate)
-        // setEndDate(maxDate)
     }
     const handleProfileClick = () => {
         setIsTooltip(!isTooltip)
-        fetchGetOrder()
-            .then(() => {})
-            .catch((error) => {
-                console.error('Ошибка при получении данных заказа:', error)
-            })
     }
     const closeH = () => {
         setIsTooltip(!isTooltip)
-        fetchGetOrder()
-            .then(() => {})
-            .catch((error) => {
-                console.error('Ошибка при получении данных заказа:', error)
-            })
         setStartDate(startDate)
         setEndDate(endDate)
     }
+    const handleClear = () => {
+        setSelectedOrderName(null)
+        setSelectedAdvName(null)
+        setSelectedOptionAdv('')
+        setSelectedOptionOrder('')
+        setStartDate(null)
+        setEndDate(null)
+    }
     React.useEffect(() => {
-        fetchGetOrder()
+        // fetchGetOrder()
     }, [])
     React.useEffect(() => {
 
     }, [])
-
 
     const dataFilteredClose = () => {
         setDataFiltered(false)
         setLoadingClose(true)
         // dispatch(fetchStatistics()).then(() => setLoadingClose(false))
     }
-    React.useEffect(() => {
-        dispatch(fetchStatistics({})).then(() => setLoading(false))
-    }, [dispatch])
+    // React.useEffect(() => {
+    //     dispatch(fetchStatistics({})).then(() => setLoading(false))
+    // }, [dispatch])
 
     let totalViews = 0
     let totalBudget = 0
     let totalAnalitickView = 0
+    let tableData = [];
 
 
-    console.log("getOrder", getOrder)
     return (
         <>
             {loading ? (
@@ -141,14 +197,9 @@ function AdvertiserReportTable() {
                     <div className="spinner"></div>
                 </div>
             ) : (
-                <div className="tableWrapper">
+                <div className="tableWrapper" style={{overflow: "visible"}}>
                     <div className={style.tableChartWrapper__table_title}>
-                        {/* Ячейки с инфо Бюджет,План показов, План бюджета */}
-                        <div>
-                            <div>{getOrder.name}</div>
-                            <InfoCardsTop getOrder={getOrder} />
-                        </div>
-                        {/* Ячейки с инфо Бюджет,План показов, План бюджета */}
+
                         <div className={style.profile}>
                             {dataFiltered && (
                                 <div
@@ -205,156 +256,146 @@ function AdvertiserReportTable() {
                                     ></div>
                                 </div>
                             )}
-
-                            {/* <DownloadReport
-                getOrder={getOrder}
-                startDate={startDate}
-                endDate={endDate}
-              /> */}
-
-                            <div style={{ display: 'grid', marginLeft: '10px' }}>
-                                <div style={{ fontSize: '10px' }}>Выбрать период</div>
-                                <button
-                                    className={style.profile__wrapper}
-                                    onClick={handleProfileClick}
-                                >
-                                    <Filter style={{ width: '20px', height: '20px' }} />
-                                </button>
-                            </div>
-
-                            <FilteredTooltip
-                                getOrder={getOrder}
-                                isTooltip={isTooltip}
-                                handleDateStatictick={handleDateStatictick}
-                                startDate={startDate}
-                                setStartDate={setStartDate}
-                                endDate={endDate}
-                                setEndDate={setEndDate}
-                                setIsTooltip={setIsTooltip}
-                                closeH={closeH}
-                                fetchGetOrder={fetchGetOrder}
-                            />
+                            <FilteredTooltipMain handleProfileClick={handleProfileClick} >
+                                <FilteredTooltip
+                                    getOrder={getOrder}
+                                    isTooltip={isTooltip}
+                                    handleDateStatictick={handleDateStatictick}
+                                    startDate={startDate}
+                                    setStartDate={setStartDate}
+                                    endDate={endDate}
+                                    setEndDate={setEndDate}
+                                    setIsTooltip={setIsTooltip}
+                                    closeH={closeH}
+                                    advdata={advdata}
+                                    selectedOptionAdv={selectedOptionAdv}
+                                    handleSelectChangeADV={handleSelectChangeADV}
+                                    ShortListdata={ShortListdata}
+//
+                                    setSelectedOptionOrder={setSelectedOptionOrder}
+                                    handleSelectChangeOrder={handleSelectChangeOrder}
+                                    selectedOptionOrder={selectedOptionOrder}
+                                    selectedAdv={selectedAdv}
+                                    loadingDots={loadingDots}
+                                    handleClear={handleClear}
+                                    selectedAdvName={selectedAdvName}
+                                    selectedOrderName={selectedOrderName}
+                                />
+                            </FilteredTooltipMain>
                         </div>
                     </div>
+                    {
+                      data && data.length ? <table className="tableWrapper" style={{overflow: "visible"}}>
+                          {/* Колонки основной таблица  */}
+                          <thead>
+                          <OrderChartThead/>
+                          </thead>
+                          {/* Колонки основной таблица  */}
 
-                    <table className="tableWrapper">
-                        {/* Колонки основной таблица  */}
-                        <thead>
-                        <OrderChartThead />
-                        </thead>
-                        {/* Колонки основной таблица  */}
-
-                        <tbody>
-                        {data &&
+                          <tbody>
+                          {data && data.length &&
                             data.map((statistic, index) => {
                                 totalBudget += statistic.budget
                                 totalAnalitickView += statistic.online_view_count
                                 totalViews += statistic.online_view_count
+                                tableData.push(statistic);
                                 return (
-                                    <React.Fragment key={statistic.video_link}>
-                                        {/* Данные таблицы  */}
-                                        <tr key={index}>
-                                            <AdvChartData
-                                                statistic={statistic}
-                                                index={index}
-                                                handleRowClick={handleRowClick}
-                                                isExpanded={expandedRows === statistic.video_link}
-                                            />
-                                        </tr>
-                                        {/* Данные таблицы  */}
+                                  <React.Fragment key={statistic.video_link}>
+                                      {/* Данные таблицы  */}
+                                      <tr key={index} style={{borderBottom: "1px solid #dad9d9"}}>
+                                          <AdvChartData
+                                            statistic={statistic}
+                                            index={index}
+                                            handleRowClick={handleRowClick}
+                                            isExpanded={expandedRows === statistic.video_link}
+                                          />
+                                          {/*<tr*/}
+                                          {/*  key={index}*/}
+                                          {/*  className={`${style.doprow} ${style.list__item__open}`}*/}
+                                          {/*>*/}
+                                          {/*    <td*/}
+                                          {/*      colSpan="10"*/}
+                                          {/*      className={`${style.list__item} ${*/}
+                                          {/*        expandedRows === statistic.video_link*/}
+                                          {/*          ? style.list__item__open*/}
+                                          {/*          : ''*/}
+                                          {/*      }`}*/}
 
-                                        {/* Дополнительная таблица */}
-                                        {expandedRows === statistic.video_link && (
-                                            <tr
-                                                key={index}
-                                                className={`${style.doprow} ${style.list__item__open}`}
-                                            >
-                                                <td
-                                                    colSpan="10"
-                                                    className={`${style.list__item} ${
-                                                        expandedRows === statistic.video_link
-                                                            ? style.list__item__open
-                                                            : ''
-                                                    }`}
-                                                >
-                                                    <div className="tableWrapper">
-                                                        {/* {statistic.age_group_percentages.length === 0 &&
-                              statistic.gender_percentages.length === 0 &&
-                              statistic.geo_percentages.length === 0 ? (
-                                <div
-                                  style={{
-                                    fontSize: '15px',
-                                    lineHeight: '15px',
-                                    color: '#fa8a00',
-                                    textAlign: 'center',
-                                  }}
-                                >
-                                  Введется аналитика данных
-                                </div>
-                              ) : ( */}
-                                                        <table className="tableWrapper">
-                                                            <thead style={{ border: 0 }}>
-                                                            {/* Колонки  ГЕО Возраст ПОЛ доп таблица  */}
-                                                            <tr>
-                                                                <TheadAgeGenderGeo
-                                                                    data={data}
-                                                                    statistic={statistic}
-                                                                />
-                                                            </tr>
-                                                            {/* Колонки ГЕО Возраст ПОЛ доп таблица  */}
-                                                            </thead>
+                                          {/*    >*/}
 
-                                                            <thead style={{ borderTop: '0' }}>
-                                                            {/* Колонки подробная инфа ГЕО Возраст ПОЛ */}
-                                                            <tr className={style.tableChart__tr}>
-                                                                <th style={{ textAlign: 'center' }}>
-                                                                    <Eye
-                                                                        style={{
-                                                                            width: '25px',
-                                                                            height: '25px',
-                                                                        }}
-                                                                    />
-                                                                </th>
-                                                                <WrapperThead statistic={statistic} />
-                                                            </tr>
-                                                            {/* Колонки подробная инфа ГЕО Возраст ПОЛ */}
-                                                            </thead>
+                                          {/*        <div className="tableWrapper" style={{overflow: "visible"}}>*/}
+                                          {/*            <table className="tableWrapper" style={{overflow: "visible"}}>*/}
+                                          {/*                <thead style={{border: 0}}>*/}
+                                          {/*                /!* Колонки  ГЕО Возраст ПОЛ доп таблица  *!/*/}
+                                          {/*                <tr>*/}
+                                          {/*                    <TheadAgeGenderGeo*/}
+                                          {/*                      data={data}*/}
+                                          {/*                      statistic={statistic}*/}
+                                          {/*                    />*/}
+                                          {/*                </tr>*/}
+                                          {/*                /!* Колонки ГЕО Возраст ПОЛ доп таблица  *!/*/}
+                                          {/*                </thead>*/}
 
-                                                            <td
-                                                                data-label="Показов"
-                                                                style={{ textAlign: 'center' }}
-                                                            >
-                                                                <FormatterView
-                                                                    data={statistic.online_view_count}
-                                                                />
-                                                            </td>
+                                          {/*                <thead style={{borderTop: '0'}}>*/}
+                                          {/*                /!* Колонки подробная инфа ГЕО Возраст ПОЛ *!/*/}
+                                          {/*                <tr className={style.tableChart__tr}>*/}
+                                          {/*                    <th style={{textAlign: 'center'}}>*/}
+                                          {/*                        <Eye*/}
+                                          {/*                          style={{*/}
+                                          {/*                              width: '25px',*/}
+                                          {/*                              height: '25px',*/}
+                                          {/*                          }}*/}
+                                          {/*                        />*/}
+                                          {/*                    </th>*/}
+                                          {/*                    <WrapperThead statistic={statistic}/>*/}
+                                          {/*                </tr>*/}
+                                          {/*                /!* Колонки подробная инфа ГЕО Возраст ПОЛ *!/*/}
+                                          {/*                </thead>*/}
 
-                                                            <GenderData statistic={statistic} />
-                                                            <AgeData statistic={statistic} />
-                                                            <GeoData statistic={statistic} />
-                                                        </table>
-                                                        {/* )} */}
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        )}
-                                        {/* Дополнительная таблица */}
-                                    </React.Fragment>
+                                          {/*                <td*/}
+                                          {/*                  data-label="Показов"*/}
+                                          {/*                  style={{textAlign: 'center'}}*/}
+                                          {/*                >*/}
+                                          {/*                    <FormatterView*/}
+                                          {/*                      data={statistic.online_view_count}*/}
+                                          {/*                    />*/}
+                                          {/*                </td>*/}
+
+                                          {/*                <GenderData statistic={statistic}/>*/}
+                                          {/*                <AgeData statistic={statistic}/>*/}
+                                          {/*                <GeoData statistic={statistic}/>*/}
+                                          {/*            </table>*/}
+                                          {/*            /!* )} *!/*/}
+                                          {/*        </div>*/}
+                                          {/*    </td>*/}
+                                          {/*</tr>*/}
+
+                                      </tr>
+
+                                      {/* Данные таблицы  */}
+
+                                      {/* Дополнительная таблица */}
+
+
+                                      {/* Дополнительная таблица */}
+                                  </React.Fragment>
                                 )
                             })}
-                        </tbody>
+                          </tbody>
 
-                        <thead style={{ border: 0 }}>
-                        {/* Ячейки с инфо Итого:	 */}
-                        <InfoCardsBottom
+                          <thead style={{border: 0}}>
+                          {/* Ячейки с инфо Итого:	 */}
+                          <InfoCardsBottom
                             totalViews={totalViews}
                             totalBudget={totalBudget}
                             totalAnalitickView={totalAnalitickView}
                             getOrder={getOrder}
-                        />
-                        {/* Ячейки с инфо Итого:	 */}
-                        </thead>
-                    </table>
+                          />
+                          {/* Ячейки с инфо Итого:	 */}
+                          </thead>
+                      </table> : <div style={{display: "flex", justifyContent: "center", fontWeight: "600"}}>Выберите параметры фильтра</div>
+                    }
+
                 </div>
             )}
         </>

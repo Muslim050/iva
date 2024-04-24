@@ -233,14 +233,14 @@ function App() {
               </Protected>
             }
           />
-            {/*<Route*/}
-            {/*    path="/advertiser-report"*/}
-            {/*    element={*/}
-            {/*        <Protected allowedRoles={['advertiser', 'advertising_agency', 'admin']}>*/}
-            {/*            <AdvertiserReport />*/}
-            {/*        </Protected>*/}
-            {/*    }*/}
-            {/*/>*/}
+            <Route
+                path="/advertiser-report"
+                element={
+                    <Protected allowedRoles={['advertiser', 'advertising_agency', 'admin']}>
+                        <AdvertiserReport />
+                    </Protected>
+                }
+            />
 
           {/* Other routes */}
         </Route>

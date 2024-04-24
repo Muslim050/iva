@@ -7,10 +7,14 @@ const headers = [
   { key: 'video_name', label: 'Название видео' },
   { key: 'order_format', label: 'Формат' },
   { key: 'publication_date', label: 'Начало' },
-  { key: 'status', label: 'Статус' },
+  { key: 'publication_date', label: 'Конец' },
   { key: 'online_view_count', label: 'Показы' },
   { key: 'budget', label: 'Бюджет' },
-  { key: 'analiz_budget', label: 'Анализ аудитории' },
+
+  { key: 'gender', label: 'Пол' },
+  { key: 'age', label: 'Возраст' },
+  { key: 'geo', label: 'Гео' },
+
 ]
 
 function OrderChartRow() {
@@ -24,6 +28,7 @@ function OrderChartRow() {
             </th>
           )
         })}
+
       </tr>
     </>
   )

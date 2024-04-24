@@ -54,7 +54,8 @@ function PublisherReportTable() {
   const [dateRange, setDateRange] = React.useState([]);
   const currentMonth = new Date();
   const startOfCurrentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
-  const [selectedMonth, setSelectedMonth] = React.useState(startOfCurrentMonth);
+  const [selectedMonth, setSelectedMonth] = React.useState('');
+
 
   // Функция для изменения страницы
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
@@ -63,7 +64,7 @@ function PublisherReportTable() {
   }, [dispatch])
   React.useEffect(() => {
     dispatch(fetchChannel())
-  }, [dispatch])
+  }, [dispatch, setSelectedMonth])
   React.useEffect(() => {
     if (selectedChannel) { // Проверка на наличие значения
       dispatch(fetchAdvertiser({ id: selectedChannel })).then(() => setLoading(false));
@@ -80,7 +81,7 @@ function PublisherReportTable() {
     setEndDate(date) // Keep the Date object for DatePicker
   }
   const handleReload = () => {
-    dispatch(addPublisherReport())
+    window.location.reload();
   }
   const uniqueChannelName = new Set(data.map(item => item.channel_name));
   const uniqueChannelNameFiltered = Array.from(uniqueChannelName)
@@ -117,9 +118,16 @@ function PublisherReportTable() {
 
     XLSX.writeFile(workBook, "confirmed_order.xlsx");
   };
+  React.useEffect(() => {
+    if (dateRange.length === 2) {
+      setStartDateMonth(dateRange[0]);
+      setEndDateMonth(dateRange[1]);
+    }
+  }, [dateRange]);
   const handleSearch = () => {
     if (selectedChannel || selectedAdv) {
       setFilterLoading(true)
+
       const formattedStartDate = startDate
         ? format(startDate, 'yyyy-MM-dd')
         : undefined
@@ -225,6 +233,16 @@ function PublisherReportTable() {
     { key: 'commission_rate', label: 'Комиссия AdTech Media' },
     { key: 'commission_rate', label: `Бюджет - ${uniqueChannelNameFiltered}` },
   ]
+
+  const handleDateChange = (date) => {
+    const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    setDateRange([startOfMonth, endOfMonth]);
+    setSelectedMonth(startOfMonth);
+    setEndDateMonth(dateRange[1])
+    setStartDateMonth(dateRange[0])
+  };
+
   return (
     <>
       {loading ? (
@@ -341,7 +359,7 @@ function PublisherReportTable() {
                       >
                         Месяц
                         <div style={{ marginTop: '4px' }}>
-                          {selectedMonth.toLocaleString('ru-RU', { month: 'long' }).toLowerCase()}
+                          {selectedMonth ? selectedMonth.toLocaleString('ru-RU', { month: 'long' }).toLowerCase() : "All"}
                         </div>
                       </div>
                     </div>
@@ -459,6 +477,7 @@ function PublisherReportTable() {
                     selectedMonth={selectedMonth}
                     //
                     download={download}
+                    handleDateChange={handleDateChange}
                   />
                 </div>
               </div>

@@ -48,7 +48,8 @@ function FilteredTooltip({
                            setStartDateMonth,endDateMonth, startDateMonth,
                            setDateRange,
                            dateRange,setSelectedMonth,selectedMonth,
-                           download
+                           download,
+                           handleDateChange
 }) {
 
 
@@ -56,14 +57,6 @@ function FilteredTooltip({
 
 
 
-  const handleDateChange = (date) => {
-    const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-    const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    setDateRange([startOfMonth, endOfMonth]);
-    setSelectedMonth(startOfMonth);
-    setEndDateMonth(dateRange[1])
-    setStartDateMonth(dateRange[0])
-  };
 
 
   return (
@@ -167,8 +160,9 @@ function FilteredTooltip({
                     showMonthYearPicker
                     showFullMonthYearPicker
                     className={style.input}
-                    disabled={!!startDate || !!endDate} // Здесь используется приведение dateRange к булевому типу
-                    locale={ru} // Устанавливайте русскую локаль здесь
+                    disabled={!!startDate || !!endDate } // Здесь используется приведение dateRange к булевому типу
+                    locale={ru}
+
 
                 />
               </div>
