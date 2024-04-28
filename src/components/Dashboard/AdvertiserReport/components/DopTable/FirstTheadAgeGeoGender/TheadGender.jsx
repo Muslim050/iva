@@ -50,7 +50,7 @@ function OrderChartTwoThead({ statistic }) {
                 key={`gender-${index}`}
                 data-label="Пол"
                 style={{
-                  textAlign: 'center', padding: "5px",  width: "60px", fontSize: "12px",
+                  textAlign: 'center', padding: "5px",  width: "60px", fontSize: "13px",  fontWeight: "600", color: "blue"
                 }}
               >
                 {gender.percentage}%

@@ -37,7 +37,7 @@ function OrderChartAge({ statistic, getOrder }) {
                 key={`age-${index}`}
                 data-label="Возраст"
                 style={{
-                  textAlign: 'center', padding: "5px", width: "60px", fontSize: "12px",
+                  textAlign: 'center', padding: "5px", width: "60px", fontSize: "13px", fontWeight: "600", color: "blue"
                 }}
               >
                 {age.percentage}%

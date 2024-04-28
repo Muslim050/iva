@@ -11,24 +11,18 @@ function AdvChartData({ statistic, index, handleRowClick, isExpanded }) {
   const user = localStorage.getItem('role')
   return (
     <>
-      <td className={style.table_td}>{index + 1}</td>
-      <td className={style.table_td}>{statistic.channel_name}</td>
-
-      <td
-        style={{display: 'table-cell', width: '100%', color: "blue"}}
-        className={style.table_td}
-      >
-
-          {statistic.video_name}
-
+      <td className={style.table_td} style={{padding: "10px 10px"}}>{index + 1}</td>
+      <td className={style.table_td} style={{display: 'table-cell', width: '250px', padding: "10px 10px"}}>
+        {statistic.channel_name}
       </td>
-
-      <td className={style.table_td}>
+      <td style={{display: 'table-cell', width: '300px', color: "blue", padding: "10px 10px"}}  className={style.table_td}>
+          {statistic.video_name}
+      </td>
+      <td className={style.table_td} style={{padding: "10px 10px"}}>
         {(statistic.order_format === 'preroll' && 'Pre-roll') ||
           ('mixroll' && 'Mix-roll')}
       </td>
-
-      <td className={style.table_td}>
+      <td className={style.table_td} style={{padding: "10px 10px"}}>
         <div>
           <div style={{display: 'flex', width: '100px'}}>
             {new Date(statistic.publication_date).toLocaleDateString('ru-RU', {
@@ -45,7 +39,7 @@ function AdvChartData({ statistic, index, handleRowClick, isExpanded }) {
           </div>
         </div>
       </td>
-      <td className={style.table_td}>
+      <td className={style.table_td} style={{padding: "10px 10px"}}>
         <div>
           <div style={{display: 'flex', width: '100px'}}>
             {new Date(statistic.deactivation_date).toLocaleDateString('ru-RU', {
@@ -64,11 +58,11 @@ function AdvChartData({ statistic, index, handleRowClick, isExpanded }) {
       </td>
 
 
-      <td className={style.table_td}>
+      <td className={style.table_td} style={{padding: "10px 10px"}}>
         <FormatterView data={statistic.online_view_count}/>
       </td>
 
-      <td className={style.table_td}>
+      <td className={style.table_td} style={{padding: "10px 10px"}}>
         <div
           style={{
             display: 'flex',
@@ -95,20 +89,25 @@ function AdvChartData({ statistic, index, handleRowClick, isExpanded }) {
           )}
         </div>
       </td>
-      <td style={{padding: "0px", borderLeft: "1px solid #f3f0f0"}}>
-        <div>
-          <TheadGender statistic={statistic} />
-        </div>
-      </td>
 
-      <td style={{padding: "0px", borderLeft: "1px solid #f3f0f0", borderRight: "1px solid #e3e3e3"}}>
-        <TheadAge statistic={statistic}/>
-      </td>
+        <td style={{
+          padding: "0px", borderLeft: "1px solid #f3f0f0",
+          width: "155px"
+        }}>
 
-      <td style={{padding: "0px", borderRight: "1px solid #f3f0f0"}}>
-        <TheadGeo statistic={statistic}/>
+          <TheadGender statistic={statistic}/>
 
-      </td>
+        </td>
+
+        <td style={{padding: "0px", borderLeft: "1px solid #f3f0f0", borderRight: "1px solid #e3e3e3"}}>
+          <TheadAge statistic={statistic}/>
+        </td>
+
+        <td style={{padding: "0px", borderRight: "1px solid #f3f0f0"}}>
+          <TheadGeo statistic={statistic}/>
+
+        </td>
+
     </>
   )
 }

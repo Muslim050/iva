@@ -32,7 +32,7 @@ function OrderChartGeo({ statistic }) {
                 key={`geo-${index}`}
                 data-label="Гео"
                 style={{
-                  textAlign: 'center', padding: "5px", width: "60px", fontSize: "12px",
+                  textAlign: 'center', padding: "5px", width: "60px", fontSize: "13px",  fontWeight: "600", color: "blue"
                 }}
               >
                 {geo.percentage}%

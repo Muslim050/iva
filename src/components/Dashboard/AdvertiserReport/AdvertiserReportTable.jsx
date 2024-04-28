@@ -1,30 +1,14 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
 import {clearStatistics, fetchStatistics} from '../../../redux/statisticsSlice'
-import FormatterView from '../../UI/formatter/FormatterView'
 import style from './AdvChartTable.module.scss'
-import axios from 'axios'
-import backendURL from 'src/utils/url'
-import TheadAgeGenderGeo from './components/DopTable/SecondTheadAgeGenderGeo'
-import WrapperThead from './components/DopTable/FirstTheadAgeGeoGender/WrapperThead'
 import OrderChartThead from './AdvChartThead'
 import AdvChartData from './AdvChartData'
-import { ReactComponent as Eye } from 'src/assets/eye.svg'
-import DownloadReport from './components/DownloadReport'
-import { InfoCardsBottom, InfoCardsTop } from './components/InfoCards/InfoCards'
+import { InfoCardsBottom } from './components/InfoCards/InfoCards'
 import FilteredTooltip from './components/FilteredTooltip/FilteredTooltip'
-import GenderData from './components/DopTable/Data/GenderData'
-import AgeData from './components/DopTable/Data/AgeData'
-import GeoData from './components/DopTable/Data/GeoData'
-import { ReactComponent as Close } from 'src/assets/Modal/Close.svg'
-import {fetchShortList} from "../../../redux/order/orderSlice";
 import {fetchAdvertiser} from "../../../redux/advertiser/advertiserSlice";
 import FilteredTooltipMain from "./components/FilteredTooltip/FilteredTooltipMain";
-import TheadGender from "./components/DopTable/FirstTheadAgeGeoGender/TheadGender";
-import TheadAge from "./components/DopTable/FirstTheadAgeGeoGender/TheadAge";
-import TheadGeo from "./components/DopTable/FirstTheadAgeGeoGender/TheadGeo";
-import {resetPublisherReport} from "../../../redux/publisher/publisherSlice";
+
 
 function AdvertiserReportTable() {
     const dispatch = useDispatch()
@@ -92,46 +76,6 @@ function AdvertiserReportTable() {
         dispatch(fetchAdvertiser({}));
      }, [dispatch]);
 
-
-    // const fetchGetOrder = async () => {
-    //     const id = selectedOrder
-    //     const token = localStorage.getItem('token')
-    //
-    //     const response = await axios.get(
-    //       `${backendURL}/order/${id}/`,
-    //
-    //       {
-    //           headers: {
-    //               'Content-Type': 'application/json',
-    //               Accept: 'application/json',
-    //               Authorization: `Bearer ${token}`,
-    //           },
-    //       },
-    //     )
-    //     setGetOrder(response.data.data)
-    //     const { expected_start_date, actual_end_date, expected_end_date } =
-    //       response.data.data
-    //
-    //     const startDateObj = new Date(expected_start_date)
-    //     const endDateObj = actual_end_date
-    //       ? new Date(actual_end_date)
-    //       : new Date(expected_end_date)
-    //
-    //     const minDate = startDateObj.toISOString().split('T')[0]
-    //     const maxDate = endDateObj.toISOString().split('T')[0]
-    //
-    //     setStartDate(minDate)
-    //     setEndDate(maxDate)
-    // }
-    // React.useEffect(() => {
-    //     if(selectedOrder){
-    //         setLoadingDots(true)
-    //         fetchGetOrder(selectedOrder)
-    //           .then(() => setLoadingDots(false))
-    //     }
-    // }, [dispatch, selectedOrder]);
-
-
     // Отправка запроса с фильтра
     const handleDateStatictick = () => {
         setLoading(true)
@@ -157,19 +101,10 @@ function AdvertiserReportTable() {
         setStartDate(null)
         setEndDate(null)
     }
-    React.useEffect(() => {
-        // fetchGetOrder()
-    }, [])
-
 
     const dataFilteredClose = () => {
-
         dispatch(clearStatistics())
-        // dispatch(fetchStatistics()).then(() => setLoadingClose(false))
     }
-    // React.useEffect(() => {
-    //     dispatch(fetchStatistics({})).then(() => setLoading(false))
-    // }, [dispatch])
 
     let totalViews = 0
     let totalBudget = 0
@@ -188,7 +123,7 @@ function AdvertiserReportTable() {
                     <div className="spinner"></div>
                 </div>
             ) : (
-                <div className="tableWrapper" style={{overflow: "visible"}}>
+                <div className="tableWrapper" style={{overflow: "auto"}}>
                     <div className={style.tableChartWrapper__table_title}>
 
                         <div className={style.profile}>
@@ -293,75 +228,7 @@ function AdvertiserReportTable() {
                                             handleRowClick={handleRowClick}
                                             isExpanded={expandedRows === statistic.video_link}
                                           />
-                                          {/*<tr*/}
-                                          {/*  key={index}*/}
-                                          {/*  className={`${style.doprow} ${style.list__item__open}`}*/}
-                                          {/*>*/}
-                                          {/*    <td*/}
-                                          {/*      colSpan="10"*/}
-                                          {/*      className={`${style.list__item} ${*/}
-                                          {/*        expandedRows === statistic.video_link*/}
-                                          {/*          ? style.list__item__open*/}
-                                          {/*          : ''*/}
-                                          {/*      }`}*/}
-
-                                          {/*    >*/}
-
-                                          {/*        <div className="tableWrapper" style={{overflow: "visible"}}>*/}
-                                          {/*            <table className="tableWrapper" style={{overflow: "visible"}}>*/}
-                                          {/*                <thead style={{border: 0}}>*/}
-                                          {/*                /!* Колонки  ГЕО Возраст ПОЛ доп таблица  *!/*/}
-                                          {/*                <tr>*/}
-                                          {/*                    <TheadAgeGenderGeo*/}
-                                          {/*                      data={data}*/}
-                                          {/*                      statistic={statistic}*/}
-                                          {/*                    />*/}
-                                          {/*                </tr>*/}
-                                          {/*                /!* Колонки ГЕО Возраст ПОЛ доп таблица  *!/*/}
-                                          {/*                </thead>*/}
-
-                                          {/*                <thead style={{borderTop: '0'}}>*/}
-                                          {/*                /!* Колонки подробная инфа ГЕО Возраст ПОЛ *!/*/}
-                                          {/*                <tr className={style.tableChart__tr}>*/}
-                                          {/*                    <th style={{textAlign: 'center'}}>*/}
-                                          {/*                        <Eye*/}
-                                          {/*                          style={{*/}
-                                          {/*                              width: '25px',*/}
-                                          {/*                              height: '25px',*/}
-                                          {/*                          }}*/}
-                                          {/*                        />*/}
-                                          {/*                    </th>*/}
-                                          {/*                    <WrapperThead statistic={statistic}/>*/}
-                                          {/*                </tr>*/}
-                                          {/*                /!* Колонки подробная инфа ГЕО Возраст ПОЛ *!/*/}
-                                          {/*                </thead>*/}
-
-                                          {/*                <td*/}
-                                          {/*                  data-label="Показов"*/}
-                                          {/*                  style={{textAlign: 'center'}}*/}
-                                          {/*                >*/}
-                                          {/*                    <FormatterView*/}
-                                          {/*                      data={statistic.online_view_count}*/}
-                                          {/*                    />*/}
-                                          {/*                </td>*/}
-
-                                          {/*                <GenderData statistic={statistic}/>*/}
-                                          {/*                <AgeData statistic={statistic}/>*/}
-                                          {/*                <GeoData statistic={statistic}/>*/}
-                                          {/*            </table>*/}
-                                          {/*            /!* )} *!/*/}
-                                          {/*        </div>*/}
-                                          {/*    </td>*/}
-                                          {/*</tr>*/}
-
                                       </tr>
-
-                                      {/* Данные таблицы  */}
-
-                                      {/* Дополнительная таблица */}
-
-
-                                      {/* Дополнительная таблица */}
                                   </React.Fragment>
                                 )
                             })}
@@ -377,7 +244,7 @@ function AdvertiserReportTable() {
                           />
                           {/* Ячейки с инфо Итого:	 */}
                           </thead>
-                      </table> : <div style={{display: "flex", justifyContent: "center", fontWeight: "600"}}>Выберите параметры фильтра</div>
+                      </table> : <div style={{display: "flex", justifyContent: "center", fontWeight: "600", padding: "100px"}}>Выберите параметры фильтра</div>
                     }
 
                 </div>
