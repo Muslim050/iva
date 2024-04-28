@@ -108,31 +108,7 @@ function FilteredTooltip({
               </label>
             </div>
 
-            <div style={{width: '300px', marginTop: '10px'}}>
-              <label
-                  style={{
-                    fontSize: '12px',
-                    color: 'var(--text-color)',
-                    fontWeight: '400',
-                  }}
-              >
-                Выбрать рекламодателя
-                <select
-                    value={selectedOptionAdv}
-                    onChange={handleSelectChangeADV}
-                    style={{width: '100%'}}
-                    className={style.input}
-                    disabled={!selectedChannel}
-                >
-                  <option value="">Выберите рекламодателя</option>
-                  {advdata.map((option) => (
-                      <option key={option.id} value={JSON.stringify(option)}>
-                        {option.name}
-                      </option>
-                  ))}
-                </select>
-              </label>
-            </div>
+
 
 
             <div style={{display: 'flex', gap: '10px', margin: '10px 0 '}}>

@@ -6,7 +6,7 @@ const headers = [
   { key: 'channel.name', label: 'Канал' },
   { key: 'video_content.name', label: 'Название Видео' },
   { key: 'format', label: 'Формат' },
-  { key: 'start_at', label: 'Тайм код рекламы' },
+
   { key: 'expected_number_of_views', label: 'Прогноз показов' },
 
   { key: 'expected_promo_duration', label: 'Хрон ролика' },

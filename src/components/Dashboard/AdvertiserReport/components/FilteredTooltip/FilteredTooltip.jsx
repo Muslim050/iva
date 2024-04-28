@@ -80,31 +80,6 @@ function FilteredTooltip({
 
 
 
-          <div style={{width: '300px', marginTop: '10px'}}>
-            <label
-              style={{
-                fontSize: '12px',
-                color: 'var(--text-color)',
-                fontWeight: '400',
-              }}
-            >
-              Выбрать Заказ
-              <select
-                value={selectedOptionOrder}
-                onChange={handleSelectChangeOrder}
-                style={{width: '100%'}}
-                className={style.input}
-                disabled={!selectedAdv}
-              >
-                <option value="">Выберите Заказ</option>
-                {ShortListdata.map((option) => (
-                  <option key={option.id} value={JSON.stringify(option)}>
-                    {option.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
 
 
           {/*{loadingDots ? <div>*/}

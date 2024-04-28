@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { fetchStatistics } from '../../../redux/statisticsSlice'
+import {clearStatistics, fetchStatistics} from '../../../redux/statisticsSlice'
 import FormatterView from '../../UI/formatter/FormatterView'
 import style from './AdvChartTable.module.scss'
 import axios from 'axios'
@@ -29,7 +29,7 @@ import {resetPublisherReport} from "../../../redux/publisher/publisherSlice";
 function AdvertiserReportTable() {
     const dispatch = useDispatch()
     const [expandedRows, setExpandedRows] = React.useState('')
-    const [loading, setLoading] = React.useState(true)
+    const [loading, setLoading] = React.useState(false)
 
     const [loadingClose, setLoadingClose] = React.useState(false)
     const [loadingDots, setLoadingDots] = React.useState(false)
@@ -89,61 +89,54 @@ function AdvertiserReportTable() {
         }
     };
     React.useEffect(() => {
-        dispatch(fetchAdvertiser({})).then(() => setLoading(false));
-        // dispatch(fetchShortList({id: AdvID})).then(() => setLoading(false));
+        dispatch(fetchAdvertiser({}));
      }, [dispatch]);
-    React.useEffect(() => {
-        if(selectedAdv){
-            dispatch(fetchShortList({id: selectedAdv})).then(() => setLoading(false));
-        }
-    }, [dispatch, selectedAdv]);
 
-    const fetchGetOrder = async () => {
-        const id = selectedOrder
-        const token = localStorage.getItem('token')
 
-        const response = await axios.get(
-          `${backendURL}/order/${id}/`,
+    // const fetchGetOrder = async () => {
+    //     const id = selectedOrder
+    //     const token = localStorage.getItem('token')
+    //
+    //     const response = await axios.get(
+    //       `${backendURL}/order/${id}/`,
+    //
+    //       {
+    //           headers: {
+    //               'Content-Type': 'application/json',
+    //               Accept: 'application/json',
+    //               Authorization: `Bearer ${token}`,
+    //           },
+    //       },
+    //     )
+    //     setGetOrder(response.data.data)
+    //     const { expected_start_date, actual_end_date, expected_end_date } =
+    //       response.data.data
+    //
+    //     const startDateObj = new Date(expected_start_date)
+    //     const endDateObj = actual_end_date
+    //       ? new Date(actual_end_date)
+    //       : new Date(expected_end_date)
+    //
+    //     const minDate = startDateObj.toISOString().split('T')[0]
+    //     const maxDate = endDateObj.toISOString().split('T')[0]
+    //
+    //     setStartDate(minDate)
+    //     setEndDate(maxDate)
+    // }
+    // React.useEffect(() => {
+    //     if(selectedOrder){
+    //         setLoadingDots(true)
+    //         fetchGetOrder(selectedOrder)
+    //           .then(() => setLoadingDots(false))
+    //     }
+    // }, [dispatch, selectedOrder]);
 
-          {
-              headers: {
-                  'Content-Type': 'application/json',
-                  Accept: 'application/json',
-                  Authorization: `Bearer ${token}`,
-              },
-          },
-        )
-        setGetOrder(response.data.data)
-        const { expected_start_date, actual_end_date, expected_end_date } =
-          response.data.data
 
-        const startDateObj = new Date(expected_start_date)
-        const endDateObj = actual_end_date
-          ? new Date(actual_end_date)
-          : new Date(expected_end_date)
-
-        const minDate = startDateObj.toISOString().split('T')[0]
-        const maxDate = endDateObj.toISOString().split('T')[0]
-
-        setStartDate(minDate)
-        setEndDate(maxDate)
-    }
-    React.useEffect(() => {
-        if(selectedOrder){
-            setLoadingDots(true)
-            fetchGetOrder(selectedOrder)
-              .then(() => setLoadingDots(false))
-        }
-    }, [dispatch, selectedOrder]);
-
-    React.useEffect(() => {
-        dispatch(fetchShortList()).then(() => setLoading(false));
-    }, [dispatch]);
     // Отправка запроса с фильтра
     const handleDateStatictick = () => {
         setLoading(true)
         setDataFiltered(true)
-        dispatch(fetchStatistics({ id: selectedOrder}))
+        dispatch(fetchStatistics({adv_id: selectedAdv,  startDate, endDate }))
           .unwrap()
           .then(() => setLoading(false))
         setIsTooltip(false)
@@ -167,13 +160,11 @@ function AdvertiserReportTable() {
     React.useEffect(() => {
         // fetchGetOrder()
     }, [])
-    React.useEffect(() => {
 
-    }, [])
 
     const dataFilteredClose = () => {
-        setDataFiltered(false)
-        setLoadingClose(true)
+
+        dispatch(clearStatistics())
         // dispatch(fetchStatistics()).then(() => setLoadingClose(false))
     }
     // React.useEffect(() => {
@@ -201,7 +192,7 @@ function AdvertiserReportTable() {
                     <div className={style.tableChartWrapper__table_title}>
 
                         <div className={style.profile}>
-                            {dataFiltered && (
+                            {(startDate || endDate) && (
                                 <div
                                     style={{
                                         padding: '10px',
@@ -223,29 +214,22 @@ function AdvertiserReportTable() {
                                     >
                                         Выбранный период
                                         <div style={{ marginTop: '4px' }}>
-                                            {new Date(startDate).toLocaleDateString('ru-RU', {
+                                            {startDate && new Date(startDate).toLocaleDateString('ru-RU', {
                                                 day: '2-digit',
                                                 month: '2-digit',
                                                 year: 'numeric',
                                             })}
-                                            -
-                                            {new Date(endDate).toLocaleDateString('ru-RU', {
-                                                day: '2-digit',
-                                                month: '2-digit',
-                                                year: 'numeric',
-                                            })}
+
+                                            {endDate && new Date(endDate).toLocaleDateString('ru-RU', {
+                                                    day: '2-digit',
+                                                    month: '2-digit',
+                                                    year: 'numeric',
+                                                })
+                                            }
                                         </div>
                                     </div>
 
-                                    <Close
-                                        onClick={dataFilteredClose}
-                                        style={{
-                                            cursor: 'pointer',
-                                            border: 'solid 1px orange',
-                                            marginLeft: '10px',
-                                            borderRadius: '8px',
-                                        }}
-                                    />
+
                                 </div>
                             )}
                             {loadingClose && (

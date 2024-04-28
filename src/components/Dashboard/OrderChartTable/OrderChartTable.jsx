@@ -44,7 +44,7 @@ function OrderChartTable() {
   const handleDateStatictick = () => {
     setLoading(true)
     setDataFiltered(true)
-    dispatch(fetchStatistics({ id, startDate, endDate })).then(() =>
+    dispatch(fetchStatistics({ order_id:id, startDate, endDate })).then(() =>
       setLoading(false),
     )
     setIsTooltip(false)
@@ -103,10 +103,10 @@ function OrderChartTable() {
   const dataFilteredClose = () => {
     setDataFiltered(false)
     setLoadingClose(true)
-    dispatch(fetchStatistics({ id })).then(() => setLoadingClose(false))
+    dispatch(fetchStatistics({ order_id: id })).then(() => setLoadingClose(false))
   }
   React.useEffect(() => {
-    dispatch(fetchStatistics({ id })).then(() => setLoading(false))
+    dispatch(fetchStatistics({ order_id: id })).then(() => setLoading(false))
   }, [dispatch])
 
   let totalViews = 0

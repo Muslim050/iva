@@ -1,13 +1,8 @@
 import React from 'react'
 import style from './AdvChartTable.module.scss'
-import { ReactComponent as Linkk } from 'src/assets/link.svg'
+
 import FormatterView from 'src/components/UI/formatter/FormatterView'
 import FormatterBudjet from 'src/components/UI/formatter/FormatterBudjet'
-import { ReactComponent as Arrow } from 'src/assets/Table/arrow.svg'
-import OrderChartAge from "./components/DopTable/FirstTheadAgeGeoGender/TheadAge";
-import GenderData from "./components/DopTable/Data/GenderData";
-import AgeData from "./components/DopTable/Data/AgeData";
-import GeoData from "./components/DopTable/Data/GeoData";
 import TheadGender from "./components/DopTable/FirstTheadAgeGeoGender/TheadGender";
 import TheadAge from "./components/DopTable/FirstTheadAgeGeoGender/TheadAge";
 import TheadGeo from "./components/DopTable/FirstTheadAgeGeoGender/TheadGeo";

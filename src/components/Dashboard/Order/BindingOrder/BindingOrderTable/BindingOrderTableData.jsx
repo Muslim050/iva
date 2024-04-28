@@ -96,10 +96,7 @@ function BindingOrderTableData({
             {(invetar.format === 'preroll' && 'Pre-roll') ||
               ('mixroll' && 'Mix-roll')}
           </td>
-          <td className={style.table_td}>
-            {' '}
-            <FormatterTimeTwoDigit data={invetar.start_at} />{' '}
-          </td>
+
           <td className={style.table_td}>
             <FormatterView data={invetar.expected_number_of_views} />
           </td>

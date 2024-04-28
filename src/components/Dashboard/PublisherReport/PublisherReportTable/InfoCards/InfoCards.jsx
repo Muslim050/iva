@@ -13,7 +13,7 @@ export function InfoCardsBottom({
   totalbudjetChannel,
   channelName, uniqueChannelNameFiltered
 }) {
-  return (
+return (
     <tr align="center">
       <th></th>
       <th></th>
@@ -73,7 +73,7 @@ export function InfoCardsBottom({
               <>
                 <FormatterBudjet
                   budget={totalBudget}
-                  // data={getOrder.expected_start_date}
+                  data={channelName.order_start_date}
                 />
               </>
             )}
@@ -107,7 +107,7 @@ export function InfoCardsBottom({
               <>
                 <FormatterBudjet
                   budget={totalComisy}
-                  // data={getOrder.expected_start_date}
+                  data={channelName.order_start_date}
                 />
               </>
             )}
@@ -141,7 +141,7 @@ export function InfoCardsBottom({
               <>
                 <FormatterBudjet
                   budget={totalComisyAdtech}
-                  // data={getOrder.expected_start_date}
+                  data={channelName.order_start_date}
                 />
               </>
             )}
@@ -175,7 +175,7 @@ export function InfoCardsBottom({
               <>
                 <FormatterBudjet
                   budget={totalbudjetChannel}
-                  // data={getOrder.expected_start_date}
+                  data={channelName.order_start_date}
                 />
               </>
             )}

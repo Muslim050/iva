@@ -125,7 +125,7 @@ function PublisherReportTable() {
     }
   }, [dateRange]);
   const handleSearch = () => {
-    if (selectedChannel || selectedAdv) {
+    if (selectedChannel ) {
       setFilterLoading(true)
 
       const formattedStartDate = startDate
@@ -149,7 +149,6 @@ function PublisherReportTable() {
           startDate: useMonthBasedDates ? formattedStartDateMonth : formattedStartDate,
           endDate: useMonthBasedDates ? formattedEndDateMonth : formattedEndDate,
           format: selectedFormat,
-          advertiser: selectedAdv,
         }),
       )
         .then(() => {
@@ -509,7 +508,7 @@ function PublisherReportTable() {
                   totalComisyAdtech += person.adtechmedia_commission_total
                   totalbudjetChannel += person.channel_budget_total
 
-                  channelName = person.channel_name
+                  channelName = person
 
                   return (
                       <tr key={person.id}>
@@ -589,6 +588,9 @@ function PublisherReportTable() {
                   currentItems={currentItems}
                   totalComisyAdtech={totalComisyAdtech}
                   totalbudjetChannel={totalbudjetChannel}
+
+
+
                   channelName={channelName}
                   uniqueChannelNameFiltered={uniqueChannelNameFiltered}
                 />
