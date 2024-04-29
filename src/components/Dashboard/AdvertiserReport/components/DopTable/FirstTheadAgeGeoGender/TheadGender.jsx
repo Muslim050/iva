@@ -2,19 +2,19 @@ import React from 'react'
 import style from '../../../AdvChartTable.module.scss'
 import Anonim from 'src/assets/anonim.png'
 
-function OrderChartTwoThead({ statistic }) {
+function OrderChartTwoThead ({statistic}) {
   const uniqueGenders =
-   Array.from(
-          new Set(statistic.gender_percentages.map((gen) => gen.gender)),
-        )
+    Array.from (
+      new Set (statistic.gender_percentages.map ((gen) => gen.gender)),
+    )
   const uniqueGendersss = statistic.gender_percentages
 
   return (
-    <div >
-      <div style={{ display: "flex", justifyContent: "space-between"}}>
+    <div>
+      <div style={{display: "flex", justifyContent: "start"}}>
 
-      {uniqueGenders.length > 0
-        ? uniqueGenders.map((gender, index) => (
+        {uniqueGenders.length > 0
+          ? uniqueGenders.map ((gender, index) => (
             <td
               key={index}
               className={style.tableChart__tdd}
@@ -33,24 +33,24 @@ function OrderChartTwoThead({ statistic }) {
                     justifyContent: 'center',
                   }}
                 >
-                  <img src={Anonim} alt="Anonim" style={{ width: '15px' }} />
+                  <img src={Anonim} alt="Anonim" style={{width: '15px'}}/>
                 </div>
               ) : (
                 <>{gender}</>
               )}
             </td>
           ))
-        : null}
+          : null}
       </div>
       <div style={{borderTop: "1px solid #f3f0f0", display: "flex", justifyContent: "space-between"}}>
         {uniqueGendersss.length > 0
-          ? uniqueGendersss.map((gender, index) => (
+          ? uniqueGendersss.map ((gender, index) => (
             <>
               <td
                 key={`gender-${index}`}
                 data-label="Пол"
                 style={{
-                  textAlign: 'center', padding: "5px",  width: "60px", fontSize: "13px",  fontWeight: "600", color: "blue"
+                  textAlign: 'center', padding: "5px", width: "60px", fontSize: "13px", fontWeight: "600", color: "blue"
                 }}
               >
                 {gender.percentage}%

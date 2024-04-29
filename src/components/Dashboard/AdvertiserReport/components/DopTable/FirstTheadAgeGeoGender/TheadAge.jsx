@@ -1,11 +1,11 @@
 import React from 'react'
 import style from '../../../AdvChartTable.module.scss'
 
-function OrderChartAge({ statistic, getOrder }) {
+function OrderChartAge ({statistic, getOrder}) {
   const uniqueGenders =
-      Array.from(
-          new Set(statistic.age_group_percentages?.map((age) => age.age_group)),
-        )
+    Array.from (
+      new Set (statistic.age_group_percentages?.map ((age) => age.age_group)),
+    )
   const uniqueAge = statistic.age_group_percentages
 
   return (
@@ -14,25 +14,25 @@ function OrderChartAge({ statistic, getOrder }) {
         // display: "flex",
         // justifyContent: "space-between"
       }}>
-        <div style={{ display: "flex", justifyContent: "space-between"}}>
+        <div style={{display: "flex", justifyContent: "start"}}>
 
-        {uniqueGenders.length > 0
-          ? uniqueGenders.map((genderData, index) => (
-            <td
-              key={index}
-              className={style.tableChart__tdd}
-              style={{
-                fontSize: '12px', padding: "5px", width: "60px"
-              }}
-            >
-              {genderData.substring(3)}
-            </td>
-          ))
-          : null}
+          {uniqueGenders.length > 0
+            ? uniqueGenders.map ((genderData, index) => (
+              <td
+                key={index}
+                className={style.tableChart__tdd}
+                style={{
+                  fontSize: '12px', padding: "5px", width: "60px"
+                }}
+              >
+                {genderData.substring (3)}
+              </td>
+            ))
+            : null}
         </div>
-        <div style={{borderTop: "1px solid #f3f0f0", display: "flex", justifyContent: "space-between"}}>
+        <div style={{borderTop: "1px solid #f3f0f0", display: "flex", justifyContent: "start"}}>
           {uniqueAge.length > 0
-            ? uniqueAge.map((age, index) => (
+            ? uniqueAge.map ((age, index) => (
               <td
                 key={`age-${index}`}
                 data-label="Возраст"

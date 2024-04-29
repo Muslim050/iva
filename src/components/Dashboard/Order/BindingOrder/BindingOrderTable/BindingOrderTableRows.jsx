@@ -1,31 +1,30 @@
 import React from 'react'
-import { SortButton } from 'src/utils/SortButton'
+import {SortButton} from 'src/utils/SortButton'
 
 const headers = [
-  { key: 'id', label: '№' },
-  { key: 'channel.name', label: 'Канал' },
-  { key: 'video_content.name', label: 'Название Видео' },
-  { key: 'format', label: 'Формат' },
+  {key: 'id', label: '№'},
+  {key: 'channel.name', label: 'Канал'},
+  {key: 'video_content.name', label: 'Название Видео'},
+  {key: 'format', label: 'Формат'},
 
-  { key: 'expected_number_of_views', label: 'Прогноз показов' },
+  {key: 'expected_number_of_views', label: 'Прогноз показов'},
 
-  { key: 'expected_promo_duration', label: 'Хрон ролика' },
-  { key: 'link_to_video', label: 'Ссылка' },
-  { key: 'category', label: 'Категория' },
-  { key: 'publication_time', label: 'Время публикаций' },
-  { key: 'online_views', label: 'Показы' },
+  {key: 'link_to_video', label: 'Ссылка'},
+  {key: 'category', label: 'Категория'},
+  {key: 'publication_time', label: 'Время публикаций'},
+  {key: 'online_views', label: 'Показы'},
 
-  { key: 'status', label: 'Статусы' },
-  { key: 'deistviaB', label: 'Действия' },
+  {key: 'status', label: 'Статусы'},
+  {key: 'deistviaB', label: 'Действия'},
 ]
 
-function BindingOrderTableRows({ getOrder, sort, sortKey, changeSort }) {
-  const hasInactiveStatus = getOrder.some((item) => item.status === 'inactive')
+function BindingOrderTableRows ({getOrder, sort, sortKey, changeSort}) {
+  const hasInactiveStatus = getOrder.some ((item) => item.status === 'inactive')
 
   return (
     <>
       <tr>
-        {headers.map((row) => {
+        {headers.map ((row) => {
           if (row.key === 'deistviaB' && hasInactiveStatus) {
             return null // Пропустить отображение столбца, если есть статус "inactive"
           }
@@ -33,7 +32,7 @@ function BindingOrderTableRows({ getOrder, sort, sortKey, changeSort }) {
           // Проверка для столбца "Показы онлайн"
           if (row.key === 'online_views') {
             // Проверка наличия ненулевых online_views в заказе
-            const hasNonZeroOnlineViews = getOrder.some(
+            const hasNonZeroOnlineViews = getOrder.some (
               (item) => item.online_views !== 0,
             )
 
@@ -48,7 +47,7 @@ function BindingOrderTableRows({ getOrder, sort, sortKey, changeSort }) {
               <SortButton
                 row={row.label}
                 columnKey={row.key}
-                onClick={() => changeSort(row.key)}
+                onClick={() => changeSort (row.key)}
                 sort={sort}
                 sortKey={sortKey}
               />

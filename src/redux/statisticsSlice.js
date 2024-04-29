@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { toastConfig } from "src/utils/toastConfig";
+import {toast} from "react-toastify";
+import {toastConfig} from "src/utils/toastConfig";
 import backendURL from "src/utils/url";
 
 const initialState = {
@@ -12,12 +12,12 @@ const initialState = {
   error: null,
 };
 
-export const fetchStatistics = createAsyncThunk(
+export const fetchStatistics = createAsyncThunk (
   "statistics/fetchStatistics",
-  async ({ adv_id, order_id, startDate, endDate }) => {
-    const token = localStorage.getItem("token");
+  async ({adv_id, order_id, startDate, endDate}) => {
+    const token = localStorage.getItem ("token");
     let url = `${backendURL}/order/statistics/`;
-
+    console.log ("startDatestartDatestartDate", startDate)
     let hasParam = false;
 
     if (adv_id) {
@@ -38,7 +38,7 @@ export const fetchStatistics = createAsyncThunk(
 
 
     try {
-      const response = await axios.get(url, {
+      const response = await axios.get (url, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -50,22 +50,22 @@ export const fetchStatistics = createAsyncThunk(
       if (error.response && error.response.data && error.response.data.error) {
         const errorMessage = error.response.data.error;
         if (errorMessage.detail) {
-          toast.error(errorMessage.detail); // Отображение деталей ошибки с помощью toast
+          toast.error (errorMessage.detail); // Отображение деталей ошибки с помощью toast
         }
       } else {
-        toast.error("Ошибка при загрузке", toastConfig); // Общее сообщение об ошибке, если детали не доступны
+        toast.error ("Ошибка при загрузке", toastConfig); // Общее сообщение об ошибке, если детали не доступны
       }
       throw error;
     }
   }
 );
-export const fetchVideoStatistics = createAsyncThunk(
+export const fetchVideoStatistics = createAsyncThunk (
   "statistics/fetchVideoStatistics",
-  async ({ id }) => {
-    const token = localStorage.getItem("token");
+  async ({id}) => {
+    const token = localStorage.getItem ("token");
 
     try {
-      const response = await axios.get(
+      const response = await axios.get (
         `${backendURL}/publisher/channel/${id}/video-statistics/`,
 
         {
@@ -81,25 +81,25 @@ export const fetchVideoStatistics = createAsyncThunk(
       if (error.response && error.response.data && error.response.data.error) {
         const errorMessage = error.response.data.error;
         if (errorMessage.detail) {
-          toast.error(errorMessage.detail, toastConfig);
+          toast.error (errorMessage.detail, toastConfig);
         } else {
-          toast.error("Unknown error occurred", toastConfig);
+          toast.error ("Unknown error occurred", toastConfig);
         }
       } else {
-        toast.error("Error occurred while loading", toastConfig);
+        toast.error ("Error occurred while loading", toastConfig);
       }
       throw error;
     }
   }
 );
 
-export const fetchChannelStatistics = createAsyncThunk(
+export const fetchChannelStatistics = createAsyncThunk (
   "statistics/fetchChannelStatistics",
-  async ({ id }) => {
-    const token = localStorage.getItem("token");
+  async ({id}) => {
+    const token = localStorage.getItem ("token");
 
     try {
-      const response = await axios.get(
+      const response = await axios.get (
         `${backendURL}/publisher/channel/${id}/statistics/`,
 
         {
@@ -115,19 +115,19 @@ export const fetchChannelStatistics = createAsyncThunk(
       if (error.response && error.response.data && error.response.data.error) {
         const errorMessage = error.response.data.error;
         if (errorMessage.detail) {
-          toast.error(errorMessage.detail);
+          toast.error (errorMessage.detail);
         } else {
-          toast.error("Unknown error occurred");
+          toast.error ("Unknown error occurred");
         }
       } else {
-        toast.error("Error occurred while loading");
+        toast.error ("Error occurred while loading");
       }
       throw error;
     }
   }
 );
 
-const staticsSlice = createSlice({
+const staticsSlice = createSlice ({
   name: "statistics",
   initialState,
   reducers: {
@@ -140,43 +140,43 @@ const staticsSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(fetchStatistics.pending, (state) => {
+      .addCase (fetchStatistics.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchStatistics.fulfilled, (state, action) => {
+      .addCase (fetchStatistics.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.statistics = action.payload;
       })
-      .addCase(fetchStatistics.rejected, (state, action) => {
+      .addCase (fetchStatistics.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(fetchVideoStatistics.pending, (state) => {
+      .addCase (fetchVideoStatistics.pending, (state) => {
         state.status = "loading";
         state.statisticsVideo = [];
       })
-      .addCase(fetchVideoStatistics.fulfilled, (state, action) => {
+      .addCase (fetchVideoStatistics.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.statisticsVideo = action.payload;
       })
-      .addCase(fetchVideoStatistics.rejected, (state, action) => {
+      .addCase (fetchVideoStatistics.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(fetchChannelStatistics.pending, (state) => {
+      .addCase (fetchChannelStatistics.pending, (state) => {
         state.status = "loading";
         state.statisticsChannel = [];
       })
-      .addCase(fetchChannelStatistics.fulfilled, (state, action) => {
+      .addCase (fetchChannelStatistics.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.statisticsChannel = action.payload;
       })
-      .addCase(fetchChannelStatistics.rejected, (state, action) => {
+      .addCase (fetchChannelStatistics.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });
   },
 });
-export const { clearStatistics } = staticsSlice.actions;
+export const {clearStatistics} = staticsSlice.actions;
 
 export default staticsSlice.reducer;
