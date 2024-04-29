@@ -120,11 +120,11 @@ function AdvChartData ({statistic, index, handleRowClick, isExpanded}) {
 
       </td>
 
-      <td style={{padding: "0px", borderLeft: "1px solid #f3f0f0", borderRight: "1px solid #e3e3e3"}}>
+      <td style={{padding: "0px", borderLeft: "1px solid #f3f0f0", borderRight: "1px solid #e3e3e3", width: "430px"}}>
         <TheadAge statistic={statistic}/>
       </td>
 
-      <td style={{padding: "0px", borderRight: "1px solid #f3f0f0"}}>
+      <td style={{padding: "0px", borderRight: "1px solid #f3f0f0", width: "250px"}}>
         <TheadGeo statistic={statistic}/>
 
       </td>

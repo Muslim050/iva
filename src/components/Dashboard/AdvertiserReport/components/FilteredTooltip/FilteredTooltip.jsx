@@ -1,7 +1,6 @@
 import React from 'react'
 import style from './FilteredTooltip.module.scss'
 import {ReactComponent as Close} from 'src/assets/Close.svg'
-import DownloadReport from '../DownloadReport'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import ButtonTable from "../../../../UI/ButtonTable/ButtonTable";
@@ -147,15 +146,15 @@ function FilteredTooltip ({
               Сортировать
             </button>
             }
-            {(startDate || endDate)
-              ? <DownloadReport
-                getOrder={getOrder}
-                startDate={startDate}
-                endDate={endDate}
-                setIsTooltip={setIsTooltip}
-                // fetchGetOrder={fetchGetOrder}
-              /> : null
-            }
+            {/*{(startDate || endDate)*/}
+            {/*  ? <DownloadReport*/}
+            {/*    getOrder={getOrder}*/}
+            {/*    startDate={startDate}*/}
+            {/*    endDate={endDate}*/}
+            {/*    setIsTooltip={setIsTooltip}*/}
+            {/*    // fetchGetOrder={fetchGetOrder}*/}
+            {/*  /> : null*/}
+            {/*}*/}
             {(startDate || endDate || selectedOrderName || selectedAdvName) && (
               <div>
                 <ButtonTable
