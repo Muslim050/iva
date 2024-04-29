@@ -99,6 +99,7 @@ function BindingOrderTableData ({
           <td className={style.table_td}>
             <FormatterView data={invetar.expected_number_of_views}/>
           </td>
+          <td className={style.table_td}>{invetar.video_content.category}</td>
 
           <td className={style.table_td}>
             <a
@@ -131,23 +132,22 @@ function BindingOrderTableData ({
               />
             </a>
           </td>
-          <td className={style.table_td}>{invetar.video_content.category}</td>
           <td className={style.table_td}>
             {new Date (invetar.video_content?.actual_publication_time)
               .toLocaleDateString ('en-GB')
               .replace (/\//g, '.')}
           </td>
 
-          {invetar.online_views > 1 ? (
-              <td className={style.table_td}>
-                {/* <FormatterView data={invetar.online_views} /> */}
+          {invetar.online_views ? (
+            <td className={style.table_td}>
+              {/* <FormatterView data={invetar.online_views} /> */}
 
-                <td className={style.table_td}>
-                  <FormatterView data={invetar.online_views}/>
-                </td>
+              <td className={style.table_td}>
+                <FormatterView data={invetar.online_views}/>
               </td>
-            ) : // <td className={style.table_td}></td>
-            null}
+            </td>
+          ) : <td className={style.table_td} style={{color: "orange", fontWeight: "600"}}>Ведется аналитика</td>
+          }
 
           <td className={style.table_td}>
             <div>

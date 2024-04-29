@@ -8,9 +8,9 @@ const headers = [
   {key: 'format', label: 'Формат'},
 
   {key: 'expected_number_of_views', label: 'Прогноз показов'},
+  {key: 'category', label: 'Категория'},
 
   {key: 'link_to_video', label: 'Ссылка'},
-  {key: 'category', label: 'Категория'},
   {key: 'publication_time', label: 'Время публикаций'},
   {key: 'online_views', label: 'Показы'},
 
