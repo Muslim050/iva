@@ -33,7 +33,6 @@ function AdvertiserReportTable () {
   const [startDate, setStartDate] = React.useState ('')
   const [endDate, setEndDate] = React.useState ('')
   const [dataFiltered, setDataFiltered] = React.useState (false)
-  console.log ("startDate", startDate)
   //
   const [selectedAdv, setSetSelectedAdv] = React.useState (null)
   const [selectedAdvName, setSelectedAdvName] = React.useState (null)
@@ -149,7 +148,6 @@ function AdvertiserReportTable () {
       ) : (
         <div className="tableWrapper" style={{overflow: "auto"}}>
           <div className={style.tableChartWrapper__table_title}>
-
             <div className={style.profile}>
               {(startDate || endDate) && (
                 <div
@@ -234,7 +232,7 @@ function AdvertiserReportTable () {
             data && data.length ? <table className="tableWrapper" style={{overflow: "visible"}}>
                 {/* Колонки основной таблица  */}
                 <thead>
-                <OrderChartThead/>
+                <OrderChartThead statistic={tableData}/>
                 </thead>
                 {/* Колонки основной таблица  */}
 
@@ -256,10 +254,13 @@ function AdvertiserReportTable () {
                             isExpanded={expandedRows === statistic.video_link}
                           />
                         </tr>
+                        
                       </React.Fragment>
                     )
                   })}
+
                 </tbody>
+
 
                 <thead style={{border: 0}}>
                 {/* Ячейки с инфо Итого:	 */}

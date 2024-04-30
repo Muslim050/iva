@@ -1,23 +1,23 @@
 import React from 'react'
 import style from '../../../AdvChartTable.module.scss'
 
-function OrderChartAge ({statistic, getOrder}) {
-  const uniqueGenders =
+function OrderChartAge ({statistic}) {
+  function findVideoWithThreeGenders (data) {
+    return data.find (item => item?.age_group_percentages.length === 7);
+  }
+
+  const result = findVideoWithThreeGenders (statistic);
+  const uniqueAge =
     Array.from (
-      new Set (statistic.age_group_percentages?.map ((age) => age.age_group)),
+      new Set (result.age_group_percentages.map ((gen) => gen.age_group)),
     )
-  const uniqueAge = statistic.age_group_percentages
 
   return (
     <>
-      <div style={{
-        // display: "flex",
-        // justifyContent: "space-between"
-      }}>
+      <div>
         <div style={{display: "flex", justifyContent: "start"}}>
-
-          {uniqueGenders.length > 0
-            ? uniqueGenders.map ((genderData, index) => (
+          {uniqueAge.length > 0
+            ? uniqueAge.map ((genderData, index) => (
               <td
                 key={index}
                 className={style.tableChart__tdd}
@@ -30,23 +30,6 @@ function OrderChartAge ({statistic, getOrder}) {
             ))
             : null}
         </div>
-        <div style={{borderTop: "1px solid #f3f0f0", display: "flex", justifyContent: "start"}}>
-          {uniqueAge.length > 0
-            ? uniqueAge.map ((age, index) => (
-              <td
-                key={`age-${index}`}
-                data-label="Возраст"
-                style={{
-                  textAlign: 'center', padding: "5px", width: "60px", fontSize: "13px", fontWeight: "600", color: "blue"
-                }}
-              >
-                {age.percentage}%
-              </td>
-            ))
-            : null}
-        </div>
-
-
       </div>
     </>
   )

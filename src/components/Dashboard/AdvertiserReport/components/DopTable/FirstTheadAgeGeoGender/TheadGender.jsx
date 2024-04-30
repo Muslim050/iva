@@ -3,12 +3,15 @@ import style from '../../../AdvChartTable.module.scss'
 import Anonim from 'src/assets/anonim.png'
 
 function OrderChartTwoThead ({statistic}) {
+  function findVideoWithThreeGenders (data) {
+    return data.find (item => item.gender_percentages.length === 3);
+  }
+
+  const result = findVideoWithThreeGenders (statistic);
   const uniqueGenders =
     Array.from (
-      new Set (statistic.gender_percentages.map ((gen) => gen.gender)),
+      new Set (result.gender_percentages.map ((gen) => gen.gender)),
     )
-  const uniqueGendersss = statistic.gender_percentages
-
   return (
     <div>
       <div style={{display: "flex", justifyContent: "start"}}>
@@ -39,23 +42,6 @@ function OrderChartTwoThead ({statistic}) {
                 <>{gender}</>
               )}
             </td>
-          ))
-          : null}
-      </div>
-      <div style={{borderTop: "1px solid #f3f0f0", display: "flex", justifyContent: "space-between"}}>
-        {uniqueGendersss.length > 0
-          ? uniqueGendersss.map ((gender, index) => (
-            <>
-              <td
-                key={`gender-${index}`}
-                data-label="Пол"
-                style={{
-                  textAlign: 'center', padding: "5px", width: "60px", fontSize: "13px", fontWeight: "600", color: "blue"
-                }}
-              >
-                {gender.percentage}%
-              </td>
-            </>
           ))
           : null}
       </div>

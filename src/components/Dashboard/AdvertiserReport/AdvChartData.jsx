@@ -3,13 +3,14 @@ import style from './AdvChartTable.module.scss'
 
 import FormatterView from 'src/components/UI/formatter/FormatterView'
 import FormatterBudjet from 'src/components/UI/formatter/FormatterBudjet'
-import TheadGender from "./components/DopTable/FirstTheadAgeGeoGender/TheadGender";
-import TheadAge from "./components/DopTable/FirstTheadAgeGeoGender/TheadAge";
-import TheadGeo from "./components/DopTable/FirstTheadAgeGeoGender/TheadGeo";
 
 function AdvChartData ({statistic, index, handleRowClick, isExpanded}) {
   const user = localStorage.getItem ('role')
   const [activeTooltip, setActiveTooltip] = React.useState (null)
+
+  const uniqueGendersss = statistic.gender_percentages
+  const uniqueAge = statistic.age_group_percentages
+  const uniqueGeo = statistic.geo_percentages
 
 
   return (
@@ -110,24 +111,83 @@ function AdvChartData ({statistic, index, handleRowClick, isExpanded}) {
           )}
         </div>
       </td>
-
-      <td style={{
-        padding: "0px", borderLeft: "1px solid #f3f0f0",
-        width: "155px"
-      }}>
-
-        <TheadGender statistic={statistic}/>
-
+      <td className={style.table_td} style={{padding: "0px", borderLeft: "1px solid #f3f0f0"}}>
+        <div style={{display: "flex", justifyContent: "space-between"}}>
+          {uniqueGendersss.length > 0
+            ? uniqueGendersss.map ((gender, index) => (
+              <>
+                <td
+                  key={`gender-${index}`}
+                  data-label="Пол"
+                  style={{
+                    textAlign: 'center',
+                    padding: "5px",
+                    width: "60px",
+                    fontSize: "13px",
+                    fontWeight: "600",
+                    color: "blue"
+                  }}
+                >
+                  {gender.percentage}%
+                </td>
+              </>
+            ))
+            : null}
+        </div>
       </td>
 
-      <td style={{padding: "0px", borderLeft: "1px solid #f3f0f0", borderRight: "1px solid #e3e3e3", width: "430px"}}>
-        <TheadAge statistic={statistic}/>
+
+      <td className={style.table_td} style={{padding: "0px", borderLeft: "1px solid #f3f0f0"}}>
+
+        <div style={{display: "flex", justifyContent: "start"}}>
+          {uniqueAge.length > 0
+            ? uniqueAge.map ((age, index) => (
+              <td
+                key={`age-${index}`}
+                data-label="Возраст"
+                style={{
+                  textAlign: 'center', padding: "5px", width: "60px", fontSize: "13px", fontWeight: "600", color: "blue"
+                }}
+              >
+                {age.percentage}%
+              </td>
+            ))
+            : null}
+        </div>
       </td>
 
-      <td style={{padding: "0px", borderRight: "1px solid #f3f0f0", width: "250px"}}>
-        <TheadGeo statistic={statistic}/>
-
+      <td className={style.table_td} style={{padding: "0px", borderLeft: "1px solid #f3f0f0"}}>
+        <div style={{display: "flex", justifyContent: "start"}}>
+          {uniqueGeo.length > 0
+            ? uniqueGeo.map ((geo, index) => (
+              <>
+                <div
+                  key={`geo-${index}`}
+                  data-label="Гео"
+                  style={{
+                    textAlign: 'center',
+                    padding: "5px",
+                    width: "60px",
+                    fontSize: "13px",
+                    fontWeight: "600",
+                    color: "blue"
+                  }}
+                >
+                  {geo.percentage}%
+                </div>
+              </>
+            ))
+            : null}
+        </div>
       </td>
+
+      {/*<td style={{padding: "0px", borderLeft: "1px solid #f3f0f0", borderRight: "1px solid #e3e3e3", width: "430px"}}>*/}
+      {/*  <TheadAge statistic={statistic}/>*/}
+      {/*</td>*/}
+
+      {/*<td style={{padding: "0px", borderRight: "1px solid #f3f0f0", width: "250px"}}>*/}
+      {/*  <TheadGeo statistic={statistic}/>*/}
+      {/*</td>*/}
 
     </>
   )
