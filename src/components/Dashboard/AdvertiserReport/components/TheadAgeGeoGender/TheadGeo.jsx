@@ -1,7 +1,7 @@
 import React from 'react'
-import style from '../../../AdvChartTable.module.scss'
+import style from '../../AdvChartTable.module.scss'
 
-function OrderChartGeo ({statistic}) {
+function TheadGeo ({statistic}) {
 
   function findVideoWithThreeGenders (data) {
     return data.find (item => item?.geo_percentages.length === 4);
@@ -15,10 +15,7 @@ function OrderChartGeo ({statistic}) {
 
   return (
 
-    <div style={{
-      display: "flex", justifyContent: "start",
-
-    }}>
+    <div>
       {uniqueGenders.length > 0
         ? uniqueGenders.map ((geo, index) => (
           <td
@@ -37,4 +34,4 @@ function OrderChartGeo ({statistic}) {
   )
 }
 
-export default OrderChartGeo
+export default TheadGeo

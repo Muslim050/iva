@@ -1,8 +1,8 @@
 import React from 'react'
-import style from '../../../AdvChartTable.module.scss'
-import Anonim from 'src/assets/anonim.png'
+import style from '../../AdvChartTable.module.scss'
+import Anonim from '../../../../../assets/anonim.png'
 
-function OrderChartTwoThead ({statistic}) {
+function TheadGender ({statistic}) {
   function findVideoWithThreeGenders (data) {
     return data.find (item => item.gender_percentages.length === 3);
   }
@@ -13,13 +13,7 @@ function OrderChartTwoThead ({statistic}) {
       new Set (result.gender_percentages.map ((gen) => gen.gender)),
     )
   return (
-
-    <div style={{
-      display: "flex", justifyContent: "start",
-
-
-    }}>
-
+    <div>
       {uniqueGenders.length > 0
         ? uniqueGenders.map ((gender, index) => (
           <td
@@ -56,4 +50,4 @@ function OrderChartTwoThead ({statistic}) {
   )
 }
 
-export default OrderChartTwoThead
+export default TheadGender

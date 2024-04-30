@@ -1,49 +1,14 @@
 import React from 'react'
 import style from './InfoCards.module.scss'
-import {useParams} from 'react-router-dom'
 import FormatterView from 'src/components/UI/formatter/FormatterView'
 import FormatterBudjet from 'src/components/UI/formatter/FormatterBudjet'
 
-export function InfoCardsTop ({getOrder}) {
-  const {id} = useParams ()
-  return (
-    <div style={{display: 'flex'}}>
-      <div className={style.infoCart}>
-        Заказ
-        <div className={style.infoCart__text}>№-{id}</div>
-      </div>
 
-      <div className={style.infoCart}>
-        План показов: &nbsp;
-        <div className={style.infoCart__text}>
-          <FormatterView data={getOrder.expected_number_of_views}/>
-        </div>
-      </div>
-      <div className={style.infoCart}>
-        План бюджета: &nbsp;
-        <div
-          className={style.infoCart__text}
-          style={{
-            display: 'flex',
-          }}
-        >
-          <FormatterBudjet
-            budget={getOrder.budget}
-            data={getOrder.expected_start_date}
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export function InfoCardsBottom ({
-                                   totalViews,
-                                   totalBudget,
-                                   totalAnalitickView,
-                                   getOrder,
-                                 }) {
-
+export function InfoCardsBottom (
+  {
+    totalViews,
+    totalBudget,
+  }) {
   const ndc = totalBudget * 0.12
   return (
     <tr align="center">
@@ -52,8 +17,6 @@ export function InfoCardsBottom ({
       <th></th>
       <th></th>
       <th></th>
-
-
       <th
         className={style.infoCards_bottom_th}
         rowSpan="1"
@@ -61,8 +24,6 @@ export function InfoCardsBottom ({
       >
         <div style={{display: 'flex', justifyContent: 'center'}}>Итого:</div>
       </th>
-
-
       <th
         className={style.infoCards_bottom_th}
         rowSpan="2"
@@ -77,7 +38,6 @@ export function InfoCardsBottom ({
           </div>
         </div>
       </th>
-
       <th
         className={style.infoCards_bottom_th}
         rowSpan="2"
@@ -103,13 +63,10 @@ export function InfoCardsBottom ({
       <th
         className={style.infoCards_bottom_th}
         rowSpan="2"
-
       >
         <div className={style.infoCards_bottom_th__toptext}>
-
           <div
             className={style.infoCards_bottom_th__bottomtext}
-
           >
             {totalBudget === 0 ? (
               <div
@@ -126,21 +83,19 @@ export function InfoCardsBottom ({
                 <>
                   <FormatterBudjet
                     budget={totalBudget}
-                    data={getOrder.expected_start_date}
+                    // data={getOrder.expected_start_date}
                   />
                 </>
                 <>
-
-
                   <FormatterBudjet
                     budget={ndc}
-                    data={getOrder.expected_start_date}
+                    // data={getOrder.expected_start_date}
                   />
                 </>
                 <>
                   <FormatterBudjet
                     budget={totalBudget + ndc}
-                    data={getOrder.expected_start_date}
+                    // data={getOrder.expected_start_date}
                   />
                 </>
               </>

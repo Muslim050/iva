@@ -1,7 +1,7 @@
 import React from 'react'
-import style from '../../../AdvChartTable.module.scss'
+import style from '../../AdvChartTable.module.scss'
 
-function OrderChartAge ({statistic}) {
+function TheadAge ({statistic}) {
   function findVideoWithThreeGenders (data) {
     return data.find (item => item?.age_group_percentages.length === 7);
   }
@@ -14,20 +14,18 @@ function OrderChartAge ({statistic}) {
 
   return (
     <>
-
-      <div style={{
-        display: "flex", justifyContent: "start",
-        borderRadius: "0px 0px 0px 0px"
-      }}>
+      <div>
         {uniqueAge.length > 0
           ? uniqueAge.map ((genderData, index) => (
             <td
               key={index}
               className={style.tableChart__tdd}
               style={{
-                fontSize: '12px', padding: "6px", width: "60px", fontWeight: "600",
+                fontSize: '12px',
+                padding: "6px",
+                width: "60px",
+                fontWeight: "600",
                 color: "#6e7079"
-
               }}
             >
               {genderData.substring (3)}
@@ -35,9 +33,8 @@ function OrderChartAge ({statistic}) {
           ))
           : null}
       </div>
-
     </>
   )
 }
 
-export default OrderChartAge
+export default TheadAge

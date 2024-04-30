@@ -6,26 +6,23 @@ import 'react-datepicker/dist/react-datepicker.css'
 import ButtonTable from "../../../../UI/ButtonTable/ButtonTable";
 import {ReactComponent as Delete} from 'src/assets/Delete.svg'
 
-function FilteredTooltip ({
-                            isTooltip,
-                            handleDateStatictick,
-                            startDate,
-                            setStartDate,
-                            endDate,
-                            setEndDate,
-                            setIsTooltip,
-                            getOrder,
-                            closeH, advdata, selectedOptionAdv, handleSelectChangeADV, handleClear,
-                            selectedOrderName, selectedAdvName, loadingDots, handleEndDateChange, handleStartDateChange
-                          }) {
-  // const handleStartDateChange = (date) => {
-  //   setStartDate (date.toISOString ().slice (0, 10)) // Преобразование даты в строку формата YYYY-MM-DD
-  // }
-  //
-  // const handleEndDateChange = (date) => {
-  //   setEndDate (date.toISOString ().slice (0, 10)) // Аналогично для конечной даты
-  // }
-
+function FilteredTooltip (
+  {
+    isTooltip,
+    handleDateStatictick,
+    startDate,
+    endDate,
+    closeH,
+    advdata,
+    selectedOptionAdv,
+    handleSelectChangeADV,
+    handleClear,
+    selectedOrderName,
+    selectedAdvName,
+    loadingDots,
+    handleEndDateChange,
+    handleStartDateChange
+  }) {
   return (
     <>
       {isTooltip && (

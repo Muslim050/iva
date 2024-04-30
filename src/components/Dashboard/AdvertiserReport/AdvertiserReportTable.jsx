@@ -4,7 +4,7 @@ import {clearStatistics, fetchStatistics} from '../../../redux/statisticsSlice'
 import style from './AdvChartTable.module.scss'
 import OrderChartThead from './AdvChartThead'
 import AdvChartData from './AdvChartData'
-import {InfoCardsBottom} from './components/InfoCards/InfoCards'
+import {InfoCardsBottom} from './components/InfoCardsBottom/InfoCards'
 import FilteredTooltip from './components/FilteredTooltip/FilteredTooltip'
 import {fetchAdvertiser} from "../../../redux/advertiser/advertiserSlice";
 import FilteredTooltipMain from "./components/FilteredTooltip/FilteredTooltipMain";
@@ -16,37 +16,23 @@ function AdvertiserReportTable () {
   const dispatch = useDispatch ()
   const [expandedRows, setExpandedRows] = React.useState ('')
   const [loading, setLoading] = React.useState (false)
-
-  const [loadingClose, setLoadingClose] = React.useState (false)
-  const [loadingDots, setLoadingDots] = React.useState (false)
-
-  const user = localStorage.getItem ('role')
-  const AdvID = localStorage.getItem ('advertiser')
-
-//
+  //
   const data = useSelector ((state) => state.statistics.statistics.results)
   const ShortListdata = useSelector ((state) => state.order.shortListData)
   const advdata = useSelector ((state) => state.advertiser.advertisers)
-//
-  const [getOrder, setGetOrder] = React.useState ([])
+  //
   const [isTooltip, setIsTooltip] = React.useState (false)
   const [startDate, setStartDate] = React.useState ('')
   const [endDate, setEndDate] = React.useState ('')
-  const [dataFiltered, setDataFiltered] = React.useState (false)
   //
   const [selectedAdv, setSetSelectedAdv] = React.useState (null)
   const [selectedAdvName, setSelectedAdvName] = React.useState (null)
   const [selectedOptionAdv, setSelectedOptionAdv] = React.useState ('')
   //
-  const [selectedOrder, setSetSelectedOrder] = React.useState (null)
   const [selectedOrderName, setSelectedOrderName] = React.useState (null)
   const [selectedOptionOrder, setSelectedOptionOrder] = React.useState ('')
 
-  const handleRowClick = (videoLink) => {
-    setExpandedRows ((prevExpandedRow) =>
-      prevExpandedRow === videoLink ? '' : videoLink,
-    )
-  }
+  //Выбор рекламадателя
   const handleSelectChangeADV = (event) => {
     const value = event.target.value;
     setSelectedOptionAdv (value);
@@ -60,28 +46,19 @@ function AdvertiserReportTable () {
       setSelectedAdvName ("");
     }
   };
-  const handleSelectChangeOrder = (event) => {
-    const value = event.target.value;
-    setSelectedOptionOrder (value);
+  //Выбор рекламадателя
 
-    if (value) {
-      const option = JSON.parse (value);
-      setSetSelectedOrder (option.id);
-      setSelectedOrderName (option.name);
-    } else {
-      setSetSelectedOrder (null);
-      setSelectedOrderName ("");
-    }
-  };
+  //useEffect
   React.useEffect (() => {
     dispatch (fetchAdvertiser ({}));
   }, [dispatch]);
-
   React.useEffect (() => {
     if (selectedAdv) {
       dispatch (fetchShortList ({id: selectedAdv}));
     }
   }, [dispatch, selectedAdv]);
+  //useEffect
+
   const formattedStartDate = startDate
     ? format (startDate, 'yyyy-MM-dd')
     : undefined
@@ -93,13 +70,13 @@ function AdvertiserReportTable () {
   // Отправка запроса с фильтра
   const handleDateStatictick = () => {
     setLoading (true)
-    setDataFiltered (true)
-
     dispatch (fetchStatistics ({adv_id: selectedAdv, startDate: formattedStartDate, endDate: formattedEndDate}))
       .unwrap ()
       .then (() => setLoading (false))
     setIsTooltip (false)
   }
+  // Отправка запроса с фильтра
+
   const handleProfileClick = () => {
     setIsTooltip (!isTooltip)
   }
@@ -119,9 +96,6 @@ function AdvertiserReportTable () {
 
   }
 
-  const dataFilteredClose = () => {
-    dispatch (clearStatistics ())
-  }
   const handleStartDateChange = (date) => {
     setStartDate (date) // Keep the Date object for DatePicker
   }
@@ -189,17 +163,8 @@ function AdvertiserReportTable () {
 
                 </div>
               )}
-              {loadingClose && (
-                <div className="loaderWrapper" style={{height: '6vh'}}>
-                  <div
-                    className="spinner"
-                    style={{width: '25px', height: '25px'}}
-                  ></div>
-                </div>
-              )}
               <FilteredTooltipMain handleProfileClick={handleProfileClick}>
                 <FilteredTooltip
-                  getOrder={getOrder}
                   isTooltip={isTooltip}
                   handleDateStatictick={handleDateStatictick}
                   startDate={startDate}
@@ -214,10 +179,8 @@ function AdvertiserReportTable () {
                   ShortListdata={ShortListdata}
                   //
                   setSelectedOptionOrder={setSelectedOptionOrder}
-                  handleSelectChangeOrder={handleSelectChangeOrder}
                   selectedOptionOrder={selectedOptionOrder}
                   selectedAdv={selectedAdv}
-                  loadingDots={loadingDots}
                   handleClear={handleClear}
                   selectedAdvName={selectedAdvName}
                   selectedOrderName={selectedOrderName}
@@ -235,7 +198,6 @@ function AdvertiserReportTable () {
                 <OrderChartThead statistic={tableData}/>
                 </thead>
                 {/* Колонки основной таблица  */}
-
                 <tbody>
                 {data && data.length &&
                   data.map ((statistic, index) => {
@@ -250,7 +212,6 @@ function AdvertiserReportTable () {
                           <AdvChartData
                             statistic={statistic}
                             index={index}
-                            handleRowClick={handleRowClick}
                             isExpanded={expandedRows === statistic.video_link}
                           />
                         </tr>
@@ -259,21 +220,19 @@ function AdvertiserReportTable () {
                   })}
 
                 </tbody>
-
-
                 <thead style={{border: 0}}>
                 {/* Ячейки с инфо Итого:	 */}
                 <InfoCardsBottom
                   totalViews={totalViews}
                   totalBudget={totalBudget}
                   totalAnalitickView={totalAnalitickView}
-                  getOrder={getOrder}
                 />
                 {/* Ячейки с инфо Итого:	 */}
                 </thead>
               </table> :
-              <div style={{display: "flex", justifyContent: "center", fontWeight: "600", padding: "20% 0"}}>Выберите
-                параметры фильтра</div>
+              <div style={{display: "flex", justifyContent: "center", fontWeight: "600", padding: "20% 0"}}>
+                Выберитепараметры фильтра
+              </div>
           }
 
         </div>

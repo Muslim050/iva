@@ -4,10 +4,8 @@ import style from './AdvChartTable.module.scss'
 import FormatterView from 'src/components/UI/formatter/FormatterView'
 import FormatterBudjet from 'src/components/UI/formatter/FormatterBudjet'
 
-function AdvChartData ({statistic, index, handleRowClick, isExpanded}) {
-  const user = localStorage.getItem ('role')
+function AdvChartData ({statistic, index, isExpanded}) {
   const [activeTooltip, setActiveTooltip] = React.useState (null)
-
   const uniqueGendersss = statistic.gender_percentages
   const uniqueAge = statistic.age_group_percentages
   const uniqueGeo = statistic.geo_percentages
@@ -179,13 +177,6 @@ function AdvChartData ({statistic, index, handleRowClick, isExpanded}) {
         </div>
       </td>
 
-      {/*<td style={{padding: "0px", borderLeft: "1px solid #f3f0f0", borderRight: "1px solid #e3e3e3", width: "430px"}}>*/}
-      {/*  <TheadAge statistic={statistic}/>*/}
-      {/*</td>*/}
-
-      {/*<td style={{padding: "0px", borderRight: "1px solid #f3f0f0", width: "250px"}}>*/}
-      {/*  <TheadGeo statistic={statistic}/>*/}
-      {/*</td>*/}
 
     </>
   )

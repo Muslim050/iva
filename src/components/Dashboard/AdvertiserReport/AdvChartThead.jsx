@@ -1,8 +1,8 @@
 import React from 'react'
 import style from './AdvChartTable.module.scss'
-import TheadGender from "./components/DopTable/FirstTheadAgeGeoGender/TheadGender";
-import TheadAge from "./components/DopTable/FirstTheadAgeGeoGender/TheadAge";
-import TheadGeo from "./components/DopTable/FirstTheadAgeGeoGender/TheadGeo";
+import TheadGender from "./components/TheadAgeGeoGender/TheadGender";
+import TheadAge from "./components/TheadAgeGeoGender/TheadAge";
+import TheadGeo from "./components/TheadAgeGeoGender/TheadGeo";
 
 const headers = [
   {key: 'index', label: '№'},
