@@ -254,7 +254,6 @@ function AdvertiserReportTable () {
                             isExpanded={expandedRows === statistic.video_link}
                           />
                         </tr>
-                        
                       </React.Fragment>
                     )
                   })}

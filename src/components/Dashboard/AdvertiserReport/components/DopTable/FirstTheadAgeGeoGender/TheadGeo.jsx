@@ -14,24 +14,25 @@ function OrderChartGeo ({statistic}) {
     )
 
   return (
-    <div>
-      <div style={{display: "flex", justifyContent: "start"}}>
 
-        {uniqueGenders.length > 0
-          ? uniqueGenders.map ((geo, index) => (
-            <td
-              key={index}
-              className={style.tableChart__tdd}
-              style={{
-                fontSize: '12px', padding: "5px", width: "60px"
-              }}
-            >
-              {geo}
-            </td>
-          ))
-          : null}
-      </div>
-      
+    <div style={{
+      display: "flex", justifyContent: "start",
+
+    }}>
+      {uniqueGenders.length > 0
+        ? uniqueGenders.map ((geo, index) => (
+          <td
+            key={index}
+            className={style.tableChart__tdd}
+            style={{
+              fontSize: '12px', padding: "6px", width: "60px", fontWeight: "600",
+              color: "#6e7079"
+            }}
+          >
+            {geo}
+          </td>
+        ))
+        : null}
     </div>
   )
 }

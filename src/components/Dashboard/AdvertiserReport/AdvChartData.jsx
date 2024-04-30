@@ -19,26 +19,24 @@ function AdvChartData ({statistic, index, handleRowClick, isExpanded}) {
       <td className={style.table_td} style={{display: 'table-cell', width: '250px', padding: "10px 10px"}}>
         {statistic.channel_name}
       </td>
-      <td onMouseEnter={() => setActiveTooltip (statistic.id)}
-          onMouseLeave={() => setActiveTooltip (null)}
-          style={{
-            position: "relative",
-            zIndex: "3",
-            display: 'table-cell',
-            width: '300px',
-            color: "blue",
-            padding: "10px 10px"
-          }}
-          className={style.table_td}>
+      <td
+        onMouseEnter={() => setActiveTooltip (statistic.id)}
+        onMouseLeave={() => setActiveTooltip (null)}
+        style={{
+          position: "relative",
+          zIndex: "3",
+          display: 'table-cell',
+          width: '300px',
+          color: "blue",
+          padding: "10px 10px"
+        }}
+        className={style.table_td}>
         {statistic.video_name.length > 25 ? statistic.video_name.substring (0, 25) + '...' : statistic.video_name}
-
-
         <span
           className={
             activeTooltip === statistic.id ? style.tooltiptext : style.hidden
           }
         >{statistic.video_name}</span>
-
       </td>
       <td className={style.table_td} style={{padding: "10px 10px"}}>
         {(statistic.order_format === 'preroll' && 'Pre-roll') ||
@@ -78,8 +76,6 @@ function AdvChartData ({statistic, index, handleRowClick, isExpanded}) {
           </div>
         </div>
       </td>
-
-
       <td className={style.table_td} style={{padding: "10px 10px"}}>
         <FormatterView data={statistic.online_view_count}/>
       </td>
@@ -112,7 +108,7 @@ function AdvChartData ({statistic, index, handleRowClick, isExpanded}) {
         </div>
       </td>
       <td className={style.table_td} style={{padding: "0px", borderLeft: "1px solid #f3f0f0"}}>
-        <div style={{display: "flex", justifyContent: "space-between"}}>
+        <div style={{display: "flex", justifyContent: "space-between",}}>
           {uniqueGendersss.length > 0
             ? uniqueGendersss.map ((gender, index) => (
               <>
@@ -135,10 +131,7 @@ function AdvChartData ({statistic, index, handleRowClick, isExpanded}) {
             : null}
         </div>
       </td>
-
-
       <td className={style.table_td} style={{padding: "0px", borderLeft: "1px solid #f3f0f0"}}>
-
         <div style={{display: "flex", justifyContent: "start"}}>
           {uniqueAge.length > 0
             ? uniqueAge.map ((age, index) => (
@@ -146,7 +139,12 @@ function AdvChartData ({statistic, index, handleRowClick, isExpanded}) {
                 key={`age-${index}`}
                 data-label="Возраст"
                 style={{
-                  textAlign: 'center', padding: "5px", width: "60px", fontSize: "13px", fontWeight: "600", color: "blue"
+                  textAlign: 'center',
+                  padding: "7px",
+                  width: "60px",
+                  fontSize: "13px",
+                  fontWeight: "600",
+                  color: "blue"
                 }}
               >
                 {age.percentage}%

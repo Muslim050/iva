@@ -14,23 +14,28 @@ function OrderChartAge ({statistic}) {
 
   return (
     <>
-      <div>
-        <div style={{display: "flex", justifyContent: "start"}}>
-          {uniqueAge.length > 0
-            ? uniqueAge.map ((genderData, index) => (
-              <td
-                key={index}
-                className={style.tableChart__tdd}
-                style={{
-                  fontSize: '12px', padding: "5px", width: "60px"
-                }}
-              >
-                {genderData.substring (3)}
-              </td>
-            ))
-            : null}
-        </div>
+
+      <div style={{
+        display: "flex", justifyContent: "start",
+        borderRadius: "0px 0px 0px 0px"
+      }}>
+        {uniqueAge.length > 0
+          ? uniqueAge.map ((genderData, index) => (
+            <td
+              key={index}
+              className={style.tableChart__tdd}
+              style={{
+                fontSize: '12px', padding: "6px", width: "60px", fontWeight: "600",
+                color: "#6e7079"
+
+              }}
+            >
+              {genderData.substring (3)}
+            </td>
+          ))
+          : null}
       </div>
+
     </>
   )
 }
