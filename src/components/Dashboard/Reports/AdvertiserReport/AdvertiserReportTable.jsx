@@ -1,14 +1,14 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {clearStatistics, fetchStatistics} from '../../../redux/statisticsSlice'
+import {clearStatistics, fetchStatistics} from 'src/redux/statisticsSlice'
 import style from './AdvChartTable.module.scss'
 import OrderChartThead from './AdvChartThead'
 import AdvChartData from './AdvChartData'
 import {InfoCardsBottom} from './components/InfoCardsBottom/InfoCards'
 import FilteredTooltip from './components/FilteredTooltip/FilteredTooltip'
-import {fetchAdvertiser} from "../../../redux/advertiser/advertiserSlice";
+import {fetchAdvertiser} from "src/redux/advertiser/advertiserSlice";
 import FilteredTooltipMain from "./components/FilteredTooltip/FilteredTooltipMain";
-import {fetchShortList} from "../../../redux/order/orderSlice";
+import {fetchShortList} from "src/redux/order/orderSlice";
 import {format} from "date-fns";
 
 

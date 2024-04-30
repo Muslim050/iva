@@ -3,7 +3,7 @@ import style from './FilteredTooltip.module.scss'
 import {ReactComponent as Close} from 'src/assets/Close.svg'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import ButtonTable from "../../../../UI/ButtonTable/ButtonTable";
+import ButtonTable from "../../../../../UI/ButtonTable/ButtonTable";
 import {ReactComponent as Delete} from 'src/assets/Delete.svg'
 
 function FilteredTooltip (

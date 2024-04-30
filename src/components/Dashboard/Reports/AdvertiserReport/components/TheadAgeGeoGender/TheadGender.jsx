@@ -1,6 +1,6 @@
 import React from 'react'
 import style from '../../AdvChartTable.module.scss'
-import Anonim from '../../../../../assets/anonim.png'
+import Anonim from '../../../../../../assets/anonim.png'
 
 function TheadGender ({statistic}) {
   function findVideoWithThreeGenders (data) {

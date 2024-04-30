@@ -1,10 +1,10 @@
 import React from 'react'
-import PublisherReportTable from 'src/components/Dashboard/PublisherReport/PublisherReportTable/PublisherReportTable'
+import PublisherReportTable from '../../../components/Dashboard/Reports/PublisherReport/PublisherReportTable'
 
-function PublisherReport() {
+function PublisherReport () {
   return (
     <div>
-      <PublisherReportTable />
+      <PublisherReportTable/>
     </div>
   )
 }

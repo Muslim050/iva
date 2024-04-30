@@ -1,34 +1,33 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import style from "./BindingOrderModal.module.scss";
-import { ReactComponent as ArrowR } from "src/assets/arrow-right.svg";
-import { ReactComponent as Close } from "src/assets/Modal/Close.svg";
-import { ReactComponent as SaveInventory } from "src/assets/Table/SaveInventory.svg";
+import {ReactComponent as Close} from "src/assets/Modal/Close.svg";
+import {ReactComponent as SaveInventory} from "src/assets/Table/SaveInventory.svg";
 
 import BindingOrderModalList from "./BindingOrderModalList";
 import BindingOrderModalRows from "./BindingOrderModalRows";
-import { toast } from "react-toastify";
-import { fetchInventory } from "../../../../../redux/inventory/inventorySlice";
+import {toast} from "react-toastify";
+import {fetchInventory} from "../../../../../redux/inventory/inventorySlice";
 import axios from "axios";
 
 import DopOrder from "./DopOrder";
-import { hideModalSInventory } from "src/redux/modalSlice";
+import {hideModalSInventory} from "src/redux/modalSlice";
 import backendURL from "src/utils/url";
 
-export default function BindingOrderModal({ onRowsSelected, expandedRows }) {
-  const dispatch = useDispatch();
-  const [selectedRows, setSelectedRows] = React.useState([]);
-  const [onceOrder, setOnceOrder] = React.useState([]);
+export default function BindingOrderModal ({onRowsSelected, expandedRows}) {
+  const dispatch = useDispatch ();
+  const [selectedRows, setSelectedRows] = React.useState ([]);
+  const [onceOrder, setOnceOrder] = React.useState ([]);
 
-  const [loading, setLoading] = React.useState(true);
-  const { order } = useSelector((state) => state);
+  const [loading, setLoading] = React.useState (true);
+  const {order} = useSelector ((state) => state);
   const orders = order?.order;
 
-  const { inventory } = useSelector((state) => state);
+  const {inventory} = useSelector ((state) => state);
   const inventor = inventory?.inventory;
 
-  const orddd = orders.filter((i) => i.id === expandedRows);
-  const filteredInventory = inventor.filter(
+  const orddd = orders.filter ((i) => i.id === expandedRows);
+  const filteredInventory = inventor.filter (
     (i) =>
       i.status !== "unused" &&
       i.status !== "pre_booked" &&
@@ -36,11 +35,10 @@ export default function BindingOrderModal({ onRowsSelected, expandedRows }) {
       i.status !== "in_use" &&
       i.status !== "inactive"
   );
-
   const fetchOnceOrder = async () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem ("token");
 
-    const response = await axios.get(
+    const response = await axios.get (
       `${backendURL}/order/${expandedRows}/`,
 
       {
@@ -51,46 +49,49 @@ export default function BindingOrderModal({ onRowsSelected, expandedRows }) {
         },
       }
     );
-    setOnceOrder(response.data.data);
+    console.log (response)
+    setOnceOrder (response.data.data);
   };
 
-  React.useEffect(() => {
-    dispatch(fetchInventory()).then(() => setLoading(false));
-    fetchOnceOrder();
+  console.log ("inventory", inventory)
+  React.useEffect (() => {
+    dispatch (fetchInventory ()).then (() => setLoading (false));
+    fetchOnceOrder ();
   }, [dispatch]);
 
   const isDisabled = selectedRows.length === 0;
 
-  function handleRow() {
-    const selectedInventory = inventor.filter((i) =>
-      selectedRows.includes(i.id)
+  function handleRow () {
+    const selectedInventory = inventor.filter ((i) =>
+      selectedRows.includes (i.id)
     );
 
-    const orderFormat = orddd.map((i) => i.format);
+    const orderFormat = orddd.map ((i) => i.format);
 
-    const isFormatMatched = selectedInventory.every((i) => {
-      if (orderFormat.includes("mixroll")) {
+    const isFormatMatched = selectedInventory.every ((i) => {
+      if (orderFormat.includes ("mixroll")) {
         return i.format;
-      } else if (orderFormat.includes("preroll")) {
+      } else if (orderFormat.includes ("preroll")) {
         return i.format === "preroll";
       }
       return false;
     });
 
     if (isFormatMatched) {
-      onRowsSelected(selectedRows);
+      onRowsSelected (selectedRows);
     } else {
-      toast.error("Формат инвентаря не соответствует требованиям заказа");
+      toast.error ("Формат инвентаря не соответствует требованиям заказа");
     }
   }
+
   const handleButtonClick = () => {
-    dispatch(hideModalSInventory());
+    dispatch (hideModalSInventory ());
   };
 
   return (
     <>
       {loading ? (
-        <div className="loaderWrapper" style={{ height: "10vh" }}>
+        <div className="loaderWrapper" style={{height: "10vh"}}>
           <div className="spinner"></div>
         </div>
       ) : (
@@ -110,24 +111,24 @@ export default function BindingOrderModal({ onRowsSelected, expandedRows }) {
             />
           </div>
           <div className={style.dopOrder}>
-            <DopOrder onceOrder={onceOrder} />
+            <DopOrder onceOrder={onceOrder}/>
           </div>
           <div className={style.tableWrapper}>
             {filteredInventory.length && filteredInventory ? (
               <table className={style.table}>
                 <thead>
-                  <BindingOrderModalRows
-                    setSelectedRows={setSelectedRows}
-                    selectedRows={selectedRows}
-                    inventor={filteredInventory}
-                  />
+                <BindingOrderModalRows
+                  setSelectedRows={setSelectedRows}
+                  selectedRows={selectedRows}
+                  inventor={filteredInventory}
+                />
                 </thead>
                 <tbody>
-                  <BindingOrderModalList
-                    inventor={filteredInventory}
-                    selectedRows={selectedRows}
-                    setSelectedRows={setSelectedRows}
-                  />
+                <BindingOrderModalList
+                  inventor={filteredInventory}
+                  selectedRows={selectedRows}
+                  setSelectedRows={setSelectedRows}
+                />
                 </tbody>
               </table>
             ) : (
@@ -148,7 +149,7 @@ export default function BindingOrderModal({ onRowsSelected, expandedRows }) {
             >
               Добавить инвентарь
               <SaveInventory
-                style={{ width: "20px", height: "20px", marginLeft: "5px" }}
+                style={{width: "20px", height: "20px", marginLeft: "5px"}}
               />
             </button>
           </div>

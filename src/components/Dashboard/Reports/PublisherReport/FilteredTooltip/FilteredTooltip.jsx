@@ -1,11 +1,11 @@
 import React from 'react'
 import style from './FilteredTooltip.module.scss'
-import {ReactComponent as Close} from 'src/assets/Close.svg'
+import {ReactComponent as Close} from '../../../../../assets/Close.svg'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import ButtonTable from '../../../../UI/ButtonTable/ButtonTable'
-import {ReactComponent as Search} from 'src/assets/Search.svg'
-import {ReactComponent as Delete} from 'src/assets/Delete.svg'
+import {ReactComponent as Search} from '../../../../../assets/Search.svg'
+import {ReactComponent as Delete} from '../../../../../assets/Delete.svg'
 import ru from 'date-fns/locale/ru'; // Импортируйте русскую локаль
 
 const formatV = [
@@ -28,31 +28,23 @@ function FilteredTooltip ({
                             channel,
                             //
                             selectedChannel,
-                            //
-                            selectedAdv,
-                            //
                             handleSelectChange,
-                            handleSelectChangeADV,
                             //
                             handleSearch,
                             handleClear,
                             //
                             handleEndDateChange,
-                            handleStartDateChange,
-                            //
-                            selectedOptionChannel,
-                            selectedOptionAdv,
-                            selectedAdvName,
-                            //
-                            setEndDateMonth,
-                            setStartDateMonth, endDateMonth, startDateMonth,
-                            setDateRange,
-                            dateRange, setSelectedMonth, selectedMonth,
-                            download,
-                            handleDateChange
+                            selectedOptionChannel, endDateMonth, startDateMonth, selectedMonth,
+                            handleDateChange,
+                            publisher,
+                            handleSelectChangePablisher,
+                            selectedOptionPublisher
                           }) {
 
+  const user = localStorage.getItem ("role");
 
+  console.log (channel
+  )
   return (
     <>
       {isTooltip && (
@@ -75,6 +67,31 @@ function FilteredTooltip ({
           >
             <Close style={{height: '30px'}}/>
           </button>
+
+          {user === 'admin' && <div style={{width: '300px'}}>
+            <label
+              style={{
+                fontSize: '12px',
+                color: 'var(--text-color)',
+                fontWeight: '400',
+              }}
+            >
+              Выбрать паблишера
+              <select
+                value={selectedOptionPublisher} // Используйте ID, а не имя, для value
+                onChange={handleSelectChangePablisher}
+                style={{width: '100%'}}
+                className={style.input}
+              >
+                <option value="">Выберите паблишера</option>
+                {publisher.map ((option) => (
+                  <option key={option.id} value={JSON.stringify (option)}>
+                    {option.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>}
 
 
           <div style={{width: '300px'}}>
@@ -101,8 +118,6 @@ function FilteredTooltip ({
               </select>
             </label>
           </div>
-
-
           <div style={{display: 'flex', gap: '10px', margin: '10px 0 '}}>
 
             <div
@@ -160,7 +175,6 @@ function FilteredTooltip ({
               />
             </div>
           </div>
-
           <label
             style={{
               fontSize: '12px',
