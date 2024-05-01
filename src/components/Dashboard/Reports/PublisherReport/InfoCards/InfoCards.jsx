@@ -190,9 +190,9 @@ export function InfoCardsBottom ({
 
 
 export function InfoCardsDop ({
-                                totalBudget,
+                                totalComisyAdtech,
                               }) {
-  const ndc = totalBudget * 0.12
+  const ndc = totalComisyAdtech * 0.12
   return (
     <tr align="center">
       <th></th>
@@ -251,7 +251,7 @@ export function InfoCardsDop ({
         }}>
           <>
             <FormatterBudjet
-              budget={totalBudget}
+              budget={totalComisyAdtech}
               // data={getOrder.expected_start_date}
             />
           </>
@@ -263,7 +263,7 @@ export function InfoCardsDop ({
           </>
           <>
             <FormatterBudjet
-              budget={totalBudget + ndc}
+              budget={totalComisyAdtech + ndc}
               // data={getOrder.expected_start_date}
             />
           </>

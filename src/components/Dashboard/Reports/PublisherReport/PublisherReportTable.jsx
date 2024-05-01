@@ -658,7 +658,7 @@ function PublisherReportTable () {
                 <thead style={{border: 0}}>
 
                 {/* Ячейки с инфо Итого:	 */}
-                <InfoCardsDop totalBudget={totalBudget}
+                <InfoCardsDop totalComisyAdtech={totalComisyAdtech}
                 />
                 </thead>
 
@@ -666,11 +666,10 @@ function PublisherReportTable () {
               </table>
             ) : (
               <>
-                {
-                  data.length > 0 ? <div className="empty_list">
-                    Установите фильтр или по данным пораметрам не найдены данные!
-                  </div> : <div className="empty_list">
-                    Данных нет </div>}</>
+                <div className="empty_list">
+                  Установите фильтр или по данным пораметрам не найдены данные!
+                </div>
+              </>
             )}
           <div className={style.pagination}>
             {Array.from (
