@@ -151,6 +151,8 @@ function AdvertiserReportTable () {
                         year: 'numeric',
                       })}
 
+                      &nbsp;
+
                       {endDate && new Date (endDate).toLocaleDateString ('ru-RU', {
                         day: '2-digit',
                         month: '2-digit',

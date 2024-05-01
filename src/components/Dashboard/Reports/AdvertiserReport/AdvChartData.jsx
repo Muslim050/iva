@@ -49,12 +49,6 @@ function AdvChartData ({statistic, index, isExpanded}) {
               year: 'numeric',
             })}
           </div>
-          <div>
-            {new Date (statistic.publication_date).toLocaleTimeString ([], {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </div>
         </div>
       </td>
       <td className={style.table_td} style={{padding: "10px 10px"}}>
@@ -66,16 +60,25 @@ function AdvChartData ({statistic, index, isExpanded}) {
               year: 'numeric',
             })}
           </div>
-          <div>
-            {new Date (statistic.deactivation_date).toLocaleTimeString ([], {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </div>
+
         </div>
       </td>
       <td className={style.table_td} style={{padding: "10px 10px"}}>
-        <FormatterView data={statistic.online_view_count}/>
+        {
+          statistic.online_view_count === 0 ?
+            <div
+              style={{
+                fontSize: '13px',
+                lineHeight: '15px',
+                color: '#fa8a00',
+                fontWeight: "600"
+              }}
+            >
+              Введется <br/> аналитика
+            </div>
+            : <FormatterView data={statistic.online_view_count}/>
+        }
+
       </td>
 
       <td className={style.table_td} style={{padding: "10px 10px"}}>
@@ -91,6 +94,8 @@ function AdvChartData ({statistic, index, isExpanded}) {
                 fontSize: '13px',
                 lineHeight: '15px',
                 color: '#fa8a00',
+                fontWeight: "600"
+
               }}
             >
               Введется <br/> аналитика
@@ -126,7 +131,16 @@ function AdvChartData ({statistic, index, isExpanded}) {
                 </td>
               </>
             ))
-            : null}
+            : <div style={{
+              fontSize: "13px",
+              lineHeight: "15px",
+              fontWeight: "600",
+              color: "rgb(250, 138, 0)",
+              display: "flex",
+              justifyContent: "center",
+              width: "100%"
+            }}>Введется
+              аналитика</div>}
         </div>
       </td>
       <td className={style.table_td} style={{padding: "0px", borderLeft: "1px solid #f3f0f0"}}>
@@ -148,7 +162,16 @@ function AdvChartData ({statistic, index, isExpanded}) {
                 {age.percentage}%
               </td>
             ))
-            : null}
+            : <div style={{
+              fontSize: "13px",
+              lineHeight: "15px",
+              fontWeight: "600",
+              color: "rgb(250, 138, 0)",
+              display: "flex",
+              justifyContent: "center",
+              width: "100%"
+            }}>Введется
+              аналитика</div>}
         </div>
       </td>
 
@@ -173,7 +196,16 @@ function AdvChartData ({statistic, index, isExpanded}) {
                 </div>
               </>
             ))
-            : null}
+            : <div style={{
+              fontSize: "13px",
+              lineHeight: "15px",
+              fontWeight: "600",
+              color: "rgb(250, 138, 0)",
+              display: "flex",
+              justifyContent: "center",
+              width: "100%"
+            }}>Введется
+              аналитика</div>}
         </div>
       </td>
 
