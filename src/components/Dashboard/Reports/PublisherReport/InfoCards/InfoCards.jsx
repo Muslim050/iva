@@ -1,5 +1,6 @@
 import React from 'react'
 import style from './InfoCards.module.scss'
+import styleInfo from './InfoCards.module.scss'
 import FormatterView from '../../../../UI/formatter/FormatterView'
 import FormatterBudjet from '../../../../UI/formatter/FormatterBudjet'
 
@@ -21,14 +22,15 @@ export function InfoCardsBottom ({
       <th></th>
       <th></th>
       <th></th>
+      <th></th>
 
-      <th
-        className={style.infoCards_bottom_th}
-        rowSpan="1"
-        style={{fontWeight: '400'}}
-      >
-        <div style={{display: 'flex', justifyContent: 'center'}}>Итого:</div>
-      </th>
+      {/*<th*/}
+      {/*  className={style.infoCards_bottom_th}*/}
+      {/*  rowSpan="1"*/}
+      {/*  style={{fontWeight: '400'}}*/}
+      {/*>*/}
+      {/*  <div style={{display: 'flex', justifyContent: 'center'}}>Итого:</div>*/}
+      {/*</th>*/}
 
       <th
         className={style.infoCards_bottom_th}
@@ -182,5 +184,93 @@ export function InfoCardsBottom ({
         </div>
       </th>
     </tr>
+
   )
 }
+
+
+export function InfoCardsDop ({
+                                totalBudget,
+                              }) {
+  const ndc = totalBudget * 0.12
+  return (
+    <tr align="center">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th
+        className={styleInfo.infoCards_bottom_th}
+        rowSpan="1"
+        style={{fontWeight: '400'}}
+      >
+        <div style={{display: 'flex', justifyContent: 'center'}}>Итого:</div>
+      </th>
+
+      <th
+        className={styleInfo.infoCards_bottom_th}
+        rowSpan="2"
+        style={{
+          borderLeft: '4px solid white',
+        }}
+      >
+        <div style={{
+          color: "#45464e",
+          fontSize: "13px",
+          lineHeight: "16px",
+          fontWeight: "600",
+          background: "#fff2e2",
+          borderRadius: "8px"
+        }}>
+          <div>
+            Бюджет
+            <br/>
+            НДС
+            <div style={{display: "flex", width: "max-content"}}>
+              Итого с НДС
+            </div>
+
+          </div>
+        </div>
+      </th>
+
+      <th className={styleInfo.infoCards_bottom_th}>
+        <div style={{
+          color: "#45464e",
+          fontSize: "13px",
+          lineHeight: "15px",
+          fontWeight: "400",
+          background: "#fff2e2",
+          borderRadius: "8px"
+        }}>
+          <>
+            <FormatterBudjet
+              budget={totalBudget}
+              // data={getOrder.expected_start_date}
+            />
+          </>
+          <>
+            <FormatterBudjet
+              budget={ndc}
+              // data={getOrder.expected_start_date}
+            />
+          </>
+          <>
+            <FormatterBudjet
+              budget={totalBudget + ndc}
+              // data={getOrder.expected_start_date}
+            />
+          </>
+        </div>
+      </th>
+    </tr>
+
+  )
+}
+

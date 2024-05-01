@@ -55,7 +55,8 @@ export default function BindingOrderModal ({onRowsSelected, expandedRows}) {
 
   console.log ("inventory", inventory)
   React.useEffect (() => {
-    dispatch (fetchInventory ()).then (() => setLoading (false));
+    // eslint-disable-next-line no-restricted-globals
+    dispatch (fetchInventory ({status: "open"})).then (() => setLoading (false));
     fetchOnceOrder ();
   }, [dispatch]);
 

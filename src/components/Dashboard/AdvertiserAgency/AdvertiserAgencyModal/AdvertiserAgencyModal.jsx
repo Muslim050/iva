@@ -1,48 +1,49 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
-import { toastConfig } from "../../../../utils/toastConfig";
+import {useDispatch} from "react-redux";
+import {toast} from "react-toastify";
+import {useForm} from "react-hook-form";
+import {toastConfig} from "../../../../utils/toastConfig";
 import InputUI from "../../../UI/InputUI/InputUI";
-import { addAdvertiserAgency } from "../../../../redux/AgencySlice/advertiserAgency/advertiserAgencySlice";
-import { ReactComponent as Close } from "src/assets/Modal/Close.svg";
-import { hideModalAdvertiserAgency } from "src/redux/modalSlice";
-import { ButtonModal } from "src/components/UI/ButtonUI/ButtonUI";
+import {addAdvertiserAgency} from "../../../../redux/AgencySlice/advertiserAgency/advertiserAgencySlice";
+import {ReactComponent as Close} from "src/assets/Modal/Close.svg";
+import {hideModalAdvertiserAgency} from "src/redux/modalSlice";
+import {ButtonModal} from "src/components/UI/ButtonUI/ButtonUI";
 
-export default function AdvertiserAgencyModal() {
-  const dispatch = useDispatch();
+export default function AdvertiserAgencyModal () {
+  const dispatch = useDispatch ();
   const {
     register,
-    formState: { errors, isValid },
+    formState: {errors, isValid},
     handleSubmit,
-  } = useForm({
+  } = useForm ({
     defaultValues: {
       name: "",
       phone: "",
       email: "",
+      commission_rate: ""
     },
     mode: "onBlur",
   });
 
   const onSubmit = (data) => {
-    const adv = dispatch(addAdvertiserAgency({ data }));
+    const adv = dispatch (addAdvertiserAgency ({data}));
     if (adv) {
-      toast.success("Рекламадатель успешно создан!", toastConfig);
-      dispatch(hideModalAdvertiserAgency());
-      setTimeout(() => {
-        window.location.reload();
+      toast.success ("Рекламадатель успешно создан!", toastConfig);
+      dispatch (hideModalAdvertiserAgency ());
+      setTimeout (() => {
+        window.location.reload ();
       }, 1500);
     } else {
-      toast.error("Что то пошло не так!", toastConfig);
+      toast.error ("Что то пошло не так!", toastConfig);
     }
   };
   const handleButtonClick = () => {
-    dispatch(hideModalAdvertiserAgency());
+    dispatch (hideModalAdvertiserAgency ());
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit (onSubmit)}>
         <div className="modalWindow__title">
           Cоздать агентство
           <Close
@@ -84,11 +85,20 @@ export default function AdvertiserAgencyModal() {
             inputWidth="inputSmall"
           />
 
-          <div style={{ display: "flex", justifyContent: "end" }}>
+          <InputUI
+            type="text"
+            placeholder="Комиссия"
+            autoComplete="off"
+            register={register}
+            name="commission_rate"
+            errors={errors.commission_rate}
+          />
+          <div style={{display: "flex", justifyContent: "end"}}>
             <ButtonModal isValid={true} disabled={!isValid}>
               Создать
             </ButtonModal>
           </div>
+
         </div>
       </form>
     </>

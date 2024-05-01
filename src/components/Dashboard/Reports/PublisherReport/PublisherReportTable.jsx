@@ -10,7 +10,7 @@ import FormatterBudjet from '../../../UI/formatter/FormatterBudjet'
 import {fetchChannel} from '../../../../redux/channel/channelSlice'
 import {format} from 'date-fns'
 import FilteredTooltip from './FilteredTooltip/FilteredTooltip'
-import {InfoCardsBottom} from './InfoCards/InfoCards'
+import {InfoCardsBottom, InfoCardsDop} from './InfoCards/InfoCards'
 import {fetchAdvertiser} from '../../../../redux/advertiser/advertiserSlice'
 import * as XLSX from "xlsx";
 
@@ -60,8 +60,6 @@ function PublisherReportTable () {
   React.useEffect (() => {
     dispatch (addPublisherReport ()).then (() => setLoading (false))
   }, [dispatch])
-
-
   React.useEffect (() => {
     if (selectedPublisher) {
       dispatch (fetchChannel (selectedPublisher))
@@ -133,7 +131,7 @@ function PublisherReportTable () {
     }
   }, [dateRange]);
   const handleSearch = () => {
-    if (selectedChannel) {
+    if (selectedChannel || selectedPublisher) {
       setFilterLoading (true)
 
       const formattedStartDate = startDate
@@ -156,6 +154,7 @@ function PublisherReportTable () {
           id: selectedChannel,
           startDate: useMonthBasedDates ? formattedStartDateMonth : formattedStartDate,
           endDate: useMonthBasedDates ? formattedEndDateMonth : formattedEndDate,
+          publisher: selectedPublisher,
           format: selectedFormat,
         }),
       )
@@ -223,6 +222,9 @@ function PublisherReportTable () {
     setEndDate (null)
     setSelectedFormat ('')
     setDateRange ([])
+    setSetSelectedPublisher (null)
+    setSelectedPublisherName (null)
+    setSelectedOptionPublisher ('')
     // setSelectedMonth (startOfCurrentMonth);  // Сброс выбранной даты в DatePicker
     dispatch (resetPublisherReport ()) // Dispatch the reset action
     setFilterLoading (false)
@@ -239,6 +241,7 @@ function PublisherReportTable () {
   let totalbudjetChannel = 0
   let channelName = ''
 
+
   const headers = [
     {key: 'id', label: 'ID'},
     {key: 'company', label: 'Компания'},
@@ -254,7 +257,6 @@ function PublisherReportTable () {
     {key: 'commission_rate', label: 'Комиссия AdTech Media'},
     {key: 'commission_rate', label: `Бюджет - ${uniqueChannelNameFiltered}`},
   ]
-
   const handleDateChange = (date) => {
     const startOfMonth = new Date (date.getFullYear (), date.getMonth (), 1);
     const endOfMonth = new Date (date.getFullYear (), date.getMonth () + 1, 0);
@@ -263,6 +265,7 @@ function PublisherReportTable () {
     setEndDateMonth (dateRange[1])
     setStartDateMonth (dateRange[0])
   };
+
 
   return (
     <>
@@ -385,6 +388,34 @@ function PublisherReportTable () {
                     </div>
                   </div>
                 )}
+                {(selectedPublisher) && (
+                  <div
+                    style={{
+                      padding: '10px',
+                      borderRadius: '8px',
+                      background: '#FEF5EA',
+                      border: '1px solid #ffd8a9',
+                      marginRight: '5px',
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: '13px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      Паблишер
+                      <div style={{marginTop: '4px'}}>
+
+                        {selectedPublisherName}
+                      </div>
+                    </div>
+                  </div>
+                )}
                 {(startDate || endDate) && (
                   <div
                     style={{
@@ -419,6 +450,7 @@ function PublisherReportTable () {
                     </div>
                   </div>
                 )}
+
                 {selectedFormat && (
                   <div
                     style={{
@@ -504,130 +536,142 @@ function PublisherReportTable () {
 
                     handleSelectChangePablisher={handleSelectChangePablisher}
                     selectedOptionPublisher={selectedOptionPublisher}
+                    selectedPublisher={selectedPublisher}
+                    dateRange={dateRange}
                   />
                 </div>
               </div>
             </div>
           </div>
-          {data && data.length ? (
-            <table style={{width: '100%'}}>
-              <thead>
-              <tr>
-                {headers.map ((row) => (
-                  <th
-                    key={row.key}
-                    style={{
-                      fontSize: '14px',
-                      fontWeight: '400',
-                      color: '#2C2D33',
-                    }}
-                  >
-                    {row.label}
-                  </th>
-                ))}
-              </tr>
-              </thead>
-              <tbody>
-              {currentItems.map ((person, i) => {
-                totalBudget += person.budget_fact
-                totalViews += person.recorded_view_count
-                totalComisy += person.agency_commission_total
-                totalComisyAdtech += person.adtechmedia_commission_total
-                totalbudjetChannel += person.channel_budget_total
-
-                channelName = person
-
-                return (
-                  <tr key={person.id}>
-                    <td>{indexOfFirstItem + i + 1}</td>
-
-                    <td>{person.order_name}</td>
-                    <td>{person.advertiser_name}</td>
-
-                    <td>{person.channel_name}</td>
-                    {/*<td>{person.video_content_name}</td>*/}
-                    <td
-                      style={{width: 'inherit', color: "blue"}}
-                      className={style.table_td}
+          {data && data.length ?
+            (
+              <table style={{width: '100%'}}>
+                <thead>
+                <tr>
+                  {headers.map ((row) => (
+                    <th
+                      key={row.key}
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '400',
+                        color: '#2C2D33',
+                      }}
                     >
-                      {person.video_content_name}
-                    </td>
-                    <td>{person.format}</td>
+                      {row.label}
+                    </th>
+                  ))}
+                </tr>
+                </thead>
+                <tbody>
+                {currentItems.map ((person, i) => {
+                  totalBudget += person.budget_fact
+                  totalViews += person.recorded_view_count
+                  totalComisy += person.agency_commission_total
+                  totalComisyAdtech += person.adtechmedia_commission_total
+                  totalbudjetChannel += person.channel_budget_total
 
-                    <td>
-                      {new Date (person.order_start_date)
-                        .toLocaleDateString ('en-GB')
-                        .replace (/\//g, '.')}
-                    </td>
-                    <td>
-                      {new Date (person.order_end_date)
-                        .toLocaleDateString ('en-GB')
-                        .replace (/\//g, '.')}
-                    </td>
+                  channelName = person
 
-                    <td>
-                      <FormatterView data={person.recorded_view_count}/>
-                    </td>
+                  return (
+                    <tr key={person.id}>
+                      <td>{indexOfFirstItem + i + 1}</td>
 
-                    <td>
-                      <div style={{display: 'flex'}}>
-                        <FormatterBudjet budget={person.budget_fact}
-                                         data={person.order_start_date}
-                        />
-                      </div>
-                    </td>
-                    <td>
-                      <div style={{display: 'flex'}}>
-                        <FormatterBudjet
-                          budget={person.agency_commission_total}
-                          data={person.order_start_date}
-                        />
-                      </div>
-                    </td>
-                    <td>
-                      <div style={{display: 'flex'}}>
-                        <FormatterBudjet
-                          budget={person.adtechmedia_commission_total}
-                          data={person.order_start_date}
-                        />
-                      </div>
-                    </td>
+                      <td>{person.order_name}</td>
+                      <td>{person.advertiser_name}</td>
 
-                    <td>
-                      <div style={{display: 'flex'}}>
-                        <FormatterBudjet
-                          budget={person.channel_budget_total}
-                          data={person.order_start_date}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                )
-              })}
-              </tbody>
+                      <td>{person.channel_name}</td>
+                      {/*<td>{person.video_content_name}</td>*/}
+                      <td
+                        style={{width: 'inherit', color: "blue"}}
+                        className={style.table_td}
+                      >
+                        {person.video_content_name}
+                      </td>
+                      <td>{person.format}</td>
 
-              <thead style={{border: 0}}>
-              {/* Ячейки с инфо Итого:	 */}
-              <InfoCardsBottom
-                totalViews={totalViews}
-                totalBudget={totalBudget}
-                totalComisy={totalComisy}
-                currentItems={currentItems}
-                totalComisyAdtech={totalComisyAdtech}
-                totalbudjetChannel={totalbudjetChannel}
+                      <td>
+                        {new Date (person.order_start_date)
+                          .toLocaleDateString ('en-GB')
+                          .replace (/\//g, '.')}
+                      </td>
+                      <td>
+                        {new Date (person.order_end_date)
+                          .toLocaleDateString ('en-GB')
+                          .replace (/\//g, '.')}
+                      </td>
+
+                      <td>
+                        <FormatterView data={person.recorded_view_count}/>
+                      </td>
+
+                      <td>
+                        <div style={{display: 'flex'}}>
+                          <FormatterBudjet budget={person.budget_fact}
+                                           data={person.order_start_date}
+                          />
+                        </div>
+                      </td>
+                      <td>
+                        <div style={{display: 'flex'}}>
+                          <FormatterBudjet
+                            budget={person.agency_commission_total}
+                            data={person.order_start_date}
+                          />
+                        </div>
+                      </td>
+                      <td>
+                        <div style={{display: 'flex'}}>
+                          <FormatterBudjet
+                            budget={person.adtechmedia_commission_total}
+                            data={person.order_start_date}
+                          />
+                        </div>
+                      </td>
+
+                      <td>
+                        <div style={{display: 'flex'}}>
+                          <FormatterBudjet
+                            budget={person.channel_budget_total}
+                            data={person.order_start_date}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })}
+                </tbody>
+
+                <thead style={{border: 0}}>
+                {/* Ячейки с инфо Итого:	 */}
+                <InfoCardsBottom
+                  totalViews={totalViews}
+                  totalBudget={totalBudget}
+                  totalComisy={totalComisy}
+                  currentItems={currentItems}
+                  totalComisyAdtech={totalComisyAdtech}
+                  totalbudjetChannel={totalbudjetChannel}
+                  channelName={channelName}
+                  uniqueChannelNameFiltered={uniqueChannelNameFiltered}
+                />
+                {/* Ячейки с инфо Итого:	 */}
+                </thead>
+                <thead style={{border: 0}}>
+
+                {/* Ячейки с инфо Итого:	 */}
+                <InfoCardsDop totalBudget={totalBudget}
+                />
+                </thead>
 
 
-                channelName={channelName}
-                uniqueChannelNameFiltered={uniqueChannelNameFiltered}
-              />
-              {/* Ячейки с инфо Итого:	 */}
-              </thead>
-            </table>
-          ) : (
-            <div className="empty_list">
-              Установите фильтр или по данным пораметрам не найдены данные!
-            </div>
-          )}
+              </table>
+            ) : (
+              <>
+                {
+                  data.length > 0 ? <div className="empty_list">
+                    Установите фильтр или по данным пораметрам не найдены данные!
+                  </div> : <div className="empty_list">
+                    Данных нет </div>}</>
+            )}
           <div className={style.pagination}>
             {Array.from (
               {length: Math.ceil (data.length / itemsPerPage)},

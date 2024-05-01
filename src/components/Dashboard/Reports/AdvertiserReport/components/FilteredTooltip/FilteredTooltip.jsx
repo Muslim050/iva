@@ -135,9 +135,10 @@ function FilteredTooltip (
           </div>
 
           <div style={{display: 'flex', marginTop: '10px', gap: "10px"}}>
-            {selectedAdvName && <button
-              className={style.btn_filtered}
+            {<button
+              className={`${style.btn_filtered} ${!selectedAdvName ? style.btn_filtered__dis : ''}`}
               onClick={handleDateStatictick}
+              disabled={!selectedAdvName}
 
             >
               Сортировать
@@ -152,11 +153,12 @@ function FilteredTooltip (
             {/*    // fetchGetOrder={fetchGetOrder}*/}
             {/*  /> : null*/}
             {/*}*/}
-            {(startDate || endDate || selectedOrderName || selectedAdvName) && (
+            {(startDate || endDate || selectedAdvName) && (
               <div>
                 <ButtonTable
                   onClick={handleClear}
                   Customstyle={{justifyContent: 'center'}}
+
                 >
                   <Delete style={{width: '30px', height: '30px'}}/>
                 </ButtonTable>

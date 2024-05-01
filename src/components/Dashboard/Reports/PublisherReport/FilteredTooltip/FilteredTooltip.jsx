@@ -15,6 +15,7 @@ const formatV = [
 
 function FilteredTooltip ({
                             isTooltip,
+                            dateRange,
                             //
                             startDate,
                             endDate,
@@ -38,7 +39,8 @@ function FilteredTooltip ({
                             handleDateChange,
                             publisher,
                             handleSelectChangePablisher,
-                            selectedOptionPublisher
+                            selectedOptionPublisher,
+                            selectedPublisher
                           }) {
 
   const user = localStorage.getItem ("role");
@@ -68,30 +70,31 @@ function FilteredTooltip ({
             <Close style={{height: '30px'}}/>
           </button>
 
-          {user === 'admin' && <div style={{width: '300px'}}>
-            <label
-              style={{
-                fontSize: '12px',
-                color: 'var(--text-color)',
-                fontWeight: '400',
-              }}
-            >
-              Выбрать паблишера
-              <select
-                value={selectedOptionPublisher} // Используйте ID, а не имя, для value
-                onChange={handleSelectChangePablisher}
-                style={{width: '100%'}}
-                className={style.input}
+          {user === 'admin' &&
+            <div style={{width: '300px', margin: '10px 0 '}}>
+              <label
+                style={{
+                  fontSize: '12px',
+                  color: 'var(--text-color)',
+                  fontWeight: '400',
+                }}
               >
-                <option value="">Выберите паблишера</option>
-                {publisher.map ((option) => (
-                  <option key={option.id} value={JSON.stringify (option)}>
-                    {option.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>}
+                Выбрать паблишера
+                <select
+                  value={selectedOptionPublisher} // Используйте ID, а не имя, для value
+                  onChange={handleSelectChangePablisher}
+                  style={{width: '100%'}}
+                  className={style.input}
+                >
+                  <option value="">Выберите паблишера</option>
+                  {publisher.map ((option) => (
+                    <option key={option.id} value={JSON.stringify (option)}>
+                      {option.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>}
 
 
           <div style={{width: '300px'}}>
@@ -203,13 +206,14 @@ function FilteredTooltip ({
               <ButtonTable
                 onClick={handleSearch}
                 Customstyle={{width: '100%', justifyContent: 'center'}}
+                disabled={!startDateMonth || !endDateMonth}
               >
                 <Search style={{width: '23px', height: '23px'}}/>
                 <div style={{marginLeft: '5px'}}>Сортировать</div>
               </ButtonTable>
             </div>
 
-            {(selectedChannel || startDate || endDate || selectedFormat || startDateMonth || endDateMonth) && (
+            {(selectedChannel || startDate || endDate || selectedFormat || startDateMonth || endDateMonth || selectedPublisher) && (
               <div style={{width: '100%'}}>
                 <ButtonTable
                   onClick={handleClear}

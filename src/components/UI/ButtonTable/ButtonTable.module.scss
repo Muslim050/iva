@@ -22,6 +22,25 @@
     }
   }
 
+  &__disabled {
+    display: flex;
+    align-items: center;
+    color: white;
+    background-color: grey;
+    font-weight: 500;
+    border-radius: 12px;
+    font-size: 15px;
+    padding: 7px 16px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: gray;
+      box-shadow: 0 0 5px var(--primary_color);
+
+    }
+  }
+
   &__icon {
     display: flex;
 
