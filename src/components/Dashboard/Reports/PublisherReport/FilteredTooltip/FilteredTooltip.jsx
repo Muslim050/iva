@@ -44,9 +44,6 @@ function FilteredTooltip ({
                           }) {
 
   const user = localStorage.getItem ("role");
-
-  console.log (channel
-  )
   return (
     <>
       {isTooltip && (
@@ -74,7 +71,7 @@ function FilteredTooltip ({
             <div style={{width: '300px', margin: '10px 0 '}}>
               <label
                 style={{
-                  fontSize: '12px',
+                  fontSize: '14px',
                   color: 'var(--text-color)',
                   fontWeight: '400',
                 }}
@@ -100,7 +97,7 @@ function FilteredTooltip ({
           <div style={{width: '300px'}}>
             <label
               style={{
-                fontSize: '12px',
+                fontSize: '14px',
                 color: 'var(--text-color)',
                 fontWeight: '400',
               }}
@@ -132,7 +129,7 @@ function FilteredTooltip ({
             >
               <label
                 style={{
-                  fontSize: '12px',
+                  fontSize: '14px',
                   color: 'var(--text-color)',
                   fontWeight: '400',
                 }}
@@ -161,7 +158,7 @@ function FilteredTooltip ({
             >
               <label
                 style={{
-                  fontSize: '12px',
+                  fontSize: '14px',
                   color: 'var(--text-color)',
                   fontWeight: '400',
                 }}
@@ -180,7 +177,7 @@ function FilteredTooltip ({
           </div>
           <label
             style={{
-              fontSize: '12px',
+              fontSize: '14px',
               color: 'var(--text-color)',
               fontWeight: '400',
             }}

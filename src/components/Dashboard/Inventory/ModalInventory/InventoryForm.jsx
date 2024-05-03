@@ -1,30 +1,29 @@
 import React from 'react'
 import SelectUI from 'src/components/UI/SelectUI/SelectUI'
 import style from './ModalInventory.module.scss'
-import { ButtonModal } from 'src/components/UI/ButtonUI/ButtonUI'
+import {ButtonModal} from 'src/components/UI/ButtonUI/ButtonUI'
 
-function InventoryForm({
-  channelModal,
-  register,
-  errors,
-  videoModal,
-  format,
-  timeC,
-  Controller,
-  control,
-  isValid,
-  cId,
-  watchVideo,
-}) {
-  const user = localStorage.getItem('role')
-  console.log('cId,cId', cId)
+function InventoryForm ({
+                          channelModal,
+                          register,
+                          errors,
+                          videoModal,
+                          format,
+                          timeC,
+                          Controller,
+                          control,
+                          isValid,
+                          cId,
+                          watchVideo,
+                        }) {
+  const user = localStorage.getItem ('role')
   return (
     <>
       {user === 'publisher' || user === 'channel' ? (
         <SelectUI
           label="Канал"
           options={channelModal}
-          register={register('channelID', {
+          register={register ('channelID', {
             required: 'Поле обязательно для заполнения',
           })}
           error={errors?.channelID?.message}
@@ -64,8 +63,8 @@ function InventoryForm({
       ) : (
         <SelectUI
           label="Видео"
-          options={Array.isArray(videoModal) ? videoModal : []}
-          register={register('video', {
+          options={Array.isArray (videoModal) ? videoModal : []}
+          register={register ('video', {
             required: 'Поле обязательно для заполнения',
           })}
           error={errors?.video?.message}
@@ -81,21 +80,21 @@ function InventoryForm({
             marginBottom: '24px',
           }}
         >
-          <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+          <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
             Выбрать Формат
           </label>
           <select
             id="countries"
             className={style.select__select}
-            style={{ padding: '12px' }}
-            {...register('formatv', {
+            style={{padding: '12px'}}
+            {...register ('formatv', {
               required: 'Поле обязательно для заполнения',
             })}
           >
             <option value="">Выбрать Формат</option>
 
             {format &&
-              format.map((option, index) => (
+              format.map ((option, index) => (
                 <>
                   <option key={index} value={option.value}>
                     {option.text}
@@ -106,13 +105,13 @@ function InventoryForm({
 
           <span className={style.error}>
             {errors?.formatv && (
-              <p style={{ lineHeight: '16px' }}>{errors?.formatv?.message}</p>
+              <p style={{lineHeight: '16px'}}>{errors?.formatv?.message}</p>
             )}
           </span>
         </div>
 
-        <div style={{ width: '210px' }}>
-          <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+        <div style={{width: '210px'}}>
+          <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
             Тайм код рекламы
           </label>
           <input
@@ -130,15 +129,15 @@ function InventoryForm({
       </div>
 
       <div className="modalWindow__wrapper_input">
-        <div style={{ width: '210px' }}>
-          <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+        <div style={{width: '210px'}}>
+          <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
             Хрон рекламы (ceк)
           </label>
-          <div style={{ marginBottom: '24px' }}>
+          <div style={{marginBottom: '24px'}}>
             <input
               className={style.input}
               type="number"
-              {...register('videotiming', {
+              {...register ('videotiming', {
                 required: 'Поле обязательно для заполнения',
               })}
             />
@@ -149,24 +148,24 @@ function InventoryForm({
           </div>
         </div>
 
-        <div style={{ width: '210px' }}>
-          <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+        <div style={{width: '210px'}}>
+          <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
             Прогноз показов
           </label>
           <Controller
             name="numberview"
             control={control}
-            rules={{ required: 'Поле обязательно к заполнению' }}
+            rules={{required: 'Поле обязательно к заполнению'}}
             defaultValue=""
-            render={({ field: { onChange, onBlur, value, name, ref } }) => (
+            render={({field: {onChange, onBlur, value, name, ref}}) => (
               <input
                 className={style.input}
                 type="text"
-                value={value.toLocaleString('en-US')}
+                value={value.toLocaleString ('en-US')}
                 onChange={(e) => {
-                  const rawValue = e.target.value.replace(/\D/g, '')
-                  const newValue = rawValue ? parseInt(rawValue, 10) : ''
-                  onChange(newValue)
+                  const rawValue = e.target.value.replace (/\D/g, '')
+                  const newValue = rawValue ? parseInt (rawValue, 10) : ''
+                  onChange (newValue)
                 }}
                 onBlur={onBlur}
                 name={name}
@@ -183,7 +182,7 @@ function InventoryForm({
         </div>
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'end' }}>
+      <div style={{display: 'flex', justifyContent: 'end'}}>
         <ButtonModal
           isValid={isValid && cId && watchVideo}
           disabled={!isValid || !cId || !watchVideo}

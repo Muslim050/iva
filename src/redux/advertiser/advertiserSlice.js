@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import axios from 'axios'
-import { toast } from 'react-toastify'
-import { toastConfig } from 'src/utils/toastConfig'
+import {toast} from 'react-toastify'
+import {toastConfig} from 'src/utils/toastConfig'
 import backendURL from 'src/utils/url'
 
 const initialState = {
@@ -10,41 +10,41 @@ const initialState = {
   error: null,
 }
 
-export const fetchAdvertiser = createAsyncThunk(
-    'advertiser/fetchAdvertiser',
-    async ({ id } = {}, { rejectWithValue }) => { // Указываем, что параметр может быть не предоставлен
-        const token = localStorage.getItem('token');
-        try {
-            const url = id ? `${backendURL}/advertiser/?channel_id=${id}` : `${backendURL}/advertiser/`;
-            const response = await axios.get(url, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            return response.data.data;
+export const fetchAdvertiser = createAsyncThunk (
+  'advertiser/fetchAdvertiser',
+  async ({id} = {}, {rejectWithValue}) => { // Указываем, что параметр может быть не предоставлен
+    const token = localStorage.getItem ('token');
+    try {
+      const url = id ? `${backendURL}/advertiser/?channel_id=${id}` : `${backendURL}/advertiser/`;
+      const response = await axios.get (url, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data.data;
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
         const errorMessage = error.response.data.error
         if (errorMessage.detail) {
-          toast.error(errorMessage.detail) // Отображение деталей ошибки с помощью toast
+          toast.error (errorMessage.detail) // Отображение деталей ошибки с помощью toast
         }
       } else {
-        toast.error('Ошибка при загрузке', toastConfig) // Общее сообщение об ошибке, если детали не доступны
+        toast.error ('Ошибка при загрузке', toastConfig) // Общее сообщение об ошибке, если детали не доступны
       }
       throw error
     }
   },
 )
 
-export const addAdvertiser = createAsyncThunk(
+export const addAdvertiser = createAsyncThunk (
   'advertiser/addAdvertiser',
-  async ({ data }) => {
-    const token = localStorage.getItem('token')
+  async ({data}) => {
+    const token = localStorage.getItem ('token')
 
     try {
-      const response = await axios.post(
+      const response = await axios.post (
         `${backendURL}/advertiser/`,
         {
           advertising_agency: data.agency,
@@ -67,23 +67,23 @@ export const addAdvertiser = createAsyncThunk(
       if (error.response && error.response.data && error.response.data.error) {
         const errorMessage = error.response.data.error
         if (errorMessage.detail) {
-          toast.error(errorMessage.detail) // Отображение деталей ошибки с помощью toast
+          toast.error (errorMessage.detail) // Отображение деталей ошибки с помощью toast
         }
       } else {
-        toast.error('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
+        toast.error ('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
       }
       throw error
     }
   },
 )
 
-export const removeAdvertiser = createAsyncThunk(
+export const removeAdvertiser = createAsyncThunk (
   'advertiser/removeAdvertiser',
-  async ({ data }) => {
-    const token = localStorage.getItem('token')
+  async ({data}) => {
+    const token = localStorage.getItem ('token')
 
     try {
-      const response = await axios.delete(
+      const response = await axios.delete (
         `${backendURL}/advertiser/${data.id}`,
 
         {
@@ -99,24 +99,23 @@ export const removeAdvertiser = createAsyncThunk(
       if (error.response && error.response.data && error.response.data.error) {
         const errorMessage = error.response.data.error
         if (errorMessage.detail) {
-          toast.error(errorMessage.detail) // Отображение деталей ошибки с помощью toast
+          toast.error (errorMessage.detail) // Отображение деталей ошибки с помощью toast
         }
       } else {
-        toast.error('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
+        toast.error ('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
       }
       throw error
     }
   },
 )
 
-export const editAdvertiser = createAsyncThunk(
+export const editAdvertiser = createAsyncThunk (
   'advertiser/editAdvertiser',
-  async ({ id, data }) => {
-    console.log('data', data)
-    const token = localStorage.getItem('token')
+  async ({id, data}) => {
+    const token = localStorage.getItem ('token')
 
     try {
-      const response = await axios.patch(
+      const response = await axios.patch (
         `${backendURL}/advertiser/${id}/`,
         {
           name: data.name,
@@ -138,54 +137,54 @@ export const editAdvertiser = createAsyncThunk(
       if (error.response && error.response.data && error.response.data.error) {
         const errorMessage = error.response.data.error
         if (errorMessage.detail) {
-          toast.error(errorMessage.detail) // Отображение деталей ошибки с помощью toast
+          toast.error (errorMessage.detail) // Отображение деталей ошибки с помощью toast
         }
       } else {
-        toast.error('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
+        toast.error ('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
       }
       throw error
     }
   },
 )
 
-const advertiserSlice = createSlice({
+const advertiserSlice = createSlice ({
   name: 'advertiser',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAdvertiser.pending, (state) => {
+      .addCase (fetchAdvertiser.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase(fetchAdvertiser.fulfilled, (state, action) => {
+      .addCase (fetchAdvertiser.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.advertisers = action.payload
       })
-      .addCase(fetchAdvertiser.rejected, (state, action) => {
+      .addCase (fetchAdvertiser.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
-      .addCase(addAdvertiser.fulfilled, (state, action) => {
-        state.advertisers.push(action.payload)
+      .addCase (addAdvertiser.fulfilled, (state, action) => {
+        state.advertisers.push (action.payload)
         state.status = 'succeeded'
       })
-      .addCase(removeAdvertiser.pending, (state) => {
+      .addCase (removeAdvertiser.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase(removeAdvertiser.fulfilled, (state, action) => {
+      .addCase (removeAdvertiser.fulfilled, (state, action) => {
         state.status = 'succeeded'
       })
-      .addCase(removeAdvertiser.rejected, (state, action) => {
+      .addCase (removeAdvertiser.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
-      .addCase(editAdvertiser.pending, (state) => {
+      .addCase (editAdvertiser.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase(editAdvertiser.fulfilled, (state, action) => {
+      .addCase (editAdvertiser.fulfilled, (state, action) => {
         state.status = 'succeeded'
       })
-      .addCase(editAdvertiser.rejected, (state, action) => {
+      .addCase (editAdvertiser.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })

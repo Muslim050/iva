@@ -10,7 +10,6 @@ function AdvChartData ({statistic, index, isExpanded}) {
   const uniqueAge = statistic.age_group_percentages
   const uniqueGeo = statistic.geo_percentages
 
-
   return (
     <>
       <td className={style.table_td} style={{padding: "10px 10px"}}>{index + 1}</td>
@@ -110,104 +109,101 @@ function AdvChartData ({statistic, index, isExpanded}) {
           )}
         </div>
       </td>
-      <td className={style.table_td} style={{padding: "0px", borderLeft: "1px solid #f3f0f0"}}>
-        <div style={{display: "flex", justifyContent: "space-between",}}>
-          {uniqueGendersss.length > 0
-            ? uniqueGendersss.map ((gender, index) => (
-              <>
-                <td
-                  key={`gender-${index}`}
-                  data-label="Пол"
-                  style={{
-                    textAlign: 'center',
-                    padding: "5px",
-                    width: "60px",
-                    fontSize: "13px",
-                    fontWeight: "600",
-                    color: "blue"
-                  }}
-                >
-                  {gender.percentage}%
-                </td>
-              </>
-            ))
-            : <div style={{
-              fontSize: "13px",
-              lineHeight: "15px",
-              fontWeight: "600",
-              color: "rgb(250, 138, 0)",
-              display: "flex",
-              justifyContent: "center",
-              width: "100%"
-            }}>Введется
-              аналитика</div>}
-        </div>
-      </td>
-      <td className={style.table_td} style={{padding: "0px", borderLeft: "1px solid #f3f0f0"}}>
-        <div style={{display: "flex", justifyContent: "start"}}>
-          {uniqueAge.length > 0
-            ? uniqueAge.map ((age, index) => (
-              <td
-                key={`age-${index}`}
-                data-label="Возраст"
-                style={{
-                  textAlign: 'center',
-                  padding: "7px",
-                  width: "60px",
-                  fontSize: "13px",
-                  fontWeight: "600",
-                  color: "blue"
-                }}
-              >
-                {age.percentage}%
-              </td>
-            ))
-            : <div style={{
-              fontSize: "13px",
-              lineHeight: "15px",
-              fontWeight: "600",
-              color: "rgb(250, 138, 0)",
-              display: "flex",
-              justifyContent: "center",
-              width: "100%"
-            }}>Введется
-              аналитика</div>}
-        </div>
-      </td>
 
-      <td className={style.table_td} style={{padding: "0px", borderLeft: "1px solid #f3f0f0"}}>
-        <div style={{display: "flex", justifyContent: "start"}}>
-          {uniqueGeo.length > 0
-            ? uniqueGeo.map ((geo, index) => (
-              <>
-                <div
-                  key={`geo-${index}`}
-                  data-label="Гео"
-                  style={{
-                    textAlign: 'center',
-                    padding: "5px",
-                    width: "60px",
-                    fontSize: "13px",
-                    fontWeight: "600",
-                    color: "blue"
-                  }}
-                >
-                  {geo.percentage}%
-                </div>
-              </>
-            ))
-            : <div style={{
-              fontSize: "13px",
-              lineHeight: "15px",
-              fontWeight: "600",
-              color: "rgb(250, 138, 0)",
-              display: "flex",
-              justifyContent: "center",
-              width: "100%"
-            }}>Введется
-              аналитика</div>}
-        </div>
-      </td>
+      {uniqueGendersss.length && uniqueAge.length && uniqueGeo.length ?
+        <>
+          <td className={style.table_td}
+              style={{padding: "0px", borderLeft: "1px solid #f3f0f0",}}>
+            <div style={{display: "flex", justifyContent: "space-between"}}>
+              {uniqueGendersss.length > 0 ? (
+                  uniqueGendersss.map ((gender, index) => (
+                    <td
+                      key={`gender-${index}`}
+                      data-label="Пол"
+                      style={{
+                        textAlign: 'center',
+                        padding: "5px",
+                        width: "60px",
+                        fontSize: "13px",
+                        fontWeight: "600",
+                        color: "blue"
+                      }}
+                    >
+                      {gender.percentage}%
+                    </td>
+                  ))
+                ) :
+                null
+              }
+            </div>
+          </td>
+
+
+          <td className={style.table_td}
+              style={{padding: "0px", borderLeft: "1px solid #f3f0f0",}}>
+            <div style={{display: "flex", justifyContent: "start"}}>
+              {uniqueAge.length > 0 ? (
+                uniqueAge.map ((age, index) => (
+                  <td
+                    key={`age-${index}`}
+                    data-label="Возраст"
+                    style={{
+                      textAlign: 'center',
+                      padding: "7px",
+                      width: "60px",
+                      fontSize: "13px",
+                      fontWeight: "600",
+                      color: "blue"
+                    }}
+                  >
+                    {age.percentage}%
+                  </td>
+                ))
+              ) : null}
+            </div>
+          </td>
+
+
+          <td className={style.table_td}
+              style={{padding: "0px", borderLeft: "1px solid #f3f0f0",}}>
+            <div style={{display: "flex", justifyContent: "start"}}>
+              {uniqueGeo.length > 0 ? (
+                uniqueGeo.map ((geo, index) => (
+                  <div
+                    key={`geo-${index}`}
+                    data-label="Гео"
+                    style={{
+                      textAlign: 'center',
+                      padding: "5px",
+                      width: "60px",
+                      fontSize: "13px",
+                      fontWeight: "600",
+                      color: "blue"
+                    }}
+                  >
+                    {geo.percentage}%
+                  </div>
+                ))
+              ) : null}
+            </div>
+          </td>
+
+        </>
+        : <div style={{position: "relative"}}>
+          <td style={{
+            position: "absolute", right: "-150%", fontSize: "13px",
+            lineHeight: "15px",
+            fontWeight: "600",
+            color: "rgb(250, 138, 0)",
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
+            padding: "0",
+            height: "40px",
+            alignItems: "center"
+          }}>Введется аналитика
+          </td>
+        </div>}
 
 
     </>

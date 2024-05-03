@@ -1,46 +1,46 @@
 import axios from 'axios'
 import React from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
-import { toast } from 'react-toastify'
-import { addOrder } from '../../../../redux/order/orderSlice'
-import { toastConfig } from '../../../../utils/toastConfig'
+import {Controller, useForm} from 'react-hook-form'
+import {useDispatch} from 'react-redux'
+import {toast} from 'react-toastify'
+import {addOrder} from '../../../../redux/order/orderSlice'
+import {toastConfig} from '../../../../utils/toastConfig'
 import 'react-datepicker/dist/react-datepicker.css'
 import InputUI from '../../../UI/InputUI/InputUI'
 import SelectUI from '../../../UI/SelectUI/SelectUI'
 import style from './OrderModal.module.scss'
 import backendURL from 'src/utils/url'
-import { hideModalOrder } from 'src/redux/modalSlice'
-import { ReactComponent as Close } from 'src/assets/Modal/Close.svg'
+import {hideModalOrder} from 'src/redux/modalSlice'
+import {ReactComponent as Close} from 'src/assets/Modal/Close.svg'
 
 const format = [
-  { value: 'preroll', text: 'Pre-roll' },
-  { value: 'mixroll', text: 'Mix-roll' },
+  {value: 'preroll', text: 'Pre-roll'},
+  {value: 'mixroll', text: 'Mix-roll'},
 ]
-export default function OrderModal({ setShowModal }) {
-  const dispatch = useDispatch()
-  const [selectedFile, setSelectedFile] = React.useState(null)
+export default function OrderModal ({setShowModal}) {
+  const dispatch = useDispatch ()
+  const [selectedFile, setSelectedFile] = React.useState (null)
 
-  const [isOrderCreated, setIsOrderCreated] = React.useState(false)
-  const [advertiser, setAdvertiser] = React.useState([])
-  const [cpm, setCpm] = React.useState([])
-  const user = localStorage.getItem('role')
-  const [budgett, setBudgett] = React.useState(0)
-  const [selectedEndDate, setSelectedEndDate] = React.useState(null)
-  const advID = localStorage.getItem('advertiser')
-  const today = new Date()
+  const [isOrderCreated, setIsOrderCreated] = React.useState (false)
+  const [advertiser, setAdvertiser] = React.useState ([])
+  const [cpm, setCpm] = React.useState ([])
+  const user = localStorage.getItem ('role')
+  const [budgett, setBudgett] = React.useState (0)
+  const [selectedEndDate, setSelectedEndDate] = React.useState (null)
+  const advID = localStorage.getItem ('advertiser')
+  const today = new Date ()
   // let advId
   // advertiser.forEach((item) => {
   //   advId = item.id // Присваиваем значение свойства name текущего элемента массива
   // })
   const {
     register,
-    formState: { errors, isValid },
+    formState: {errors, isValid},
     handleSubmit,
     control,
     watch,
     setValue,
-  } = useForm({
+  } = useForm ({
     defaultValues: {
       advertiserID: '',
       name: '',
@@ -53,13 +53,10 @@ export default function OrderModal({ setShowModal }) {
 
     mode: 'onBlur',
   })
-  const selectedFormat = watch('format')
-  const expectedView = watch('expectedView')
+  const selectedFormat = watch ('format')
+  const expectedView = watch ('expectedView')
 
-  const agencyAdvId = watch('advertiserID')
-
-  console.log(',agencyAdvId', agencyAdvId)
-  console.log('advID', advID)
+  const agencyAdvId = watch ('advertiserID')
   const calculateBudget = () => {
     let newBudget = 0
 
@@ -67,16 +64,16 @@ export default function OrderModal({ setShowModal }) {
       newBudget = (expectedView / 1000) * cpm[selectedFormat]
     }
 
-    setBudgett(newBudget)
+    setBudgett (newBudget)
   }
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0])
+    setSelectedFile (event.target.files[0])
   }
   const fetchCpm = async () => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem ('token')
 
-    const response = await axios.get(
+    const response = await axios.get (
       `${backendURL}/order/cpm/?advertiser=${agencyAdvId || advID}`,
       {
         headers: {
@@ -86,13 +83,13 @@ export default function OrderModal({ setShowModal }) {
         },
       },
     )
-    setCpm(response.data.data)
+    setCpm (response.data.data)
   }
 
   const fetchAdvertiser = async () => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem ('token')
 
-    const response = await axios.get(
+    const response = await axios.get (
       `${backendURL}/advertiser/`,
 
       {
@@ -103,72 +100,72 @@ export default function OrderModal({ setShowModal }) {
         },
       },
     )
-    setAdvertiser(response.data.data)
+    setAdvertiser (response.data.data)
   }
-  React.useEffect(() => {
-    fetchAdvertiser()
+  React.useEffect (() => {
+    fetchAdvertiser ()
   }, [])
 
-  React.useEffect(() => {
+  React.useEffect (() => {
     if (agencyAdvId) {
-      fetchCpm()
+      fetchCpm ()
     }
   }, [agencyAdvId])
 
   // Effect hook for advID changes
-  React.useEffect(() => {
+  React.useEffect (() => {
     if (advID) {
-      fetchCpm()
+      fetchCpm ()
     }
   }, [advID])
   const onSubmit = async (data) => {
     try {
-      setIsOrderCreated(true)
-      const response = await dispatch(addOrder({ data }))
+      setIsOrderCreated (true)
+      const response = await dispatch (addOrder ({data}))
       if (response && !response.error) {
-        toast.success('Заказ успешно создан!', toastConfig)
-        dispatch(hideModalOrder())
-        setTimeout(() => {
-          window.location.reload()
+        toast.success ('Заказ успешно создан!', toastConfig)
+        dispatch (hideModalOrder ())
+        setTimeout (() => {
+          window.location.reload ()
         }, 1500)
       } else if (response.error.message) {
-        toast.error(
+        toast.error (
           'Что-то пошло не так!' + response.error.message,
           toastConfig,
         )
-        dispatch(hideModalOrder())
+        dispatch (hideModalOrder ())
       }
     } catch (error) {
-      setIsOrderCreated(false)
+      setIsOrderCreated (false)
       if (error.message) {
-        toast.error(`Ошибка : ${error.message}`, toastConfig)
+        toast.error (`Ошибка : ${error.message}`, toastConfig)
       } else {
-        toast.error('Что-то пошло не так: ' + error.message, toastConfig)
+        toast.error ('Что-то пошло не так: ' + error.message, toastConfig)
       }
     }
   }
 
-  React.useEffect(() => {
-    setValue('budgett', budgett)
+  React.useEffect (() => {
+    setValue ('budgett', budgett)
   }, [budgett, setValue])
-  React.useEffect(() => {
-    calculateBudget()
+  React.useEffect (() => {
+    calculateBudget ()
   }, [selectedFormat, expectedView])
 
-  const [notes, setNotes] = React.useState('') // Состояние для хранения текста заметок
+  const [notes, setNotes] = React.useState ('') // Состояние для хранения текста заметок
   const maxChars = 100 // Максимальное количество символов
 
   const handleNotesChange = (event) => {
-    setNotes(event.target.value.substring(0, maxChars)) // Обновляем текст, обрезая его до максимальной длины
+    setNotes (event.target.value.substring (0, maxChars)) // Обновляем текст, обрезая его до максимальной длины
   }
 
   const handleButtonClick = () => {
-    dispatch(hideModalOrder())
+    dispatch (hideModalOrder ())
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit (onSubmit)}>
         <div className="modalWindow__title">
           Cоздать заказ
           <Close
@@ -182,7 +179,7 @@ export default function OrderModal({ setShowModal }) {
             <SelectUI
               label="рекламодателя"
               options={advertiser}
-              register={register('advertiserID', {
+              register={register ('advertiserID', {
                 required: 'Поле обязательно для заполнения',
               })}
               error={errors?.publisher?.message}
@@ -203,18 +200,18 @@ export default function OrderModal({ setShowModal }) {
 
           <div
             className="modalWindow__wrapper_input"
-            style={{ marginBottom: '24px' }}
+            style={{marginBottom: '24px'}}
           >
             <div>
-              <div style={{ display: 'grid', marginRight: '10px' }}>
-                <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+              <div style={{display: 'grid', marginRight: '10px'}}>
+                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                   Начало
                 </label>
                 <input
                   className={style.input}
                   type="date"
                   // min={getCurrentDate()}
-                  {...register('startdate', {
+                  {...register ('startdate', {
                     required: 'Поле обязательно к заполнению',
                   })}
                   style={{
@@ -227,15 +224,15 @@ export default function OrderModal({ setShowModal }) {
               </div>
             </div>
             <div>
-              <div style={{ display: 'grid' }}>
-                <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+              <div style={{display: 'grid'}}>
+                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                   Конец
                 </label>
                 <input
                   className={style.input}
                   type="date"
                   // min={getEndDate(watch("startdate"))} // Use watch to get the value of the "startdate" field
-                  {...register('enddate', {
+                  {...register ('enddate', {
                     required: 'Поле обязательно к заполнению',
                   })}
                   style={{
@@ -251,20 +248,20 @@ export default function OrderModal({ setShowModal }) {
 
           <div
             className="modalWindow__wrapper_input"
-            style={{ marginBottom: '24px' }}
+            style={{marginBottom: '24px'}}
           >
-            <div style={{ width: '175px' }}>
+            <div style={{width: '175px'}}>
               <select
                 id="countries"
                 className={style.select__select}
-                style={{ padding: '12px' }}
-                {...register('format', {
+                style={{padding: '12px'}}
+                {...register ('format', {
                   required: 'Поле обязательно',
                 })}
               >
                 <option value="">Выбрать Формат</option>
 
-                {format.map((option, index) => (
+                {format.map ((option, index) => (
                   <option key={index} value={option.value}>
                     {option.text}
                   </option>
@@ -272,7 +269,7 @@ export default function OrderModal({ setShowModal }) {
               </select>
               <span className={style.select__error}>
                 {errors?.format && (
-                  <p style={{ lineHeight: '16px' }}>
+                  <p style={{lineHeight: '16px'}}>
                     {errors?.format?.message}
                   </p>
                 )}
@@ -291,18 +288,18 @@ export default function OrderModal({ setShowModal }) {
                   },
                 }}
                 defaultValue=""
-                render={({ field: { onChange, onBlur, value, name, ref } }) => (
+                render={({field: {onChange, onBlur, value, name, ref}}) => (
                   <input
                     className={style.input}
                     type="text"
-                    value={value.toLocaleString('en-US')}
+                    value={value.toLocaleString ('en-US')}
                     style={{
                       width: '245px',
                     }}
                     onChange={(e) => {
-                      const rawValue = e.target.value.replace(/\D/g, '')
-                      const newValue = rawValue ? parseInt(rawValue, 10) : ''
-                      onChange(newValue)
+                      const rawValue = e.target.value.replace (/\D/g, '')
+                      const newValue = rawValue ? parseInt (rawValue, 10) : ''
+                      onChange (newValue)
                     }}
                     onBlur={onBlur}
                     name={name}
@@ -316,7 +313,7 @@ export default function OrderModal({ setShowModal }) {
               />
               <span className={style.modalWindow__input_error}>
                 {errors?.expectedView && (
-                  <p style={{ width: '240px', lineHeight: '1.4' }}>
+                  <p style={{width: '240px', lineHeight: '1.4'}}>
                     {errors?.expectedView?.message}
                   </p>
                 )}
@@ -326,10 +323,10 @@ export default function OrderModal({ setShowModal }) {
 
           <div
             className="modalWindow__wrapper_input"
-            style={{ marginBottom: '24px' }}
+            style={{marginBottom: '24px'}}
           >
-            <div style={{ display: 'grid' }}>
-              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+            <div style={{display: 'grid'}}>
+              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 Бюджет (сум)
               </label>
               <input
@@ -338,22 +335,22 @@ export default function OrderModal({ setShowModal }) {
                 style={{
                   width: '150px',
                 }}
-                value={budgett.toLocaleString('en-US')}
+                value={budgett.toLocaleString ('en-US')}
                 placeholder="Бюджет"
                 autoComplete="off"
                 disabled={true}
               />
             </div>
 
-            <div style={{ display: 'grid' }}>
-              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+            <div style={{display: 'grid'}}>
+              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 Загрузить рекламный ролик
               </label>
               <input
                 type="file"
                 onChange={handleFileChange}
                 className={style.modalWindow__file}
-                {...register('selectedFile', {
+                {...register ('selectedFile', {
                   required: 'Ролик обезателен',
                 })}
               />
@@ -367,8 +364,8 @@ export default function OrderModal({ setShowModal }) {
             placeholder="Комментарий к заказу"
             autoComplete="off"
             className={style.modalWindow__textarea}
-            {...register('notes')}
-            style={{ width: '100%' }}
+            {...register ('notes')}
+            style={{width: '100%'}}
             onChange={handleNotesChange} // Обработка изменений
             maxLength={maxChars}
           ></textarea>
@@ -384,7 +381,7 @@ export default function OrderModal({ setShowModal }) {
 
           <div className={style.btn__wrapper}>
             <button
-              style={{ display: 'flex', alignItems: 'center' }}
+              style={{display: 'flex', alignItems: 'center'}}
               type="submit"
               disabled={!isValid || isOrderCreated}
               className={

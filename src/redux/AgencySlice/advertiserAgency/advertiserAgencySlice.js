@@ -44,7 +44,6 @@ export const addAdvertiserAgency = createAsyncThunk (
   'advertiserAgency/addAdvertiserAgency',
   async ({data}) => {
     const token = localStorage.getItem ('token')
-    console.log ("data", data)
     try {
       const response = await axios.post (
         `${backendURL}/advertiser/advertising-agency/`,
@@ -62,7 +61,6 @@ export const addAdvertiserAgency = createAsyncThunk (
           },
         },
       )
-      console.log (response)
       return response.data.data
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {

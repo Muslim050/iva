@@ -2,7 +2,6 @@ import React from 'react'
 
 function AgeData ({statistic}) {
   const uniqueAge = statistic.age_group_percentages
-  console.log (uniqueAge)
   return (
     <div style={{borderTop: "1px solid #e3e3e3",}}>
       {uniqueAge

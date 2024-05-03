@@ -1,8 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import axios from 'axios'
-import { toast } from 'react-toastify'
+import {toast} from 'react-toastify'
 // import axios from "src/utils/axiosInstance.js";
 import backendURL from 'src/utils/url'
+
 const initialState = {
   order: [],
   status: 'idle',
@@ -11,14 +12,14 @@ const initialState = {
   exportExcelOrder: '',
   confirmedOrders: [],
   exportConfirmed: [],
-    shortListData: []
+  shortListData: []
 }
 
-export const fetchOrder = createAsyncThunk('order/fetchOrder', async () => {
-  const token = localStorage.getItem('token')
+export const fetchOrder = createAsyncThunk ('order/fetchOrder', async () => {
+  const token = localStorage.getItem ('token')
 
   try {
-    const response = await axios.get(`${backendURL}/order/`, {
+    const response = await axios.get (`${backendURL}/order/`, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -33,22 +34,22 @@ export const fetchOrder = createAsyncThunk('order/fetchOrder', async () => {
     if (error.response && error.response.data && error.response.data.error) {
       const errorMessage = error.response.data.error
       if (errorMessage.detail) {
-        toast.error(errorMessage.detail) // Отображение деталей ошибки с помощью toast
+        toast.error (errorMessage.detail) // Отображение деталей ошибки с помощью toast
       }
     } else {
-      toast.error('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
+      toast.error ('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
     }
     throw error
   }
 })
 
-export const fetchConfirmedOrder = createAsyncThunk(
+export const fetchConfirmedOrder = createAsyncThunk (
   'order/fetchConfirmedOrder',
   async () => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem ('token')
 
     try {
-      const response = await axios.get(
+      const response = await axios.get (
         `${backendURL}/order/confirmed-orders/`,
         {
           headers: {
@@ -60,17 +61,16 @@ export const fetchConfirmedOrder = createAsyncThunk(
       )
       return response.data.data
     } catch (error) {
-      throw new Error('Failed to fetch order')
+      throw new Error ('Failed to fetch order')
     }
   },
 )
 
-export const addOrder = createAsyncThunk('order/addOrder', async ({ data }) => {
-  console.log('data', data)
-  const token = localStorage.getItem('token')
+export const addOrder = createAsyncThunk ('order/addOrder', async ({data}) => {
+  const token = localStorage.getItem ('token')
 
   try {
-    const response = await axios.post(
+    const response = await axios.post (
       `${backendURL}/order/`,
       {
         advertiser: data.advertiserID,
@@ -94,19 +94,19 @@ export const addOrder = createAsyncThunk('order/addOrder', async ({ data }) => {
     return response.data
   } catch (error) {
     if (error.response && error.response.status === 403) {
-      throw new Error('Ошибка 403: Доступ запрещен')
+      throw new Error ('Ошибка 403: Доступ запрещен')
     }
     throw error
   }
 })
 
-export const confirmPayment = createAsyncThunk(
+export const confirmPayment = createAsyncThunk (
   'order/confirmPayment',
-  async ({ id }) => {
-    const token = localStorage.getItem('token')
+  async ({id}) => {
+    const token = localStorage.getItem ('token')
 
     try {
-      const response = await axios.post(
+      const response = await axios.post (
         `${backendURL}/order/confirm-payment/`,
         {
           order_id: id,
@@ -122,44 +122,44 @@ export const confirmPayment = createAsyncThunk(
       return response.data
     } catch (error) {
       if (error.response && error.response.status === 403) {
-        throw new Error('Ошибка 403: Доступ запрещен')
+        throw new Error ('Ошибка 403: Доступ запрещен')
       }
       throw error
     }
   },
 )
 
-export const fetchShortList = createAsyncThunk(
-    'order/fetchShortList',
-    async ({id}) => {
-        const token = localStorage.getItem('token')
+export const fetchShortList = createAsyncThunk (
+  'order/fetchShortList',
+  async ({id}) => {
+    const token = localStorage.getItem ('token')
 
-        try {
-            const response = await axios.get(
-                `${backendURL}/order/short-list/?advertiser=${id}`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Accept: 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                },
-            )
+    try {
+      const response = await axios.get (
+        `${backendURL}/order/short-list/?advertiser=${id}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
 
-            return response.data.data
-        } catch (error) {
-            if (error.response && error.response.status === 403) {
-                throw new Error('Ошибка 403: Доступ запрещен')
-            }
-            throw error
-        }
-    },
+      return response.data.data
+    } catch (error) {
+      if (error.response && error.response.status === 403) {
+        throw new Error ('Ошибка 403: Доступ запрещен')
+      }
+      throw error
+    }
+  },
 )
 
-export const fetchEditOrder = createAsyncThunk(
+export const fetchEditOrder = createAsyncThunk (
   'order/fetchEditOrder',
-  async ({ id, data }) => {
-    const token = localStorage.getItem('token')
+  async ({id, data}) => {
+    const token = localStorage.getItem ('token')
 
     const requestData = {
       expected_number_of_views: data.expectedView,
@@ -190,7 +190,7 @@ export const fetchEditOrder = createAsyncThunk(
     }
 
     try {
-      const response = await axios.patch(
+      const response = await axios.patch (
         `${backendURL}/order/${id}/`,
         requestData,
         {
@@ -203,18 +203,18 @@ export const fetchEditOrder = createAsyncThunk(
       )
       return response.data.data
     } catch (error) {
-      throw new Error('Failed to fetch order')
+      throw new Error ('Failed to fetch order')
     }
   },
 )
 
-export const deleteOrder = createAsyncThunk(
+export const deleteOrder = createAsyncThunk (
   'order/deleteOrder',
-  async ({ id }) => {
-    const token = localStorage.getItem('token')
+  async ({id}) => {
+    const token = localStorage.getItem ('token')
 
     try {
-      const response = await axios.delete(
+      const response = await axios.delete (
         `${backendURL}/order/${id}`,
 
         {
@@ -228,72 +228,72 @@ export const deleteOrder = createAsyncThunk(
       return response.data
     } catch (error) {
       if (error.response && error.response.status === 403) {
-        throw new Error('Failed to fetch order')
+        throw new Error ('Failed to fetch order')
       }
       throw error
     }
   },
 )
 
-const orderSlice = createSlice({
+const orderSlice = createSlice ({
   name: 'order',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchOrder.pending, (state) => {
+      .addCase (fetchOrder.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase(fetchOrder.fulfilled, (state, action) => {
+      .addCase (fetchOrder.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.order = action.payload
       })
-      .addCase(fetchOrder.rejected, (state, action) => {
+      .addCase (fetchOrder.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
-      .addCase(fetchConfirmedOrder.pending, (state) => {
+      .addCase (fetchConfirmedOrder.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase(fetchConfirmedOrder.fulfilled, (state, action) => {
+      .addCase (fetchConfirmedOrder.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.confirmedOrders = action.payload
       })
-      .addCase(fetchConfirmedOrder.rejected, (state, action) => {
+      .addCase (fetchConfirmedOrder.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
 
-      .addCase(fetchEditOrder.pending, (state) => {
+      .addCase (fetchEditOrder.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase(fetchEditOrder.fulfilled, (state, action) => {
+      .addCase (fetchEditOrder.fulfilled, (state, action) => {
         state.status = 'succeeded'
       })
-      .addCase(fetchEditOrder.rejected, (state, action) => {
+      .addCase (fetchEditOrder.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
 
-      .addCase(deleteOrder.pending, (state) => {
+      .addCase (deleteOrder.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase(deleteOrder.fulfilled, (state, action) => {
+      .addCase (deleteOrder.fulfilled, (state, action) => {
         state.status = 'succeeded'
       })
-      .addCase(deleteOrder.rejected, (state, action) => {
+      .addCase (deleteOrder.rejected, (state, action) => {
         state.status = 'failed'
       })
-        .addCase(fetchShortList.pending, (state) => {
-            state.status = 'loading'
-        })
-        .addCase(fetchShortList.fulfilled, (state, action) => {
-            state.status = 'succeeded'
-            state.shortListData = action.payload
-        })
-        .addCase(fetchShortList.rejected, (state, action) => {
-            state.status = 'failed'
-        })
+      .addCase (fetchShortList.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase (fetchShortList.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.shortListData = action.payload
+      })
+      .addCase (fetchShortList.rejected, (state, action) => {
+        state.status = 'failed'
+      })
   },
 })
 

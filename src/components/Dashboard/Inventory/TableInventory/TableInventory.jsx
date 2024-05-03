@@ -61,9 +61,6 @@ function TableInventory () {
   const [expandedRows, setExpandedRows] = React.useState ('')
   const [currentOrder, setCurrentOrder] = React.useState (null)
   const channel = useSelector ((state) => state.channel.channel)
-
-
-  console.log ("loading,", loading)
   const sortedData = React.useCallback (
     () =>
       sortData ({

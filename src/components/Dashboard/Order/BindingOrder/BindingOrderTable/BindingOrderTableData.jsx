@@ -133,7 +133,7 @@ function BindingOrderTableData ({
             </a>
           </td>
           <td className={style.table_td}>
-            {new Date (invetar.video_content?.actual_publication_time)
+            {new Date (invetar.video_content?.publication_time)
               .toLocaleDateString ('en-GB')
               .replace (/\//g, '.')}
           </td>

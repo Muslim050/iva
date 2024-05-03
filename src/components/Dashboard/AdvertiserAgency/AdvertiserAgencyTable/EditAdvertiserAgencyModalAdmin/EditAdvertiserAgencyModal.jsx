@@ -1,29 +1,29 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
+import {useForm} from 'react-hook-form'
+import {useDispatch} from 'react-redux'
 import 'react-datepicker/dist/react-datepicker.css'
 import style from './EditAdvertiserAgencyModal.module.scss'
-import { ReactComponent as Close } from 'src/assets/Modal/Close.svg'
-import { toastConfig } from 'src/utils/toastConfig'
-import { toast } from 'react-toastify'
+import {ReactComponent as Close} from 'src/assets/Modal/Close.svg'
+import {toastConfig} from 'src/utils/toastConfig'
+import {toast} from 'react-toastify'
 import {
   editAdvertiserAgency,
   fetchAdvertiserAgency,
 } from 'src/redux/AgencySlice/advertiserAgency/advertiserAgencySlice'
 import InputUI from 'src/components/UI/InputUI/InputUI'
 
-export default function EditAdvertiserAgencyModal({
-  setShowModalEditAdmin,
-  currentOrder,
-}) {
-  const dispatch = useDispatch()
+export default function EditAdvertiserAgencyModal ({
+                                                     setShowModalEditAdmin,
+                                                     currentOrder,
+                                                   }) {
+  const dispatch = useDispatch ()
 
-  const [isOrderCreated, setIsOrderCreated] = React.useState(false)
+  const [isOrderCreated, setIsOrderCreated] = React.useState (false)
   const {
     register,
-    formState: { errors, isValid },
+    formState: {errors, isValid},
     handleSubmit,
-  } = useForm({
+  } = useForm ({
     defaultValues: {
       name: currentOrder.name,
       email: currentOrder.email,
@@ -34,41 +34,40 @@ export default function EditAdvertiserAgencyModal({
   })
 
   const onSubmit = async (data) => {
-    console.log('EditAdvertiserAgencyModal', data)
     try {
-      setIsOrderCreated(true)
-      const response = await dispatch(
-        editAdvertiserAgency({ id: currentOrder.id, data }),
+      setIsOrderCreated (true)
+      const response = await dispatch (
+        editAdvertiserAgency ({id: currentOrder.id, data}),
       )
       if (response && !response.error) {
-        toast.success('Изминения успешно обновлены!', toastConfig)
-        setShowModalEditAdmin(false)
-        dispatch(fetchAdvertiserAgency())
+        toast.success ('Изминения успешно обновлены!', toastConfig)
+        setShowModalEditAdmin (false)
+        dispatch (fetchAdvertiserAgency ())
       } else if (response.error.message) {
-        toast.error(
+        toast.error (
           'Что-то пошло не так!' + response.error.message,
           toastConfig,
         )
-        setShowModalEditAdmin(false)
+        setShowModalEditAdmin (false)
       }
     } catch (error) {
-      setIsOrderCreated(false)
+      setIsOrderCreated (false)
       if (error.message) {
-        toast.error(`Ошибка : ${error.message}`, toastConfig)
+        toast.error (`Ошибка : ${error.message}`, toastConfig)
       } else {
-        toast.error('Что-то пошло не так: ' + error.message, toastConfig)
+        toast.error ('Что-то пошло не так: ' + error.message, toastConfig)
       }
     }
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit (onSubmit)}>
         <div className="modalWindow__title">
           Редактировать CPM
           <Close
             className="modalWindow__title__button"
-            onClick={() => setShowModalEditAdmin(false)}
+            onClick={() => setShowModalEditAdmin (false)}
           />
         </div>
 
@@ -121,7 +120,7 @@ export default function EditAdvertiserAgencyModal({
 
           <div className={style.btn__wrapper}>
             <button
-              style={{ display: 'flex', alignItems: 'center' }}
+              style={{display: 'flex', alignItems: 'center'}}
               type="submit"
               disabled={!isValid || isOrderCreated}
               className={

@@ -1,29 +1,29 @@
 import React from 'react'
-import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
+import {toast} from 'react-toastify'
+import {useDispatch} from 'react-redux'
 import axios from 'axios'
-import { addAdvertiser } from 'src/redux/advertiser/advertiserSlice'
-import { useForm, Controller } from 'react-hook-form'
-import { toastConfig } from 'src/utils/toastConfig'
+import {addAdvertiser} from 'src/redux/advertiser/advertiserSlice'
+import {useForm} from 'react-hook-form'
+import {toastConfig} from 'src/utils/toastConfig'
 import InputUI from 'src/components/UI/InputUI/InputUI'
 import SelectUI from 'src/components/UI/SelectUI/SelectUI'
-import { hideModalAdvertiser } from 'src/redux/modalSlice'
-import { ButtonModal } from 'src/components/UI/ButtonUI/ButtonUI'
-import { ReactComponent as Close } from 'src/assets/Modal/Close.svg'
+import {hideModalAdvertiser} from 'src/redux/modalSlice'
+import {ButtonModal} from 'src/components/UI/ButtonUI/ButtonUI'
+import {ReactComponent as Close} from 'src/assets/Modal/Close.svg'
 import backendURL from 'src/utils/url'
 
-export default function AdvertiserModal() {
-  const [advertiserModal, setAdvertiserModal] = React.useState([])
-  const [cpm, setCpm] = React.useState([])
+export default function AdvertiserModal () {
+  const [advertiserModal, setAdvertiserModal] = React.useState ([])
+  const [cpm, setCpm] = React.useState ([])
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch ()
   const {
     register,
-    formState: { errors, isValid },
+    formState: {errors, isValid},
     handleSubmit,
     control,
     setValue,
-  } = useForm({
+  } = useForm ({
     defaultValues: {
       name: '',
       phone: '',
@@ -36,8 +36,8 @@ export default function AdvertiserModal() {
   })
 
   const fetchAdvertiser = async () => {
-    const token = localStorage.getItem('token')
-    const response = await axios.get(
+    const token = localStorage.getItem ('token')
+    const response = await axios.get (
       `${backendURL}/advertiser/advertising-agency/`,
 
       {
@@ -48,12 +48,12 @@ export default function AdvertiserModal() {
         },
       },
     )
-    setAdvertiserModal(response.data.data)
+    setAdvertiserModal (response.data.data)
   }
   const fetchCpm = async () => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem ('token')
 
-    const response = await axios.get(
+    const response = await axios.get (
       `${backendURL}/order/cpm/`,
 
       {
@@ -64,39 +64,38 @@ export default function AdvertiserModal() {
         },
       },
     )
-    setCpm(response.data.data)
-    setValue('cpm_mixroll', response.data.data.mixroll)
-    setValue('cpm_preroll', response.data.data.preroll)
+    setCpm (response.data.data)
+    setValue ('cpm_mixroll', response.data.data.mixroll)
+    setValue ('cpm_preroll', response.data.data.preroll)
   }
 
-  React.useEffect(() => {
-    fetchAdvertiser()
+  React.useEffect (() => {
+    fetchAdvertiser ()
   }, [])
 
-  React.useEffect(() => {
-    fetchCpm()
+  React.useEffect (() => {
+    fetchCpm ()
   }, [])
-  console.log('cpm', cpm)
 
   const onSubmit = (data) => {
-    const adv = dispatch(addAdvertiser({ data }))
+    const adv = dispatch (addAdvertiser ({data}))
     if (adv) {
-      toast.success('Рекламадатель успешно создан!', toastConfig)
-      dispatch(hideModalAdvertiser())
-      setTimeout(() => {
-        window.location.reload()
+      toast.success ('Рекламадатель успешно создан!', toastConfig)
+      dispatch (hideModalAdvertiser ())
+      setTimeout (() => {
+        window.location.reload ()
       }, 1500)
     } else {
-      toast.error('Что то пошло не так!', toastConfig)
+      toast.error ('Что то пошло не так!', toastConfig)
     }
   }
   const handleButtonClick = () => {
-    dispatch(hideModalAdvertiser())
+    dispatch (hideModalAdvertiser ())
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit (onSubmit)}>
         <div className="modalWindow__title">
           Cоздать рекламодателя
           <Close
@@ -138,9 +137,9 @@ export default function AdvertiserModal() {
             inputWidth="inputSmall"
           />
 
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{display: 'flex', justifyContent: 'space-between'}}>
             <div>
-              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 CPM_Preroll
               </label>
               <InputUI
@@ -153,7 +152,7 @@ export default function AdvertiserModal() {
             </div>
 
             <div>
-              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 CPM_Mixroll
               </label>
               <InputUI
@@ -169,12 +168,12 @@ export default function AdvertiserModal() {
           <SelectUI
             label="Рекламное агенство"
             options={advertiserModal}
-            register={register('agency')}
+            register={register ('agency')}
             error={errors?.advertiser?.message}
             inputWidth
           />
 
-          <div style={{ display: 'flex', justifyContent: 'end' }}>
+          <div style={{display: 'flex', justifyContent: 'end'}}>
             <ButtonModal isValid={true} disabled={!isValid}>
               Создать
             </ButtonModal>

@@ -49,6 +49,8 @@ export function InfoCardsBottom (
 
           <div
             className={style.infoCards_bottom_th__bottomtext}
+            style={{fontWeight: "600"}}
+
           >
 
             Бюджет
@@ -80,24 +82,24 @@ export function InfoCardsBottom (
               </div>
             ) : (
               <>
-                <>
+                <div style={{fontWeight: "600"}}>
                   <FormatterBudjet
                     budget={totalBudget}
                     // data={getOrder.expected_start_date}
                   />
-                </>
-                <>
+                </div>
+                <div style={{fontWeight: "600"}}>
                   <FormatterBudjet
                     budget={ndc}
                     // data={getOrder.expected_start_date}
                   />
-                </>
-                <>
+                </div>
+                <div style={{fontWeight: "600"}}>
                   <FormatterBudjet
                     budget={totalBudget + ndc}
                     // data={getOrder.expected_start_date}
                   />
-                </>
+                </div>
               </>
             )}
           </div>

@@ -31,7 +31,17 @@ function AdvertiserReportTable () {
   //
   const [selectedOrderName, setSelectedOrderName] = React.useState (null)
   const [selectedOptionOrder, setSelectedOptionOrder] = React.useState ('')
+  const [startDateMonth, setStartDateMonth] = React.useState (null)
+  const [endDateMonth, setEndDateMonth] = React.useState (null)
+  const [dateRange, setDateRange] = React.useState ([]);
+  const [selectedMonth, setSelectedMonth] = React.useState ('');
 
+  console.log ("data", data)
+
+  React.useEffect (() => {
+    setStartDateMonth (dateRange[0]);
+    setEndDateMonth (dateRange[1]);
+  }, [dateRange]);
   //Выбор рекламадателя
   const handleSelectChangeADV = (event) => {
     const value = event.target.value;
@@ -67,13 +77,45 @@ function AdvertiserReportTable () {
     : undefined
 
 
+  const handleDateChange = (date) => {
+    const startOfMonth = new Date (date.getFullYear (), date.getMonth (), 1);
+    const endOfMonth = new Date (date.getFullYear (), date.getMonth () + 1, 0);
+    setDateRange ([startOfMonth, endOfMonth]);
+    setSelectedMonth (startOfMonth);
+    setEndDateMonth (dateRange[1])
+    setStartDateMonth (dateRange[0])
+  };
   // Отправка запроса с фильтра
+
+
   const handleDateStatictick = () => {
-    setLoading (true)
-    dispatch (fetchStatistics ({adv_id: selectedAdv, startDate: formattedStartDate, endDate: formattedEndDate}))
-      .unwrap ()
-      .then (() => setLoading (false))
-    setIsTooltip (false)
+    if (selectedAdv) {
+      setLoading (true); // Start loading
+      const formattedStartDateMonth = startDateMonth
+        ? format (startDateMonth, 'yyyy-MM-dd')
+        : undefined;
+      const formattedEndDateMonth = endDateMonth
+        ? format (endDateMonth, 'yyyy-MM-dd')
+        : undefined;
+
+      const useMonthBasedDates = startDateMonth !== undefined;
+      dispatch (
+        fetchStatistics ({
+          adv_id: selectedAdv,
+          startDate: useMonthBasedDates ? formattedStartDateMonth : formattedStartDate,
+          endDate: useMonthBasedDates ? formattedEndDateMonth : formattedEndDate,
+        }),
+      )
+        .then (() => {
+          setLoading (false); // Stop loading when the request is successful
+        })
+        .catch (() => {
+          setLoading (false); // Stop loading also when there is an error
+        });
+      setIsTooltip (!isTooltip);
+    } else {
+      console.log ('No advertiser selected');
+    }
   }
   // Отправка запроса с фильтра
 
@@ -92,6 +134,8 @@ function AdvertiserReportTable () {
     setSelectedOptionOrder ('')
     setStartDate (null)
     setEndDate (null)
+    setSelectedMonth ('')
+    setDateRange ([])
     dispatch (clearStatistics ());
 
   }
@@ -189,12 +233,20 @@ function AdvertiserReportTable () {
                   //
                   handleStartDateChange={handleStartDateChange}
                   handleEndDateChange={handleEndDateChange}
+
+                  handleDateChange={handleDateChange}
+                  setStartDateMonth={setStartDateMonth}
+                  setEndDateMonth={setEndDateMonth}
+                  startDateMonth={startDateMonth}
+                  endDateMonth={endDateMonth}
+                  selectedMonth={selectedMonth}
                 />
               </FilteredTooltipMain>
             </div>
           </div>
           {
-            data && data.length ? <table className="tableWrapper" style={{overflow: "visible"}}>
+            data && data.length ?
+              <table className="tableWrapper" style={{overflow: "visible"}}>
                 {/* Колонки основной таблица  */}
                 <thead>
                 <OrderChartThead statistic={tableData}/>
@@ -233,7 +285,7 @@ function AdvertiserReportTable () {
                 </thead>
               </table> :
               <div style={{display: "flex", justifyContent: "center", fontWeight: "600", padding: "20% 0"}}>
-                Выберитепараметры фильтра
+                Выберите параметры фильтра
               </div>
           }
 

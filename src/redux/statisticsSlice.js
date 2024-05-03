@@ -17,7 +17,6 @@ export const fetchStatistics = createAsyncThunk (
   async ({adv_id, order_id, startDate, endDate}) => {
     const token = localStorage.getItem ("token");
     let url = `${backendURL}/order/statistics/`;
-    console.log ("startDatestartDatestartDate", startDate)
     let hasParam = false;
 
     if (adv_id) {

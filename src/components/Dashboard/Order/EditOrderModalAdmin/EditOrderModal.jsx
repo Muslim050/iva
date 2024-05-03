@@ -1,47 +1,41 @@
 import React from 'react'
-import { useForm, Controller } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
-import {
-  deleteOrder,
-  fetchEditOrder,
-  fetchOrder,
-} from '../../../../redux/order/orderSlice'
-import { toastConfig } from '../../../../utils/toastConfig'
+import {Controller, useForm} from 'react-hook-form'
+import {useDispatch, useSelector} from 'react-redux'
+import {toast} from 'react-toastify'
+import {deleteOrder, fetchEditOrder, fetchOrder,} from '../../../../redux/order/orderSlice'
+import {toastConfig} from '../../../../utils/toastConfig'
 import 'react-datepicker/dist/react-datepicker.css'
 import style from './EditOrderModal.module.scss'
-import { ReactComponent as Close } from 'src/assets/Modal/Close.svg'
-import { ReactComponent as File } from 'src/assets/Table/file.svg'
+import {ReactComponent as Close} from 'src/assets/Modal/Close.svg'
+import {ReactComponent as File} from 'src/assets/Table/file.svg'
 import backendURL from 'src/utils/url'
 import axios from 'axios'
 import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
-import { ReactComponent as Delete } from 'src/assets/Table/Delete.svg'
-import { useParams } from 'react-router-dom'
-import InputUI from 'src/components/UI/InputUI/InputUI'
+import {ReactComponent as Delete} from 'src/assets/Table/Delete.svg'
 
 const format = [
-  { value: 'preroll', text: 'Pre-roll' },
-  { value: 'mixroll', text: 'Mix-roll' },
+  {value: 'preroll', text: 'Pre-roll'},
+  {value: 'mixroll', text: 'Mix-roll'},
 ]
-export default function EditOrderModal({
-  setShowModalEditAdmin,
-  currentOrder,
-}) {
-  const dispatch = useDispatch()
-  const [selectedFile, setSelectedFile] = React.useState(null)
-  const [cpm, setCpm] = React.useState([])
-  const [budgett, setBudgett] = React.useState(0)
-  const role = localStorage.getItem('role')
-  const { order } = useSelector((state) => state.order)
-  const [isOrderCreated, setIsOrderCreated] = React.useState(false)
+export default function EditOrderModal ({
+                                          setShowModalEditAdmin,
+                                          currentOrder,
+                                        }) {
+  const dispatch = useDispatch ()
+  const [selectedFile, setSelectedFile] = React.useState (null)
+  const [cpm, setCpm] = React.useState ([])
+  const [budgett, setBudgett] = React.useState (0)
+  const role = localStorage.getItem ('role')
+  const {order} = useSelector ((state) => state.order)
+  const [isOrderCreated, setIsOrderCreated] = React.useState (false)
   const {
     register,
-    formState: { errors, isValid },
+    formState: {errors, isValid},
     handleSubmit,
     watch,
     control,
     setValue,
-  } = useForm({
+  } = useForm ({
     defaultValues: {
       name: currentOrder.name,
       format: currentOrder.format,
@@ -54,14 +48,14 @@ export default function EditOrderModal({
   })
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0])
+    setSelectedFile (event.target.files[0])
   }
-  const advID = localStorage.getItem('advertiser')
+  const advID = localStorage.getItem ('advertiser')
 
-  const editName = watch('name')
+  const editName = watch ('name')
   // const viewValue = watch("view");
-  const selectedFormat = watch('format')
-  const expectedView = watch('expectedView')
+  const selectedFormat = watch ('format')
+  const expectedView = watch ('expectedView')
 
   const calculateBudget = () => {
     let newBudget = 0
@@ -70,19 +64,18 @@ export default function EditOrderModal({
       newBudget = (expectedView / 1000) * cpm[selectedFormat]
     }
 
-    setBudgett(newBudget)
+    setBudgett (newBudget)
   }
-  console.log('currentOrder', currentOrder)
 
   let advId
-  order.forEach((item) => {
+  order.forEach ((item) => {
     advId = item.advertiser.id
   })
 
   const fetchCpm = async () => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem ('token')
 
-    const response = await axios.get(
+    const response = await axios.get (
       `${backendURL}/order/cpm/?advertiser=${
         advID === null ? advID : currentOrder.advertiser.id
       }`,
@@ -95,80 +88,80 @@ export default function EditOrderModal({
         },
       },
     )
-    setCpm(response.data.data)
+    setCpm (response.data.data)
   }
-  React.useEffect(() => {
-    calculateBudget()
+  React.useEffect (() => {
+    calculateBudget ()
   }, [selectedFormat, cpm, expectedView])
 
-  React.useEffect(() => {
+  React.useEffect (() => {
     if (advID) {
-      fetchCpm()
+      fetchCpm ()
     }
   }, [advID])
 
-  React.useEffect(() => {
-    setValue('budgett', budgett)
+  React.useEffect (() => {
+    setValue ('budgett', budgett)
   }, [budgett, setValue])
   const onSubmit = async (data) => {
     try {
-      setIsOrderCreated(true)
-      const response = await dispatch(
-        fetchEditOrder({ id: currentOrder.id, data }),
+      setIsOrderCreated (true)
+      const response = await dispatch (
+        fetchEditOrder ({id: currentOrder.id, data}),
       )
 
       if (response && !response.error) {
-        toast.success('Изминения успешно обновлены!', toastConfig)
-        setShowModalEditAdmin(false)
-        dispatch(fetchOrder())
+        toast.success ('Изминения успешно обновлены!', toastConfig)
+        setShowModalEditAdmin (false)
+        dispatch (fetchOrder ())
       } else if (response.error.message) {
-        toast.error(
+        toast.error (
           'Что-то пошло не так!' + response.error.message,
           toastConfig,
         )
-        setShowModalEditAdmin(false)
+        setShowModalEditAdmin (false)
       }
     } catch (error) {
-      setIsOrderCreated(false)
+      setIsOrderCreated (false)
       if (error.message) {
-        toast.error(`Ошибка : ${error.message}`, toastConfig)
+        toast.error (`Ошибка : ${error.message}`, toastConfig)
       } else {
-        toast.error('Что-то пошло не так: ' + error.message, toastConfig)
+        toast.error ('Что-то пошло не так: ' + error.message, toastConfig)
       }
     }
   }
 
   const handleRemoveInventory = () => {
-    const confirmDelete = window.confirm('Вы уверены, что хотите удалить?')
+    const confirmDelete = window.confirm ('Вы уверены, что хотите удалить?')
     if (confirmDelete) {
-      dispatch(deleteOrder({ id: currentOrder.id }))
-        .then(() => {
-          toast.success('Инвентарь успешно удален', toastConfig)
-          setShowModalEditAdmin(false)
-          dispatch(fetchOrder())
+      dispatch (deleteOrder ({id: currentOrder.id}))
+        .then (() => {
+          toast.success ('Инвентарь успешно удален', toastConfig)
+          setShowModalEditAdmin (false)
+          dispatch (fetchOrder ())
         })
-        .catch((error) => {
-          toast.error(error.message, toastConfig)
-          dispatch(fetchOrder())
+        .catch ((error) => {
+          toast.error (error.message, toastConfig)
+          dispatch (fetchOrder ())
         })
     } else {
-      toast.info('Операция отменена', toastConfig)
+      toast.info ('Операция отменена', toastConfig)
     }
   }
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit (onSubmit)}>
         <div className="modalWindow__title">
           Редактировать Заказ
           <Close
             className="modalWindow__title__button"
-            onClick={() => setShowModalEditAdmin(false)}
+            onClick={() => setShowModalEditAdmin (false)}
           />
         </div>
 
         <div className="modalWindow">
-          <div style={{ display: 'grid', marginBottom: '18px' }}>
-            <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+          <div style={{display: 'grid', marginBottom: '18px'}}>
+            <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
               Название рекламной кампании
             </label>
             <input
@@ -178,7 +171,7 @@ export default function EditOrderModal({
                   ? style.modalWindow__inputU
                   : style.modalWindow__input
               }
-              {...register('name', {
+              {...register ('name', {
                 required: 'Название рекламной кампании обезательно',
               })}
               disabled={role !== 'admin'}
@@ -190,10 +183,10 @@ export default function EditOrderModal({
 
           <div
             className="modalWindow__wrapper_input"
-            style={{ marginBottom: '18px' }}
+            style={{marginBottom: '18px'}}
           >
-            <div style={{ display: 'grid', marginRight: '10px' }}>
-              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+            <div style={{display: 'grid', marginRight: '10px'}}>
+              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 Начало
               </label>
               <Controller
@@ -201,10 +194,10 @@ export default function EditOrderModal({
                 control={control}
                 defaultValue={
                   currentOrder.expected_start_date
-                    ? currentOrder.expected_start_date.substring(0, 10)
+                    ? currentOrder.expected_start_date.substring (0, 10)
                     : ''
                 }
-                render={({ field: { onChange, value } }) => (
+                render={({field: {onChange, value}}) => (
                   <input
                     // className={style.input}
                     className={
@@ -227,8 +220,8 @@ export default function EditOrderModal({
               </span>
             </div>
 
-            <div style={{ display: 'grid' }}>
-              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+            <div style={{display: 'grid'}}>
+              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 Конец
               </label>
               <Controller
@@ -236,10 +229,10 @@ export default function EditOrderModal({
                 control={control}
                 defaultValue={
                   currentOrder.expected_end_date
-                    ? currentOrder.expected_end_date.substring(0, 10)
+                    ? currentOrder.expected_end_date.substring (0, 10)
                     : ''
                 }
-                render={({ field: { onChange, value } }) => (
+                render={({field: {onChange, value}}) => (
                   <input
                     className={
                       role === 'admin'
@@ -264,16 +257,16 @@ export default function EditOrderModal({
 
           <div
             className="modalWindow__wrapper_input"
-            style={{ marginBottom: '15px' }}
+            style={{marginBottom: '15px'}}
           >
-            <div style={{ width: '175px' }}>
-              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+            <div style={{width: '175px'}}>
+              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 Формат
               </label>
               <select
                 id="countries"
-                style={{ padding: '12px' }}
-                {...register('format', {
+                style={{padding: '12px'}}
+                {...register ('format', {
                   required: 'Поле обязательно',
                 })}
                 className={
@@ -285,7 +278,7 @@ export default function EditOrderModal({
               >
                 <option value="">Выбрать Формат</option>
 
-                {format.map((option, index) => (
+                {format.map ((option, index) => (
                   <option key={index} value={option.value}>
                     {option.text}
                   </option>
@@ -293,15 +286,15 @@ export default function EditOrderModal({
               </select>
               <span className={style.select__error}>
                 {errors?.format && (
-                  <p style={{ lineHeight: '16px' }}>
+                  <p style={{lineHeight: '16px'}}>
                     {errors?.format?.message}
                   </p>
                 )}
               </span>
             </div>
 
-            <div style={{ display: 'grid', marginTop: '5px' }}>
-              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+            <div style={{display: 'grid', marginTop: '5px'}}>
+              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 Количество показов
               </label>
               <Controller
@@ -311,7 +304,7 @@ export default function EditOrderModal({
                   required: 'Поле обязательно к заполнению',
                 }}
                 defaultValue=""
-                render={({ field: { onChange, onBlur, value, name, ref } }) => (
+                render={({field: {onChange, onBlur, value, name, ref}}) => (
                   <input
                     // className={style.modalWindow__inputU}
                     className={
@@ -320,14 +313,14 @@ export default function EditOrderModal({
                         : style.modalWindow__input
                     }
                     type="text"
-                    value={value.toLocaleString('en-US')}
+                    value={value.toLocaleString ('en-US')}
                     style={{
                       width: '245px',
                     }}
                     onChange={(e) => {
-                      const rawValue = e.target.value.replace(/\D/g, '')
-                      const newValue = rawValue ? parseInt(rawValue, 10) : ''
-                      onChange(newValue)
+                      const rawValue = e.target.value.replace (/\D/g, '')
+                      const newValue = rawValue ? parseInt (rawValue, 10) : ''
+                      onChange (newValue)
                     }}
                     onBlur={onBlur}
                     name={name}
@@ -342,7 +335,7 @@ export default function EditOrderModal({
               />
               <span className={style.modalWindow__input_error}>
                 {errors?.expectedView && (
-                  <p style={{ width: '240px', lineHeight: '1.4' }}>
+                  <p style={{width: '240px', lineHeight: '1.4'}}>
                     {errors?.expectedView?.message}
                   </p>
                 )}
@@ -351,15 +344,15 @@ export default function EditOrderModal({
           </div>
           <div
             className="modalWindow__wrapper_input"
-            style={{ marginBottom: '15px', justifyContent: 'space-between' }}
+            style={{marginBottom: '15px', justifyContent: 'space-between'}}
           >
-            <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div style={{display: 'flex', alignItems: 'center'}}>
               <div
                 style={{
                   marginLeft: '10px',
                 }}
               >
-                <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                   Тякущий ролик:
                 </label>
                 <a
@@ -370,14 +363,14 @@ export default function EditOrderModal({
                 >
                   Ролик
                   <File
-                    style={{ width: '18px', height: '18px', marginLeft: '5px' }}
+                    style={{width: '18px', height: '18px', marginLeft: '5px'}}
                   />
                 </a>
               </div>
             </div>
 
-            <div style={{ display: 'grid' }}>
-              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+            <div style={{display: 'grid'}}>
+              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 Бюджет (сум)
               </label>
               <input
@@ -387,9 +380,9 @@ export default function EditOrderModal({
                   width: '150px',
                 }}
                 value={
-                  isNaN(budgett)
-                    ? currentOrder.budget.toLocaleString('en-US')
-                    : budgett.toLocaleString('en-US')
+                  isNaN (budgett)
+                    ? currentOrder.budget.toLocaleString ('en-US')
+                    : budgett.toLocaleString ('en-US')
                 }
                 placeholder="Бюджет"
                 autoComplete="off"
@@ -399,15 +392,15 @@ export default function EditOrderModal({
           </div>
 
           <div className="modalWindow__wrapper_input">
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+            <div style={{marginBottom: '20px'}}>
+              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 Загрузить новый ролик
               </label>
               <input
                 type="file"
                 onChange={handleFileChange}
                 className={style.modalWindow__file}
-                {...register('selectedFile')}
+                {...register ('selectedFile')}
               />
               <span className={style.modalWindow__input_error}>
                 {errors?.selectedFile && <p>{errors?.selectedFile?.message}</p>}
@@ -418,14 +411,14 @@ export default function EditOrderModal({
             placeholder="Комментарий к заказу"
             autoComplete="off"
             className={style.modalWindow__textarea}
-            {...register('notes')}
-            style={{ width: '100%' }}
+            {...register ('notes')}
+            style={{width: '100%'}}
           ></textarea>
           <div className={style.btn__wrapper}>
             {role === 'admin' ? (
               <ButtonBorder
                 onClick={() => {
-                  handleRemoveInventory()
+                  handleRemoveInventory ()
                 }}
               >
                 <Delete
@@ -440,7 +433,7 @@ export default function EditOrderModal({
             ) : null}
 
             <button
-              style={{ display: 'flex', alignItems: 'center' }}
+              style={{display: 'flex', alignItems: 'center'}}
               type="submit"
               disabled={!isValid || isOrderCreated}
               className={

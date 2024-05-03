@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import ButtonTable from "../../../../../UI/ButtonTable/ButtonTable";
 import {ReactComponent as Delete} from 'src/assets/Delete.svg'
+import ru from "date-fns/locale/ru";
 
 function FilteredTooltip (
   {
@@ -21,7 +22,13 @@ function FilteredTooltip (
     selectedAdvName,
     loadingDots,
     handleEndDateChange,
-    handleStartDateChange
+    handleStartDateChange,
+    setStartDateMonth,
+    setEndDateMonth,
+    startDateMonth,
+    endDateMonth,
+    handleDateChange,
+    selectedMonth
   }) {
   return (
     <>
@@ -46,7 +53,7 @@ function FilteredTooltip (
           <div style={{width: '300px', marginTop: '10px'}}>
             <label
               style={{
-                fontSize: '12px',
+                fontSize: '14px',
                 color: 'var(--text-color)',
                 fontWeight: '400',
               }}
@@ -92,7 +99,7 @@ function FilteredTooltip (
             >
               <label
                 style={{
-                  fontSize: '10px',
+                  fontSize: '14px',
                   color: 'var(--text-color)',
                   fontWeight: '400',
                 }}
@@ -117,7 +124,7 @@ function FilteredTooltip (
             >
               <label
                 style={{
-                  fontSize: '10px',
+                  fontSize: '14px',
                   color: 'var(--text-color)',
                   fontWeight: '400',
                 }}
@@ -132,6 +139,35 @@ function FilteredTooltip (
 
               />
             </div>
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              marginTop: "10px"
+
+            }}
+          >
+            <label
+              style={{
+                fontSize: '14px',
+                color: 'var(--text-color)',
+                fontWeight: '400',
+              }}
+            >
+              Месяц
+            </label>
+            <DatePicker
+              onChange={handleDateChange}
+              selected={selectedMonth}
+              dateFormat="MM/yyyy"
+              showMonthYearPicker
+              showFullMonthYearPicker
+              className={style.input}
+              disabled={!!startDate || !!endDate} // Здесь используется приведение dateRange к булевому типу
+              locale={ru}
+            />
           </div>
 
           <div style={{display: 'flex', marginTop: '10px', gap: "10px"}}>

@@ -249,24 +249,24 @@ export function InfoCardsDop ({
           background: "#fff2e2",
           borderRadius: "8px"
         }}>
-          <>
+          <div style={{fontWeight: "600"}}>
             <FormatterBudjet
               budget={totalComisyAdtech}
               // data={getOrder.expected_start_date}
             />
-          </>
-          <>
+          </div>
+          <div style={{fontWeight: "600"}}>
             <FormatterBudjet
               budget={ndc}
               // data={getOrder.expected_start_date}
             />
-          </>
-          <>
+          </div>
+          <div style={{fontWeight: "600"}}>
             <FormatterBudjet
               budget={totalComisyAdtech + ndc}
               // data={getOrder.expected_start_date}
             />
-          </>
+          </div>
         </div>
       </th>
     </tr>
