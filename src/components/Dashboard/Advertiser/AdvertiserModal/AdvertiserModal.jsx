@@ -15,6 +15,7 @@ import backendURL from 'src/utils/url'
 export default function AdvertiserModal () {
   const [advertiserModal, setAdvertiserModal] = React.useState ([])
   const [cpm, setCpm] = React.useState ([])
+  const role = localStorage.getItem ('role')
 
   const dispatch = useDispatch ()
   const {
@@ -137,33 +138,36 @@ export default function AdvertiserModal () {
             inputWidth="inputSmall"
           />
 
-          <div style={{display: 'flex', justifyContent: 'space-between'}}>
-            <div>
-              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-                CPM_Preroll
-              </label>
-              <InputUI
-                type="text"
-                autoComplete="off"
-                register={register}
-                name="cpm_preroll"
-                errors={errors.cpm_preroll}
-              />
-            </div>
+          {
+            role === 'admin' && <div style={{display: 'flex', justifyContent: 'space-between'}}>
+              <div>
+                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
+                  CPM_Preroll
+                </label>
+                <InputUI
+                  type="text"
+                  autoComplete="off"
+                  register={register}
+                  name="cpm_preroll"
+                  errors={errors.cpm_preroll}
+                />
+              </div>
 
-            <div>
-              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-                CPM_Mixroll
-              </label>
-              <InputUI
-                type="text"
-                autoComplete="off"
-                register={register}
-                name="cpm_mixroll"
-                errors={errors.cpm_mixroll}
-              />
+              <div>
+                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
+                  CPM_Mixroll
+                </label>
+                <InputUI
+                  type="text"
+                  autoComplete="off"
+                  register={register}
+                  name="cpm_mixroll"
+                  errors={errors.cpm_mixroll}
+                />
+              </div>
             </div>
-          </div>
+          }
+
 
           <SelectUI
             label="Рекламное агенство"

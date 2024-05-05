@@ -205,7 +205,7 @@ export default function OrderModal ({setShowModal}) {
             <div>
               <div style={{display: 'grid', marginRight: '10px'}}>
                 <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-                  Начало
+                  Начало размещения
                 </label>
                 <input
                   className={style.input}
@@ -226,7 +226,7 @@ export default function OrderModal ({setShowModal}) {
             <div>
               <div style={{display: 'grid'}}>
                 <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-                  Конец
+                  Конец размещения
                 </label>
                 <input
                   className={style.input}
@@ -327,6 +327,22 @@ export default function OrderModal ({setShowModal}) {
           >
             <div style={{display: 'grid'}}>
               <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
+                Загрузить рекламный ролик
+              </label>
+              <input
+                type="file"
+                onChange={handleFileChange}
+                className={style.modalWindow__file}
+                {...register ('selectedFile', {
+                  required: 'Ролик обезателен',
+                })}
+              />
+              <span className={style.modalWindow__input_error}>
+                {errors?.selectedFile && <p>{errors?.selectedFile?.message}</p>}
+              </span>
+            </div>
+            <div style={{display: 'grid'}}>
+              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 Бюджет (сум)
               </label>
               <input
@@ -342,22 +358,7 @@ export default function OrderModal ({setShowModal}) {
               />
             </div>
 
-            <div style={{display: 'grid'}}>
-              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-                Загрузить рекламный ролик
-              </label>
-              <input
-                type="file"
-                onChange={handleFileChange}
-                className={style.modalWindow__file}
-                {...register ('selectedFile', {
-                  required: 'Ролик обезателен',
-                })}
-              />
-              <span className={style.modalWindow__input_error}>
-                {errors?.selectedFile && <p>{errors?.selectedFile?.message}</p>}
-              </span>
-            </div>
+
           </div>
 
           <textarea
