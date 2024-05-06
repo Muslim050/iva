@@ -278,7 +278,7 @@ function PublisherReportTable () {
         <div className="tableWrapper">
           <div className="tableWrapper__table_title">
             <div style={{display: 'flex', alignItems: 'center'}}>
-              Отчет &nbsp;
+              Отчет-Паблишера &nbsp;
               <ButtonTable onClick={handleReload}>
                 <Reload style={{width: '23px', height: '23px'}}/>
               </ButtonTable>
@@ -667,7 +667,7 @@ function PublisherReportTable () {
             ) : (
               <>
                 <div className="empty_list">
-                  Установите фильтр или по данным пораметрам не найдены данные!
+                  Установите фильтр или по данным параметрам не найдены данные!
                 </div>
               </>
             )}

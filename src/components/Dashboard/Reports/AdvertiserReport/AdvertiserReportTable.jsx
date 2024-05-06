@@ -335,8 +335,8 @@ function AdvertiserReportTable () {
                 {/* Ячейки с инфо Итого:	 */}
                 </thead>
               </table> :
-              <div style={{display: "flex", justifyContent: "center", fontWeight: "600", padding: "30% 0"}}>
-                Выберите параметры фильтра
+              <div style={{display: "flex", justifyContent: "center", fontWeight: "600", padding: "20% 0"}}>
+                Установите фильтр или по данным параметрам не найдены данные!
               </div>
           }
 

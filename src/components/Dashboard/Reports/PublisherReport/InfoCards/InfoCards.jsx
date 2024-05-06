@@ -194,7 +194,7 @@ export function InfoCardsDop ({
                               }) {
   const ndc = totalComisyAdtech * 0.12
   return (
-    <tr align="center">
+    <tr align="center" style={{borderTop: '4px solid white'}}>
       <th></th>
       <th></th>
       <th></th>
@@ -218,6 +218,7 @@ export function InfoCardsDop ({
         rowSpan="2"
         style={{
           borderLeft: '4px solid white',
+          borderRadius: "8px 0px 0px 8px"
         }}
       >
         <div style={{
@@ -226,7 +227,7 @@ export function InfoCardsDop ({
           lineHeight: "16px",
           fontWeight: "600",
           background: "#fff2e2",
-          borderRadius: "8px"
+          borderRadius: "0px"
         }}>
           <div>
             Бюджет
@@ -235,12 +236,11 @@ export function InfoCardsDop ({
             <div style={{display: "flex", width: "max-content"}}>
               Итого с НДС
             </div>
-
           </div>
         </div>
       </th>
 
-      <th className={styleInfo.infoCards_bottom_th}>
+      <th className={styleInfo.infoCards_bottom_th} style={{borderRadius: "0px 8px 8px 0px"}}>
         <div style={{
           color: "#45464e",
           fontSize: "13px",

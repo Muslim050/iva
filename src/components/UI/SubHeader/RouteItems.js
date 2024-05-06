@@ -1,4 +1,4 @@
-export default function getTitle(title, id) {
+export default function getTitle (title, id) {
   if (title === 'inventory') {
     return 'Инвентарь'
   } else if (title === 'order') {
@@ -24,16 +24,16 @@ export default function getTitle(title, id) {
   } else if (title === 'channel') {
     return 'Канал'
   } else if (title === 'channel-users') {
-    return 'Пользователи канала'.replace('-', ' ')
-  } else if (title.startsWith('chart-order-table')) {
+    return 'Пользователи канала'.replace ('-', ' ')
+  } else if (title.startsWith ('chart-order-table')) {
     return `Статистика Заказа`
-  } else if (title.startsWith(`statistics-channel`)) {
+  } else if (title.startsWith (`statistics-channel`)) {
     return `Статистика канала`
-  } else if (title.startsWith(`revenue`)) {
+  } else if (title.startsWith (`revenue`)) {
     return `Revenue`
-  } else if (title.startsWith(`publisher-report`)) {
-    return `Отчет`
-  }else if (title.startsWith(`advertiser-report`)) {
+  } else if (title.startsWith (`publisher-report`)) {
+    return `Отчет-Паблишера`
+  } else if (title.startsWith (`advertiser-report`)) {
     return `Отчет - Рекламодателя`
   }
 
