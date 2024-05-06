@@ -1,28 +1,48 @@
 import React from 'react'
-import ButtonTable from '../../../UI/ButtonTable/ButtonTable'
-import { ReactComponent as Download } from 'src/assets/Table/Download.svg'
+import ButtonTable from 'src/components/UI/ButtonTable/ButtonTable'
+import {ReactComponent as Download} from 'src/assets/Table/Download.svg'
 import axios from 'axios'
 import backendURL from 'src/utils/url'
+import {format} from "date-fns";
 
-function DownloadReport({
-  getOrder,
-  startDate,
-  endDate,
-  setIsTooltip,
-  fetchGetOrder,
-}) {
-  const [loading, setLoading] = React.useState(false)
-  const exportExcel = async (id) => {
+function DownloadReport ({
+                           selectedAdv,
+                           selectedAdvName,
+                           startDate,
+                           endDate,
+                           setIsTooltip,
+                           tableData,
+                           fetchGetOrder,
+                           endDateMonth,
+                           startDateMonth
+                         }) {
+  const [loading, setLoading] = React.useState (false)
+  const formattedStartDate = startDate
+    ? format (startDate, 'yyyy-MM-dd')
+    : undefined
+  const formattedEndDate = endDate
+    ? format (endDate, 'yyyy-MM-dd')
+    : undefined
+
+  const formattedStartDateMonth = startDateMonth
+    ? format (startDateMonth, 'yyyy-MM-dd')
+    : undefined;
+  const formattedEndDateMonth = endDateMonth
+    ? format (endDateMonth, 'yyyy-MM-dd')
+    : undefined;
+
+  const exportExcel = async (selectedAdv) => {
     try {
-      setLoading(true)
-      const token = localStorage.getItem('token')
-      let urllink = `${backendURL}/order/statistics-export/?order_id=${id}`
+      setLoading (true)
+      const token = localStorage.getItem ('token')
+      let urllink = `${backendURL}/order/statistics-export/?advertiser=${selectedAdv}`
 
-      if (startDate && endDate) {
-        urllink += `&start_date=${startDate}&end_date=${endDate}`
+
+      if (startDate && endDate || startDateMonth && endDateMonth) {
+        urllink += `&start_date=${formattedStartDateMonth || formattedStartDate}&end_date=${formattedEndDateMonth || formattedEndDate}`
       }
 
-      const response = await axios.get(urllink, {
+      const response = await axios.get (urllink, {
         responseType: 'blob', // Set the response type to blob
         headers: {
           'Content-Type': 'application/json',
@@ -30,32 +50,32 @@ function DownloadReport({
           Authorization: `Bearer ${token}`,
         },
       })
-      const blob = new Blob([response.data], {
+      const blob = new Blob ([response.data], {
         type: 'application/vnd.ms-excel',
       })
-      const url = URL.createObjectURL(blob)
-      const link = document.createElement('a')
+      const url = URL.createObjectURL (blob)
+      const link = document.createElement ('a')
       link.href = url
-      link.setAttribute('download', `${getOrder.name}.xlsx`)
-      link.click()
-      setIsTooltip(false)
+      link.setAttribute ('download', `${selectedAdvName}.xlsx`)
+      link.click ()
+      setIsTooltip (false)
       // fetchGetOrder()
       //   .then(() => {})
       //   .catch((error) => {
       //     console.error('Ошибка при получении данных заказа:', error)
       //   })
     } catch (error) {
-      console.error(error)
+      console.error (error)
     } finally {
-      setLoading(false)
+      setLoading (false)
     }
   }
 
   return (
     <>
-      <ButtonTable onClick={() => exportExcel(getOrder.id)} disabled={loading}>
+      <ButtonTable onClick={() => exportExcel (selectedAdv)} disabled={loading}>
         {loading ? (
-          <div className="loaderWrapper" style={{ height: '30px' }}>
+          <div className="loaderWrapper" style={{height: '30px'}}>
             <div
               className="spinner"
               style={{
@@ -67,7 +87,7 @@ function DownloadReport({
             ></div>
           </div>
         ) : (
-          <Download style={{ width: '25px', height: '30px' }} />
+          <Download style={{width: '25px', height: '30px'}}/>
         )}
       </ButtonTable>
     </>

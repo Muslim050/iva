@@ -217,7 +217,6 @@ function AdvertiserReportTable () {
                   setStartDate={setStartDate}
                   endDate={endDate}
                   setEndDate={setEndDate}
-                  setIsTooltip={setIsTooltip}
                   closeH={closeH}
                   advdata={advdata}
                   selectedOptionAdv={selectedOptionAdv}
@@ -240,6 +239,8 @@ function AdvertiserReportTable () {
                   startDateMonth={startDateMonth}
                   endDateMonth={endDateMonth}
                   selectedMonth={selectedMonth}
+                  setIsTooltip={setIsTooltip}
+                  tableData={tableData}
                 />
               </FilteredTooltipMain>
             </div>
@@ -284,7 +285,7 @@ function AdvertiserReportTable () {
                 {/* Ячейки с инфо Итого:	 */}
                 </thead>
               </table> :
-              <div style={{display: "flex", justifyContent: "center", fontWeight: "600", padding: "20% 0"}}>
+              <div style={{display: "flex", justifyContent: "center", fontWeight: "600", padding: "30% 0"}}>
                 Выберите параметры фильтра
               </div>
           }

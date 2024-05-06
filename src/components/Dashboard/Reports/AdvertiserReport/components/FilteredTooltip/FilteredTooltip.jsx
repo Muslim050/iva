@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import ButtonTable from "../../../../../UI/ButtonTable/ButtonTable";
 import {ReactComponent as Delete} from 'src/assets/Delete.svg'
 import ru from "date-fns/locale/ru";
+import DownloadReport from "../DownloadReport";
 
 function FilteredTooltip (
   {
@@ -15,6 +16,7 @@ function FilteredTooltip (
     endDate,
     closeH,
     advdata,
+    tableData,
     selectedOptionAdv,
     handleSelectChangeADV,
     handleClear,
@@ -27,9 +29,12 @@ function FilteredTooltip (
     setEndDateMonth,
     startDateMonth,
     endDateMonth,
+    selectedAdv,
     handleDateChange,
-    selectedMonth
+    selectedMonth,
+    setIsTooltip
   }) {
+  console.log (selectedAdv)
   return (
     <>
       {isTooltip && (
@@ -180,15 +185,18 @@ function FilteredTooltip (
               Сортировать
             </button>
             }
-            {/*{(startDate || endDate)*/}
-            {/*  ? <DownloadReport*/}
-            {/*    getOrder={getOrder}*/}
-            {/*    startDate={startDate}*/}
-            {/*    endDate={endDate}*/}
-            {/*    setIsTooltip={setIsTooltip}*/}
-            {/*    // fetchGetOrder={fetchGetOrder}*/}
-            {/*  /> : null*/}
-            {/*}*/}
+            {(startDate || endDate || endDateMonth || startDateMonth)
+              ? <DownloadReport
+                selectedAdv={selectedAdv}
+                selectedAdvName={selectedAdvName}
+                setIsTooltip={setIsTooltip}
+                tableData={tableData}
+                startDate={startDate}
+                endDate={endDate}
+                endDateMonth={endDateMonth}
+                startDateMonth={startDateMonth}
+              /> : null
+            }
             {(startDate || endDate || selectedAdvName) && (
               <div>
                 <ButtonTable

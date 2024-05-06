@@ -11,6 +11,8 @@ import {fetchOrder} from "src/redux/order/orderSlice";
 import {fetchComplitedInventory, fetchConfirmedIInventory, fetchInventory,} from "src/redux/inventory/inventorySlice";
 import {fetchChannel} from "src/redux/channel/channelSlice";
 import {fetchVideos} from "src/redux/video/videoSlice";
+import axios from "axios";
+import backendURL from "../../../utils/url";
 
 function Sidebar () {
   const [open, setOpen] = React.useState (false);
@@ -21,6 +23,7 @@ function Sidebar () {
   const {videos} = useSelector ((state) => state.video);
   const {сomplitedInventories} = useSelector ((state) => state.inventory);
   const {сonfirmedInventories} = useSelector ((state) => state.inventory);
+  const [filteredOrders, setFilteredOrders] = React.useState ('');
 
   const dispatch = useDispatch ();
   const navigate = useNavigate ();
@@ -40,9 +43,27 @@ function Sidebar () {
     setOpen (!open);
   };
 
+  const fetchfilteredOrders = async ({status}) => {
+    const token = localStorage.getItem ('token')
+    const response = await axios.get (
+      `${backendURL}/order/order-count-by-status/?status=${status}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    setFilteredOrders (response.data.data.count)
+  }
+  React.useEffect (() => {
+  },)
+
   React.useEffect (() => {
     if (user === "admin") {
-      dispatch (fetchOrder ());
+      // dispatch (fetchOrder ())
+      fetchfilteredOrders ({status: 'sent'})
       dispatch (fetchInventory ({status: "open"}));
       dispatch (fetchChannel ());
     }
@@ -64,11 +85,12 @@ function Sidebar () {
       dispatch (fetchComplitedInventory ());
       dispatch (fetchConfirmedIInventory ());
     }
+
   }, [dispatch]);
 
   // Админ
   const filteredInventory = inventory.filter ((i) => i.status === "open");
-  const filteredOrders = order.filter ((i) => i.status === "sent");
+  // const filteredOrders = order.filter ((i) => i.status === "sent");
   // Админ
 
   // Рекломадатели
@@ -328,8 +350,8 @@ function Sidebar () {
 
                 {user === "admin" && item.label === "Заказы" ? (
                   <>
-                    {filteredOrders.length > 0 && (
-                      <CircularBadge count={filteredOrders.length}/>
+                    {filteredOrders > 0 && (
+                      <CircularBadge count={filteredOrders}/>
                     )}
                   </>
                 ) : (

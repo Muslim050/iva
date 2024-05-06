@@ -1,28 +1,30 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import style from './FilteredTooltip.module.scss'
-import { ReactComponent as Close } from 'src/assets/Close.svg'
+
+import {ReactComponent as Close} from 'src/assets/Close.svg'
+import {ReactComponent as Delete} from 'src/assets/Delete.svg'
 import DownloadReport from '../DownloadReport'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
-function FilteredTooltip({
-  isTooltip,
-  handleDateStatictick,
-  startDate,
-  setStartDate,
-  endDate,
-  setEndDate,
-  setIsTooltip,
-  getOrder,
-  closeH,
-  fetchGetOrder,
-}) {
+function FilteredTooltip ({
+                            isTooltip,
+                            handleDateStatictick,
+                            startDate,
+                            setStartDate,
+                            endDate,
+                            setEndDate,
+                            setIsTooltip,
+                            getOrder,
+                            closeH,
+                            handleClear
+                          }) {
   const handleStartDateChange = (date) => {
-    setStartDate(date.toISOString().slice(0, 10)) // Преобразование даты в строку формата YYYY-MM-DD
+    setStartDate (date.toISOString ().slice (0, 10)) // Преобразование даты в строку формата YYYY-MM-DD
   }
 
   const handleEndDateChange = (date) => {
-    setEndDate(date.toISOString().slice(0, 10)) // Аналогично для конечной даты
+    setEndDate (date.toISOString ().slice (0, 10)) // Аналогично для конечной даты
   }
 
   return (
@@ -39,11 +41,11 @@ function FilteredTooltip({
             padding: '40px 14px 14px',
             borderRadius: '10px',
             zIndex: '2',
-            width: '200px',
+            width: '250px',
           }}
         >
           <button className={style.btn_filtered__close} onClick={closeH}>
-            <Close style={{ height: '30px' }} />
+            <Close style={{height: '30px'}}/>
           </button>
           <div
             style={{
@@ -61,13 +63,13 @@ function FilteredTooltip({
               Дата начало
             </label>
             <DatePicker
-              selected={startDate ? new Date(startDate) : null}
+              selected={startDate ? new Date (startDate) : null}
               onChange={handleStartDateChange}
               selectsStart
-              startDate={startDate ? new Date(startDate) : null}
-              endDate={endDate ? new Date(endDate) : null}
-              minDate={new Date(startDate)} // Устанавливаем minDate равным startDate
-              maxDate={new Date(endDate)} // Устанавливаем maxDate равным endDate
+              startDate={startDate ? new Date (startDate) : null}
+              endDate={endDate ? new Date (endDate) : null}
+              minDate={new Date (startDate)} // Устанавливаем minDate равным startDate
+              maxDate={new Date (endDate)} // Устанавливаем maxDate равным endDate
               className={style.input}
             />
           </div>
@@ -89,32 +91,47 @@ function FilteredTooltip({
               Дата конец
             </label>
             <DatePicker
-              selected={endDate ? new Date(endDate) : null}
+              selected={endDate ? new Date (endDate) : null}
               onChange={handleEndDateChange}
               selectsEnd
-              startDate={startDate ? new Date(startDate) : null}
-              endDate={endDate ? new Date(endDate) : null}
-              minDate={new Date(startDate)} // Устанавливаем minDate равным startDate
-              maxDate={new Date(endDate)} // Устанавливаем maxDate равным endDate
+              startDate={startDate ? new Date (startDate) : null}
+              endDate={endDate ? new Date (endDate) : null}
+              minDate={new Date (startDate)} // Устанавливаем minDate равным startDate
+              maxDate={new Date (endDate)} // Устанавливаем maxDate равным endDate
               className={style.input}
             />
           </div>
 
-          <div style={{ display: 'flex', marginTop: '10px' }}>
+
+          <div style={{display: 'flex', marginTop: '10px', gap: '10px'}}>
             <button
               className={style.btn_filtered}
               onClick={handleDateStatictick}
             >
               Сортировать
             </button>
+
+
+            <button
+              onClick={handleClear}
+              className={style.btn_filtered}
+            >
+              <Delete style={{width: '23px', height: '23px'}}/>
+            </button>
+
             <DownloadReport
               getOrder={getOrder}
               startDate={startDate}
               endDate={endDate}
               setIsTooltip={setIsTooltip}
-              fetchGetOrder={fetchGetOrder}
             />
           </div>
+
+
+          {/*<div style={{width: '100%'}}>*/}
+
+
+          {/*</div>*/}
         </div>
       )}
     </>
