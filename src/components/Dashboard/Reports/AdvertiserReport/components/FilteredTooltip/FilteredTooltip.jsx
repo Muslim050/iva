@@ -34,7 +34,6 @@ function FilteredTooltip (
     selectedMonth,
     setIsTooltip
   }) {
-  console.log (selectedAdv)
   return (
     <>
       {isTooltip && (

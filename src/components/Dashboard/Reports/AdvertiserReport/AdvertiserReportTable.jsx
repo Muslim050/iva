@@ -36,7 +36,6 @@ function AdvertiserReportTable () {
   const [dateRange, setDateRange] = React.useState ([]);
   const [selectedMonth, setSelectedMonth] = React.useState ('');
 
-  console.log ("data", data)
 
   React.useEffect (() => {
     setStartDateMonth (dateRange[0]);
@@ -139,7 +138,6 @@ function AdvertiserReportTable () {
     dispatch (clearStatistics ());
 
   }
-
   const handleStartDateChange = (date) => {
     setStartDate (date) // Keep the Date object for DatePicker
   }
@@ -151,7 +149,6 @@ function AdvertiserReportTable () {
   let totalBudget = 0
   let totalAnalitickView = 0
   let tableData = [];
-
 
   return (
     <>
@@ -189,24 +186,77 @@ function AdvertiserReportTable () {
                   >
                     Выбранный период
                     <div style={{marginTop: '4px'}}>
-                      {startDate && new Date (startDate).toLocaleDateString ('ru-RU', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                      })}
-
+                      {startDate && (
+                        <>
+                          {startDate
+                            .toLocaleDateString ('en-GB')
+                            .replaceAll ('/', '-')}
+                        </>
+                      )}
                       &nbsp;
-
-                      {endDate && new Date (endDate).toLocaleDateString ('ru-RU', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                      })
-                      }
+                      {endDate && (
+                        <>
+                          {endDate
+                            .toLocaleDateString ('en-GB')
+                            .replaceAll ('/', '-')}
+                        </>
+                      )}
                     </div>
                   </div>
-
-
+                </div>
+              )}
+              {(startDateMonth || endDateMonth) && (
+                <div
+                  style={{
+                    padding: '10px',
+                    borderRadius: '8px',
+                    background: '#FEF5EA',
+                    border: '1px solid #ffd8a9',
+                    marginRight: '5px',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: '13px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    Месяц
+                    <div style={{marginTop: '4px'}}>
+                      {selectedMonth ? selectedMonth.toLocaleString ('ru-RU', {month: 'long'}).toLowerCase () : "All"}
+                    </div>
+                  </div>
+                </div>
+              )}
+              {(selectedAdvName) && (
+                <div
+                  style={{
+                    padding: '10px',
+                    borderRadius: '8px',
+                    background: '#FEF5EA',
+                    border: '1px solid #ffd8a9',
+                    marginRight: '5px',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: '13px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    Выбранный Рекламадатель
+                    <div style={{marginTop: '4px'}}>
+                      {selectedAdvName}
+                    </div>
+                  </div>
                 </div>
               )}
               <FilteredTooltipMain handleProfileClick={handleProfileClick}>

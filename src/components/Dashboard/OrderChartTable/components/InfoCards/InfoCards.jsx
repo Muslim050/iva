@@ -80,7 +80,7 @@ export function InfoCardsBottom ({
                 data={getOrder.expected_number_of_views - getOrder.online_views}
               /> :
               <FormatterView
-                data='0'
+                data={getOrder.expected_number_of_views - totalViews}
               />
 
             }
@@ -211,21 +211,7 @@ export function InfoCardsBottom ({
               ' ' +
               '%'}
           </div>}
-          {/*{getOrder.status === 'finished' ? (*/}
-          {/*  <div*/}
-          {/*    style={{*/}
-          {/*      padding: '3px 4px',*/}
-          {/*      borderRadius: '7px',*/}
-          {/*      background: 'rgb(156 81 81)',*/}
-          {/*      color: '#eedede',*/}
-          {/*      marginTop: '8px',*/}
-          {/*      display: 'flex',*/}
-          {/*      justifyContent: 'center',*/}
-          {/*    }}*/}
-          {/*  >*/}
-          {/*    100%*/}
-          {/*  </div>*/}
-          {/*) : null}*/}
+
 
         </div>
       </th>
