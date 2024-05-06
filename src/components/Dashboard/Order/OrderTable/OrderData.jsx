@@ -291,17 +291,9 @@ function OrderData ({sortedData}) {
                 {advert.is_paid === true ? (
                   <div></div>
                 ) : (
-                  advert.status === 'finished' ? (
-                      <FormatterView
-                        data='0'
-                      />
-                    ) :
-
-                    <FormatterView
-                      data={advert.expected_number_of_views - advert.online_views}
-                    />
-
-
+                  <FormatterView
+                    data={advert.expected_number_of_views - advert.online_views}
+                  />
                 )}
               </td>
 
