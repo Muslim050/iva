@@ -1,6 +1,6 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 import backendURL from 'src/utils/url'
 
 const initialState = {
@@ -8,15 +8,16 @@ const initialState = {
   status: 'idle',
   error: null,
   publisherReport: [],
+  publisherReportExport: [],
 }
 
-export const fetchPublisher = createAsyncThunk (
+export const fetchPublisher = createAsyncThunk(
   'publisher/fetchPublisher',
-  async (_, {getState}) => {
+  async (_, { getState }) => {
     // const token = localStorage.getItem("token");
-    const token = localStorage.getItem ('token')
+    const token = localStorage.getItem('token')
     try {
-      const response = await axios.get (
+      const response = await axios.get(
         `${backendURL}/publisher/`,
 
         {
@@ -36,23 +37,23 @@ export const fetchPublisher = createAsyncThunk (
       if (error.response && error.response.data && error.response.data.error) {
         const errorMessage = error.response.data.error
         if (errorMessage.detail) {
-          toast.error (errorMessage.detail) // Отображение деталей ошибки с помощью toast
+          toast.error(errorMessage.detail) // Отображение деталей ошибки с помощью toast
         }
       } else {
-        toast.error ('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
+        toast.error('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
       }
       throw error
     }
   },
 )
 
-export const addPublisher = createAsyncThunk (
+export const addPublisher = createAsyncThunk(
   'publisher/addPublisher',
-  async ({data}) => {
-    const token = localStorage.getItem ('token')
+  async ({ data }) => {
+    const token = localStorage.getItem('token')
 
     try {
-      const response = await axios.post (
+      const response = await axios.post(
         `${backendURL}/publisher/`,
         {
           name: data.name,
@@ -72,51 +73,49 @@ export const addPublisher = createAsyncThunk (
       if (error.response && error.response.data && error.response.data.error) {
         const errorMessage = error.response.data.error
         if (errorMessage.detail) {
-          toast.error (errorMessage.detail) // Отображение деталей ошибки с помощью toast
+          toast.error(errorMessage.detail) // Отображение деталей ошибки с помощью toast
         }
       } else {
-        toast.error ('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
+        toast.error('Ошибка при загрузке') // Общее сообщение об ошибке, если детали не доступны
       }
       throw error
     }
   },
 )
 
-export const addPublisherReport = createAsyncThunk (
+export const addPublisherReport = createAsyncThunk(
   'publisher/addPublisherReport',
-  async ({id, startDate, endDate, format, advertiser, publisher}) => {
-    const token = localStorage.getItem ('token')
-    let url = new URL (`${backendURL}/publisher/report/`)
-    const params = new URLSearchParams ()
+  async ({ id, startDate, endDate, format, advertiser, publisher }) => {
+    const token = localStorage.getItem('token')
+    let url = new URL(`${backendURL}/publisher/report/`)
+    const params = new URLSearchParams()
     if (id) {
-      params.append ('channel_id', id)
+      params.append('channel_id', id)
     }
     if (startDate) {
-      params.append ('start_date', startDate)
+      params.append('start_date', startDate)
     }
     if (endDate) {
-      params.append ('end_date', endDate)
+      params.append('end_date', endDate)
     }
     if (format) {
-      params.append ('order_format', format)
+      params.append('order_format', format)
     }
     if (advertiser) {
-      params.append ('advertiser_id', advertiser)
+      params.append('advertiser_id', advertiser)
     }
     if (publisher) {
-      params.append ('publisher_id', publisher)
+      params.append('publisher_id', publisher)
     }
 
-
-    url.search = params.toString ()
+    url.search = params.toString()
     try {
-      const response = await axios.get (url.href, {
+      const response = await axios.get(url.href, {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
           Authorization: `Bearer ${token}`,
         },
-
       })
 
       return response.data.data
@@ -126,12 +125,12 @@ export const addPublisherReport = createAsyncThunk (
   },
 )
 
-export const deletePublisher = createAsyncThunk (
+export const deletePublisher = createAsyncThunk(
   'publisher/deletePublisher',
   async (userId) => {
-    const token = localStorage.getItem ('token')
+    const token = localStorage.getItem('token')
 
-    await axios.delete (`${backendURL}/publisher/${userId}/`, {
+    await axios.delete(`${backendURL}/publisher/${userId}/`, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -142,59 +141,48 @@ export const deletePublisher = createAsyncThunk (
   },
 )
 
-const publisherSlice = createSlice ({
+const publisherSlice = createSlice({
   name: 'publisher',
   initialState,
   reducers: {
-    resetPublisherReport (state) {
+    resetPublisherReport(state) {
       state.publisherReport = [] // Resets to an empty array
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase (fetchPublisher.pending, (state) => {
+      .addCase(fetchPublisher.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase (fetchPublisher.fulfilled, (state, action) => {
+      .addCase(fetchPublisher.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.publisher = action.payload
       })
-      .addCase (fetchPublisher.rejected, (state, action) => {
+      .addCase(fetchPublisher.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
-      .addCase (addPublisher.fulfilled, (state, action) => {
-        state.publisher.push (action.payload.data)
+      .addCase(addPublisher.fulfilled, (state, action) => {
+        state.publisher.push(action.payload.data)
       })
-      .addCase (deletePublisher.fulfilled, (state, action) => {
-        state.publisher = state.publisher.filter (
+      .addCase(deletePublisher.fulfilled, (state, action) => {
+        state.publisher = state.publisher.filter(
           (user) => user.id !== action.payload,
         )
       })
-      .addCase (addPublisherReport.pending, (state) => {
+      .addCase(addPublisherReport.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase (addPublisherReport.fulfilled, (state, action) => {
+      .addCase(addPublisherReport.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.publisherReport = action.payload
       })
-      .addCase (addPublisherReport.rejected, (state, action) => {
+      .addCase(addPublisherReport.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
-
-    // .addCase(updateUser.fulfilled, (state, action) => {
-    //   const { id, firstName, lastName, email } = action.payload;
-    //   const user = state.users.find((user) => user.id === id);
-    //   if (user) {
-    //     user.firstName = firstName;
-    //     user.lastName = lastName;
-    //     user.email = email;
-    //   }
-    //   state.userToEdit = null;
-    // })
   },
 })
-export const {resetPublisherReport} = publisherSlice.actions
+export const { resetPublisherReport } = publisherSlice.actions
 
 export default publisherSlice.reducer

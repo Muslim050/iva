@@ -43,9 +43,6 @@ const store = configureStore({
     revenue: revenueSlice,
     modal: modalSlice,
   },
-  // middleware: (getDefaultMiddleware) =>
-  //   getDefaultMiddleware().concat(authMiddleware),
 })
-// store.dispatch(refreshAccessToken());
 
 export default store

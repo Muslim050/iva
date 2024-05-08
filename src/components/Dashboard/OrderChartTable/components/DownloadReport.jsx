@@ -33,6 +33,7 @@ function DownloadReport({
       const blob = new Blob([response.data], {
         type: 'application/vnd.ms-excel',
       })
+      console.log(blob)
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
