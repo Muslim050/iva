@@ -74,6 +74,10 @@ function ChannelTable() {
     <>
       {loading ? (
         <div className="loaderWrapper">
+          <div style={{ color: 'var(--text-color, )' }}>
+            {' '}
+            Загрузка каналов &nbsp;
+          </div>
           <div className="spinner"></div>
         </div>
       ) : (

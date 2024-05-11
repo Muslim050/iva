@@ -269,9 +269,6 @@ function PublisherReportTable() {
           <div className="tableWrapper__table_title">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               Отчет-Паблишера &nbsp;
-              <ButtonTable onClick={handleReload}>
-                <Reload style={{ width: '23px', height: '23px' }} />
-              </ButtonTable>
             </div>
 
             <div
@@ -645,7 +642,7 @@ function PublisherReportTable() {
           ) : (
             <>
               <div className="empty_list">
-                Установите фильтр или по данным параметрам не найдены данные!
+                Установите фильтр для отображение данных!
               </div>
             </>
           )}

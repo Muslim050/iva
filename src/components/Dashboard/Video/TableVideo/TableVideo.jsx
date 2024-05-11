@@ -84,6 +84,10 @@ function TableVideo({ setShowModal }) {
       </AnimatePresence>
       {loading ? (
         <div className="loaderWrapper">
+          <div style={{ color: 'var(--text-color, )' }}>
+            {' '}
+            Загрузка видео &nbsp;
+          </div>
           <div className="spinner"></div>
         </div>
       ) : (

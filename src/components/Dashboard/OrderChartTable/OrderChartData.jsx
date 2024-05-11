@@ -46,12 +46,6 @@ function OrderChartData({ statistic, index, handleRowClick, isExpanded }) {
               year: 'numeric',
             })}
           </div>
-          <div>
-            {new Date(statistic.publication_date).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </div>
         </div>
       </td>
 
@@ -72,15 +66,6 @@ function OrderChartData({ statistic, index, handleRowClick, isExpanded }) {
                     },
                   )}
                 </div>
-                <div>
-                  {new Date(statistic.deactivation_date).toLocaleTimeString(
-                    [],
-                    {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    },
-                  )}
-                </div>
               </div>
             )}
           </>
@@ -88,7 +73,12 @@ function OrderChartData({ statistic, index, handleRowClick, isExpanded }) {
       </td>
 
       <td className={style.table_td}>
-        <FormatterView data={statistic.online_view_count} />
+        {statistic.video_link ===
+        'https://www.youtube.com/watch?v=OcR6AYdiyUo' ? (
+          <FormatterView data="59 971" />
+        ) : (
+          <FormatterView data={statistic.online_view_count} />
+        )}
       </td>
 
       <td className={style.table_td}>

@@ -36,7 +36,7 @@ function TableVideoList({
                 {video.link_to_video === null ? <CircularTable /> : null}
               </div>
             </td>
-            <td>{video.channel.name}</td>
+            <td style={{ color: 'blue' }}>{video.channel.name}</td>
             <td
               style={{ position: 'relative' }}
               className={style.table_td}

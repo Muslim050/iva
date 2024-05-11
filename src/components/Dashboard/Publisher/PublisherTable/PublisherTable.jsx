@@ -1,81 +1,85 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPublisher } from "../../../../redux/publisher/publisherSlice";
-import style from "./PublisherTable.module.scss";
-import ButtonTable from "src/components/UI/ButtonTable/ButtonTable";
-import { showModalPablisher } from "src/redux/modalSlice";
-import { ReactComponent as Add } from "src/assets/Table/add.svg";
-import { SortButton } from "src/utils/SortButton";
-import { sortData } from "src/utils/SortData";
-import FormatterPhone from "src/components/UI/formatter/FormatterPhone";
-import { ReactComponent as Reload } from "src/assets/Table/reload.svg";
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchPublisher } from '../../../../redux/publisher/publisherSlice'
+import style from './PublisherTable.module.scss'
+import ButtonTable from 'src/components/UI/ButtonTable/ButtonTable'
+import { showModalPablisher } from 'src/redux/modalSlice'
+import { ReactComponent as Add } from 'src/assets/Table/add.svg'
+import { SortButton } from 'src/utils/SortButton'
+import { sortData } from 'src/utils/SortData'
+import FormatterPhone from 'src/components/UI/formatter/FormatterPhone'
+import { ReactComponent as Reload } from 'src/assets/Table/reload.svg'
 
 const headers = [
-  { key: "id", label: "№" },
-  { key: "name", label: "Имя" },
-  { key: "email", label: "Email" },
-  { key: "phone_number", label: "Номер телефона" },
-];
+  { key: 'id', label: '№' },
+  { key: 'name', label: 'Имя' },
+  { key: 'email', label: 'Email' },
+  { key: 'phone_number', label: 'Номер телефона' },
+]
 
 function PublisherTable() {
-  const dispatch = useDispatch();
-  const data = useSelector((state) => state.publisher.publisher);
-  const user = localStorage.getItem("role");
-  const [sortKey, setSortKey] = React.useState("last_name");
-  const [sort, setSort] = React.useState("ascn");
-  const [loading, setLoading] = React.useState(true);
+  const dispatch = useDispatch()
+  const data = useSelector((state) => state.publisher.publisher)
+  const user = localStorage.getItem('role')
+  const [sortKey, setSortKey] = React.useState('last_name')
+  const [sort, setSort] = React.useState('ascn')
+  const [loading, setLoading] = React.useState(true)
   React.useEffect(() => {
-    dispatch(fetchPublisher()).then(() => setLoading(false));
-  }, [dispatch]);
+    dispatch(fetchPublisher()).then(() => setLoading(false))
+  }, [dispatch])
 
   const sortedData = React.useCallback(
     () =>
       sortData({
         tableData: data,
         sortKey,
-        reverse: sort === "desc",
+        reverse: sort === 'desc',
       }),
-    [data, sortKey, sort]
-  );
+    [data, sortKey, sort],
+  )
   function changeSort(key) {
-    setSort(sort === "ascn" ? "desc" : "ascn");
-    setSortKey(key);
+    setSort(sort === 'ascn' ? 'desc' : 'ascn')
+    setSortKey(key)
   }
 
   const handleButtonClick = () => {
-    dispatch(showModalPablisher());
-  };
+    dispatch(showModalPablisher())
+  }
   const handleReload = () => {
-    dispatch(fetchPublisher());
-  };
+    dispatch(fetchPublisher())
+  }
   return (
     <>
       {loading ? (
         <div className="loaderWrapper">
+          <div style={{ color: 'var(--text-color, )' }}>
+            {' '}
+            Загрузка паблишеров &nbsp;
+          </div>
           <div className="spinner"></div>
         </div>
       ) : (
         <div className="tableWrapper">
           <div className="tableWrapper__table_title">
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
               Паблишеры &nbsp;
               <ButtonTable onClick={handleReload}>
-                <Reload style={{ width: "23px", height: "23px" }} />
+                <Reload style={{ width: '23px', height: '23px' }} />
               </ButtonTable>
             </div>
 
-            {user === "publisher" ? (
-              ""
+            {user === 'publisher' ? (
+              ''
             ) : (
               <ButtonTable onClick={handleButtonClick}>
-                <Add style={{ width: "25px", marginRight: "12px" }} />
+                <Add style={{ width: '25px', marginRight: '12px' }} />
                 Создать паблишера
               </ButtonTable>
             )}
           </div>
 
           {data && data ? (
-            <table style={{ width: "100%" }}>
+            <table style={{ width: '100%' }}>
               <thead>
                 <tr>
                   {headers.map((row) => {
@@ -89,7 +93,7 @@ function PublisherTable() {
                           sortKey={sortKey}
                         />
                       </th>
-                    );
+                    )
                   })}
                 </tr>
               </thead>
@@ -104,7 +108,7 @@ function PublisherTable() {
                         <FormatterPhone phoneNumber={pablisher.phone_number} />
                       </td>
                     </tr>
-                  );
+                  )
                 })}
               </tbody>
             </table>
@@ -116,7 +120,7 @@ function PublisherTable() {
         </div>
       )}
     </>
-  );
+  )
 }
 
-export default PublisherTable;
+export default PublisherTable
