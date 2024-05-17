@@ -6,11 +6,12 @@ import BindingOrderTable from '../BindingOrder/BindingOrderTable/BindingOrderTab
 import FormatterBudjet from '../../../UI/formatter/FormatterBudjet'
 import style from './OrderTable.module.scss'
 import {ReactComponent as Arrow} from 'src/assets/Table/arrow.svg'
-import {ReactComponent as File} from 'src/assets/Table/file.svg'
 import {ReactComponent as Finish} from 'src/assets/Table/Finish.svg'
 import {ReactComponent as Chart} from 'src/assets/Table/Chart.svg'
 import {ReactComponent as Edit} from 'src/assets/Table/Edit.svg'
 import {ReactComponent as Comment} from 'src/assets/Table/comment.svg'
+import {ReactComponent as Video} from 'src/assets/Table/video.svg'
+
 import MyModal from '../../../UI/ModalComponents/ModalUI/ModalUI'
 import AdvertStatus from 'src/components/UI/AdvertStatus/AdvertStatus'
 import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
@@ -146,12 +147,12 @@ function OrderData ({sortedData}) {
                     className={style.fileWrapper}
                     rel="noreferrer"
                   >
-                    Ролик
-                    <File
+
+                    <Video
                       style={{
-                        width: '18px',
-                        height: '18px',
-                        marginLeft: '5px',
+                        width: '32px',
+                        height: '32px',
+
                       }}
                     />
                   </a>

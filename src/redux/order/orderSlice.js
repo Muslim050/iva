@@ -68,7 +68,7 @@ export const fetchConfirmedOrder = createAsyncThunk (
 
 export const addOrder = createAsyncThunk ('order/addOrder', async ({data}) => {
   const token = localStorage.getItem ('token')
-
+  console.log ("data", data)
   try {
     const response = await axios.post (
       `${backendURL}/order/`,
@@ -82,6 +82,7 @@ export const addOrder = createAsyncThunk ('order/addOrder', async ({data}) => {
         budget: data.budgett,
         promo_file: data.selectedFile[0],
         notes: data.notes,
+        target_country: data.target_country
       },
       {
         headers: {

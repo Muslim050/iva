@@ -38,6 +38,7 @@
     width: 100%;
     padding: 10px;
   }
+
   input::placeholder {
     color: var(--tablelabel-color);
   }
@@ -46,6 +47,7 @@
     padding-left: 80px;
     cursor: pointer;
   }
+
   textarea::placeholder {
     color: var(--tablelabel-color);
   }
@@ -221,4 +223,57 @@
       -webkit-transform: rotate(360deg);
     }
   }
+}
+
+.checkboxI {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  width: 185px;
+  color: var(--text-color);
+}
+
+/* Hide the default checkbox */
+.checkboxI input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  display: inline-block;
+  width: 22px;
+  height: 20px;
+  background-color: #eee;
+  border-radius: 4px;
+  position: relative;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkboxI input[type='checkbox']:checked + .checkmark {
+  background-color: #5570f1;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+  left: 7px;
+  top: 2.5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* Show the checkmark when checked */
+.checkboxI input[type='checkbox']:checked + .checkmark:after {
+  display: block;
 }

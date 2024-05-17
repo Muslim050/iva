@@ -2,53 +2,52 @@ import React from 'react'
 import style from './TableInventory.module.scss'
 import CircularTable from 'src/components/UI/Circular/CircularTable'
 import CircularBadge from 'src/components/UI/Circular/CircularBadge'
-import FormatterTime from '../../../UI/formatter/FormatterTime'
 import FormatterView from '../../../UI/formatter/FormatterView'
 import AdvertStatus from 'src/components/UI/AdvertStatus/AdvertStatus'
-import { ReactComponent as Arrow } from 'src/assets/Table/arrow.svg'
+import {ReactComponent as Arrow} from 'src/assets/Table/arrow.svg'
 import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
-import { ReactComponent as Edit } from 'src/assets/Table/Edit.svg'
+import {ReactComponent as Edit} from 'src/assets/Table/Edit.svg'
 import BindingInventoryOrderTable from '../BindingInventoryOrderTable/BindingInventoryOrderTable'
 
-function TableInventoryData({
-  sortedData,
-  setShowModalEditAdmin,
-  setCurrentOrder,
-}) {
-  const user = localStorage.getItem('role')
-  const [expandedRows, setExpandedRows] = React.useState('')
-  const [activeTooltip, setActiveTooltip] = React.useState(null)
-  const [activeTooltipp, setActiveTooltipp] = React.useState(null)
+function TableInventoryData ({
+                               sortedData,
+                               setShowModalEditAdmin,
+                               setCurrentOrder,
+                             }) {
+  const user = localStorage.getItem ('role')
+  const [expandedRows, setExpandedRows] = React.useState ('')
+  const [activeTooltip, setActiveTooltip] = React.useState (null)
+  const [activeTooltipp, setActiveTooltipp] = React.useState (null)
 
   const handleRowClick = (id) => {
-    setExpandedRows(id === expandedRows ? false : id)
+    setExpandedRows (id === expandedRows ? false : id)
   }
   return (
     <>
-      {sortedData().map((inventor, i) => (
+      {sortedData ().map ((inventor, i) => (
         <>
           <tr className={style.table__tr}>
             <td className={style.table_td}>
-              <div style={{ display: 'flex' }}>
+              <div style={{display: 'flex'}}>
                 <div>{i + 1}</div>
                 {user === 'publisher' || user === 'channel' ? (
                   <>
                     {inventor.status === 'pre_booked' ? (
-                      <CircularTable />
+                      <CircularTable/>
                     ) : null}
                   </>
                 ) : null}
 
                 {user === 'admin' ? (
-                  <>{inventor.status === 'open' ? <CircularTable /> : null}</>
+                  <>{inventor.status === 'open' ? <CircularTable/> : null}</>
                 ) : null}
               </div>
             </td>
             <td
-              style={{ position: 'relative' }}
+              style={{position: 'relative'}}
               className={style.table_td}
-              onMouseEnter={() => setActiveTooltip(i)}
-              onMouseLeave={() => setActiveTooltip(null)}
+              onMouseEnter={() => setActiveTooltip (i)}
+              onMouseLeave={() => setActiveTooltip (null)}
             >
               {inventor.channel === null ? '' : inventor.channel.name}
               {user === 'admin' && (
@@ -63,10 +62,10 @@ function TableInventoryData({
             </td>
 
             <td
-              style={{ position: 'relative' }}
+              style={{position: 'relative'}}
               className={style.table_td}
-              onMouseEnter={() => setActiveTooltip(i)}
-              onMouseLeave={() => setActiveTooltip(null)}
+              onMouseEnter={() => setActiveTooltip (i)}
+              onMouseLeave={() => setActiveTooltip (null)}
             >
               {inventor.video_content?.name}
               {user === 'admin' && (
@@ -80,7 +79,7 @@ function TableInventoryData({
               )}
             </td>
             {/**/}
-            <td className={style.table_td}>
+            <td className={style.table_td} style={{color: 'blue'}}>
               {(inventor.format === 'preroll' && 'Pre-roll') ||
                 (inventor.format === 'midroll1' && 'Mid-roll 1') ||
                 (inventor.format === 'midroll2' && 'Mid-roll 2') ||
@@ -89,16 +88,16 @@ function TableInventoryData({
             </td>
 
             <td className={style.table_td}>
-              <FormatterView data={inventor.expected_number_of_views} />
+              <FormatterView data={inventor.expected_number_of_views}/>
             </td>
 
-            <td className={style.table_td} style={{ color: 'blue' }}>
+            <td className={style.table_td}>
               {inventor.video_content?.category}
             </td>
             <td className={style.table_td}>
-              {new Date(inventor.video_content?.publication_time)
-                .toLocaleDateString('en-GB')
-                .replace(/\//g, '.')}
+              {new Date (inventor.video_content?.publication_time)
+                .toLocaleDateString ('en-GB')
+                .replace (/\//g, '.')}
             </td>
             <td className={style.table_td}>
               <div>
@@ -114,8 +113,8 @@ function TableInventoryData({
               <td className={style.table_td}>
                 <button
                   className={style.dopBtn}
-                  onClick={() => handleRowClick(inventor.id)}
-                  style={{ position: 'relative' }}
+                  onClick={() => handleRowClick (inventor.id)}
+                  style={{position: 'relative'}}
                 >
                   Открыть
                   <span className={style.arrow}>
@@ -141,7 +140,7 @@ function TableInventoryData({
               </td>
             ) : null}
             <td className={style.table_td}>
-              <FormatterView data={inventor.online_views} />
+              <FormatterView data={inventor.online_views}/>
             </td>
 
             <td>
@@ -151,8 +150,8 @@ function TableInventoryData({
               inventor.status === 'open' ? (
                 <ButtonBorder
                   onClick={() => {
-                    setShowModalEditAdmin(true)
-                    setCurrentOrder(inventor)
+                    setShowModalEditAdmin (true)
+                    setCurrentOrder (inventor)
                   }}
                 >
                   <Edit
@@ -176,7 +175,7 @@ function TableInventoryData({
               >
                 {/* <div className={style.status__wrapper}>{advert.status}</div> */}
 
-                <BindingInventoryOrderTable expandedRows={expandedRows} />
+                <BindingInventoryOrderTable expandedRows={expandedRows}/>
               </td>
             </tr>
           )}

@@ -1,47 +1,48 @@
 import React from 'react'
 import style from './TableVideo.module.scss'
-import { ReactComponent as Link } from 'src/assets/link.svg'
-import { ReactComponent as LinkVideo } from 'src/assets/linkVideo.svg'
-import { useDispatch } from 'react-redux'
-import { showModalVideoLinked } from 'src/redux/modalSlice'
+import {ReactComponent as Link} from 'src/assets/link.svg'
+import {ReactComponent as LinkVideo} from 'src/assets/linkVideo.svg'
+import {useDispatch} from 'react-redux'
+import {showModalVideoLinked} from 'src/redux/modalSlice'
 import FormatterTime from 'src/components/UI/formatter/FormatterTime'
 import CircularTable from 'src/components/UI/Circular/CircularTable'
 import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
-import { ReactComponent as Edit } from 'src/assets/Table/Edit.svg'
+import {ReactComponent as Edit} from 'src/assets/Table/Edit.svg'
 
-function TableVideoList({
-  sortedData,
-  inventoryPublish,
-  setCurrentOrder,
-  setShowModalEditAdmin,
-}) {
-  const user = localStorage.getItem('role')
-  const [activeTooltip, setActiveTooltip] = React.useState(null)
+function TableVideoList ({
+                           sortedData,
+                           inventoryPublish,
+                           setCurrentOrder,
+                           setShowModalEditAdmin,
+                         }) {
+  const user = localStorage.getItem ('role')
+  const [activeTooltip, setActiveTooltip] = React.useState (null)
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch ()
   const linkedVideo = (id) => {
-    dispatch(showModalVideoLinked())
-    inventoryPublish(id)
+    dispatch (showModalVideoLinked ())
+    inventoryPublish (id)
   }
 
   return (
     <>
-      {sortedData().map((video, i) => (
+      {sortedData ().map ((video, i) => (
         <>
           <tr>
             <td className={style.table_td}>
-              <div style={{ display: 'flex' }}>
+              <div style={{display: 'flex'}}>
                 <div>{i + 1}</div>
 
-                {video.link_to_video === null ? <CircularTable /> : null}
+                {video.link_to_video === null ? <CircularTable/> : null}
               </div>
             </td>
-            <td style={{ color: 'blue' }}>{video.channel.name}</td>
+            <td>{video.channel.name}</td>
             <td
-              style={{ position: 'relative' }}
+              style={{position: 'relative', color: 'blue'}}
+
               className={style.table_td}
-              onMouseEnter={() => setActiveTooltip(i)}
-              onMouseLeave={() => setActiveTooltip(null)}
+              onMouseEnter={() => setActiveTooltip (i)}
+              onMouseLeave={() => setActiveTooltip (null)}
             >
               {video.name}
               {user === 'admin' && (
@@ -57,16 +58,16 @@ function TableVideoList({
             {/* <td>{video.name}</td> */}
             <td>{video.category}</td>
             <td>
-              {new Date(video.publication_time)
-                .toLocaleDateString('en-GB')
-                .replace(/\//g, '.')}
+              {new Date (video.publication_time)
+                .toLocaleDateString ('en-GB')
+                .replace (/\//g, '.')}
             </td>
 
             <td>
-              <FormatterTime data={video.duration} />
+              <FormatterTime data={video.duration}/>
             </td>
 
-            <td style={{ display: 'flex', alignItems: 'center' }}>
+            <td style={{display: 'flex', alignItems: 'center'}}>
               {video.link_to_video === null ? (
                 <button
                   style={{
@@ -75,7 +76,7 @@ function TableVideoList({
                     justifyContent: 'center',
                   }}
                   className={style.linkVideo}
-                  onClick={() => linkedVideo(video.id)}
+                  onClick={() => linkedVideo (video.id)}
                 >
                   <LinkVideo
                     style={{
@@ -109,11 +110,11 @@ function TableVideoList({
                 </a>
               )}
               {user === 'admin' && !video.link_to_video ? (
-                <div style={{ display: 'flow' }}>
+                <div style={{display: 'flow'}}>
                   <ButtonBorder
                     onClick={() => {
-                      setShowModalEditAdmin(true)
-                      setCurrentOrder(video)
+                      setShowModalEditAdmin (true)
+                      setCurrentOrder (video)
                     }}
                   >
                     <Edit

@@ -32,6 +32,9 @@ export default function AdvertiserModal () {
       agency: '',
       cpm_mixroll: '',
       cpm_preroll: '',
+      cpm_preroll_uz: '',
+      cpm_mixroll_uz: '',
+
     },
     mode: 'onBlur',
   })
@@ -83,9 +86,9 @@ export default function AdvertiserModal () {
     if (adv) {
       toast.success ('Рекламадатель успешно создан!', toastConfig)
       dispatch (hideModalAdvertiser ())
-      setTimeout (() => {
-        window.location.reload ()
-      }, 1500)
+      // setTimeout (() => {
+      //   window.location.reload ()
+      // }, 1500)
     } else {
       toast.error ('Что то пошло не так!', toastConfig)
     }
@@ -163,6 +166,36 @@ export default function AdvertiserModal () {
                   register={register}
                   name="cpm_mixroll"
                   errors={errors.cpm_mixroll}
+                />
+              </div>
+            </div>
+          }
+
+          {
+            role === 'admin' && <div style={{display: 'flex', justifyContent: 'space-between'}}>
+              <div>
+                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
+                  Target Preroll
+                </label>
+                <InputUI
+                  type="text"
+                  autoComplete="off"
+                  register={register}
+                  name="cpm_preroll_uz"
+                  errors={errors.cpm_preroll_uz}
+                />
+              </div>
+
+              <div>
+                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
+                  Target Mixroll
+                </label>
+                <InputUI
+                  type="text"
+                  autoComplete="off"
+                  register={register}
+                  name="cpm_mixroll_uz"
+                  errors={errors.cpm_mixroll_uz}
                 />
               </div>
             </div>
