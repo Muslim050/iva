@@ -1,23 +1,23 @@
-import React from "react";
-import { ReactComponent as Email } from "../../assets/InputIcon/Message.svg";
-import { ReactComponent as Lock } from "../../assets/InputIcon/Lock.svg";
-import { ReactComponent as Show } from "src/assets/InputIcon/Show.svg";
-import { ReactComponent as Ulock } from "src/assets/InputIcon/Ulock.svg";
-import Eclipse from "src/assets/Site/Ellipse.png";
+import React from 'react'
+import { ReactComponent as Email } from '../../assets/InputIcon/Message.svg'
+import { ReactComponent as Lock } from '../../assets/InputIcon/Lock.svg'
+import { ReactComponent as Show } from 'src/assets/InputIcon/Show.svg'
+import { ReactComponent as Ulock } from 'src/assets/InputIcon/Ulock.svg'
+import Eclipse from 'src/assets/Site/Ellipse.png'
 
-import { useDispatch } from "react-redux";
-import { login } from "../../redux/auth/authSlice";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
-import style from "./Login.module.scss";
-import { toastConfig } from "src/utils/toastConfig";
+import { useDispatch } from 'react-redux'
+import { login } from '../../redux/auth/authSlice'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { useForm } from 'react-hook-form'
+import style from './Login.module.scss'
+import { toastConfig } from 'src/utils/toastConfig'
 
 function Login() {
-  const dispatch = useDispatch();
-  let navigate = useNavigate();
-  const [isLogin, setIsLogin] = React.useState(false);
-  const [showPasswordOld, setShowPasswordOld] = React.useState(false);
+  const dispatch = useDispatch()
+  let navigate = useNavigate()
+  const [isLogin, setIsLogin] = React.useState(false)
+  const [showPasswordOld, setShowPasswordOld] = React.useState(false)
 
   const {
     register,
@@ -25,40 +25,43 @@ function Login() {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      login: "",
-      password: "",
+      login: '',
+      password: '',
     },
-    mode: "onBlur",
-  });
+    mode: 'onBlur',
+  })
   const handleTogglePasswordOld = () => {
-    setShowPasswordOld(!showPasswordOld);
-  };
+    setShowPasswordOld(!showPasswordOld)
+  }
   const onSubmit = async (data) => {
     try {
-      setIsLogin(true);
+      setIsLogin(true)
 
-      const logindata = await dispatch(login({ data }));
-      const role = localStorage.getItem("role");
-      const routesByRole = {
-        admin: "/order",
-        publisher: "/inventory",
-        channel: "/inventory",
-        advertiser: "/order",
-        guest: "/login",
-        advertising_agency: "/order",
-      };
-      const redirectRoute = role ? routesByRole[role] : routesByRole.guest;
-      navigate(redirectRoute);
-      setIsLogin(false);
+      const logindata = await dispatch(login({ data }))
+      if (logindata.payload) {
+        const role = localStorage.getItem('role')
+        const routesByRole = {
+          admin: '/order',
+          publisher: '/inventory',
+          channel: '/inventory',
+          advertiser: '/order',
+          guest: '/login',
+          advertising_agency: '/order',
+        }
+        const redirectRoute = role ? routesByRole[role] : routesByRole.guest
+        navigate(redirectRoute)
+      }
+
+      setIsLogin(false)
     } catch (error) {
-      setIsLogin(false);
+      setIsLogin(false)
 
       toast.error(
-        "Ошибка при входе. Пожалуйста, попробуйте снова.",
-        toastConfig
-      );
+        'Ошибка при входе. Пожалуйста, попробуйте снова.',
+        toastConfig,
+      )
     }
-  };
+  }
 
   return (
     <>
@@ -80,7 +83,7 @@ function Login() {
             <div>
               <div
                 className={style.modalWindow}
-                style={{ marginBottom: "40px" }}
+                style={{ marginBottom: '40px' }}
               >
                 <div className={style.inputContainer}>
                   <div className={style.inputIcon}>
@@ -91,8 +94,8 @@ function Login() {
                     type="text"
                     placeholder="Логин"
                     autoComplete="off"
-                    {...register("login", {
-                      required: "Поле обезательно к заполнению",
+                    {...register('login', {
+                      required: 'Поле обезательно к заполнению',
                     })}
                   />
 
@@ -104,7 +107,7 @@ function Login() {
 
               <div
                 className={style.modalWindow}
-                style={{ marginBottom: "80px" }}
+                style={{ marginBottom: '80px' }}
               >
                 <div className={style.inputContainer}>
                   <div className={style.inputIcon}>
@@ -112,11 +115,11 @@ function Login() {
                   </div>
                   <input
                     className={style.modalWindow__input}
-                    type={showPasswordOld ? "text" : "password"}
+                    type={showPasswordOld ? 'text' : 'password'}
                     placeholder="Пароль"
                     autoComplete="off"
-                    {...register("password", {
-                      required: "Поле обезательно к заполнению",
+                    {...register('password', {
+                      required: 'Поле обезательно к заполнению',
                     })}
                   />
                 </div>
@@ -127,16 +130,16 @@ function Login() {
                 <div
                   onClick={handleTogglePasswordOld}
                   style={{
-                    position: "absolute",
-                    right: "20px",
-                    top: "15px",
-                    cursor: "pointer",
+                    position: 'absolute',
+                    right: '20px',
+                    top: '15px',
+                    cursor: 'pointer',
                   }}
                 >
                   {showPasswordOld ? (
-                    <Ulock style={{ width: "20px", height: "20px" }} />
+                    <Ulock style={{ width: '20px', height: '20px' }} />
                   ) : (
-                    <Show style={{ width: "20px", height: "20px" }} />
+                    <Show style={{ width: '20px', height: '20px' }} />
                   )}
                 </div>
               </div>
@@ -146,7 +149,7 @@ function Login() {
               </ButtonUI> */}
               <div className={style.btn__wrapper}>
                 <button
-                  style={{ display: "flex", alignItems: "center" }}
+                  style={{ display: 'flex', alignItems: 'center' }}
                   type="submit"
                   disabled={!isValid || isLogin}
                   className={
@@ -175,7 +178,7 @@ function Login() {
         </div>
       </form>
     </>
-  );
+  )
 }
 
-export default Login;
+export default Login
