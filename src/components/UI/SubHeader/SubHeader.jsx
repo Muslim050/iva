@@ -19,6 +19,7 @@ function SubHeader() {
   const title = route[0]
   const id = route[1]
   const transformedTitle = getTitle(title, id)
+
   const username = localStorage.getItem('username')
   const [isTooltip, setIsTooltip] = React.useState(false)
   const tooltipRef = useRef(null)
