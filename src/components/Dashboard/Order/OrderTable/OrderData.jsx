@@ -180,7 +180,7 @@ function OrderData({ sortedData }) {
                   style={{
                     marginLeft: '2px',
                     fontSize: '15px',
-                    background: '#02c102',
+                    background: '#606afc',
                     padding: '0px 4px',
                     borderRadius: '10px',
                     color: 'white',
