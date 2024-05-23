@@ -46,8 +46,8 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
       phone_number: currentOrder.phone_number,
       cpm_mixroll: currentOrder.cpm_mixroll,
       cpm_preroll: currentOrder.cpm_preroll,
-      cpm_preroll_uz: currentOrder.cpm_preroll_uz,
-      cpm_mixroll_uz: currentOrder.cpm_mixroll_uz,
+      // cpm_preroll_uz: currentOrder.cpm_preroll_uz,
+      // cpm_mixroll_uz: currentOrder.cpm_mixroll_uz,
     },
     mode: 'onBlur',
   })
@@ -202,7 +202,7 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
             </div>
           </div>
 
-          <div
+          {/* <div
             className="modalWindow__wrapper_input"
             style={{ marginBottom: '15px' }}
           >
@@ -268,7 +268,7 @@ export default function EditAdvModal({ setShowModalEditAdmin, currentOrder }) {
                 {errors?.numberview && <p>{errors?.numberview?.message}</p>}
               </span>
             </div>
-          </div>
+          </div> */}
 
           <div className={style.btn__wrapper}>
             <button

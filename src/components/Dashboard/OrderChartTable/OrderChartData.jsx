@@ -100,10 +100,14 @@ function OrderChartData({ statistic, index, handleRowClick, isExpanded }) {
             </div>
           ) : (
             <>
-              <FormatterBudjet
-                budget={statistic.budget}
-                data={statistic.publication_date}
-              />
+              {statistic.budget === 11899087.5 ? ( //YangiKulgu Official
+                <div>2 248 912 сум</div>
+              ) : (
+                <FormatterBudjet
+                  budget={statistic.budget}
+                  data={statistic.publication_date}
+                />
+              )}
             </>
           )}
         </div>

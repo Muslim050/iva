@@ -50,7 +50,7 @@ export default function OrderModal({ setShowModal }) {
       budgett: 0,
       selectedFile: null,
       notes: '',
-      target_country: '',
+      // target_country: '',
     },
 
     mode: 'onBlur',
@@ -291,7 +291,7 @@ export default function OrderModal({ setShowModal }) {
               </span>
             </div>
 
-            <div
+            {/* <div
               style={{
                 display: 'flex',
                 border: '1px solid #dedddd',
@@ -311,13 +311,7 @@ export default function OrderModal({ setShowModal }) {
                   <span className={style.checkmark}></span>
                 </label>
               </div>
-            </div>
-          </div>
-
-          <div
-            className="modalWindow__wrapper_input"
-            style={{ marginBottom: '24px' }}
-          >
+            </div> */}
             <div style={{ display: 'grid' }}>
               <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
                 Количество показов
@@ -339,7 +333,7 @@ export default function OrderModal({ setShowModal }) {
                     type="text"
                     value={value.toLocaleString('en-US')}
                     style={{
-                      width: '245px',
+                      width: '210px',
                     }}
                     onChange={(e) => {
                       const rawValue = e.target.value.replace(/\D/g, '')
@@ -364,7 +358,12 @@ export default function OrderModal({ setShowModal }) {
                 )}
               </span>
             </div>
+          </div>
 
+          <div
+            className="modalWindow__wrapper_input"
+            style={{ marginBottom: '24px' }}
+          >
             <div style={{ display: 'grid' }}>
               <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
                 Бюджет (сум)
@@ -373,7 +372,7 @@ export default function OrderModal({ setShowModal }) {
                 className={style.input}
                 type="text"
                 style={{
-                  width: '180px',
+                  width: '155px',
                 }}
                 value={budgett.toLocaleString('en-US')}
                 placeholder="Бюджет"
@@ -381,12 +380,6 @@ export default function OrderModal({ setShowModal }) {
                 disabled={true}
               />
             </div>
-          </div>
-
-          <div
-            className="modalWindow__wrapper_input"
-            style={{ marginBottom: '24px' }}
-          >
             <div style={{ display: 'grid' }}>
               <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
                 Загрузить рекламный ролик

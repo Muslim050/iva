@@ -32,12 +32,6 @@ const AdvertStatus = ({ status, children, endDate }) => {
       {endDate && (
         <div style={{ color: 'red', fontSize: '11px', marginLeft: '5px' }}>
           <div>{endDate.split('T')[0]}</div>
-          <div>
-            {new Date(endDate).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </div>
         </div>
       )}
     </div>
