@@ -291,6 +291,7 @@ function OrderData({ sortedData }) {
                                   '%'}
                             </div>
                           ) : null}
+
                           {advert.status === 'finished' ? (
                             <div
                               style={{

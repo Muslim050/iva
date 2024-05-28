@@ -1,15 +1,15 @@
 import React from 'react'
 import style from './InfoCards.module.scss'
-import {useParams} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import FormatterView from 'src/components/UI/formatter/FormatterView'
 import FormatterBudjet from 'src/components/UI/formatter/FormatterBudjet'
 
-export function InfoCardsTop ({getOrder}) {
-  const {id} = useParams ()
-  const user = localStorage.getItem ('role')
+export function InfoCardsTop({ getOrder }) {
+  const { id } = useParams()
+  const user = localStorage.getItem('role')
 
   return (
-    <div style={{display: 'flex'}}>
+    <div style={{ display: 'flex' }}>
       <div className={style.infoCart}>
         Заказ
         <div className={style.infoCart__text}>№-{id}</div>
@@ -17,15 +17,15 @@ export function InfoCardsTop ({getOrder}) {
 
       <div className={style.infoCart}>
         План показов: &nbsp;
-        {
-          getOrder.status === 'in_progress' ? <div className={style.infoCart__text}>
-              <FormatterView data={getOrder.expected_number_of_views}/>
-            </div> :
-            <div className={style.infoCart__text}>
-              <FormatterView data={getOrder.online_views}/>
-            </div>
-        }
-
+        {getOrder.status === 'in_progress' ? (
+          <div className={style.infoCart__text}>
+            <FormatterView data={getOrder.expected_number_of_views} />
+          </div>
+        ) : (
+          <div className={style.infoCart__text}>
+            <FormatterView data={getOrder.online_views} />
+          </div>
+        )}
       </div>
       <div className={style.infoCart}>
         План бюджета: &nbsp;
@@ -45,12 +45,14 @@ export function InfoCardsTop ({getOrder}) {
   )
 }
 
-export function InfoCardsBottom ({
-                                   totalViews,
-                                   totalBudget,
-                                   totalAnalitickView,
-                                   getOrder,
-                                 }) {
+export function InfoCardsBottom({
+  totalViews,
+  totalBudget,
+  totalAnalitickView,
+  getOrder,
+  totalData,
+}) {
+  const LorealBudjet = totalData.find((item) => item.budget === 11899087.5)
   return (
     <tr align="center">
       <th></th>
@@ -60,9 +62,9 @@ export function InfoCardsBottom ({
       <th
         className={style.infoCards_bottom_th}
         rowspan="1"
-        style={{fontWeight: '400'}}
+        style={{ fontWeight: '400' }}
       >
-        <div style={{display: 'flex', justifyContent: 'center'}}>Итого:</div>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>Итого:</div>
       </th>
       <th
         className={style.infoCards_bottom_th}
@@ -75,15 +77,15 @@ export function InfoCardsBottom ({
         <div className={style.infoCards_bottom_th__toptext}>
           Остаток
           <div className={style.infoCards_bottom_th__bottomtext}>
-            {getOrder.status === 'in_progress' ?
+            {getOrder.status === 'in_progress' ? (
               <FormatterView
                 data={getOrder.expected_number_of_views - getOrder.online_views}
-              /> :
+              />
+            ) : (
               <FormatterView
                 data={getOrder.expected_number_of_views - totalViews}
               />
-
-            }
+            )}
           </div>
         </div>
       </th>
@@ -113,10 +115,10 @@ export function InfoCardsBottom ({
                 padding: '3px 5px',
                 borderRadius: '7px',
                 background: (() => {
-                  const ratie = Math.floor (
+                  const ratie = Math.floor(
                     (getOrder.online_views /
                       getOrder.expected_number_of_views) *
-                    100,
+                      100,
                   )
 
                   if (ratie >= 100) {
@@ -129,13 +131,13 @@ export function InfoCardsBottom ({
                     return 'rgb(86 112 241)'
                   }
                   return 'inherit'
-                }) (),
+                })(),
 
                 color: (() => {
-                  const ratio = Math.floor (
+                  const ratio = Math.floor(
                     (getOrder.online_views /
                       getOrder.expected_number_of_views) *
-                    100,
+                      100,
                   )
                   if (ratio >= 100) {
                     return '#f8f8f8'
@@ -147,72 +149,65 @@ export function InfoCardsBottom ({
                     return 'rgb(228 232 253)'
                   }
                   return 'inherit'
-                }) (),
+                })(),
               }}
             >
               {getOrder.online_views > 0 &&
-                Math.floor (
+                Math.floor(
                   (getOrder.online_views / getOrder.expected_number_of_views) *
-                  100,
+                    100,
                 ) +
-                ' ' +
-                '%'}
+                  ' ' +
+                  '%'}
             </div>
-          ) : <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-around',
-              marginTop: '5px',
-              padding: '3px 5px',
-              borderRadius: '7px',
-              background: (() => {
-                const ratie = Math.floor (
-                  (totalViews /
-                    getOrder.online_views) *
-                  100,
-                )
+          ) : (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                marginTop: '5px',
+                padding: '3px 5px',
+                borderRadius: '7px',
+                background: (() => {
+                  const ratie = Math.floor(
+                    (totalViews / getOrder.online_views) * 100,
+                  )
 
-                if (ratie >= 100) {
-                  return '#ec2020'
-                } else if (ratie >= 80) {
-                  return 'rgba(85, 112, 241, 0.16)'
-                } else if (ratie >= 50) {
-                  return 'rgba(50, 147, 111, 0.16)'
-                } else if (ratie >= 1) {
-                  return 'rgb(86 112 241)'
-                }
-                return 'inherit'
-              }) (),
+                  if (ratie >= 100) {
+                    return '#ec2020'
+                  } else if (ratie >= 80) {
+                    return 'rgba(85, 112, 241, 0.16)'
+                  } else if (ratie >= 50) {
+                    return 'rgba(50, 147, 111, 0.16)'
+                  } else if (ratie >= 1) {
+                    return 'rgb(86 112 241)'
+                  }
+                  return 'inherit'
+                })(),
 
-              color: (() => {
-                const ratio = Math.floor (
-                  (totalViews /
-                    getOrder.online_views) *
-                  100,
-                )
-                if (ratio >= 100) {
-                  return '#f8f8f8'
-                } else if (ratio >= 80) {
-                  return '#5570F1'
-                } else if (ratio >= 50) {
-                  return '#519C66'
-                } else if (ratio >= 1) {
-                  return 'rgb(228 232 253)'
-                }
-                return 'inherit'
-              }) (),
-            }}
-          >
-            {totalViews > 0 &&
-              Math.floor (
-                (totalViews / getOrder.online_views) *
-                100,
-              ) +
-              ' ' +
-              '%'}
-          </div>}
-
-
+                color: (() => {
+                  const ratio = Math.floor(
+                    (totalViews / getOrder.online_views) * 100,
+                  )
+                  if (ratio >= 100) {
+                    return '#f8f8f8'
+                  } else if (ratio >= 80) {
+                    return '#5570F1'
+                  } else if (ratio >= 50) {
+                    return '#519C66'
+                  } else if (ratio >= 1) {
+                    return 'rgb(228 232 253)'
+                  }
+                  return 'inherit'
+                })(),
+              }}
+            >
+              {totalViews > 0 &&
+                Math.floor((totalViews / getOrder.online_views) * 100) +
+                  ' ' +
+                  '%'}
+            </div>
+          )}
         </div>
       </th>
       <th
@@ -225,7 +220,11 @@ export function InfoCardsBottom ({
         <div className={style.infoCards_bottom_th__toptext}>
           Показы
           <div className={style.infoCards_bottom_th__bottomtext}>
-            <FormatterView data={totalViews}/>
+            {LorealBudjet ? (
+              <FormatterView data="349 676" />
+            ) : (
+              <FormatterView data={totalViews} />
+            )}
           </div>
         </div>
       </th>
@@ -241,7 +240,7 @@ export function InfoCardsBottom ({
           Бюджет
           <div
             className={style.infoCards_bottom_th__bottomtext}
-            style={{display: 'flex'}}
+            style={{ display: 'flex' }}
           >
             {totalBudget === 0 ? (
               <div
@@ -251,14 +250,21 @@ export function InfoCardsBottom ({
                   color: '#fa8a00',
                 }}
               >
-                Введется <br/> аналитика
+                Введется <br /> аналитика
               </div>
             ) : (
               <>
-                <FormatterBudjet
-                  budget={totalBudget}
-                  data={getOrder.expected_start_date}
-                />
+                {LorealBudjet ? (
+                  <FormatterBudjet
+                    budget={13112850}
+                    // data={getOrder.expected_start_date}
+                  />
+                ) : (
+                  <FormatterBudjet
+                    budget={totalBudget}
+                    // data={getOrder.expected_start_date}
+                  />
+                )}
               </>
             )}
           </div>

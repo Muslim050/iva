@@ -109,6 +109,7 @@ function OrderChartTable() {
   let totalViews = 0
   let totalBudget = 0
   let totalAnalitickView = 0
+  let totalData = []
   return (
     <>
       {loading ? (
@@ -229,6 +230,7 @@ function OrderChartTable() {
                   totalBudget += statistic.budget
                   totalAnalitickView += statistic.online_view_count
                   totalViews += statistic.online_view_count
+                  totalData.push(statistic)
                   return (
                     <React.Fragment key={statistic.video_link}>
                       {/* Данные таблицы  */}
@@ -335,6 +337,7 @@ function OrderChartTable() {
                 totalBudget={totalBudget}
                 totalAnalitickView={totalAnalitickView}
                 getOrder={getOrder}
+                totalData={totalData}
               />
               {/* Ячейки с инфо Итого:	 */}
             </thead>

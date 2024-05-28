@@ -336,6 +336,7 @@ function AdvertiserReportTable() {
                   totalViews={totalViews}
                   totalBudget={totalBudget}
                   totalAnalitickView={totalAnalitickView}
+                  tableData={data}
                 />
                 {/* Ячейки с инфо Итого:	 */}
               </thead>
