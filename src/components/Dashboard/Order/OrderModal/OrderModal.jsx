@@ -30,10 +30,10 @@ export default function OrderModal({ setShowModal }) {
 
   const advID = localStorage.getItem('advertiser')
   const today = new Date()
-  // let advId
-  // advertiser.forEach((item) => {
-  //   advId = item.id // Присваиваем значение свойства name текущего элемента массива
-  // })
+  let advId
+  advertiser.forEach((item) => {
+    advId = item.id // Присваиваем значение свойства name текущего элемента массива
+  })
   const {
     register,
     formState: { errors, isValid },
@@ -50,7 +50,7 @@ export default function OrderModal({ setShowModal }) {
       budgett: 0,
       selectedFile: null,
       notes: '',
-      // target_country: '',
+      target_country: '',
     },
 
     mode: 'onBlur',
@@ -291,7 +291,7 @@ export default function OrderModal({ setShowModal }) {
               </span>
             </div>
 
-            {/* <div
+            <div
               style={{
                 display: 'flex',
                 border: '1px solid #dedddd',
@@ -311,7 +311,13 @@ export default function OrderModal({ setShowModal }) {
                   <span className={style.checkmark}></span>
                 </label>
               </div>
-            </div> */}
+            </div>
+          </div>
+
+          <div
+            className="modalWindow__wrapper_input"
+            style={{ marginBottom: '24px' }}
+          >
             <div style={{ display: 'grid' }}>
               <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
                 Количество показов
@@ -358,12 +364,6 @@ export default function OrderModal({ setShowModal }) {
                 )}
               </span>
             </div>
-          </div>
-
-          <div
-            className="modalWindow__wrapper_input"
-            style={{ marginBottom: '24px' }}
-          >
             <div style={{ display: 'grid' }}>
               <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
                 Бюджет (сум)
@@ -372,7 +372,7 @@ export default function OrderModal({ setShowModal }) {
                 className={style.input}
                 type="text"
                 style={{
-                  width: '155px',
+                  width: '205px',
                 }}
                 value={budgett.toLocaleString('en-US')}
                 placeholder="Бюджет"
@@ -380,24 +380,24 @@ export default function OrderModal({ setShowModal }) {
                 disabled={true}
               />
             </div>
-            <div style={{ display: 'grid' }}>
-              <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
-                Загрузить рекламный ролик
-              </label>
-              <input
-                type="file"
-                onChange={handleFileChange}
-                className={style.modalWindow__file}
-                {...register('selectedFile', {
-                  required: 'Ролик обезателен',
-                })}
-              />
-              <span className={style.modalWindow__input_error}>
-                {errors?.selectedFile && <p>{errors?.selectedFile?.message}</p>}
-              </span>
-            </div>
           </div>
 
+          <div style={{ display: 'grid', marginBottom: '30px' }}>
+            <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
+              Загрузить рекламный ролик
+            </label>
+            <input
+              type="file"
+              onChange={handleFileChange}
+              className={style.modalWindow__file}
+              {...register('selectedFile', {
+                required: 'Ролик обезателен',
+              })}
+            />
+            <span className={style.modalWindow__input_error}>
+              {errors?.selectedFile && <p>{errors?.selectedFile?.message}</p>}
+            </span>
+          </div>
           <textarea
             placeholder="Комментарий к заказу"
             autoComplete="off"

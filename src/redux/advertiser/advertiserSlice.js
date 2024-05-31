@@ -128,8 +128,8 @@ export const editAdvertiser = createAsyncThunk(
           phone_number: data.phone_number,
           cpm_mixroll: data.cpm_mixroll,
           cpm_preroll: data.cpm_preroll,
-          // cpm_mixroll_uz: data.cpm_mixroll_uz,
-          // cpm_preroll_uz: data.cpm_preroll_uz,
+          cpm_mixroll_uz: data.cpm_mixroll_uz,
+          cpm_preroll_uz: data.cpm_preroll_uz,
         },
         {
           headers: {

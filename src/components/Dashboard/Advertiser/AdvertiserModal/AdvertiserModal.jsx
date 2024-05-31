@@ -32,8 +32,8 @@ export default function AdvertiserModal() {
       agency: '',
       cpm_mixroll: '',
       cpm_preroll: '',
-      // cpm_preroll_uz: '',
-      // cpm_mixroll_uz: '',
+      cpm_preroll_uz: '',
+      cpm_mixroll_uz: '',
     },
     mode: 'onBlur',
   })
@@ -85,9 +85,9 @@ export default function AdvertiserModal() {
     if (adv) {
       toast.success('Рекламадатель успешно создан!', toastConfig)
       dispatch(hideModalAdvertiser())
-      // setTimeout (() => {
-      //   window.location.reload ()
-      // }, 1500)
+      setTimeout(() => {
+        window.location.reload()
+      }, 1500)
     } else {
       toast.error('Что то пошло не так!', toastConfig)
     }
@@ -170,10 +170,10 @@ export default function AdvertiserModal() {
             </div>
           )}
 
-          {/* {
-            role === 'admin' && <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          {role === 'admin' && (
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <div>
-                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
+                <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
                   Target Preroll
                 </label>
                 <InputUI
@@ -186,7 +186,7 @@ export default function AdvertiserModal() {
               </div>
 
               <div>
-                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
+                <label style={{ fontSize: '12px', color: 'var(--text-color)' }}>
                   Target Mixroll
                 </label>
                 <InputUI
@@ -198,7 +198,7 @@ export default function AdvertiserModal() {
                 />
               </div>
             </div>
-          } */}
+          )}
 
           <SelectUI
             label="Рекламное агенство"

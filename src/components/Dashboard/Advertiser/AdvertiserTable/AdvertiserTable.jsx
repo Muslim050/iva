@@ -20,8 +20,8 @@ const headers = [
   { key: 'name', label: 'Наименование Компании' },
   { key: 'cpm_preroll', label: 'CPM_Preroll' },
   { key: 'cpm_mixroll', label: 'CPM_Mixroll' },
-  // { key: 'cpm_preroll_uz', label: 'Target_Preroll' },
-  // { key: 'cpm_mixroll_uz', label: 'Target_Mixroll' },
+  { key: 'cpm_preroll_uz', label: 'Target_Preroll' },
+  { key: 'cpm_mixroll_uz', label: 'Target_Mixroll' },
   { key: 'email', label: 'Email' },
   { key: 'phone_number', label: 'Номер телефона' },
   { key: 'advertising_agency', label: 'Рекламное агенство' },
@@ -107,9 +107,10 @@ function AdvertiserTable() {
                     // Проверяем, является ли пользователь администратором
                     if (
                       role === 'admin' ||
-                      (row.key !== 'cpm_preroll' && row.key !== 'cpm_mixroll')
-                      // row.key !== 'cpm_preroll_uz' &&
-                      // row.key !== 'cpm_mixroll_uz'
+                      (row.key !== 'cpm_preroll' &&
+                        row.key !== 'cpm_mixroll' &&
+                        row.key !== 'cpm_preroll_uz' &&
+                        row.key !== 'cpm_mixroll_uz')
                     ) {
                       return (
                         <th key={row.key}>
@@ -142,7 +143,7 @@ function AdvertiserTable() {
                         </>
                       )}
 
-                      {/* {role === 'admin' && (
+                      {role === 'admin' && (
                         <>
                           <td>
                             {person.cpm_preroll_uz ? (
@@ -159,7 +160,7 @@ function AdvertiserTable() {
                             )}
                           </td>
                         </>
-                      )} */}
+                      )}
 
                       <td>{person.email}</td>
                       <td>
