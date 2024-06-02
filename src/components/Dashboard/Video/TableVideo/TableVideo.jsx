@@ -36,6 +36,7 @@ function TableVideo({ setShowModal }) {
   const { showVideoLinked } = useSelector((state) => state.modal)
   const [showModalEditAdmin, setShowModalEditAdmin] = React.useState(false)
   const [currentOrder, setCurrentOrder] = React.useState(null)
+  const user = localStorage.getItem('role')
 
   const inventoryPublish = (id) => {
     setId(id)
@@ -99,10 +100,12 @@ function TableVideo({ setShowModal }) {
                 <Reload style={{ width: '23px', height: '23px' }} />
               </ButtonTable>
             </div>
-            <ButtonTable onClick={handleButtonClick}>
-              <Add style={{ width: '25px', marginRight: '12px' }} />
-              Создать видео
-            </ButtonTable>
+            {user === 'admin' ? null : (
+              <ButtonTable onClick={handleButtonClick}>
+                <Add style={{ width: '25px', marginRight: '12px' }} />
+                Создать видео
+              </ButtonTable>
+            )}
           </div>
 
           {videos.length ? (

@@ -142,24 +142,15 @@ function BindingOrderTableData({
             <td className={style.table_td}>
               {/* <FormatterView data={invetar.online_views} /> */}
 
-              {invetar.id === 1012 ? (
+              {/* {invetar.id === 1012 ? (
                 <td className={style.table_td}>
                   <FormatterView data="59 971" />
                 </td>
-              ) : (
-                <td className={style.table_td}>
-                  <FormatterView data={invetar.online_views} />
-                </td>
-              )}
+              ) : ( */}
+              <FormatterView data={invetar.online_views} />
+              {/* )} */}
             </td>
-          ) : (
-            <td
-              className={style.table_td}
-              style={{ color: 'orange', fontWeight: '600' }}
-            >
-              -----
-            </td>
-          )}
+          ) : null}
 
           <td className={style.table_td}>
             <div>

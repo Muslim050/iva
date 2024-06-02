@@ -7,7 +7,7 @@ import FormatterBudjet from 'src/components/UI/formatter/FormatterBudjet'
 export function InfoCardsTop({ getOrder }) {
   const { id } = useParams()
   const user = localStorage.getItem('role')
-
+  console.log(getOrder)
   return (
     <div style={{ display: 'flex' }}>
       <div className={style.infoCart}>

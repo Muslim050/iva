@@ -125,7 +125,10 @@ function OrderChartTable() {
           <div className={style.tableChartWrapper__table_title}>
             {/* Ячейки с инфо Бюджет,План показов, План бюджета */}
             <div>
-              <div>{getOrder.name}</div>
+              <div style={{ display: 'flex' }}>
+                <div>{getOrder.name}</div> &nbsp; / &nbsp;
+                <div>{getOrder.advertiser.name}</div>
+              </div>
               <InfoCardsTop getOrder={getOrder} />
             </div>
             {/* Ячейки с инфо Бюджет,План показов, План бюджета */}

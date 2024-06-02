@@ -399,7 +399,7 @@ export default function OrderModal({ setShowModal }) {
             </span>
           </div>
           <textarea
-            placeholder="Комментарий к заказу"
+            placeholder="Добавить текст и ссылки"
             autoComplete="off"
             className={style.modalWindow__textarea}
             {...register('notes')}
