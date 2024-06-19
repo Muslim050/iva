@@ -1,51 +1,55 @@
-import React from "react";
-import {Link, NavLink, useNavigate} from "react-router-dom";
-import {ReactComponent as Sidebarr} from "../../../assets/Sidebar/sidebar.svg";
-import {ReactComponent as Logout} from "../../../assets/Sidebar/logout.svg";
-import {logout} from "../../../redux/auth/authSlice";
-import {useDispatch, useSelector} from "react-redux";
-import {menuItems} from "./MenuItems";
-import style from "./Sidebar.module.scss";
-import CircularBadge from "../Circular/CircularBadge";
-import {fetchOrder} from "src/redux/order/orderSlice";
-import {fetchComplitedInventory, fetchConfirmedIInventory, fetchInventory,} from "src/redux/inventory/inventorySlice";
-import {fetchChannel} from "src/redux/channel/channelSlice";
-import {fetchVideos} from "src/redux/video/videoSlice";
-import axios from "axios";
-import backendURL from "../../../utils/url";
+import React from 'react'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { ReactComponent as Sidebarr } from '../../../assets/Sidebar/sidebar.svg'
+import { ReactComponent as Logout } from '../../../assets/Sidebar/logout.svg'
+import { logout } from '../../../redux/auth/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { menuItems } from './MenuItems'
+import style from './Sidebar.module.scss'
+import CircularBadge from '../Circular/CircularBadge'
+import { fetchOrder } from 'src/redux/order/orderSlice'
+import {
+  fetchComplitedInventory,
+  fetchConfirmedIInventory,
+  fetchInventory,
+} from 'src/redux/inventory/inventorySlice'
+import { fetchChannel } from 'src/redux/channel/channelSlice'
+import { fetchVideos } from 'src/redux/video/videoSlice'
+import axios from 'axios'
+import backendURL from '../../../utils/url'
 
-function Sidebar () {
-  const [open, setOpen] = React.useState (false);
-  const [isTooltipOpen, setIsTooltipOpen] = React.useState ({});
-  const {order} = useSelector ((state) => state.order);
-  const {inventory} = useSelector ((state) => state.inventory);
-  const {channel} = useSelector ((state) => state.channel);
-  const {videos} = useSelector ((state) => state.video);
-  const {сomplitedInventories} = useSelector ((state) => state.inventory);
-  const {сonfirmedInventories} = useSelector ((state) => state.inventory);
-  const [filteredOrders, setFilteredOrders] = React.useState ('');
+function Sidebar() {
+  const [open, setOpen] = React.useState(false)
+  const [isTooltipOpen, setIsTooltipOpen] = React.useState({})
+  const { order } = useSelector((state) => state.order)
+  const { inventory } = useSelector((state) => state.inventory)
+  const { channel } = useSelector((state) => state.channel)
+  const { videos } = useSelector((state) => state.video)
+  const { сomplitedInventories } = useSelector((state) => state.inventory)
+  const { сonfirmedInventories } = useSelector((state) => state.inventory)
+  const [filteredOrders, setFilteredOrders] = React.useState('')
 
-  const dispatch = useDispatch ();
-  const navigate = useNavigate ();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const onClickLogout = (event) => {
-    event.preventDefault ();
-    if (window.confirm ("Вы точно хотите выйти?")) {
-      dispatch (logout ());
-      navigate ("/login");
+    event.preventDefault()
+    if (window.confirm('Вы точно хотите выйти?')) {
+      dispatch(logout())
+      navigate('/login')
     } else {
     }
-  };
-  const user = localStorage.getItem ("role");
-  const filteredMenuItems = menuItems.filter ((item) =>
-    item.roles.includes (user)
-  );
+  }
+  const user = localStorage.getItem('role')
+  const filteredMenuItems = menuItems.filter((item) =>
+    item.roles.includes(user),
+  )
   const toggleMenu = () => {
-    setOpen (!open);
-  };
+    setOpen(!open)
+  }
 
-  const fetchfilteredOrders = async ({status}) => {
-    const token = localStorage.getItem ('token')
-    const response = await axios.get (
+  const fetchfilteredOrders = async ({ status }) => {
+    const token = localStorage.getItem('token')
+    const response = await axios.get(
       `${backendURL}/order/order-count-by-status/?status=${status}`,
       {
         headers: {
@@ -55,75 +59,73 @@ function Sidebar () {
         },
       },
     )
-    setFilteredOrders (response.data.data.count)
+    setFilteredOrders(response.data.data.count)
   }
-  React.useEffect (() => {
-  },)
+  React.useEffect(() => {})
 
-  React.useEffect (() => {
-    if (user === "admin") {
+  React.useEffect(() => {
+    if (user === 'admin') {
       // dispatch (fetchOrder ())
-      fetchfilteredOrders ({status: 'sent'})
-      dispatch (fetchInventory ({status: "open"}));
-      dispatch (fetchChannel ());
+      fetchfilteredOrders({ status: 'sent' })
+      dispatch(fetchInventory({ status: 'open' }))
+      dispatch(fetchChannel())
     }
 
-    if (user === "advertiser" || user === "advertising_agency") {
-      dispatch (fetchOrder ());
+    if (user === 'advertiser' || user === 'advertising_agency') {
+      dispatch(fetchOrder())
     }
 
-    if (user === "publisher") {
-      dispatch (fetchChannel ());
-      dispatch (fetchVideos ());
+    if (user === 'publisher') {
+      dispatch(fetchChannel())
+      dispatch(fetchVideos())
 
-      dispatch (fetchComplitedInventory ());
-      dispatch (fetchConfirmedIInventory ());
+      dispatch(fetchComplitedInventory())
+      dispatch(fetchConfirmedIInventory())
     }
-    if (user === "channel") {
-      dispatch (fetchChannel ());
-      dispatch (fetchVideos ());
-      dispatch (fetchComplitedInventory ());
-      dispatch (fetchConfirmedIInventory ());
+    if (user === 'channel') {
+      dispatch(fetchChannel())
+      dispatch(fetchVideos())
+      dispatch(fetchComplitedInventory())
+      dispatch(fetchConfirmedIInventory())
     }
-
-  }, [dispatch]);
+  }, [dispatch])
 
   // Админ
-  const filteredInventory = inventory.filter ((i) => i.status === "open");
+  const filteredInventory = inventory.filter((i) => i.status === 'open')
   // const filteredOrders = order.filter ((i) => i.status === "sent");
   // Админ
 
   // Рекломадатели
-  const filteredOrdersAdvertiser = order.filter (
-    (i) => i.status === "accepted" || i.status === "in_progress"
-  );
+  const filteredOrdersAdvertiser = order.filter(
+    (i) => i.status === 'accepted' || i.status === 'in_progress',
+  )
   // Рекломадатели
 
   // Паблишер
-  const filteredComplitedI = сomplitedInventories.filter (
-    (i) => i.removal_date === null
-  );
-  const filteredConfirmedI = сonfirmedInventories.filter ((i) => i);
-  const filteredChannel = channel.filter ((i) => i.is_connected === false);
-  const filteredVideo = videos.filter ((i) => i.link_to_video === null);
+  const filteredComplitedI = сomplitedInventories.filter(
+    (i) => i.removal_date === null,
+  )
+  const filteredConfirmedI = сonfirmedInventories.filter((i) => i)
+  const filteredChannel = channel.filter((i) => i.is_connected === false)
+  const filteredVideo = videos.filter((i) => i.link_to_video === null)
   // Паблишер
 
-  const filteredInventoryPablisher = inventory.filter (
-    (i) => i.status === "pre_booked"
-  );
+  const filteredInventoryPablisher = inventory.filter(
+    (i) => i.status === 'pre_booked',
+  )
   const handleScroll = () => {
-    setIsTooltipOpen ({});
-  };
+    setIsTooltipOpen({})
+  }
 
-  React.useEffect (() => {
+  React.useEffect(() => {
     const scrollListener = () => {
-      handleScroll ();
-    };
-    window.addEventListener ("scroll", scrollListener, true);
+      handleScroll()
+    }
+    window.addEventListener('scroll', scrollListener, true)
     return () => {
-      window.removeEventListener ("scroll", scrollListener, true);
-    };
-  }, []);
+      window.removeEventListener('scroll', scrollListener, true)
+    }
+  }, [])
 
   return (
     <section className={style.section}>
@@ -136,10 +138,10 @@ function Sidebar () {
           <div
             onClick={toggleMenu}
             className={`${style.section__burger__icon} ${
-              open ? style.section__burger__icon__open : ""
+              open ? style.section__burger__icon__open : ''
             }`}
           >
-            <Sidebarr/>
+            <Sidebarr />
           </div>
           <div
             className={`${style.sidebar__text} ${
@@ -152,21 +154,21 @@ function Sidebar () {
 
         <div className={style.sidebar_wrapper}>
           <div className={style.sidebar}>
-            {filteredMenuItems.map ((item) => (
-              <div style={{position: "relative"}}>
+            {filteredMenuItems.map((item) => (
+              <div style={{ position: 'relative' }}>
                 <NavLink
                   to={item.to}
-                  className={({isActive}) =>
+                  className={({ isActive }) =>
                     isActive ? style.sidebar__link__active : style.sidebar__link
                   }
                   onMouseEnter={() =>
-                    setIsTooltipOpen ((prevState) => ({
+                    setIsTooltipOpen((prevState) => ({
                       ...prevState,
                       [item.label]: true,
                     }))
                   }
                   onMouseLeave={() =>
-                    setIsTooltipOpen ((prevState) => ({
+                    setIsTooltipOpen((prevState) => ({
                       ...prevState,
                       [item.label]: false,
                     }))
@@ -177,104 +179,103 @@ function Sidebar () {
                     className={`${style.sidebar__text} ${
                       !open && style.sidebar__textlink
                     }`}
-
                   >
                     {item.label}
                   </h2>
                 </NavLink>
 
                 {/* Рекломадатели */}
-                {user === "advertiser" && item.label === "Заказы" ? (
+                {user === 'advertiser' && item.label === 'Заказы' ? (
                   <>
                     {filteredOrdersAdvertiser.length > 0 && (
-                      <CircularBadge count={filteredOrdersAdvertiser.length}/>
+                      <CircularBadge count={filteredOrdersAdvertiser.length} />
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
-                {user === "advertising_agency" && item.label === "Заказы" ? (
+                {user === 'advertising_agency' && item.label === 'Заказы' ? (
                   <>
                     {filteredOrdersAdvertiser.length > 0 && (
-                      <CircularBadge count={filteredOrdersAdvertiser.length}/>
+                      <CircularBadge count={filteredOrdersAdvertiser.length} />
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
                 {/* Рекломадатели */}
 
                 {/* Паблишер */}
-                {user === "publisher" && item.label === "Заказы" ? (
+                {user === 'publisher' && item.label === 'Заказы' ? (
                   <>
                     {filteredConfirmedI.length > 0 &&
                     filteredComplitedI.length > 0 ? (
                       <CircularBadge
-                        style={{backgroundColor: "red", color: "white"}}
+                        style={{ backgroundColor: 'red', color: 'white' }}
                         count={
                           filteredComplitedI.length + filteredConfirmedI.length
                         }
                       />
                     ) : (
-                      ""
+                      ''
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
-                {user === "channel" && item.label === "Заказы" ? (
+                {user === 'channel' && item.label === 'Заказы' ? (
                   <>
                     {filteredConfirmedI.length > 0 ||
                     filteredComplitedI.length > 0 ? (
                       <CircularBadge
-                        style={{backgroundColor: "red", color: "white"}}
+                        style={{ backgroundColor: 'red', color: 'white' }}
                         count={
                           filteredComplitedI.length + filteredConfirmedI.length
                         }
                       />
                     ) : (
-                      ""
+                      ''
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
 
-                {user === "channel" && item.label === "Видео" ? (
+                {user === 'channel' && item.label === 'Видео' ? (
                   <>
                     {filteredVideo.length > 0 && (
-                      <CircularBadge count={filteredVideo.length}/>
+                      <CircularBadge count={filteredVideo.length} />
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
-                {user === "publisher" && item.label === "Видео" ? (
+                {user === 'publisher' && item.label === 'Видео' ? (
                   <>
                     {filteredVideo.length > 0 && (
-                      <CircularBadge count={filteredVideo.length}/>
+                      <CircularBadge count={filteredVideo.length} />
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
-                {user === "publisher" && item.label === "Каналы" ? (
+                {user === 'publisher' && item.label === 'Каналы' ? (
                   <>
                     {filteredChannel.length > 0 && (
                       <CircularBadge
                         style={{
-                          backgroundColor: "red",
-                          color: "white",
+                          backgroundColor: 'red',
+                          color: 'white',
                         }}
                         count={filteredChannel.length}
                       />
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
 
-                {user === "publisher" && item.label === "Инвентарь" ? (
+                {user === 'publisher' && item.label === 'Инвентарь' ? (
                   <>
                     {filteredInventoryPablisher.length > 0 && (
                       <CircularBadge
@@ -283,9 +284,9 @@ function Sidebar () {
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
-                {user === "channel" && item.label === "Инвентарь" ? (
+                {user === 'channel' && item.label === 'Инвентарь' ? (
                   <>
                     {filteredInventoryPablisher.length > 0 && (
                       <CircularBadge
@@ -294,78 +295,78 @@ function Sidebar () {
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
                 {/* Паблишер */}
 
                 {/* админ */}
 
-                {user === "admin" && item.label === "Каналы" ? (
+                {user === 'admin' && item.label === 'Каналы' ? (
                   <>
                     {filteredChannel.length > 0 && (
                       <CircularBadge
                         style={{
-                          backgroundColor: "red",
-                          color: "white",
+                          backgroundColor: 'red',
+                          color: 'white',
                         }}
                         count={filteredChannel.length}
                       />
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
 
-                {user === "publisher" && item.label === "Каналы" ? (
+                {user === 'publisher' && item.label === 'Каналы' ? (
                   <>
                     {filteredChannel.length > 0 && (
                       <CircularBadge
                         style={{
-                          backgroundColor: "red",
-                          color: "white",
+                          backgroundColor: 'red',
+                          color: 'white',
                         }}
                         count={filteredChannel.length}
                       />
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
 
-                {user === "channel" && item.label === "Каналы" ? (
+                {user === 'channel' && item.label === 'Каналы' ? (
                   <>
                     {filteredChannel.length > 0 && (
                       <CircularBadge
                         style={{
-                          backgroundColor: "red",
-                          color: "white",
+                          backgroundColor: 'red',
+                          color: 'white',
                         }}
                         count={filteredChannel.length}
                       />
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
 
-                {user === "admin" && item.label === "Заказы" ? (
+                {user === 'admin' && item.label === 'Заказы' ? (
                   <>
                     {filteredOrders > 0 && (
-                      <CircularBadge count={filteredOrders}/>
+                      <CircularBadge count={filteredOrders} />
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
 
-                {user === "admin" && item.label === "Инвентарь" ? (
+                {user === 'admin' && item.label === 'Инвентарь' ? (
                   <>
                     {filteredInventory.length > 0 && (
-                      <CircularBadge count={filteredInventory.length}/>
+                      <CircularBadge count={filteredInventory.length} />
                     )}
                   </>
                 ) : (
-                  ""
+                  ''
                 )}
 
                 {/* админ */}
@@ -376,15 +377,16 @@ function Sidebar () {
               </div>
             ))}
           </div>
+
           <div>
             <div>
               <Link
-                to={"/login"}
+                to={'/login'}
                 onClick={onClickLogout}
                 className={style.sidebar__linkL}
               >
-                <div style={{width: "25px", display: "flex"}}>
-                  <Logout/>
+                <div style={{ width: '25px', display: 'flex' }}>
+                  <Logout />
                 </div>
                 <h2
                   className={`${style.sidebar__textL} ${
@@ -399,7 +401,7 @@ function Sidebar () {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
-export default Sidebar;
+export default Sidebar
