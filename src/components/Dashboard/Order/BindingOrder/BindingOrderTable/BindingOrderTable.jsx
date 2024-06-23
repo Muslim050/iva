@@ -1,48 +1,45 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
-import { AnimatePresence } from 'framer-motion'
+import {useDispatch, useSelector} from 'react-redux'
+import {toast} from 'react-toastify'
+import {AnimatePresence} from 'framer-motion'
 import BindingOrderTableRows from './BindingOrderTableRows'
 import axios from 'axios'
 import BindingOrderTableData from './BindingOrderTableData'
 import BindingOrderModal from '../BindingOrderModal/BindingOrderModal'
-import { ReactComponent as ArrowR } from 'src/assets/arrow-right.svg'
-import { ReactComponent as ArrowInv } from 'src/assets/Table/arrowInv.svg'
-import {
-  inventoryPrebook,
-  inventoryVerify,
-} from '../../../../../redux/inventoryStatus/inventoryStatusSlice'
-import { fetchOrder } from '../../../../../redux/order/orderSlice'
+import {ReactComponent as ArrowR} from 'src/assets/arrow-right.svg'
+import {ReactComponent as ArrowInv} from 'src/assets/Table/arrowInv.svg'
+import {inventoryPrebook, inventoryVerify,} from '../../../../../redux/inventoryStatus/inventoryStatusSlice'
+import {fetchOrder} from '../../../../../redux/order/orderSlice'
 import {
   assignInventories,
   confirmOrder,
   deactivateInventories,
   removeInventories,
 } from '../../../../../redux/orderStatus/orderStatusSlice'
-import { toastConfig } from '../../../../../utils/toastConfig'
-import { sortData } from 'src/utils/SortData'
+import {toastConfig} from '../../../../../utils/toastConfig'
+import {sortData} from 'src/utils/SortData'
 import ButtonTable from 'src/components/UI/ButtonTable/ButtonTable'
-import { hideModalSInventory, showModalSInventory } from 'src/redux/modalSlice'
+import {hideModalSInventory, showModalSInventory} from 'src/redux/modalSlice'
 import ModalUI from 'src/components/UI/ModalComponents/ModalUI/ModalUI'
 import backendURL from 'src/utils/url'
 import CircularBadge from 'src/components/UI/Circular/CircularBadge'
 import FormatterView from 'src/components/UI/formatter/FormatterView'
 import AdvertStatus from 'src/components/UI/AdvertStatus/AdvertStatus'
 
-function BindingOrderTable({ expandedRows, statusOr, advert }) {
-  const dispatch = useDispatch()
-  const [sortKey, setSortKey] = React.useState('last_name')
-  const [sort, setSort] = React.useState('ascn')
-  const [getOrder, setGetOrder] = React.useState([])
-  const [isLoading, setIsLoading] = React.useState(false)
-  const { showSelectedInventory } = useSelector((state) => state.modal)
-  const CounterBadge = getOrder.map((i) => i.status)[0]
-  const role = localStorage.getItem('role')
+function BindingOrderTable ({expandedRows, statusOr, advert}) {
+  const dispatch = useDispatch ()
+  const [sortKey, setSortKey] = React.useState ('last_name')
+  const [sort, setSort] = React.useState ('ascn')
+  const [getOrder, setGetOrder] = React.useState ([])
+  const [isLoading, setIsLoading] = React.useState (false)
+  const {showSelectedInventory} = useSelector ((state) => state.modal)
+  const CounterBadge = getOrder.map ((i) => i.status)[0]
+  const role = localStorage.getItem ('role')
 
   const fetchGetOrder = async () => {
-    setIsLoading(true)
-    const token = localStorage.getItem('token')
-    const response = await axios.get(
+    setIsLoading (true)
+    const token = localStorage.getItem ('token')
+    const response = await axios.get (
       `${backendURL}/order/${expandedRows}/`,
 
       {
@@ -53,116 +50,120 @@ function BindingOrderTable({ expandedRows, statusOr, advert }) {
         },
       },
     )
-    setGetOrder(response.data.data.inventories)
-    setIsLoading(false)
+    setGetOrder (response.data.data.inventories)
+    setIsLoading (false)
   }
-  function handleRowsSelected(selectedRows) {
-    dispatch(assignInventories({ selectedRows, expandedRows })).then(() => {
-      toast.success('Инвентарь успешно привязан к заказу!', toastConfig)
-      dispatch(hideModalSInventory())
 
-      dispatch(fetchGetOrder())
+  function handleRowsSelected (selectedRows) {
+    dispatch (assignInventories ({selectedRows, expandedRows})).then (() => {
+      toast.success ('Инвентарь успешно привязан к заказу!', toastConfig)
+      dispatch (hideModalSInventory ())
+
+      dispatch (fetchGetOrder ())
     })
   }
-  function handleConfirmOrder() {
-    dispatch(confirmOrder({ expandedRows })).then(() => {
-      dispatch(hideModalSInventory())
-      dispatch(fetchOrder())
+
+  function handleConfirmOrder () {
+    dispatch (confirmOrder ({expandedRows})).then (() => {
+      dispatch (hideModalSInventory ())
+      dispatch (fetchOrder ())
     })
   }
+
   const handleRemoveInventory = (expandedRows, inventory_id) => {
-    const confirmDelete = window.confirm('Вы уверены, что хотите удалить?')
+    const confirmDelete = window.confirm ('Вы уверены, что хотите удалить?')
     if (confirmDelete) {
-      dispatch(removeInventories({ expandedRows, inventory_id }))
-        .then(() => {
-          toast.success('Инвентарь успешно удален', toastConfig)
-          fetchGetOrder()
+      dispatch (removeInventories ({expandedRows, inventory_id}))
+        .then (() => {
+          toast.success ('Инвентарь успешно удален', toastConfig)
+          fetchGetOrder ()
         })
-        .catch((error) => {
-          toast.error(error.message, toastConfig)
-          fetchGetOrder()
+        .catch ((error) => {
+          toast.error (error.message, toastConfig)
+          fetchGetOrder ()
         })
     } else {
-      toast.info('Операция отменена', toastConfig)
-      fetchGetOrder()
+      toast.info ('Операция отменена', toastConfig)
+      fetchGetOrder ()
     }
   }
   const handleButtonClick = () => {
-    dispatch(showModalSInventory())
+    dispatch (showModalSInventory ())
   }
   const handleDeactivateInventory = (inventory_id) => {
-    const confirmDeactivate = window.confirm(
+    const confirmDeactivate = window.confirm (
       'Вы уверены, что хотите завершить инвентарь?',
     )
     if (confirmDeactivate) {
-      dispatch(deactivateInventories({ inventory_id }))
-        .then(() => {
-          toast.success('Инвентарь успешно завершен', toastConfig)
-          fetchGetOrder()
+      dispatch (deactivateInventories ({inventory_id}))
+        .then (() => {
+          toast.success ('Инвентарь успешно завершен', toastConfig)
+          fetchGetOrder ()
         })
-        .catch((error) => {
-          toast.error(error.message, toastConfig)
-          fetchGetOrder()
+        .catch ((error) => {
+          toast.error (error.message, toastConfig)
+          fetchGetOrder ()
         })
     } else {
-      toast.error('Попробуйте еще раз', toastConfig)
-      fetchGetOrder()
+      toast.error ('Попробуйте еще раз', toastConfig)
+      fetchGetOrder ()
     }
   }
   const handleInventoryInPrebook = (expandedRows, inventory_id) => {
-    const confirmPrebook = window.confirm(
+    const confirmPrebook = window.confirm (
       'Данный инвентарь отправляется каналу?',
     )
     if (confirmPrebook) {
-      dispatch(inventoryPrebook({ expandedRows, inventory_id }))
-        .then(() => {
-          toast.success('Инвентарь отправлен паблишеру', toastConfig)
-          fetchGetOrder()
+      dispatch (inventoryPrebook ({expandedRows, inventory_id}))
+        .then (() => {
+          toast.success ('Инвентарь отправлен паблишеру', toastConfig)
+          fetchGetOrder ()
         })
-        .catch((error) => {
-          toast.error(error.message, toastConfig)
-          fetchGetOrder()
+        .catch ((error) => {
+          toast.error (error.message, toastConfig)
+          fetchGetOrder ()
         })
     } else {
-      toast.info('Операция отменена', toastConfig)
-      fetchGetOrder()
+      toast.info ('Операция отменена', toastConfig)
+      fetchGetOrder ()
     }
   }
   const handleInventoryVerify = (expandedRows, inventory_id) => {
-    const confirmVerify = window.confirm(
+    const confirmVerify = window.confirm (
       'Данный инвентарь отправляется каналу?',
     )
     if (confirmVerify) {
-      dispatch(inventoryVerify({ expandedRows, inventory_id }))
-        .then(() => {
-          toast.success('Инвентарь успешно отправлен', toastConfig)
-          fetchGetOrder()
+      dispatch (inventoryVerify ({expandedRows, inventory_id}))
+        .then (() => {
+          toast.success ('Инвентарь успешно отправлен', toastConfig)
+          fetchGetOrder ()
         })
-        .catch((error) => {
-          toast.error(error.message, toastConfig)
-          fetchGetOrder()
+        .catch ((error) => {
+          toast.error (error.message, toastConfig)
+          fetchGetOrder ()
         })
     } else {
-      toast.error('Попробуйте еще раз', toastConfig)
-      fetchGetOrder()
+      toast.error ('Попробуйте еще раз', toastConfig)
+      fetchGetOrder ()
     }
   }
-  React.useEffect(() => {
-    dispatch(fetchOrder())
-    fetchGetOrder()
+  React.useEffect (() => {
+    dispatch (fetchOrder ())
+    fetchGetOrder ()
   }, [dispatch])
-  const sortedData = React.useCallback(
+  const sortedData = React.useCallback (
     () =>
-      sortData({
+      sortData ({
         tableData: getOrder,
         sortKey,
         reverse: sort === 'desc',
       }),
     [getOrder, sortKey, sort],
   )
-  function changeSort(key) {
-    setSort(sort === 'ascn' ? 'desc' : 'ascn')
-    setSortKey(key)
+
+  function changeSort (key) {
+    setSort (sort === 'ascn' ? 'desc' : 'ascn')
+    setSortKey (key)
   }
 
   //Итого онлайн просмотров
@@ -186,7 +187,7 @@ function BindingOrderTable({ expandedRows, statusOr, advert }) {
       </AnimatePresence>
 
       {isLoading ? (
-        <div className="loaderWrapper" style={{ height: '10vh' }}>
+        <div className="loaderWrapper" style={{height: '10vh'}}>
           <div className="spinner"></div>
         </div>
       ) : getOrder.length === 0 ? (
@@ -196,24 +197,24 @@ function BindingOrderTable({ expandedRows, statusOr, advert }) {
           <div className="tableWrapper">
             <table className="tableWrapper">
               <thead>
-                <BindingOrderTableRows
-                  sortKey={sortKey}
-                  sort={sort}
-                  changeSort={changeSort}
-                  getOrder={getOrder}
-                />
+              <BindingOrderTableRows
+                sortKey={sortKey}
+                sort={sort}
+                changeSort={changeSort}
+                getOrder={getOrder}
+              />
               </thead>
               <tbody>
-                <BindingOrderTableData
-                  statusOr={statusOr}
-                  expandedRows={expandedRows}
-                  getOrder={getOrder}
-                  onRemoveInventory={handleRemoveInventory}
-                  onInventoryPrebook={handleInventoryInPrebook}
-                  onRemoveDeactivate={handleDeactivateInventory}
-                  onInventoryVerify={handleInventoryVerify}
-                  sortedData={sortedData}
-                />
+              <BindingOrderTableData
+                statusOr={statusOr}
+                expandedRows={expandedRows}
+                getOrder={getOrder}
+                onRemoveInventory={handleRemoveInventory}
+                onInventoryPrebook={handleInventoryInPrebook}
+                onRemoveDeactivate={handleDeactivateInventory}
+                onInventoryVerify={handleInventoryVerify}
+                sortedData={sortedData}
+              />
               </tbody>
             </table>
           </div>
@@ -247,7 +248,7 @@ function BindingOrderTable({ expandedRows, statusOr, advert }) {
                 padding: '0px 10px',
               }}
             >
-              <div style={{ marginRight: '5px' }}>Статус: </div>
+              <div style={{marginRight: '5px'}}>Статус:</div>
               <AdvertStatus status={advert.status}>
                 {role === 'admin' || role === 'advertising_agency' ? (
                   <>
@@ -257,24 +258,24 @@ function BindingOrderTable({ expandedRows, statusOr, advert }) {
                           <div
                             style={{
                               display: (() => {
-                                const ratie = Math.floor(
+                                const ratie = Math.floor (
                                   (advert.online_views /
                                     advert.expected_number_of_views) *
-                                    100,
+                                  100,
                                 )
                                 if (ratie >= 1) {
                                   return 'initial'
                                 }
                                 return 'none'
-                              })(),
+                              }) (),
                               padding: '1px 5px',
                               borderRadius: '7px',
                               fontWeight: '600',
                               background: (() => {
-                                const ratie = Math.floor(
+                                const ratie = Math.floor (
                                   (advert.online_views /
                                     advert.expected_number_of_views) *
-                                    100,
+                                  100,
                                 )
 
                                 if (ratie >= 100) {
@@ -287,7 +288,7 @@ function BindingOrderTable({ expandedRows, statusOr, advert }) {
                                   return 'rgb(86 112 241)'
                                 }
                                 return 'inherit'
-                              })(),
+                              }) (),
 
                               color: (() => {
                                 const ratio =
@@ -305,17 +306,17 @@ function BindingOrderTable({ expandedRows, statusOr, advert }) {
                                   return 'rgb(228 232 253)'
                                 }
                                 return 'inherit'
-                              })(),
+                              }) (),
                             }}
                           >
                             {advert.online_views > 0 &&
-                              Math.floor(
+                              Math.floor (
                                 (advert.online_views /
                                   advert.expected_number_of_views) *
-                                  100,
+                                100,
                               ) +
-                                ' ' +
-                                '%'}
+                              ' ' +
+                              '%'}
                           </div>
                         ) : null}
                         {advert.status === 'finished' ? (
@@ -350,7 +351,7 @@ function BindingOrderTable({ expandedRows, statusOr, advert }) {
                 borderLeft: '2px solid #ff991d',
               }}
             >
-              <div style={{ marginRight: '5px' }}> Остаток: </div>
+              <div style={{marginRight: '5px'}}> Остаток:</div>
               <FormatterView
                 data={advert.expected_number_of_views - advert.online_views}
               />
@@ -366,8 +367,8 @@ function BindingOrderTable({ expandedRows, statusOr, advert }) {
                 borderLeft: '2px solid #ff991d',
               }}
             >
-              <div style={{ marginRight: '5px' }}>Итого показы: </div>
-              <FormatterView data={totalOnlineView} />
+              <div style={{marginRight: '5px'}}>Итого показы:</div>
+              <FormatterView data={totalOnlineView}/>
             </div>
           )}
         </div>
@@ -378,7 +379,7 @@ function BindingOrderTable({ expandedRows, statusOr, advert }) {
           <ButtonTable onClick={handleButtonClick}>
             Добавить инвентарь
             <ArrowInv
-              style={{ width: '18px', height: '17px', marginLeft: '5px' }}
+              style={{width: '18px', height: '17px', marginLeft: '5px'}}
             />
           </ButtonTable>
         )}
@@ -390,10 +391,10 @@ function BindingOrderTable({ expandedRows, statusOr, advert }) {
         getOrder.length === 0 ? (
           ''
         ) : (
-          <div style={{ marginLeft: '10px', position: 'relative' }}>
+          <div style={{marginLeft: '10px', position: 'relative'}}>
             <ButtonTable onClick={handleConfirmOrder} color="green">
               Подтвердить
-              <ArrowR style={{ width: '18px', height: '15px' }} />
+              <ArrowR style={{width: '18px', height: '15px'}}/>
             </ButtonTable>
             {CounterBadge === 'booked' ? (
               <CircularBadge

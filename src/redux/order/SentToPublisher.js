@@ -5,7 +5,7 @@ import {toast} from 'react-toastify'
 import backendURL from 'src/utils/url'
 
 const initialState = {
-  order: [],
+  // order: [],
   status: 'idle',
   error: null,
   statusb: '',
@@ -13,13 +13,17 @@ const initialState = {
   confirmedOrders: [],
   exportConfirmed: [],
   shortListData: [],
+  listsentPublisher: []
 }
 
-export const fetchOrder = createAsyncThunk ('order/fetchOrder', async () => {
-  const token = localStorage.getItem ('token')
 
+export const fetchOnceListSentToPublisher = createAsyncThunk ('sentToPublisher/sentToPublisher', async ({expandedRows}) => {
+  const token = localStorage.getItem ('token')
+  console.log (
+    expandedRows
+  )
   try {
-    const response = await axios.get (`${backendURL}/order/`, {
+    const response = await axios.get (`${backendURL}/order/assignments/?order_id=${expandedRows}`, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -42,6 +46,43 @@ export const fetchOrder = createAsyncThunk ('order/fetchOrder', async () => {
     throw error
   }
 })
+
+
+export const addRecord = createAsyncThunk ('sentToPublisher/addRecord', async ({data}, thunkAPI) => {
+  const token = localStorage.getItem ('token')
+  console.log (data)
+  try {
+    const response = await axios.post (
+      `${backendURL}/order/assignments/`,
+      {
+        order: data.order,
+        channel: data.channel,
+        format: data.format,
+        start_date: data.startdate,
+        end_date: data.enddate,
+        ordered_number_of_views: data.ordered_number_of_views,
+        budget: data.budgett,
+        age_range: data.age_range,
+        content_language: data.content_language,
+        country: data.country,
+        notes_text: data.notes_text,
+        notes_url: data.notes_url,
+
+      },
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    return response.data
+  } catch (error) {
+    return thunkAPI.rejectWithValue (error.response ? error.response.data : error.message);
+  }
+})
+
 
 export const fetchConfirmedOrder = createAsyncThunk (
   'order/fetchConfirmedOrder',
@@ -66,69 +107,6 @@ export const fetchConfirmedOrder = createAsyncThunk (
   },
 )
 
-export const addOrder = createAsyncThunk ('order/addOrder', async ({data}) => {
-  const token = localStorage.getItem ('token')
-
-  try {
-    const response = await axios.post (
-      `${backendURL}/order/`,
-      {
-        advertiser: data.advertiserID,
-        name: data.name,
-        format: data.format,
-        expected_start_date: data.startdate,
-        expected_end_date: data.enddate,
-        expected_number_of_views: data.expectedView,
-        budget: data.budgett,
-        promo_file: data.selectedFile[0],
-        notes: data.notes,
-        target_country: data.target_country,
-      },
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Accept: 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    )
-    return response.data
-  } catch (error) {
-    if (error.response && error.response.status === 403) {
-      throw new Error ('Ошибка 403: Доступ запрещен')
-    }
-    throw error
-  }
-})
-
-export const confirmPayment = createAsyncThunk (
-  'order/confirmPayment',
-  async ({id}) => {
-    const token = localStorage.getItem ('token')
-
-    try {
-      const response = await axios.post (
-        `${backendURL}/order/confirm-payment/`,
-        {
-          order_id: id,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
-      return response.data
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        throw new Error ('Ошибка 403: Доступ запрещен')
-      }
-      throw error
-    }
-  },
-)
 
 export const fetchShortList = createAsyncThunk (
   'order/fetchShortList',
@@ -157,42 +135,55 @@ export const fetchShortList = createAsyncThunk (
   },
 )
 
-export const fetchEditOrder = createAsyncThunk (
-  'order/fetchEditOrder',
+export const EditSentToPublisher = createAsyncThunk (
+  'sentToPublisher/EditSentToPublisher',
   async ({id, data}) => {
+    console.log (id)
     const token = localStorage.getItem ('token')
-    const requestData = {
-      expected_number_of_views: data.expectedView,
-    }
+
+    const requestData = {};
+
 
     // Проверьте, что data.selectedFile не равен null, прежде чем добавить promo_file
-    if (data.selectedFile && data.selectedFile[0] !== null) {
-      requestData.promo_file = data.selectedFile[0]
+    if (data.order && data.order !== null) {
+      requestData.order = data.order
     }
-    if (data.name && data.name !== null) {
-      requestData.name = data.name
+    if (data.channel && data.channel !== null) {
+      requestData.channel = data.channel
     }
     if (data.format && data.format !== null) {
       requestData.format = data.format
     }
-
+    if (data.startdate && data.startdate !== null) {
+      requestData.start_date = data.startdate
+    }
+    if (data.enddate && data.enddate !== null) {
+      requestData.end_date = data.enddate
+    }
+    if (data.ordered_number_of_views && data.ordered_number_of_views !== null) {
+      requestData.ordered_number_of_views = data.ordered_number_of_views
+    }
     if (data.budgett && data.budgett !== null) {
       requestData.budget = data.budgett
     }
-    if (data.startdate && data.startdate !== null) {
-      requestData.expected_start_date = data.startdate
+    if (data.age_range && data.age_range !== null) {
+      requestData.age_range = data.age_range
     }
-    if (data.enddate && data.enddate !== null) {
-      requestData.expected_end_date = data.enddate
+    if (data.content_language && data.content_language !== null) {
+      requestData.content_language = data.content_language
     }
-    if (data.notes && data.notes !== null) {
-      requestData.notes = data.notes
+    if (data.country && data.country !== null) {
+      requestData.country = data.country
     }
-    requestData.target_country = data.target_country !== undefined ? data.target_country : '';
-
+    if (data.notes_text && data.notes_text !== null) {
+      requestData.notes_text = data.notes_text
+    }
+    if (data.notes_url && data.notes_url !== null) {
+      requestData.notes_url = data.notes_url
+    }
     try {
       const response = await axios.patch (
-        `${backendURL}/order/${id}/`,
+        `${backendURL}/order/assignments/${id}/`,
         requestData,
         {
           headers: {
@@ -209,47 +200,50 @@ export const fetchEditOrder = createAsyncThunk (
   },
 )
 
-export const deleteOrder = createAsyncThunk (
-  'order/deleteOrder',
+export const sentToPublisherButton = createAsyncThunk (
+  'sentToPublisher/sentToPublisherButton',
   async ({id}) => {
-    const token = localStorage.getItem ('token')
+    console.log ("sentToPublisherButton", id)
+    const token = localStorage.getItem ('token');
 
     try {
-      const response = await axios.delete (
-        `${backendURL}/order/${id}`,
-
+      const response = await axios.post (
+        `${backendURL}/order/assignments/${id}/send-to-publisher/`,
+        {},
         {
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
             Authorization: `Bearer ${token}`,
           },
-        },
-      )
-      return response.data
+        }
+      );
+      return response.data;
+
+
     } catch (error) {
       if (error.response && error.response.status === 403) {
-        throw new Error ('Failed to fetch order')
+        throw new Error ('Failed to fetch order');
       }
-      throw error
+      throw error;
     }
-  },
-)
+  }
+);
 
-const orderSlice = createSlice ({
-  name: 'order',
+const sentToPublisherSlice = createSlice ({
+  name: 'sentToPublisher',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase (fetchOrder.pending, (state) => {
+      .addCase (fetchOnceListSentToPublisher.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase (fetchOrder.fulfilled, (state, action) => {
+      .addCase (fetchOnceListSentToPublisher.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.order = action.payload
+        state.listsentPublisher = action.payload
       })
-      .addCase (fetchOrder.rejected, (state, action) => {
+      .addCase (fetchOnceListSentToPublisher.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
@@ -265,24 +259,24 @@ const orderSlice = createSlice ({
         state.error = action.error.message
       })
 
-      .addCase (fetchEditOrder.pending, (state) => {
+      .addCase (EditSentToPublisher.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase (fetchEditOrder.fulfilled, (state, action) => {
+      .addCase (EditSentToPublisher.fulfilled, (state, action) => {
         state.status = 'succeeded'
       })
-      .addCase (fetchEditOrder.rejected, (state, action) => {
+      .addCase (EditSentToPublisher.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
 
-      .addCase (deleteOrder.pending, (state) => {
+      .addCase (sentToPublisherButton.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase (deleteOrder.fulfilled, (state, action) => {
+      .addCase (sentToPublisherButton.fulfilled, (state, action) => {
         state.status = 'succeeded'
       })
-      .addCase (deleteOrder.rejected, (state, action) => {
+      .addCase (sentToPublisherButton.rejected, (state, action) => {
         state.status = 'failed'
       })
       .addCase (fetchShortList.pending, (state) => {
@@ -298,4 +292,4 @@ const orderSlice = createSlice ({
   },
 })
 
-export default orderSlice.reducer
+export default sentToPublisherSlice.reducer

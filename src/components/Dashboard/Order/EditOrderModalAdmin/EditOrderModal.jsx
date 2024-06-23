@@ -43,6 +43,7 @@ export default function EditOrderModal ({
       expectedView: currentOrder.expected_number_of_views,
       budgett: 0,
       notes: currentOrder.notes,
+      target_country: currentOrder.target_country || '',
     },
     mode: 'onBlur',
   })
@@ -51,22 +52,22 @@ export default function EditOrderModal ({
     setSelectedFile (event.target.files[0])
   }
   const advID = localStorage.getItem ('advertiser')
-
-  const editName = watch ('name')
-  // const viewValue = watch("view");
   const selectedFormat = watch ('format')
   const expectedView = watch ('expectedView')
-
+  const targetCountry = watch ('target_country')
   const calculateBudget = () => {
     let newBudget = 0
-
-    if (cpm[selectedFormat]) {
+    if (targetCountry) {
+      const uzFormat = `${selectedFormat}_uz`
+      if (cpm[uzFormat]) {
+        newBudget = (expectedView / 1000) * cpm[uzFormat]
+      }
+    } else if (cpm[selectedFormat]) {
       newBudget = (expectedView / 1000) * cpm[selectedFormat]
     }
 
     setBudgett (newBudget)
   }
-
   let advId
   order.forEach ((item) => {
     advId = item.advertiser.id
@@ -92,14 +93,12 @@ export default function EditOrderModal ({
   }
   React.useEffect (() => {
     calculateBudget ()
-  }, [selectedFormat, cpm, expectedView])
-
+  }, [selectedFormat, cpm, expectedView, targetCountry])
   React.useEffect (() => {
     if (advID) {
       fetchCpm ()
     }
   }, [advID])
-
   React.useEffect (() => {
     setValue ('budgett', budgett)
   }, [budgett, setValue])
@@ -148,6 +147,11 @@ export default function EditOrderModal ({
       toast.info ('Операция отменена', toastConfig)
     }
   }
+  const taretCheckbox = (event) => {
+    const isChecked = event.target.checked;
+    setValue ('target_country', isChecked ? 'uz' : '');
+    calculateBudget ();
+  };
   return (
     <>
       <form onSubmit={handleSubmit (onSubmit)}>
@@ -219,7 +223,6 @@ export default function EditOrderModal ({
                 {errors?.startdate && <p>{errors?.startdate?.message}</p>}
               </span>
             </div>
-
             <div style={{display: 'grid'}}>
               <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 Конец
@@ -259,7 +262,7 @@ export default function EditOrderModal ({
             className="modalWindow__wrapper_input"
             style={{marginBottom: '15px'}}
           >
-            <div style={{width: '175px'}}>
+            <div style={{display: 'grid', width: '100%'}}>
               <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 Формат
               </label>
@@ -293,7 +296,37 @@ export default function EditOrderModal ({
               </span>
             </div>
 
-            <div style={{display: 'grid', marginTop: '5px'}}>
+            <div
+              style={{
+                display: 'flex',
+                border: '1px solid #dedddd',
+                padding: '5px 10px',
+                borderRadius: '10px',
+                width: '100%',
+                marginLeft: "10px"
+              }}
+            >
+              <div
+                style={{display: 'grid', marginTop: '5px', fontSize: '12px',}}
+              >
+                <div style={{fontSize: '12px', color: 'var(--text-color)'}}>
+                  Target для РУЗ
+                </div>
+                <label className={style.checkboxI} onClick={taretCheckbox}>
+                  Target UZ
+                  <input
+                    type="checkbox"
+                    defaultChecked={currentOrder.target_country === 'uz'}
+                    onChange={taretCheckbox}
+                  />
+                  <span className={style.checkmark}></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div style={{display: "flex", gap: "10px", marginBottom: "15px"}}>
+            <div style={{display: 'grid', width: '100%'}}>
               <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                 Количество показов
               </label>
@@ -315,7 +348,7 @@ export default function EditOrderModal ({
                     type="text"
                     value={value.toLocaleString ('en-US')}
                     style={{
-                      width: '245px',
+                      width: '100%',
                     }}
                     onChange={(e) => {
                       const rawValue = e.target.value.replace (/\D/g, '')
@@ -341,7 +374,29 @@ export default function EditOrderModal ({
                 )}
               </span>
             </div>
+
+            <div style={{display: 'grid', width: '100%'}}>
+              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
+                Бюджет (сум)
+              </label>
+              <input
+                className={style.modalWindow__input}
+                type="text"
+
+                value={
+                  isNaN (budgett)
+                    ? currentOrder.budget.toLocaleString ('en-US')
+                    : budgett.toLocaleString ('en-US')
+                }
+                placeholder="Бюджет"
+                autoComplete="off"
+                disabled={true}
+              />
+            </div>
+
           </div>
+
+
           <div
             className="modalWindow__wrapper_input"
             style={{marginBottom: '15px', justifyContent: 'space-between'}}
@@ -369,44 +424,27 @@ export default function EditOrderModal ({
               </div>
             </div>
 
-            <div style={{display: 'grid'}}>
-              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-                Бюджет (сум)
-              </label>
-              <input
-                className={style.modalWindow__input}
-                type="text"
-                style={{
-                  width: '150px',
-                }}
-                value={
-                  isNaN (budgett)
-                    ? currentOrder.budget.toLocaleString ('en-US')
-                    : budgett.toLocaleString ('en-US')
-                }
-                placeholder="Бюджет"
-                autoComplete="off"
-                disabled={true}
-              />
-            </div>
-          </div>
-
-          <div className="modalWindow__wrapper_input">
-            <div style={{marginBottom: '20px'}}>
-              <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-                Загрузить новый ролик
-              </label>
-              <input
-                type="file"
-                onChange={handleFileChange}
-                className={style.modalWindow__file}
-                {...register ('selectedFile')}
-              />
-              <span className={style.modalWindow__input_error}>
+            <div className="modalWindow__wrapper_input">
+              <div style={{marginBottom: '20px'}}>
+                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
+                  Загрузить новый ролик
+                </label>
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  className={style.modalWindow__file}
+                  {...register ('selectedFile')}
+                />
+                <span className={style.modalWindow__input_error}>
                 {errors?.selectedFile && <p>{errors?.selectedFile?.message}</p>}
               </span>
+              </div>
             </div>
+
+
           </div>
+
+
           <textarea
             placeholder="Комментарий к заказу"
             autoComplete="off"

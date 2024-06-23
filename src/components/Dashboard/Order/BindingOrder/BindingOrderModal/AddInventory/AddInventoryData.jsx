@@ -1,31 +1,32 @@
 import React from "react";
-import AdvertStatus from "src/components/UI/AdvertStatus/AdvertStatus";
-import FormatterTime from "../../../../UI/formatter/FormatterTime";
-import FormatterView from "../../../../UI/formatter/FormatterView";
-import style from "./BindingOrderModal.module.scss";
+import AdvertStatus from "../../../../../UI/AdvertStatus/AdvertStatus";
+import FormatterTime from "../../../../../UI/formatter/FormatterTime";
+import FormatterView from "../../../../../UI/formatter/FormatterView";
+import style from "../BindingOrderModal.module.scss";
 
-function BindingOrderModalList({ inventor, selectedRows, setSelectedRows }) {
-  function handleRowClick(rowId) {
-    if (selectedRows.includes(rowId)) {
-      setSelectedRows(selectedRows.filter((id) => id !== rowId));
+function AddInventoryData ({inventor, selectedRows, setSelectedRows}) {
+  function handleRowClick (rowId) {
+    if (selectedRows.includes (rowId)) {
+      setSelectedRows (selectedRows.filter ((id) => id !== rowId));
     } else {
-      setSelectedRows([...selectedRows, rowId]);
+      setSelectedRows ([...selectedRows, rowId]);
     }
   }
+
   return (
     <>
-      {inventor.map((advert, i) => (
+      {inventor.map ((advert, i) => (
         <>
           <tr
             key={i}
-            onClick={() => handleRowClick(advert.id)}
-            className={selectedRows.includes(advert.id) ? "selected" : ""}
+            onClick={() => handleRowClick (advert.id)}
+            className={selectedRows.includes (advert.id) ? "selected" : ""}
           >
             <th className={style.table__tr_th}>
               <input
                 type="checkbox"
-                onChange={() => handleRowClick(advert.id)}
-                checked={selectedRows.includes(advert.id)}
+                onChange={() => handleRowClick (advert.id)}
+                checked={selectedRows.includes (advert.id)}
               />
             </th>
 
@@ -40,24 +41,24 @@ function BindingOrderModalList({ inventor, selectedRows, setSelectedRows }) {
             </th>
             <th className={style.table__tr_th}>{advert.start_at}</th>
             <th className={style.table__tr_th}>
-              <FormatterView data={advert.expected_number_of_views} />
+              <FormatterView data={advert.expected_number_of_views}/>
             </th>
             <th className={style.table__tr_th}>
-              <FormatterTime data={advert.expected_promo_duration} />
+              <FormatterTime data={advert.expected_promo_duration}/>
             </th>
 
             <th className={style.table__tr_th}>
               {advert.video_content?.category}
             </th>
             <th className={style.table__tr_th}>
-              {new Date(advert.video_content?.publication_time)
-                .toLocaleDateString("en-GB")
-                .replace(/\//g, ".")}
+              {new Date (advert.video_content?.publication_time)
+                .toLocaleDateString ("en-GB")
+                .replace (/\//g, ".")}
             </th>
 
             <th className={style.table__tr_th}>
               <div>
-                <AdvertStatus status={advert.status} />
+                <AdvertStatus status={advert.status}/>
               </div>
             </th>
           </tr>
@@ -67,4 +68,4 @@ function BindingOrderModalList({ inventor, selectedRows, setSelectedRows }) {
   );
 }
 
-export default BindingOrderModalList;
+export default AddInventoryData;

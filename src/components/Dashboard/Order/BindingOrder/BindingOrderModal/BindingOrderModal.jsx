@@ -3,23 +3,25 @@ import {useDispatch, useSelector} from "react-redux";
 import style from "./BindingOrderModal.module.scss";
 import {ReactComponent as Close} from "src/assets/Modal/Close.svg";
 import {ReactComponent as SaveInventory} from "src/assets/Table/SaveInventory.svg";
-
-import BindingOrderModalList from "./BindingOrderModalList";
-import BindingOrderModalRows from "./BindingOrderModalRows";
 import {toast} from "react-toastify";
 import {fetchInventory} from "../../../../../redux/inventory/inventorySlice";
 import axios from "axios";
 
-import DopOrder from "./DopOrder";
+import Index from "./DopOrder";
 import {hideModalSInventory} from "src/redux/modalSlice";
 import backendURL from "src/utils/url";
+import AddInventory from "./AddInventory";
+import AddSentPublisher from "./AddSentPublisher";
 
-export default function BindingOrderModal ({onRowsSelected, expandedRows}) {
+const BindingOrderModal = ({onRowsSelected, expandedRows}) => {
   const dispatch = useDispatch ();
   const [selectedRows, setSelectedRows] = React.useState ([]);
+  const [tabs, setTabs] = React.useState ('inventory');
+
   const [onceOrder, setOnceOrder] = React.useState ([]);
 
   const [loading, setLoading] = React.useState (true);
+
   const {order} = useSelector ((state) => state);
   const orders = order?.order;
 
@@ -86,6 +88,10 @@ export default function BindingOrderModal ({onRowsSelected, expandedRows}) {
     dispatch (hideModalSInventory ());
   };
 
+
+  const [addInventroyModal, setAddInventroyModal] = React.useState (false);
+
+
   return (
     <>
       {loading ? (
@@ -109,30 +115,32 @@ export default function BindingOrderModal ({onRowsSelected, expandedRows}) {
             />
           </div>
           <div className={style.dopOrder}>
-            <DopOrder onceOrder={onceOrder}/>
+            <Index onceOrder={onceOrder}/>
           </div>
-          <div className={style.tableWrapper}>
-            {filteredInventory.length && filteredInventory ? (
-              <table className={style.table}>
-                <thead>
-                <BindingOrderModalRows
-                  setSelectedRows={setSelectedRows}
-                  selectedRows={selectedRows}
-                  inventor={filteredInventory}
-                />
-                </thead>
-                <tbody>
-                <BindingOrderModalList
-                  inventor={filteredInventory}
-                  selectedRows={selectedRows}
-                  setSelectedRows={setSelectedRows}
-                />
-                </tbody>
-              </table>
-            ) : (
-              <div className="empty_list">Список пустой.</div>
-            )}
+          {/*Табы*/}
+          <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", padding: "5px 0"}}>
+            <TabsComponent
+              tabs={tabs}
+              setTabs={setTabs}
+            />
+
           </div>
+          {/*Табы*/}
+
+          {tabs === 'inventory' ?
+            <AddInventory
+              filteredInventory={filteredInventory}
+              setSelectedRows={setSelectedRows}
+              selectedRows={selectedRows}
+            />
+            :
+            <AddSentPublisher
+              setSelectedRows={setSelectedRows}
+              selectedRows={selectedRows}
+              expandedRows={expandedRows}
+              setAddInventroyModal={setAddInventroyModal}
+            />
+          }
           <div
             style={{
               display: "flex",
@@ -156,3 +164,32 @@ export default function BindingOrderModal ({onRowsSelected, expandedRows}) {
     </>
   );
 }
+
+
+const TabsComponent = ({setTabs, tabs}) => {
+  return (
+    <div className="toggle__swipper" style={{marginBottom: "0px"}}>
+      <button
+        className={`toggle__swipper__text ${tabs === "inventory" ? "active" : ""}`}
+        onClick={() => setTabs ('inventory')}
+        style={{
+          borderRadius: " 8px 0px 0px 8px"
+        }}
+      >
+        Инвентари
+      </button>
+
+      <button
+        className={`toggle__swipper__text ${tabs === "sentPublisher" ? "activeR" : ""}`}
+        onClick={() => setTabs ('sentPublisher')}
+        style={{
+          borderRadius: "0px 8px 8px 0px"
+        }}
+      >
+        Записи Паблишеру
+      </button>
+    </div>
+  );
+};
+
+export default BindingOrderModal;

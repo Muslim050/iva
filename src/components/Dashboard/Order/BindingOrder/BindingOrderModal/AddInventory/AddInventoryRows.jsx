@@ -1,6 +1,6 @@
 import React from 'react'
 
-function BindingOrderModalRows({ setSelectedRows, inventor, selectedRows }) {
+function AddInventoryRows ({setSelectedRows, inventor, selectedRows}) {
   return (
     <>
       <tr>
@@ -9,9 +9,9 @@ function BindingOrderModalRows({ setSelectedRows, inventor, selectedRows }) {
             type="checkbox"
             onChange={(event) => {
               if (event.target.checked) {
-                setSelectedRows(inventor.map((row) => row.id))
+                setSelectedRows (inventor.map ((row) => row.id))
               } else {
-                setSelectedRows([])
+                setSelectedRows ([])
               }
             }}
             checked={selectedRows.length === inventor.length}
@@ -31,4 +31,4 @@ function BindingOrderModalRows({ setSelectedRows, inventor, selectedRows }) {
   )
 }
 
-export default BindingOrderModalRows
+export default AddInventoryRows

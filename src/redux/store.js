@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit'
-import authReducer, { refreshAccessToken } from '../redux/auth/authSlice'
+import {configureStore} from '@reduxjs/toolkit'
+import authReducer from '../redux/auth/authSlice'
 import publisher from '../redux/publisher/publisherSlice'
 import inventory from '../redux/inventory/inventorySlice'
 
@@ -19,8 +19,9 @@ import advertiserAgencyUsersSlice from './AgencySlice/advertiserAgencyUsers/adve
 import statisticsSlice from './statisticsSlice'
 import modalSlice from './modalSlice'
 import revenueSlice from './revenueSlice'
+import sentToPublisher from "./order/SentToPublisher";
 
-const store = configureStore({
+const store = configureStore ({
   reducer: {
     // [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authReducer,
@@ -42,6 +43,7 @@ const store = configureStore({
     statistics: statisticsSlice,
     revenue: revenueSlice,
     modal: modalSlice,
+    sentToPublisher: sentToPublisher,
   },
 })
 
