@@ -139,26 +139,30 @@ const BindingOrderModal = ({onRowsSelected, expandedRows}) => {
               selectedRows={selectedRows}
               expandedRows={expandedRows}
               setAddInventroyModal={setAddInventroyModal}
+              onceOrder={onceOrder}
             />
           }
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "end",
-              marginTop: "15px",
-            }}
-          >
-            <button
-              onClick={handleRow}
-              disabled={isDisabled}
-              className={style.ok_btn}
+          {
+            tabs === 'inventory' && <div
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                marginTop: "15px",
+              }}
             >
-              Добавить инвентарь
-              <SaveInventory
-                style={{width: "20px", height: "20px", marginLeft: "5px"}}
-              />
-            </button>
-          </div>
+              <button
+                onClick={handleRow}
+                disabled={isDisabled}
+                className={style.ok_btn}
+              >
+                Добавить инвентарь
+                <SaveInventory
+                  style={{width: "20px", height: "20px", marginLeft: "5px"}}
+                />
+              </button>
+            </div>
+          }
+
         </>
       )}
     </>

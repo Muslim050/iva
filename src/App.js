@@ -26,6 +26,7 @@ import Revenue from './pages/Dashboard/Revenue/Revenue'
 import News from './components/Site/News/News'
 import PublisherReport from './components/Dashboard/Reports/PublisherReport/PublisherReportTable'
 import AdvertiserReport from "./components/Dashboard/Reports/AdvertiserReport/AdvertiserReportTable";
+import SentOrder from "./components/Dashboard/SentOrder";
 
 function App () {
   const dispatch = useDispatch ()
@@ -83,6 +84,15 @@ function App () {
                   filteredComplitedI={filteredComplitedI}
                   filteredConfirmedI={filteredConfirmedI}
                 />
+              </Protected>
+            }
+          />
+          <Route
+            path="/sents-order"
+            index
+            element={
+              <Protected allowedRoles={['publisher', 'channel']}>
+                <SentOrder/>
               </Protected>
             }
           />

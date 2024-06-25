@@ -14,7 +14,7 @@ const initialState = {
 
 export const fetchInventory = createAsyncThunk (
   'inventory/fetchInventory',
-  async ({id, format, status}) => {
+  async ({id, format, status, orderAssignmentId}) => {
     const token = localStorage.getItem ('token');
     let url = new URL (`${backendURL}/inventory/`);
     const params = new URLSearchParams ();
@@ -26,6 +26,9 @@ export const fetchInventory = createAsyncThunk (
     }
     if (status) {
       params.append ('status', status);
+    }
+    if (orderAssignmentId) {
+      params.append ('order_assignment_id', orderAssignmentId);
     }
 
     url.search = params.toString ();

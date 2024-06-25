@@ -8,7 +8,7 @@ import AddSendPublisherModal from "./AddSendPublisherModal";
 import {motion} from "framer-motion";
 import {ReactComponent as Add} from 'src/assets/Table/add.svg'
 
-export default function AddSentPublisher ({expandedRows}) {
+export default function AddSentPublisher ({expandedRows, onceOrder}) {
   const dispatch = useDispatch ();
   const {listsentPublisher} = useSelector ((state) => state.sentToPublisher);
   const [viewNote, setViewNote] = React.useState (false);
@@ -44,7 +44,7 @@ export default function AddSentPublisher ({expandedRows}) {
               transition={{duration: 0.5}}
 
             >
-              <AddSendPublisherModal expandedRows={expandedRows} setViewNote={setViewNote}/>
+              <AddSendPublisherModal expandedRows={expandedRows} setViewNote={setViewNote} onceOrder={onceOrder}/>
             </motion.tr>
           )}
           </tbody>
@@ -58,7 +58,7 @@ export default function AddSentPublisher ({expandedRows}) {
         </div>
       </div>
 
-      <div className={style.tableWrapper} style={{
+      <div style={{
         overflow: "scroll",
       }}>
         {listsentPublisher.length > 0 && (

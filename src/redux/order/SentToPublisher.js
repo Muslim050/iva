@@ -16,14 +16,20 @@ const initialState = {
   listsentPublisher: []
 }
 
-
+//запрос на получения списка
 export const fetchOnceListSentToPublisher = createAsyncThunk ('sentToPublisher/sentToPublisher', async ({expandedRows}) => {
   const token = localStorage.getItem ('token')
-  console.log (
-    expandedRows
-  )
+
+  let data = '';
+
+  if (expandedRows) {
+    data = `${backendURL}/order/assignments/?order_id=${expandedRows}`;
+  } else {
+    data = `${backendURL}/order/assignments/`;
+  }
+
   try {
-    const response = await axios.get (`${backendURL}/order/assignments/?order_id=${expandedRows}`, {
+    const response = await axios.get (data, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -46,8 +52,10 @@ export const fetchOnceListSentToPublisher = createAsyncThunk ('sentToPublisher/s
     throw error
   }
 })
+//запрос на получения списка
 
 
+//Добавление записи со стороны админа
 export const addRecord = createAsyncThunk ('sentToPublisher/addRecord', async ({data}, thunkAPI) => {
   const token = localStorage.getItem ('token')
   console.log (data)
@@ -82,63 +90,10 @@ export const addRecord = createAsyncThunk ('sentToPublisher/addRecord', async ({
     return thunkAPI.rejectWithValue (error.response ? error.response.data : error.message);
   }
 })
+//Добавление записи со стороны админа
 
-
-export const fetchConfirmedOrder = createAsyncThunk (
-  'order/fetchConfirmedOrder',
-  async () => {
-    const token = localStorage.getItem ('token')
-
-    try {
-      const response = await axios.get (
-        `${backendURL}/order/confirmed-orders/`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
-      return response.data.data
-    } catch (error) {
-      throw new Error ('Failed to fetch order')
-    }
-  },
-)
-
-
-export const fetchShortList = createAsyncThunk (
-  'order/fetchShortList',
-  async ({id}) => {
-    const token = localStorage.getItem ('token')
-
-    try {
-      const response = await axios.get (
-        `${backendURL}/order/short-list/?advertiser=${id}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
-
-      return response.data.data
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        throw new Error ('Ошибка 403: Доступ запрещен')
-      }
-      throw error
-    }
-  },
-)
-
-export const EditSentToPublisher = createAsyncThunk (
-  'sentToPublisher/EditSentToPublisher',
-  async ({id, data}) => {
-    console.log (id)
+//Редактирование записи со стороны админа
+export const EditSentToPublisher = createAsyncThunk ('sentToPublisher/EditSentToPublisher', async ({id, data}) => {
     const token = localStorage.getItem ('token')
 
     const requestData = {};
@@ -199,7 +154,10 @@ export const EditSentToPublisher = createAsyncThunk (
     }
   },
 )
+//Редактирование записи со стороны админа
 
+
+//Отправка записи паблишеру со стороны админа
 export const sentToPublisherButton = createAsyncThunk (
   'sentToPublisher/sentToPublisherButton',
   async ({id}) => {
@@ -229,6 +187,75 @@ export const sentToPublisherButton = createAsyncThunk (
     }
   }
 );
+//Отправка записи паблишеру со стороны админа
+
+
+//Выбор существующего видео  со стороны паблишера/канала
+export const AddSelectingVideo = createAsyncThunk ('sentToPublisher/AddAssignToOrderWithExistingVideo', async ({data}, thunkAPI) => {
+  const token = localStorage.getItem ('token')
+  console.log (data)
+  try {
+    const response = await axios.post (
+      `${backendURL}/inventory/assign-to-order-with-existing-video`,
+      {
+        expected_number_of_views: data.expected_number_of_views,
+        format: data.format,
+        promo_start_at: data.promo_start_at,
+        promo_duration: data.promo_duration,
+        order_assignment_id: data.order_id,
+        video_id: data.video_id,
+      },
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    return response.data
+  } catch (error) {
+    return thunkAPI.rejectWithValue (error.response ? error.response.data : error.message);
+  }
+})
+//Выбор существующего видео  со стороны паблишера/канала
+
+
+//Добаввление нового видео  со стороны паблишера/канала
+export const AddNewVideo = createAsyncThunk ('sentToPublisher/AddNewVideo', async ({data}, thunkAPI) => {
+  const token = localStorage.getItem ('token')
+  console.log (data)
+  try {
+    const response = await axios.post (
+      `${backendURL}/inventory/assign-to-order-with-new-video`,
+      {
+        expected_number_of_views: data.expected_number_of_views,
+        format: data.format,
+        promo_start_at: data.promo_start_at,
+        promo_duration: data.promo_duration,
+        order_assignment_id: data.order_id,
+        channel_id: data.channel_id,
+        video_name: data.video_name,
+        category: data.category,
+        video_duration: data.video_duration,
+        publication_time: data.publication_time,
+
+      },
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    return response.data
+  } catch (error) {
+    return thunkAPI.rejectWithValue (error.response ? error.response.data : error.message);
+  }
+})
+//Добаввление нового видео  со стороны паблишера/канала
+
 
 const sentToPublisherSlice = createSlice ({
   name: 'sentToPublisher',
@@ -247,18 +274,6 @@ const sentToPublisherSlice = createSlice ({
         state.status = 'failed'
         state.error = action.error.message
       })
-      .addCase (fetchConfirmedOrder.pending, (state) => {
-        state.status = 'loading'
-      })
-      .addCase (fetchConfirmedOrder.fulfilled, (state, action) => {
-        state.status = 'succeeded'
-        state.confirmedOrders = action.payload
-      })
-      .addCase (fetchConfirmedOrder.rejected, (state, action) => {
-        state.status = 'failed'
-        state.error = action.error.message
-      })
-
       .addCase (EditSentToPublisher.pending, (state) => {
         state.status = 'loading'
       })
@@ -269,7 +284,6 @@ const sentToPublisherSlice = createSlice ({
         state.status = 'failed'
         state.error = action.error.message
       })
-
       .addCase (sentToPublisherButton.pending, (state) => {
         state.status = 'loading'
       })
@@ -279,16 +293,27 @@ const sentToPublisherSlice = createSlice ({
       .addCase (sentToPublisherButton.rejected, (state, action) => {
         state.status = 'failed'
       })
-      .addCase (fetchShortList.pending, (state) => {
+
+      .addCase (AddSelectingVideo.pending, (state) => {
         state.status = 'loading'
       })
-      .addCase (fetchShortList.fulfilled, (state, action) => {
+      .addCase (AddSelectingVideo.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.shortListData = action.payload
       })
-      .addCase (fetchShortList.rejected, (state, action) => {
+      .addCase (AddSelectingVideo.rejected, (state, action) => {
         state.status = 'failed'
       })
+      .addCase (AddNewVideo.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase (AddNewVideo.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+      })
+      .addCase (AddNewVideo.rejected, (state, action) => {
+        state.status = 'failed'
+      })
+
+
   },
 })
 

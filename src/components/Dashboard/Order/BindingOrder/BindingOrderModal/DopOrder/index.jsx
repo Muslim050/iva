@@ -7,6 +7,7 @@ import {ReactComponent as Comment} from '../../../../../../assets/Table/comment.
 import MyModal from '../../../../../UI/ModalComponents/ModalUI/ModalUI'
 import ButtonBorder from '../../../../../UI/ButtonBorder/ButtonBorder'
 import CommentModal from '../../../CommentModal/CommentModal'
+import style from "../../../OrderTable/OrderTable.module.scss";
 
 const headers = [
   {key: 'id', label: '№'},
@@ -53,11 +54,32 @@ function Index ({onceOrder}) {
           <tr>
             <td>{onceOrder.id}</td>
             <td>{onceOrder.name}</td>
+            <td
+              className={style.td_Order}
+              style={{
+                display: 'flex',
+                alignItems: 'baseline',
+              }}
+            >
+              <div>
+                {(onceOrder.format === 'preroll' && 'Pre-roll') ||
+                  ('mixroll' && 'Mix-roll')}
+              </div>
 
-            <td>
-              {(onceOrder.format === 'preroll' && 'Pre-roll') ||
-                ('mixroll' && 'Mix-roll')}
+              <div
+                style={{
+                  marginLeft: '2px',
+                  fontSize: '15px',
+                  background: '#606afc',
+                  padding: '0px 4px',
+                  borderRadius: '10px',
+                  color: 'white',
+                }}
+              >
+                {onceOrder.target_country}
+              </div>
             </td>
+
             <td>
               {new Date (onceOrder.expected_start_date)
                 .toLocaleDateString ('en-GB')
@@ -94,7 +116,7 @@ function Index ({onceOrder}) {
                   />
                 </ButtonBorder>
               </td>
-            ) : null}
+            ) : 'Комментариев нет'}
             <td>
               <div>
                 <AdvertStatus status={onceOrder.status}/>

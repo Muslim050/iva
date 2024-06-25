@@ -5,7 +5,7 @@ import {AnimatePresence} from 'framer-motion'
 import BindingOrderTableRows from './BindingOrderTableRows'
 import axios from 'axios'
 import BindingOrderTableData from './BindingOrderTableData'
-import BindingOrderModal from '../BindingOrderModal/BindingOrderModal'
+import Index from '../BindingOrderModal'
 import {ReactComponent as ArrowR} from 'src/assets/arrow-right.svg'
 import {ReactComponent as ArrowInv} from 'src/assets/Table/arrowInv.svg'
 import {inventoryPrebook, inventoryVerify,} from '../../../../../redux/inventoryStatus/inventoryStatusSlice'
@@ -178,7 +178,7 @@ function BindingOrderTable ({expandedRows, statusOr, advert}) {
       <AnimatePresence>
         {showSelectedInventory && (
           <ModalUI>
-            <BindingOrderModal
+            <Index
               onRowsSelected={handleRowsSelected}
               expandedRows={expandedRows}
             />

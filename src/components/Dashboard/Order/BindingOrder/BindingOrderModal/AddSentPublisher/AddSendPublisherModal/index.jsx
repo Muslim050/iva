@@ -5,7 +5,7 @@ import backendURL from "../../../../../../../utils/url";
 import {Controller, useForm} from "react-hook-form";
 import {toast} from "react-toastify";
 import {toastConfig} from "../../../../../../../utils/toastConfig";
-import {addRecord, fetchOnceListSentToPublisher} from "../../../../../../../redux/order/SentToPublisher";
+import {fetchOnceListSentToPublisher} from "../../../../../../../redux/order/SentToPublisher";
 import {fetchPublisher} from "../../../../../../../redux/publisher/publisherSlice";
 import style from "./AddSendPublisherModal.module.scss";
 import 'react-datepicker/dist/react-datepicker.css'
@@ -15,7 +15,7 @@ const format = [
   {value: 'mixroll', text: 'Mix-roll'},
 ]
 
-const AddSendPublisherModal = ({setViewNote, expandedRows}) => {
+const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
   const dispatch = useDispatch ();
   const [channelModal, setChannelModal] = React.useState ([]);
   const {publisher} = useSelector ((state) => state.publisher);
@@ -23,6 +23,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows}) => {
   const [cpm, setCpm] = React.useState ([])
   const [budgett, setBudgett] = React.useState (0)
 
+  console.log (channelModal)
 
   const selectedPublisher = (event) => {
     setPublisherID (event.target.value);
@@ -31,7 +32,6 @@ const AddSendPublisherModal = ({setViewNote, expandedRows}) => {
     const token = localStorage.getItem ("token");
     const response = await axios.get (
       `${backendURL}/publisher/channel/${publisherID || ''}`,
-
       {
         headers: {
           "Content-Type": "application/json",
@@ -42,41 +42,24 @@ const AddSendPublisherModal = ({setViewNote, expandedRows}) => {
     );
     setChannelModal (response.data.data);
   };
-  const onSubmit = async (data) => {
-    try {
-      const response = await dispatch (addRecord ({data}));
 
-      // Debug log to inspect response
-      console.log ('Response:', response);
+  // const calculateBudget = () => {
+  //   let newBudget = 0
+  //
+  //   if (cpm[selectedFormat]) {
+  //     newBudget = (expectedView / 1000) * cpm[selectedFormat]
+  //   }
+  //
+  //   setBudgett (newBudget)
+  // }
+  console.log (onceOrder)
 
-      if (response.payload) {
-        toast.success ("Видео успешно создано!", toastConfig);
-        setViewNote (false)
-        await dispatch (fetchOnceListSentToPublisher ({expandedRows}));
-      } else {
-        // Handle case where payload is not as expected
-        throw new Error ('Unexpected response payload');
-      }
-    } catch (error) {
-      // Debug log to inspect error
-      console.error ('Error:', error);
-      toast.error ("Произошла ошибка при создании записи!", toastConfig);
-    }
-  };
-  const calculateBudget = () => {
-    let newBudget = 0
 
-    if (cpm[selectedFormat]) {
-      newBudget = (expectedView / 1000) * cpm[selectedFormat]
-    }
-
-    setBudgett (newBudget)
-  }
   const fetchCpm = async () => {
     const token = localStorage.getItem ('token')
 
     const response = await axios.get (
-      `${backendURL}/order/cpm/?advertiser`,
+      `${backendURL}/order/cpm/?advertiser=${onceOrder.advertiser.id}`,
 
       {
         headers: {
@@ -115,13 +98,84 @@ const AddSendPublisherModal = ({setViewNote, expandedRows}) => {
   const selectedFormat = watch ('format')
   const expectedView = watch ('ordered_number_of_views')
 
+  const onSubmit = async (data) => {
+    const token = localStorage.getItem ('token');
 
+    try {
+      const response = await axios.post (
+        `${backendURL}/order/assignments/`,
+        {
+          order: data.order,
+          channel: data.channel,
+          format: data.format,
+          start_date: data.startdate,
+          end_date: data.enddate,
+          ordered_number_of_views: data.ordered_number_of_views,
+          budget: data.budgett,
+          age_range: data.age_range,
+          content_language: data.content_language,
+          country: data.country,
+          notes_text: data.notes_text,
+          notes_url: data.notes_url,
+        },
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Debug log to inspect response
+
+      if (response.data) {
+        console.log ('Response:', response);
+
+        toast.success ("Видео успешно создано!", toastConfig);
+        setViewNote (false);
+        await dispatch (fetchOnceListSentToPublisher ({expandedRows}));
+      } else {
+        // Handle case where payload is not as expected
+        throw new Error ('Unexpected response payload');
+      }
+    } catch (error) {
+      // Debug log to inspect error
+      const errorData = error.response.data.error;
+      // Convert array contents to a string and format with index
+      let index = 1;
+      const errorMessages = Object.keys (errorData).map ((key) => {
+        let message = '';
+        if (Array.isArray (errorData[key])) {
+          message = errorData[key].map ((item) => `${index++}: ${item}`).join ('; ');
+        } else {
+          message = `${index++}: ${errorData[key]}`;
+        }
+        return `${key}:    ${message}`;
+      }).join ('\n'); // Use '\n' to add a new line between each error message
+
+      console.log (errorMessages);
+      toast.error (errorMessages, toastConfig);
+    }
+  };
+  const calculateBudget = () => {
+    let newBudget = 0
+    if (onceOrder.target_country) {
+      const uzFormat = `${selectedFormat}_uz`
+      if (cpm[uzFormat]) {
+        newBudget = (expectedView / 1000) * cpm[uzFormat]
+      }
+    } else if (cpm[selectedFormat]) {
+      newBudget = (expectedView / 1000) * cpm[selectedFormat]
+    }
+    setBudgett (newBudget)
+  }
   React.useEffect (() => {
     calculateBudget ()
   }, [selectedFormat, expectedView])
   React.useEffect (() => {
     setValue ('budgett', budgett)
-  }, [budgett, setValue])
+  }, [budgett, setValue, onceOrder])
   React.useEffect (() => {
     fetchCpm ()
   }, [])
@@ -130,7 +184,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows}) => {
   }, [dispatch])
   React.useEffect (() => {
     fetchChannel ();
-  }, [publisherID]);
+  }, [publisherID, publisher]);
 
 
   return (
@@ -161,6 +215,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows}) => {
           {...register ('channel', {
             required: 'Поле обязательно для заполнения',
           })}
+          disabled={channelModal === null || channelModal === undefined}
           style={{border: errors?.channel ? "1px solid red" : ""}}
         >
           <option value="">Выбрать канал</option>
@@ -205,10 +260,10 @@ const AddSendPublisherModal = ({setViewNote, expandedRows}) => {
           <input
             className={style.input}
             type="date"
-            {...register ('startDate', {
+            {...register ('startdate', {
               required: 'Поле обязательно к заполнению',
             })}
-            style={{border: errors?.startDate ? "1px solid red" : ""}}
+            style={{border: errors?.startdate ? "1px solid red" : ""}}
           />
         </div>
 
