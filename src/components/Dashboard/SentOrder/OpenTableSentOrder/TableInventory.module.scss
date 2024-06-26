@@ -1,5 +1,5 @@
 @media only screen and (max-width: 760px),
-  (min-device-width: 768px) and (max-width: 1024px) {
+(min-device-width: 768px) and (max-width: 1024px) {
   .tableWrapper,
   thead,
   tbody,
@@ -141,6 +141,64 @@
       background: #73a7fcc7;
     }
   }
+}
+
+.linkVideo {
+  display: flex;
+  align-items: center;
+  color: white;
+  background-color: var(--primary_color);
+  font-weight: 500;
+  border-radius: 12px;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 7px 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: #556ff1a9;
+    box-shadow: 0 0 5px var(--primary_color);
+  }
+}
+
+.linkVideo svg path {
+  stroke: var(--primary_color);
+  /* Новый цвет SVG */
+}
+
+.linkVideo:hover svg path {
+  stroke: #ffffff;
+  /* Новый цвет SVG */
+}
+
+.linkFile {
+  display: flex;
+  align-items: center;
+  color: var(--primary_color);
+  border: 2px solid var(--primary_color);
+  font-weight: 500;
+  border-radius: 12px;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 7px 16px;
+  width: max-content;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: #556ff1a9;
+    box-shadow: 0 0 5px var(--primary_color);
+    color: white;
+  }
+}
+
+.linkFile svg path {
+  stroke: var(--primary_color);
+  /* Новый цвет SVG */
+}
+
+.linkFile:hover svg path {
+  stroke: #ffffff;
+  /* Новый цвет SVG */
 }
 
 // &__table_btn_wrapper {

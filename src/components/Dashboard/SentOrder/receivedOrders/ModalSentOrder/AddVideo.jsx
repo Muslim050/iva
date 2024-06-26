@@ -8,6 +8,8 @@ import {ButtonModal} from "src/components/UI/ButtonUI/ButtonUI";
 import InputUI from "../../../../UI/InputUI/InputUI";
 import {toastConfig} from "../../../../../utils/toastConfig";
 import SelectUI from "../../../../UI/SelectUI/SelectUI";
+import {fetchOnceListSentToPublisher} from "../../../../../redux/order/SentToPublisher";
+import {useDispatch} from "react-redux";
 
 const categoryC = [
   {id: 1, text: "Шоу"},
@@ -22,6 +24,9 @@ const format = [
 export default function AddVideo ({setOpenPopoverIndex, item}) {
   const [channelModal, setChannelModal] = React.useState ([]);
   const [selectedTimer, setSelectedTimer] = React.useState ("");
+  const [selectedTimervideo_duration, setSelectedTimervideo_duration] = React.useState ("");
+  const dispatch = useDispatch ()
+
   const id = Number (localStorage.getItem ("channelId"));
   const user = localStorage.getItem ("role");
 
@@ -56,17 +61,18 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
     defaultValues: {
       expected_number_of_views: '',
       format: "",
-      promo_start_at: "",
+      promo_start_at: 0,
       promo_duration: "",
       order_id: item.id,
       channel_id: id,
       video_name: "",
       category: "",
-      video_duration: "",
+      video_duration: 0,
       publication_time: "",
     },
     mode: "onBlur",
   });
+
   const timeC = (event) => {
     const time = event.target.value;
     if (time === "") {
@@ -79,7 +85,18 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
       setValue ("promo_start_at", timeInSeconds);
     }
   };
-
+  const timevideo_duration = (event) => {
+    const time = event.target.value;
+    if (time === "") {
+      setSelectedTimervideo_duration ("00:00:00");
+      setValue ("video_duration", 0);
+    } else {
+      setSelectedTimervideo_duration (time);
+      const [hours, minutes, seconds] = time.split (":").map (Number);
+      const timeInSeconds = hours * 3600 + minutes * 60 + seconds;
+      setValue ("video_duration", timeInSeconds);
+    }
+  };
   const onSubmit = async (data) => {
     const token = localStorage.getItem ('token');
 
@@ -111,6 +128,7 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
 
       if (response.data) {
         toast.success ("Видео успешно создано!", toastConfig);
+        dispatch (fetchOnceListSentToPublisher ({}))
         setOpenPopoverIndex (null);
       } else {
         throw new Error ('Unexpected response payload');
@@ -191,9 +209,53 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
           errors={errors.namevideo}
           inputWidth
         />
+        <div style={{display: "flex", gap: "5px"}}>
+          <div style={{display: 'grid', width: "100%"}}>
+            <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
+              Выбрать Формат
+            </label>
+            <select
+              id="countries"
+              className={style.select__select}
+              style={{border: errors?.expected_number_of_views ? "1px solid red" : "", padding: '12px'}}
 
+              {...register ('format', {
+                required: 'Поле обязательно',
+              })}
+            >
+              <option value="">Выбрать Формат</option>
 
-        <div style={{display: "flex", gap: "5px", marginTop: "-15px"}}>
+              {format.map ((option, index) => (
+                <option key={index} value={option.value}>
+                  {option.text}
+                </option>
+              ))}
+            </select>
+            <span className={style.select__error}>
+                {errors?.format && (
+                  <p style={{lineHeight: '16px'}}>
+                    {errors?.format?.message}
+                  </p>
+                )}
+              </span>
+          </div>
+          <div style={{width: '100%'}}>
+            <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
+              Тайм код рекламы </label>
+            <input
+              className={style.input}
+              type="time"
+              step="1"
+              inputMode="numeric"
+              onChange={timeC}
+              defaultValue="00:00:00"
+              style={{border: errors?.promo_start_at ? "1px solid red" : ""}}
+
+            />
+
+          </div>
+        </div>
+        <div style={{display: "flex", gap: "5px", marginTop: "8px"}}>
           <div style={{width: "100%"}}>
             <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
               Прогноз показов
@@ -226,72 +288,23 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
             />
 
           </div>
-
-          <div style={{display: 'grid', width: "100%"}}>
+          <div style={{display: "block", width: "100%"}}>
             <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-              Выбрать Формат
+              Дата публикаций
             </label>
-            <select
-              id="countries"
-              className={style.select__select}
-              style={{border: errors?.expected_number_of_views ? "1px solid red" : "", padding: '12px'}}
-
-              {...register ('format', {
-                required: 'Поле обязательно',
-              })}
-            >
-              <option value="">Выбрать Формат</option>
-
-              {format.map ((option, index) => (
-                <option key={index} value={option.value}>
-                  {option.text}
-                </option>
-              ))}
-            </select>
-            <span className={style.select__error}>
-                {errors?.format && (
-                  <p style={{lineHeight: '16px'}}>
-                    {errors?.format?.message}
-                  </p>
-                )}
-              </span>
-          </div>
-
-        </div>
-
-
-        <div style={{display: "flex", gap: "5px", marginTop: "8px"}}>
-          <div style={{width: '100%'}}>
-            <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-              promo_start_at </label>
             <input
               className={style.input}
-              type="time"
-              step="1"
-              inputMode="numeric"
-              onChange={timeC}
-              defaultValue="00:00:00"
-              style={{border: errors?.promo_start_at ? "1px solid red" : ""}}
+              style={{border: errors?.publication_time ? "1px solid red" : ""}}
+              type="date"
+              min={getThreeDaysAgo ()}
+              {...register ("publication_time", {
+                required: "Поле обезательно",
+              })}
 
             />
-
-          </div>
-
-          <div style={{width: '100%'}}>
-            <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-              promo_duration
-            </label>
-            <div>
-              <input
-                className={style.input}
-                style={{border: errors?.promo_duration ? "1px solid red" : ""}}
-
-                type="number"
-                {...register ('promo_duration', {
-                  required: 'Поле обязательно для заполнения',
-                })}
-              />
-            </div>
+            <span className={style.inputError}>
+              {errors?.startdate && <p>{errors?.startdate?.message}</p>}
+            </span>
           </div>
         </div>
 
@@ -299,7 +312,7 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
         <div style={{display: "flex", gap: "5px", marginTop: "8px"}}>
           <div style={{width: "100%"}}>
             <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-              video_duration
+              Выбрать категорию
             </label>
             <select
               id="countries"
@@ -321,41 +334,40 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
 
           <div style={{width: '100%'}}>
             <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-              video_duration
+              Хрон видео
             </label>
             <div>
               <input
                 className={style.input}
+                type="time"
+                step="1"
+                inputMode="numeric"
+                onChange={timevideo_duration}
+                defaultValue="00:00:00"
                 style={{border: errors?.video_duration ? "1px solid red" : ""}}
-
-                type="number"
-                {...register ('video_duration', {
-                  required: 'Поле обязательно для заполнения',
-                })}
               />
             </div>
           </div>
         </div>
 
         <div style={{display: "flex", gap: "5px", marginTop: "8px"}}>
-          <div style={{display: "block", width: "100%"}}>
+          <div style={{width: '100%'}}>
             <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-              publication_time
+              Хрон рекламы (сек)
             </label>
-            <input
-              className={style.input}
-              style={{border: errors?.publication_time ? "1px solid red" : ""}}
-              type="date"
-              min={getThreeDaysAgo ()}
-              {...register ("publication_time", {
-                required: "Поле обезательно",
-              })}
+            <div>
+              <input
+                className={style.input}
+                style={{border: errors?.promo_duration ? "1px solid red" : ""}}
 
-            />
-            <span className={style.inputError}>
-              {errors?.startdate && <p>{errors?.startdate?.message}</p>}
-            </span>
+                type="number"
+                {...register ('promo_duration', {
+                  required: 'Поле обязательно для заполнения',
+                })}
+              />
+            </div>
           </div>
+
 
           <div style={{display: "inline-flex", justifyContent: "end", width: "100%", alignItems: "end"}}>
             <ButtonModal isValid={true} disabled={!isValid}>

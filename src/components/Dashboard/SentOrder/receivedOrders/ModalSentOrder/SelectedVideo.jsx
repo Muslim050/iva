@@ -52,27 +52,13 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
     defaultValues: {
       expected_number_of_views: '',
       format: "",
-      promo_start_at: "",
+      promo_start_at: 0,
       promo_duration: "",
       order_id: item.id,
       video_id: '',
     },
     mode: "onBlur",
   });
-
-  // const onSubmit = (data) => {
-  //   const video = dispatch (AddSelectingVideo ({data}));
-  //   if (video) {
-  //     toast.success ("Видео успешно создан!", toastConfig);
-  //
-  //     dispatch (hideModalVideo ());
-  //     // setTimeout (() => {
-  //     //   window.location.reload ();
-  //     // }, 1500);
-  //   } else {
-  //     toast.error ("Что то пошло не так!", toastConfig);
-  //   }
-  // };
 
   const onSubmit = async (data) => {
     const token = localStorage.getItem ('token');
@@ -227,6 +213,57 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
 
 
             <div style={{display: "flex", gap: "5px", marginTop: "-15px"}}>
+
+              <div style={{width: '100%', display: 'grid'}}>
+                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
+                  Выбрать Формат
+                </label>
+                <select
+                  id="countries"
+                  className={style.select__select}
+                  style={{padding: '12px'}}
+                  {...register ('format', {
+                    required: 'Поле обязательно',
+                  })}
+                >
+                  <option value="">Выбрать Формат</option>
+
+                  {format.map ((option, index) => (
+                    <option key={index} value={option.value}>
+                      {option.text}
+                    </option>
+                  ))}
+                </select>
+                <span className={style.select__error}>
+                {errors?.format && (
+                  <p style={{lineHeight: '16px'}}>
+                    {errors?.format?.message}
+                  </p>
+                )}
+              </span>
+              </div>
+
+              <div style={{width: '100%'}}>
+                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
+                  Тайм код рекламы </label>
+                <input
+                  className={style.input}
+                  type="time"
+                  step="1"
+                  inputMode="numeric"
+                  onChange={timeC}
+                  defaultValue="00:00:00"
+                />
+                <span className={style.error}>
+                  {errors?.timecod && <p>{errors?.timecod?.message}</p>}
+                </span>
+              </div>
+
+
+            </div>
+
+
+            <div style={{display: "flex", gap: "5px", marginTop: "8px"}}>
               <div style={{width: '100%'}}>
                 <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
                   Прогноз показов
@@ -260,57 +297,9 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
           </span>
               </div>
 
-              <div style={{width: '100%', display: 'grid'}}>
-                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-                  Выбрать Формат
-                </label>
-                <select
-                  id="countries"
-                  className={style.select__select}
-                  style={{padding: '12px'}}
-                  {...register ('format', {
-                    required: 'Поле обязательно',
-                  })}
-                >
-                  <option value="">Выбрать Формат</option>
-
-                  {format.map ((option, index) => (
-                    <option key={index} value={option.value}>
-                      {option.text}
-                    </option>
-                  ))}
-                </select>
-                <span className={style.select__error}>
-                {errors?.format && (
-                  <p style={{lineHeight: '16px'}}>
-                    {errors?.format?.message}
-                  </p>
-                )}
-              </span>
-              </div>
-            </div>
-
-
-            <div style={{display: "flex", gap: "5px", marginTop: "8px"}}>
               <div style={{width: '100%'}}>
                 <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-                  promo_start_at </label>
-                <input
-                  className={style.input}
-                  type="time"
-                  step="1"
-                  inputMode="numeric"
-                  onChange={timeC}
-                  defaultValue="00:00:00"
-                />
-                <span className={style.error}>
-            {errors?.timecod && <p>{errors?.timecod?.message}</p>}
-          </span>
-              </div>
-
-              <div style={{width: '100%'}}>
-                <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
-                  promo_duration
+                  Хрон рекламы (сек)
                 </label>
                 <div style={{marginBottom: '24px'}}>
                   <input

@@ -6,7 +6,7 @@ import {Controller, useForm} from "react-hook-form";
 import {toast} from "react-toastify";
 import {toastConfig} from "../../../../../../../utils/toastConfig";
 import style from "./EditSendPublisherModal.module.scss";
-import {EditSentToPublisher, fetchOnceListSentToPublisher} from "../../../../../../../redux/order/SentToPublisher";
+import {fetchOnceListSentToPublisher} from "../../../../../../../redux/order/SentToPublisher";
 import 'react-datepicker/dist/react-datepicker.css'
 import {fetchPublisher} from "../../../../../../../redux/publisher/publisherSlice";
 
@@ -73,20 +73,109 @@ const EditSendPublisherModal = ({setEditModal, expandedRows, item, setCurrentOrd
 
   const selectedFormat = watch ('format')
   const expectedView = watch ('ordered_number_of_views')
+  // const onSubmit = async (data) => {
+  //   try {
+  //     const response = await dispatch (EditSentToPublisher ({id: item.id, data}));
+  //     if (response.payload) {
+  //       toast.success ("Видео успешно создано!", toastConfig);
+  //       setEditModal (false);
+  //       dispatch (fetchOnceListSentToPublisher ({expandedRows}))
+  //     } else {
+  //       toast.error ("Произошла ошибка при создании записи", toastConfig);
+  //     }
+  //   } catch (error) {
+  //     toast.error ("Произошла ошибка при создании записи!", toastConfig);
+  //   }
+  // };
+
   const onSubmit = async (data) => {
+    const token = localStorage.getItem ('token');
+    const requestData = {};
+
+
+    // Проверьте, что data.selectedFile не равен null, прежде чем добавить promo_file
+    if (data.order && data.order !== null) {
+      requestData.order = data.order
+    }
+    if (data.channel && data.channel !== null) {
+      requestData.channel = data.channel
+    }
+    if (data.format && data.format !== null) {
+      requestData.format = data.format
+    }
+    if (data.startdate && data.startdate !== null) {
+      requestData.start_date = data.startdate
+    }
+    if (data.enddate && data.enddate !== null) {
+      requestData.end_date = data.enddate
+    }
+    if (data.ordered_number_of_views && data.ordered_number_of_views !== null) {
+      requestData.ordered_number_of_views = data.ordered_number_of_views
+    }
+    if (data.budgett && data.budgett !== null) {
+      requestData.budget = data.budgett
+    }
+    if (data.age_range && data.age_range !== null) {
+      requestData.age_range = data.age_range
+    }
+    if (data.content_language && data.content_language !== null) {
+      requestData.content_language = data.content_language
+    }
+    if (data.country && data.country !== null) {
+      requestData.country = data.country
+    }
+    if (data.notes_text && data.notes_text !== null) {
+      requestData.notes_text = data.notes_text
+    }
+    if (data.notes_url && data.notes_url !== null) {
+      requestData.notes_url = data.notes_url
+    }
     try {
-      const response = await dispatch (EditSentToPublisher ({id: item.id, data}));
-      if (response.payload) {
-        toast.success ("Видео успешно создано!", toastConfig);
+      const response = await axios.patch (
+        `${backendURL}/order/assignments/${item.id}/`,
+        requestData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Debug log to inspect response
+
+      if (response.data) {
+        console.log ('Response:', response);
+
+        toast.success ("Данные успешно обновлены!", toastConfig);
         setEditModal (false);
-        dispatch (fetchOnceListSentToPublisher ({expandedRows}))
+        await dispatch (fetchOnceListSentToPublisher ({expandedRows}));
       } else {
-        toast.error ("Произошла ошибка при создании записи", toastConfig);
+        // Handle case where payload is not as expected
+        throw new Error ('Unexpected response payload');
       }
     } catch (error) {
-      toast.error ("Произошла ошибка при создании записи!", toastConfig);
+      // // Debug log to inspect error
+      // const errorData = error?.response?.data?.error;
+      // // Convert array contents to a string and format with index
+      // let index = 1;
+      // const errorMessages = Object.keys (errorData)?.map ((key) => {
+      //   let message = '';
+      //   if (Array.isArray (errorData[key])) {
+      //     message = errorData[key].map ((item) => `${index++}: ${item}`).join ('; ');
+      //   } else {
+      //     message = `${index++}: ${errorData[key]}`;
+      //   }
+      //   return `${key}:    ${message}`;
+      // }).join ('\n'); // Use '\n' to add a new line between each error message
+
+      console.log (error);
+      toast.error (error, toastConfig);
     }
   };
+
+
   React.useEffect (() => {
     fetchChannel ();
   }, [publisherID]);

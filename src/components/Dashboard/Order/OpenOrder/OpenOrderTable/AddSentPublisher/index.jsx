@@ -33,7 +33,6 @@ export default function AddSentPublisher ({expandedRows, onceOrder}) {
               <th>Язык контента</th>
               <th>Текст и ссылка</th>
               <th>Настройка</th>
-
             </tr>
             </thead>}
           <tbody>
@@ -58,11 +57,9 @@ export default function AddSentPublisher ({expandedRows, onceOrder}) {
         </div>
       </div>
 
-      <div style={{
-        overflow: "scroll",
-      }}>
-        {listsentPublisher.length > 0 && (
-          <>
+      <div className={style.container}>
+        {listsentPublisher.length > 0 ? (
+          <div className={style['table-wrapper']}>
             <table className={style.table}>
               <thead>
               <AddSentPublisherRows/>
@@ -71,7 +68,11 @@ export default function AddSentPublisher ({expandedRows, onceOrder}) {
               <AddSentPublisherData listsentPublisher={listsentPublisher} expandedRows={expandedRows}/>
               </tbody>
             </table>
-          </>
+          </div>
+        ) : (
+          <div style={{fontSize: "15px", color: "gray"}} className={style['no-records']}>
+            Нет записей, Добавьте размещение
+          </div>
         )}
       </div>
     </>

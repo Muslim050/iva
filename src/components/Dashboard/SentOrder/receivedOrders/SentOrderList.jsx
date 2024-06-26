@@ -4,6 +4,7 @@ import ModalSentOrder from "./ModalSentOrder";
 import style from "./receivedOrders.module.scss";
 import OpenTableSentOrder from "../OpenTableSentOrder/OpenTableSentOrder";
 import AdvertStatus from "../../../UI/AdvertStatus/AdvertStatus";
+import {ReactComponent as Video} from 'src/assets/Table/video.svg'
 
 function SentOrderList ({
                           listsentPublisher,
@@ -20,6 +21,7 @@ function SentOrderList ({
 
   return (
     <>
+      
       {listsentPublisher.map ((item, i) => (
         <>
           <tr>
@@ -42,10 +44,28 @@ function SentOrderList ({
               {new Date (item.start_date)
                 .toLocaleDateString ('en-GB')
                 .replace (/\//g, '.')}
-              -
+            </td>
+            <td>
               {new Date (item.end_date)
                 .toLocaleDateString ('en-GB')
                 .replace (/\//g, '.')}
+            </td>
+            <td className={style.td_Order}>
+              <div style={{display: 'flex'}}>
+                <a
+                  href={item.promo_file}
+                  target="_blank"
+                  className={style.fileWrapper}
+                  rel="noreferrer"
+                >
+                  <Video
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                    }}
+                  />
+                </a>
+              </div>
             </td>
             <td>
               <FormatterView data={item.ordered_number_of_views}/>
@@ -55,43 +75,43 @@ function SentOrderList ({
               <AdvertStatus status={item.order_status}/>
             </td>
             <td style={{position: "relative", display: "flex", gap: "10px"}}>
-              {item.order_status === 'confirmed' ? null :
-                <div style={{
-                  color: '#53545C',
-                  borderRadius: "8px",
-                  fontSize: "15px",
-                  border: "1.5px solid #53545C",
-                  padding: '6.5px 8px',
-                  cursor: 'pointer',
-                  display: 'inline-flex'
-                }}
-                     onClick={() => setOpenPopoverIndex (i)}>
-                  Размещение
-                  {
-                    openPopoverIndex === i && (
-                      <div style={{
-                        width: "430px",
-                        position: "absolute",
-                        zIndex: "10",
-                        background: "#ffffff",
-                        borderRadius: "12px",
-                        border: "2px solid #cfcfd1",
-                        left: "-50%",
-                        padding: "12px",
-                        boxShadow: "black 0px 0px 15px -7px"
-                      }}>
-                        <ModalSentOrder setOpenPopoverIndex={setOpenPopoverIndex} item={item}/>
-                      </div>
-                    )
-                  }
-                </div>
-              }
+              <div style={{
+                color: '#53545C',
+                borderRadius: "8px",
+                fontSize: "15px",
+                border: "1.5px solid #53545C",
+                padding: '6.5px 8px',
+                cursor: 'pointer',
+                display: 'inline-flex'
+              }}
+                   onClick={() => setOpenPopoverIndex (i)}>
+                Размещение
+                {
+                  openPopoverIndex === i && (
+                    <div style={{
+                      width: "430px",
+                      position: "absolute",
+                      zIndex: "10",
+                      background: "#ffffff",
+                      borderRadius: "12px",
+                      border: "2px solid #cfcfd1",
+                      left: "-50%",
+                      padding: "12px",
+                      boxShadow: "black 0px 0px 15px -7px"
+                    }}>
+                      <ModalSentOrder setOpenPopoverIndex={setOpenPopoverIndex} item={item}/>
+                    </div>
+                  )
+                }
+              </div>
+
 
               <button
                 className={style.dopBtn}
                 style={{height: "30px"}}
                 onClick={() => handleRowClick (item.id)}
               >
+
                 Открыть
               </button>
             </td>

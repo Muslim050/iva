@@ -7,7 +7,6 @@ import {ReactComponent as Comment} from '../../../../../../assets/Table/comment.
 import MyModal from '../../../../../UI/ModalComponents/ModalUI/ModalUI'
 import ButtonBorder from '../../../../../UI/ButtonBorder/ButtonBorder'
 import CommentModal from '../../../CommentModal/CommentModal'
-import style from "../../../OrderTable/OrderTable.module.scss";
 
 const headers = [
   {key: 'id', label: '№'},
@@ -38,12 +37,12 @@ function Index ({onceOrder}) {
         )}
       </AnimatePresence>
       <table>
-        <thead>
+        <thead style={{borderTop: '0px'}}>
         <tr>
           {headers.map ((row) => {
             return (
-              <th key={row.key}>
-                <div className="sorts-button">{row.label}</div>
+              <th key={row.key} style={{color: "#717377", fontWeight: "500"}}>
+                <div>{row.label}</div>
               </th>
             )
           })}
@@ -55,17 +54,12 @@ function Index ({onceOrder}) {
             <td>{onceOrder.id}</td>
             <td>{onceOrder.name}</td>
             <td
-              className={style.td_Order}
               style={{
-                display: 'flex',
                 alignItems: 'baseline',
               }}
             >
-              <div>
-                {(onceOrder.format === 'preroll' && 'Pre-roll') ||
-                  ('mixroll' && 'Mix-roll')}
-              </div>
-
+              {(onceOrder.format === 'preroll' && 'Pre-roll') ||
+                ('mixroll' && 'Mix-roll')}
               <div
                 style={{
                   marginLeft: '2px',
@@ -116,7 +110,7 @@ function Index ({onceOrder}) {
                   />
                 </ButtonBorder>
               </td>
-            ) : 'Комментариев нет'}
+            ) : <td>Комментариев нет</td>}
             <td>
               <div>
                 <AdvertStatus status={onceOrder.status}/>

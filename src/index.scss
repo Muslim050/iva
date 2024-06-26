@@ -117,7 +117,7 @@ tr {
   color: #abafb1;
   font-size: 16px;
   font-weight: 400;
-  border-radius: 8px;
+  border-radius: 12px;
   display: inline-flex;
   line-height: 19.36px;
   margin-bottom: 20px;
@@ -131,7 +131,7 @@ tr {
   .active {
     color: #ffffff;
     background-color: #5570f1;
-    border-radius: 8px 0px 0px 8px;
+    border-radius: 12px 0px 0px 12px;
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
     cursor: pointer;
   }
@@ -139,7 +139,7 @@ tr {
   .activeR {
     color: #ffffff;
     background-color: #5570f1;
-    border-radius: 0px 8px 8px 0px;
+    border-radius: 0px 12px 12px 0px;
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
     cursor: pointer;
   }

@@ -3,10 +3,16 @@ import style from './TableInventory.module.scss'
 import CircularTable from 'src/components/UI/Circular/CircularTable'
 import CircularBadge from 'src/components/UI/Circular/CircularBadge'
 import FormatterView from '../../../UI/formatter/FormatterView'
-import AdvertStatus from 'src/components/UI/AdvertStatus/AdvertStatus'
 import {ReactComponent as Arrow} from 'src/assets/Table/arrow.svg'
 import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
 import {ReactComponent as Edit} from 'src/assets/Table/Edit.svg'
+import {ReactComponent as LinkVideo} from 'src/assets/linkVideo.svg'
+import {showModalVideoLinked} from "../../../../redux/modalSlice";
+import {useDispatch, useSelector} from "react-redux";
+import ModalUI from "../../../UI/ModalComponents/ModalUI/ModalUI";
+import TableLinkedVideo from "../../Video/TableVideo/TableLinkedVideo/TableLinkedVideo";
+import {AnimatePresence} from "framer-motion";
+import {ReactComponent as Link} from 'src/assets/link.svg'
 
 function OpenTableSentOrderData ({
                                    data,
@@ -16,12 +22,29 @@ function OpenTableSentOrderData ({
   const [expandedRows, setExpandedRows] = React.useState ('')
   const [activeTooltip, setActiveTooltip] = React.useState (null)
   const [activeTooltipp, setActiveTooltipp] = React.useState (null)
+  const dispatch = useDispatch ()
+  const {showVideoLinked} = useSelector ((state) => state.modal)
+  const [id, setId] = React.useState (null)
 
   const handleRowClick = (id) => {
     setExpandedRows (id === expandedRows ? false : id)
   }
+  const linkedVideo = (id) => {
+    dispatch (showModalVideoLinked ())
+    inventoryPublish (id)
+  }
+  const inventoryPublish = (id) => {
+    setId (id)
+  }
   return (
     <>
+      <AnimatePresence>
+        {showVideoLinked && (
+          <ModalUI>
+            <TableLinkedVideo selectedId={id}/>
+          </ModalUI>
+        )}
+      </AnimatePresence>
       {data.map ((inventor, i) => (
         <>
           <tr className={style.table__tr}>
@@ -86,7 +109,7 @@ function OpenTableSentOrderData ({
             </td>
 
             <td className={style.table_td}>
-              <FormatterView data={inventor.expected_number_of_views}/>
+              <FormatterView data={inventor.online_views}/>
             </td>
 
             <td className={style.table_td}>
@@ -98,12 +121,48 @@ function OpenTableSentOrderData ({
                 .replace (/\//g, '.')}
             </td>
             <td className={style.table_td}>
-              <div>
-                <AdvertStatus
-                  status={inventor.status}
-                  endDate={inventor.deactivation_date}
-                />
-              </div>
+              {inventor.video_content.link_to_video === null ? (
+                <button
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  className={style.linkVideo}
+                  onClick={() => linkedVideo (inventor.id)}
+                >
+                  <LinkVideo
+                    style={{
+                      width: '25px',
+                      height: '25px',
+                      marginRight: '5px',
+                    }}
+                  />
+                  Прикрепить Видео
+                </button>
+              ) : (
+                <a
+                  href={inventor.video_content.link_to_video}
+                  target="_blank"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  className={style.linkFile}
+                  rel="noreferrer"
+                >
+                  <Link
+                    style={{
+                      width: '25px',
+                      height: '25px',
+                      marginRight: '5px',
+                    }}
+                  />
+                  Ссылка на Видео
+                </a>
+              )}
+
             </td>
 
             {inventor.status === 'pre_booked' ||
@@ -137,9 +196,6 @@ function OpenTableSentOrderData ({
                 </button>
               </td>
             ) : null}
-            <td className={style.table_td}>
-              <FormatterView data={inventor.online_views}/>
-            </td>
 
             <td>
               {(user === 'admin' ||
@@ -147,7 +203,7 @@ function OpenTableSentOrderData ({
                 user === 'advertising_agency') &&
               inventor.status === 'open' ? (
                 <ButtonBorder
-                 
+
                 >
                   <Edit
                     style={{

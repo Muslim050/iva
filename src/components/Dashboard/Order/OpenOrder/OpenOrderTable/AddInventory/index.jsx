@@ -3,21 +3,22 @@ import AddInventoryRows from "./AddInventoryRows";
 import AddInventoryData from "./AddInventoryData";
 import React from "react";
 
-export default function AddInventory ({filteredInventory, setSelectedRows, selectedRows}) {
+export default function AddInventory ({getOrder, setSelectedRows, selectedRows, expandedRows}) {
   return (
     <div className={style.tableWrapper}>
-      {filteredInventory.length && filteredInventory ? (
+      {getOrder.length && getOrder ? (
         <table className={style.table}>
           <thead>
           <AddInventoryRows
             setSelectedRows={setSelectedRows}
             selectedRows={selectedRows}
-            inventor={filteredInventory}
+            inventor={getOrder}
           />
           </thead>
           <tbody>
           <AddInventoryData
-            inventor={filteredInventory}
+            inventor={getOrder}
+            expandedRows={expandedRows}
             selectedRows={selectedRows}
             setSelectedRows={setSelectedRows}
           />

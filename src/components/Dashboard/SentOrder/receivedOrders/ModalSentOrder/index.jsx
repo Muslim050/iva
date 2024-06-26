@@ -37,13 +37,13 @@ export default function ModalSentOrder ({setOpenPopoverIndex, item}) {
               className={tabs === '1' ? styles.active : styles.normal}
               onClick={() => setTabs ('1')}
             >
-              AddVideo
+              Создать видео
             </button>
             <button
               className={tabs === '2' ? styles.active : styles.normal}
               onClick={() => setTabs ('2')}
             >
-              SelectedVideo
+              Выбрать видео
             </button>
           </div>
 

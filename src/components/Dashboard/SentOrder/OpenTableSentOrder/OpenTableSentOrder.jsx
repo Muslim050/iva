@@ -10,11 +10,11 @@ const headers = [
   {key: 'format', label: 'Формат'},
   {
     key: 'expected_number_of_views',
-    label: 'Прогноз',
+    label: 'Показы факт',
   },
   {key: 'category', label: 'Категория'},
   {key: 'publication_time', label: 'Дата начала'},
-  {key: 'status', label: 'Статус'},
+  {key: 'status', label: 'Действия'},
 ]
 
 function OpenTableSentOrder ({item}) {

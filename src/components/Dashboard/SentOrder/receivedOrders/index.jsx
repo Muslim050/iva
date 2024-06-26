@@ -8,7 +8,11 @@ const headers = [
   {key: 'name', label: 'Кампания'},
 
   {key: 'name', label: 'Формат'},
-  {key: 'name', label: 'Период'},
+
+  {key: 'name', label: 'Начало'},
+  {key: 'name', label: 'Конец'},
+  {key: 'name', label: 'Ролик'},
+
   {key: 'category', label: 'Просмотры'},
   {key: 'category', label: 'Статус'},
   {key: 'category', label: 'Действия'},
@@ -68,7 +72,6 @@ const ReceivedOrders = () => {
               <tbody>
               <SentOrderList
                 listsentPublisher={listsentPublisher}
-
               />
               </tbody>
             </table>
