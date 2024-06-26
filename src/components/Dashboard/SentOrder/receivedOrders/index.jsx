@@ -28,6 +28,7 @@ const ReceivedOrders = () => {
   React.useEffect (() => {
     dispatch (fetchOnceListSentToPublisher ({})).then (() => setLoading (false))
   }, [dispatch])
+
   return (
     <>
       {loading ? (
@@ -47,37 +48,34 @@ const ReceivedOrders = () => {
 
           </div>
 
-          {videos.length ? (
-            <table className="tableWrapper">
-              <thead>
-              <tr>
-                {headers.map ((row) => {
-                  const user = localStorage.getItem ('role')
-                  const showStatusColumn = user !== 'admin'
-                  if (row.key === 'is_connected' && !showStatusColumn) {
-                    return null
-                  }
-                  return (
-                    <th key={row.key} style={{
-                      color: '#2c2d33',
-                      fontWeight: '400',
-                      fontSize: "14px"
-                    }}>
-                      {row.label}
-                    </th>
-                  )
-                })}
-              </tr>
-              </thead>
-              <tbody>
-              <SentOrderList
-                listsentPublisher={listsentPublisher}
-              />
-              </tbody>
-            </table>
-          ) : (
-            <div className="empty_list">Список пустой. Добавьте Видео!</div>
-          )}
+          <table className="tableWrapper">
+            <thead>
+            <tr>
+              {headers.map ((row) => {
+                const user = localStorage.getItem ('role')
+                const showStatusColumn = user !== 'admin'
+                if (row.key === 'is_connected' && !showStatusColumn) {
+                  return null
+                }
+                return (
+                  <th key={row.key} style={{
+                    color: '#2c2d33',
+                    fontWeight: '400',
+                    fontSize: "14px"
+                  }}>
+                    {row.label}
+                  </th>
+                )
+              })}
+            </tr>
+            </thead>
+            <tbody>
+            <SentOrderList
+              listsentPublisher={listsentPublisher}
+            />
+            </tbody>
+          </table>
+
         </div>
       )}
     </>

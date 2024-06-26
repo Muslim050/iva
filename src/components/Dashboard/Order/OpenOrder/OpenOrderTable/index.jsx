@@ -101,7 +101,6 @@ const OpenOrderTable = ({onRowsSelected, expandedRows}) => {
               setSelectedRows={setSelectedRows}
               selectedRows={selectedRows}
               expandedRows={expandedRows}
-
             />
             :
             <AddSentPublisher
