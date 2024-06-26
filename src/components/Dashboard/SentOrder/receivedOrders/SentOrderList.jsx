@@ -18,8 +18,6 @@ function SentOrderList ({
     // const item = listsentPublisher.find ((item) => item.id === id)
 
   }
-  console.log (listsentPublisher.map ((item) => item))
-
   return (
     <>
 

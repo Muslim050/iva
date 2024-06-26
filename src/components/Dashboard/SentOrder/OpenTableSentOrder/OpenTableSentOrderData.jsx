@@ -129,7 +129,7 @@ function OpenTableSentOrderData ({
                     justifyContent: 'center',
                   }}
                   className={style.linkVideo}
-                  onClick={() => linkedVideo (inventor.id)}
+                  onClick={() => linkedVideo (inventor.video_content.id)}
                 >
                   <LinkVideo
                     style={{
