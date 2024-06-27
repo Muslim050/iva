@@ -1,6 +1,5 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchInventory} from "../../../../../redux/inventory/inventorySlice";
 import axios from "axios";
 import {hideModalSInventory} from "src/redux/modalSlice";
 import backendURL from "src/utils/url";
@@ -16,7 +15,6 @@ const OpenOrderTable = ({onRowsSelected, expandedRows}) => {
 
   const [onceOrder, setOnceOrder] = React.useState ([]);
 
-  const [loading, setLoading] = React.useState (true);
 
   const {order} = useSelector ((state) => state);
   const orders = order?.order;
@@ -44,28 +42,6 @@ const OpenOrderTable = ({onRowsSelected, expandedRows}) => {
   React.useEffect (() => {
     fetchGetOrder ()
   }, [dispatch])
-  const fetchOnceOrder = async () => {
-    const token = localStorage.getItem ("token");
-
-    const response = await axios.get (
-      `${backendURL}/order/${expandedRows}/`,
-
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    setOnceOrder (response.data.data);
-  };
-  React.useEffect (() => {
-    // eslint-disable-next-line no-restricted-globals
-    dispatch (fetchInventory ({status: "open"})).then (() => setLoading (false));
-    fetchOnceOrder ();
-  }, [dispatch]);
-
   const isDisabled = selectedRows.length === 0;
   const handleButtonClick = () => {
     dispatch (hideModalSInventory ());
@@ -73,7 +49,7 @@ const OpenOrderTable = ({onRowsSelected, expandedRows}) => {
   const [addInventroyModal, setAddInventroyModal] = React.useState (false);
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <div className="loaderWrapper" style={{height: "10vh"}}>
           <div className="spinner"></div>
         </div>
@@ -96,6 +72,8 @@ const OpenOrderTable = ({onRowsSelected, expandedRows}) => {
               setSelectedRows={setSelectedRows}
               selectedRows={selectedRows}
               expandedRows={expandedRows}
+              fetchGetOrder={fetchGetOrder} // Передача функции как пропс
+
             />
             :
             <AddSentPublisher

@@ -5,27 +5,10 @@ import {useDispatch} from "react-redux";
 import {deactivateInventories} from "../../../../../../redux/orderStatus/orderStatusSlice";
 import {toastConfig} from "../../../../../../utils/toastConfig";
 import {toast} from "react-toastify";
-import axios from "axios";
-import backendURL from "../../../../../../utils/url";
+import {fetchOrder} from "../../../../../../redux/order/orderSlice";
 
-export default function AddInventory ({getOrder, setSelectedRows, selectedRows, expandedRows}) {
+export default function AddInventory ({getOrder, setSelectedRows, selectedRows, expandedRows, fetchGetOrder}) {
   const dispatch = useDispatch ()
-
-
-  const fetchOnceOrder = async () => {
-    const token = localStorage.getItem ("token");
-    const response = await axios.get (
-      `${backendURL}/order/${expandedRows}/`,
-
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  };
 
 
   const handleDeactivateInventory = (inventory_id) => {
@@ -36,17 +19,18 @@ export default function AddInventory ({getOrder, setSelectedRows, selectedRows, 
       dispatch (deactivateInventories ({inventory_id}))
         .then (() => {
           toast.success ('Инвентарь успешно завершен', toastConfig)
-          fetchOnceOrder ()
+          fetchGetOrder (); // Вызов функции после успешного запроса
         })
         .catch ((error) => {
           toast.error (error.message, toastConfig)
-          fetchOnceOrder ()
+          fetchGetOrder (); // Вызов функции после успешного запроса
         })
     } else {
-      toast.error ('Попробуйте еще раз', toastConfig)
-      fetchOnceOrder ()
+      toast.info ('Операция отменена', toastConfig)
+      dispatch (fetchOrder ())
     }
   }
+
 
   return (
     <div className={style.tableWrapper}>
@@ -58,29 +42,28 @@ export default function AddInventory ({getOrder, setSelectedRows, selectedRows, 
               №
             </th>
             <th style={{color: "#717377", fontWeight: "500"}}>
+              Канал
+            </th>
+            <th style={{color: "#717377", fontWeight: "500"}}>
               Название Видео
             </th>
             <th style={{color: "#717377", fontWeight: "500"}}>
               Формат
             </th>
-
             <th style={{color: "#717377", fontWeight: "500"}}>
               Прогноз показов
             </th>
             <th style={{color: "#717377", fontWeight: "500"}}>
               Категория
             </th>
-
-
+            <th style={{color: "#717377", fontWeight: "500"}}>
+              Ссылка
+            </th>
             <th style={{color: "#717377", fontWeight: "500"}}>
               Время публикаций
             </th>
-
             <th style={{color: "#717377", fontWeight: "500"}}>
               Показы
-            </th>
-            <th style={{color: "#717377", fontWeight: "500"}}>
-              Ссылка
             </th>
             <th style={{color: "#717377", fontWeight: "500"}}>
               Действия/Статус
@@ -98,7 +81,7 @@ export default function AddInventory ({getOrder, setSelectedRows, selectedRows, 
           </tbody>
         </table>
       ) : (
-        <div className="empty_list">Список пустой.</div>
+        <div className="empty_list" style={{padding: "10px 0"}}>Список пустой, добавьте размещение</div>
       )}
     </div>
   )

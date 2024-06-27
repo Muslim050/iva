@@ -31,7 +31,6 @@ function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRow
   const filteredVideoLink = inventor.find (
     (item) => item.id === selectedInventoryId,
   )
-  console.log (filteredVideoLink)
 
   return (
     <>
@@ -57,6 +56,9 @@ function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRow
           >
 
             <th className={style.table__tr_th}>{i + 1}</th>
+            <th className={style.table__tr_th}>
+              {advert.channel?.name}
+            </th>
             <th className={style.table__tr_th}>{advert.video_content?.name}</th>
             <th className={style.table__tr_th}>
               {(advert.format === "preroll" && "Pre-roll") ||
@@ -70,17 +72,6 @@ function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRow
             </th>
             <th className={style.table__tr_th}>
               {advert.video_content?.category}
-            </th>
-
-
-            <th className={style.table__tr_th}>
-              {new Date (advert.video_content?.publication_time)
-                .toLocaleDateString ("en-GB")
-                .replace (/\//g, ".")}
-            </th>
-
-            <th className={style.table__tr_th}>
-              <FormatterView data={advert.online_views}/>
             </th>
             <th className={style.table__tr_th}>
               <a
@@ -114,6 +105,16 @@ function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRow
               </a>
             </th>
 
+            <th className={style.table__tr_th}>
+              {new Date (advert.video_content?.publication_time)
+                .toLocaleDateString ("en-GB")
+                .replace (/\//g, ".")}
+            </th>
+
+
+            <th className={style.table__tr_th}>
+              <FormatterView data={advert.online_views}/>
+            </th>
             <th className={style.table__tr_th}>
               <div style={{display: "flex", gap: "5px"}}>
                 {

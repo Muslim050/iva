@@ -27,7 +27,7 @@ const EditSendPublisherModal = ({setEditModal, expandedRows, item, setCurrentOrd
   const fetchChannel = async () => {
     const token = localStorage.getItem ("token");
     const response = await axios.get (
-      `${backendURL}/publisher/channel/${publisherID || ''}`,
+      `${backendURL}/publisher/channel/?publisher_id=${publisherID || ''}`,
 
       {
         headers: {

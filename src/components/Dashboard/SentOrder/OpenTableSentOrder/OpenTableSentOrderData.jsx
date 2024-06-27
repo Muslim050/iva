@@ -1,9 +1,7 @@
 import React from 'react'
 import style from './TableInventory.module.scss'
 import CircularTable from 'src/components/UI/Circular/CircularTable'
-import CircularBadge from 'src/components/UI/Circular/CircularBadge'
 import FormatterView from '../../../UI/formatter/FormatterView'
-import {ReactComponent as Arrow} from 'src/assets/Table/arrow.svg'
 import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
 import {ReactComponent as Edit} from 'src/assets/Table/Edit.svg'
 import {ReactComponent as LinkVideo} from 'src/assets/linkVideo.svg'
@@ -164,39 +162,6 @@ function OpenTableSentOrderData ({
               )}
 
             </td>
-
-            {inventor.status === 'pre_booked' ||
-            inventor.status === 'booked' ? (
-              <td className={style.table_td}>
-                <button
-                  className={style.dopBtn}
-                  onClick={() => handleRowClick (inventor.id)}
-                  style={{position: 'relative'}}
-                >
-                  Открыть
-                  <span className={style.arrow}>
-                    <Arrow
-                      className={`${style.arrow__icon} ${
-                        expandedRows === inventor.id ? style.arrow__rotate : ''
-                      }`}
-                    />
-                  </span>
-                  {inventor.status === 'pre_booked' ? (
-                    <CircularBadge
-                      style={{
-                        backgroundColor: '#ff7d00',
-                        color: '#4833d0',
-                        width: '15px',
-                        height: '15px',
-                        top: '-5px',
-                        right: '-5px',
-                      }}
-                    />
-                  ) : null}
-                </button>
-              </td>
-            ) : null}
-
             <td>
               {(user === 'admin' ||
                 user === 'advertiser' ||

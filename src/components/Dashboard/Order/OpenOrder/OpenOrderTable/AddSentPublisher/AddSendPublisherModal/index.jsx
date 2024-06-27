@@ -23,15 +23,13 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
   const [cpm, setCpm] = React.useState ([])
   const [budgett, setBudgett] = React.useState (0)
 
-  console.log (channelModal)
-
   const selectedPublisher = (event) => {
     setPublisherID (event.target.value);
   };
   const fetchChannel = async () => {
     const token = localStorage.getItem ("token");
     const response = await axios.get (
-      `${backendURL}/publisher/channel/${publisherID || ''}`,
+      `${backendURL}/publisher/channel/?publisher_id=${publisherID || ''}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -42,18 +40,6 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
     );
     setChannelModal (response.data.data);
   };
-
-  // const calculateBudget = () => {
-  //   let newBudget = 0
-  //
-  //   if (cpm[selectedFormat]) {
-  //     newBudget = (expectedView / 1000) * cpm[selectedFormat]
-  //   }
-  //
-  //   setBudgett (newBudget)
-  // }
-  console.log (onceOrder)
-
 
   const fetchCpm = async () => {
     const token = localStorage.getItem ('token')
@@ -82,7 +68,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
     defaultValues: {
       order: expandedRows,
       channel: "",
-      format: "",
+      format: onceOrder.format,
       startdate: "",
       enddate: "",
       ordered_number_of_views: '',
@@ -242,6 +228,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
             required: 'Поле обязательно',
           })}
           style={{border: errors?.format ? "1px solid red" : ""}}
+          disabled={onceOrder.format === "preroll"}
         >
           <option value="">Выбрать Формат</option>
 
