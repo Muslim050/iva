@@ -51,7 +51,7 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
   } = useForm ({
     defaultValues: {
       expected_number_of_views: '',
-      format: "",
+      format: item.format,
       promo_start_at: 0,
       promo_duration: "",
       order_id: item.id,
@@ -210,8 +210,6 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
               error={errors?.video?.message}
               inputWidth
             />
-
-
             <div style={{display: "flex", gap: "5px", marginTop: "-15px"}}>
 
               <div style={{width: '100%', display: 'grid'}}>
@@ -220,6 +218,7 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
                 </label>
                 <select
                   id="countries"
+                  disabled={item.format === 'preroll'}
                   className={style.select__select}
                   style={{padding: '12px'}}
                   {...register ('format', {

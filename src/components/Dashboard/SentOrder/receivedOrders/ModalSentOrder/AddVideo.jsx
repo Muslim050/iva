@@ -29,8 +29,6 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
 
   const id = Number (localStorage.getItem ("channelId"));
   const user = localStorage.getItem ("role");
-
-
   const fetchChannel = async () => {
     const token = localStorage.getItem ("token");
     const response = await axios.get (
@@ -60,7 +58,7 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
   } = useForm ({
     defaultValues: {
       expected_number_of_views: '',
-      format: "",
+      format: item.format,
       promo_start_at: 0,
       promo_duration: "",
       order_id: item.id,
@@ -181,20 +179,6 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
             error={errors?.channelID?.message}
             inputWidth
           />
-          // <select
-          //   id="countries"
-          //   className={style.select__select}
-          //   style={{padding: '12px'}}
-          //
-          // >
-          //   <option value="">Выбрать Канал</option>
-          //
-          //   {channelModal.map ((option, index) => (
-          //     <option key={index} value={option.channel_id}>
-          //       {option.name}
-          //     </option>
-          //   ))}
-          // </select>
         ) : (
           ""
         )}
@@ -218,13 +202,12 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
               id="countries"
               className={style.select__select}
               style={{border: errors?.expected_number_of_views ? "1px solid red" : "", padding: '12px'}}
-
+              disabled={item.format === 'preroll'}
               {...register ('format', {
                 required: 'Поле обязательно',
               })}
             >
               <option value="">Выбрать Формат</option>
-
               {format.map ((option, index) => (
                 <option key={index} value={option.value}>
                   {option.text}

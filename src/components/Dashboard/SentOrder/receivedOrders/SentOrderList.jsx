@@ -7,7 +7,9 @@ import AdvertStatus from "../../../UI/AdvertStatus/AdvertStatus";
 import {ReactComponent as Video} from 'src/assets/Table/video.svg'
 import {AnimatePresence} from "framer-motion";
 import MyModal from "../../../UI/ModalComponents/ModalUI/ModalUI";
-import CommentModal from "../../Order/CommentModal/CommentModal";
+import ButtonBorder from "../../../UI/ButtonBorder/ButtonBorder";
+import {ReactComponent as Comment} from 'src/assets/Table/comment.svg'
+import CommentSentOrderModal from "../CommentSentOrderModal/CommentSentOrderModal";
 
 function SentOrderList ({
                           listsentPublisher,
@@ -28,7 +30,7 @@ function SentOrderList ({
       <AnimatePresence>
         {showKomment && (
           <MyModal>
-            <CommentModal
+            <CommentSentOrderModal
               setShowKomment={setShowKomment}
               currentOrder={currentOrder}
             />
@@ -83,6 +85,7 @@ function SentOrderList ({
             <td>
               <FormatterView data={item.ordered_number_of_views}/>
             </td>
+
             {/*<td>*/}
             {/*  {item?.notes ? (*/}
             {/*    <ButtonBorder*/}
@@ -105,7 +108,28 @@ function SentOrderList ({
               <AdvertStatus status={item.order_status}/>
             </td>
             <td style={{position: "relative", display: "flex", gap: "10px"}}>
-              {item.order_status === 'in_progress' ? null :
+              {
+                // item.status === 'finished' ? null : (
+                <td style={{display: 'contents'}}>
+                  {item?.notes_text ? (
+                    <ButtonBorder
+                      onClick={() => {
+                        setShowKomment (true)
+                        setCurrentOrder (item)
+                      }}
+                    >
+                      <Comment
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                        }}
+                      />
+                    </ButtonBorder>
+                  ) : null}
+                </td>
+                // )
+              }
+              {item.order_status === 'in_progress' || item.order_status === 'finished' ? null :
                 <div style={{
                   color: '#53545C',
                   borderRadius: "8px",
@@ -143,7 +167,6 @@ function SentOrderList ({
                 style={{height: "30px"}}
                 onClick={() => handleRowClick (item.id)}
               >
-
                 Открыть
               </button>
             </td>
