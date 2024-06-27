@@ -79,7 +79,7 @@ const OpenOrderTable = ({onRowsSelected, expandedRows}) => {
         </div>
       ) : (
         <>
-          
+
           {/*Табы*/}
           <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 0"}}>
             <TabsComponent
