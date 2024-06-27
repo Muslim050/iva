@@ -12,7 +12,6 @@ export default function AddSentPublisher ({expandedRows, onceOrder}) {
   const dispatch = useDispatch ();
   const {listsentPublisher} = useSelector ((state) => state.sentToPublisher);
   const [viewNote, setViewNote] = React.useState (false);
-  console.log (listsentPublisher)
   React.useEffect (() => {
     dispatch (fetchOnceListSentToPublisher ({expandedRows}))
   }, []);

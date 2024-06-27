@@ -344,7 +344,9 @@ function OrderData ({sortedData}) {
                     </>
                   )}
 
-                  {role === 'admin' ? (
+                  {role === 'admin' ||
+                  role === 'advertising_agency' ||
+                  role === 'advertiser' ? (
                     <button
                       className={style.dopBtn}
                       onClick={() => handleRowClick (advert.id)}

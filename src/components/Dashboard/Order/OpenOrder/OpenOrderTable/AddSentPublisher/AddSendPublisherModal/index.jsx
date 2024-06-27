@@ -22,23 +22,28 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
   const [publisherID, setPublisherID] = React.useState ('');
   const [cpm, setCpm] = React.useState ([])
   const [budgett, setBudgett] = React.useState (0)
-
+  console.log (onceOrder)
   const selectedPublisher = (event) => {
     setPublisherID (event.target.value);
   };
   const fetchChannel = async () => {
     const token = localStorage.getItem ("token");
-    const response = await axios.get (
-      `${backendURL}/publisher/channel/?publisher_id=${publisherID || ''}`,
-      {
+    const url = `${backendURL}/publisher/channel${publisherID ? `?publisher_id=${publisherID}` : ''}`;
+
+    try {
+      const response = await axios.get (url, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
-    );
-    setChannelModal (response.data.data);
+      });
+
+      setChannelModal (response.data.data);
+    } catch (error) {
+      console.error ("Error fetching channel data:", error);
+      // Обработка ошибок
+    }
   };
 
   const fetchCpm = async () => {
@@ -164,13 +169,13 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
   }, [budgett, setValue, onceOrder])
   React.useEffect (() => {
     fetchCpm ()
-  }, [])
+  }, [onceOrder])
   React.useEffect (() => {
     dispatch (fetchPublisher ())
   }, [dispatch])
   React.useEffect (() => {
     fetchChannel ();
-  }, [publisherID, publisher]);
+  }, [publisherID]);
 
 
   return (
@@ -239,7 +244,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
           ))}
         </select>
       </td>
-      <td style={{display: "flex", padding: "2px", paddingTop: "0"}}>
+      <td style={{display: "flex", justifyContent: "space-between", padding: "2px", paddingTop: "0"}}>
         <div style={{display: "grid"}}>
           <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
             Начало
@@ -253,7 +258,6 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
             style={{border: errors?.startdate ? "1px solid red" : ""}}
           />
         </div>
-
         <div style={{display: "grid"}}>
           <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
             Конец

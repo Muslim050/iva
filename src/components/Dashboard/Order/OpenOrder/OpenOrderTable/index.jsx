@@ -37,6 +37,8 @@ const OpenOrderTable = ({onRowsSelected, expandedRows}) => {
       },
     )
     setGetOrder (response.data.data.inventories)
+    setOnceOrder (response.data.data)
+
     setIsLoading (false)
   }
   React.useEffect (() => {
