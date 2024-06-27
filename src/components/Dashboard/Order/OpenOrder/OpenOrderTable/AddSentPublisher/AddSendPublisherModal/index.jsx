@@ -132,7 +132,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
       if (response.data) {
         console.log ('Response:', response);
 
-        toast.success ("Видео успешно создано!", toastConfig);
+        toast.success ("Запись успешно создана!", toastConfig);
         setViewNote (false);
         await dispatch (fetchOnceListSentToPublisher ({expandedRows}));
       } else {

@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AnimatePresence} from "framer-motion";
 import ModalUI from "../../../../../UI/ModalComponents/ModalUI/ModalUI";
 import VerifyModal from "../../VerifyModal/VerifyModal";
+import AdvertStatus from "../../../../../UI/AdvertStatus/AdvertStatus";
 
 function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRows}) {
   const dispatch = useDispatch ();
@@ -78,38 +79,49 @@ function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRow
                 .toLocaleDateString ("en-GB")
                 .replace (/\//g, ".")}
             </th>
+            <th className={style.table__tr_th}>
+              <FormatterView data={advert.online_views}/>
+            </th>
 
             <th className={style.table__tr_th}>
-              <div style={{position: "relative"}}>
-                <ButtonBorder
-                  onClick={() => {
-                    dispatch (showModalVerify ());
-                    setSelectedInventoryId (() => advert.id);
-                  }}
-                >
-                  <Star
-                    style={{
-                      width: "16px",
-                      height: "16px",
-                      marginRight: "5px",
-                    }}
-                  />
-                  Проверить
-                </ButtonBorder>
-                {advert.video_content.link_to_video ? (
-                  <CircularBadge
-                    style={{
-                      backgroundColor: "#4833d0",
-                      width: "15px",
-                      height: "15px",
-                      top: "-5px",
-                      right: "0px",
-                    }}
-                  />
-                ) : (
-                  ""
-                )}
-              </div>
+              {
+                advert.status === "in_use" ? <AdvertStatus status={advert.status}/>
+                  : <div style={{width: "fit-content"}}
+                  >
+                    <ButtonBorder
+                      onClick={() => {
+                        dispatch (showModalVerify ());
+                        setSelectedInventoryId (() => advert.id);
+                      }}
+                      style={{position: "relative", width: "fit-content"}}
+                    >
+                      <Star
+                        style={{
+                          width: "16px",
+                          height: "16px",
+                          marginRight: "5px",
+                        }}
+                      />
+                      {advert.video_content.link_to_video ? (
+                        <CircularBadge
+                          style={{
+                            backgroundColor: "#4833d0",
+                            width: "15px",
+                            height: "15px",
+                            top: "-5px",
+                            right: "-5px",
+                            position: "absolute",
+                          }}
+                        />
+                      ) : (
+                        ""
+                      )}
+                      Проверить
+                    </ButtonBorder>
+
+                  </div>
+              }
+
             </th>
           </tr>
         </>

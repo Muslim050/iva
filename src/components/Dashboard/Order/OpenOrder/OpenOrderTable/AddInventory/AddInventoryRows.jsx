@@ -1,6 +1,7 @@
 import React from 'react'
 
-function AddInventoryRows () {
+function AddInventoryRows ({inventor}) {
+  const activeStatus = (inventor.some ((item) => item.status === 'in_use'))
   return (
     <>
       <tr>
@@ -28,8 +29,14 @@ function AddInventoryRows () {
         <th style={{color: "#717377", fontWeight: "500"}}>
           Время публикаций
         </th>
+        {
+          activeStatus && <th style={{color: "#717377", fontWeight: "500"}}>
+            Показы
+          </th>
+        }
+
         <th style={{color: "#717377", fontWeight: "500"}}>
-          Действия
+          Действия/Статус
         </th>
       </tr>
     </>

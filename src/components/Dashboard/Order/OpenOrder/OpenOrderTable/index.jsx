@@ -1,10 +1,7 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import style from "./BindingOrderModal.module.scss";
 import {fetchInventory} from "../../../../../redux/inventory/inventorySlice";
 import axios from "axios";
-
-import Index from "./DopOrder";
 import {hideModalSInventory} from "src/redux/modalSlice";
 import backendURL from "src/utils/url";
 import AddInventory from "./AddInventory";
@@ -82,9 +79,7 @@ const OpenOrderTable = ({onRowsSelected, expandedRows}) => {
         </div>
       ) : (
         <>
-          <div className={style.dopOrder}>
-            <Index onceOrder={onceOrder}/>
-          </div>
+          
           {/*Табы*/}
           <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 0"}}>
             <TabsComponent

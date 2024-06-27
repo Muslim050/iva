@@ -1,29 +1,29 @@
 import React from 'react'
-import { ReactComponent as Email } from '../../assets/InputIcon/Message.svg'
-import { ReactComponent as Lock } from '../../assets/InputIcon/Lock.svg'
-import { ReactComponent as Show } from 'src/assets/InputIcon/Show.svg'
-import { ReactComponent as Ulock } from 'src/assets/InputIcon/Ulock.svg'
+import {ReactComponent as Email} from '../../assets/InputIcon/Message.svg'
+import {ReactComponent as Lock} from '../../assets/InputIcon/Lock.svg'
+import {ReactComponent as Show} from 'src/assets/InputIcon/Show.svg'
+import {ReactComponent as Ulock} from 'src/assets/InputIcon/Ulock.svg'
 import Eclipse from 'src/assets/Site/Ellipse.png'
 
-import { useDispatch } from 'react-redux'
-import { login } from '../../redux/auth/authSlice'
-import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { useForm } from 'react-hook-form'
+import {useDispatch} from 'react-redux'
+import {login} from '../../redux/auth/authSlice'
+import {useNavigate} from 'react-router-dom'
+import {toast} from 'react-toastify'
+import {useForm} from 'react-hook-form'
 import style from './Login.module.scss'
-import { toastConfig } from 'src/utils/toastConfig'
+import {toastConfig} from 'src/utils/toastConfig'
 
-function Login() {
-  const dispatch = useDispatch()
-  let navigate = useNavigate()
-  const [isLogin, setIsLogin] = React.useState(false)
-  const [showPasswordOld, setShowPasswordOld] = React.useState(false)
+function Login () {
+  const dispatch = useDispatch ()
+  let navigate = useNavigate ()
+  const [isLogin, setIsLogin] = React.useState (false)
+  const [showPasswordOld, setShowPasswordOld] = React.useState (false)
 
   const {
     register,
-    formState: { errors, isValid },
+    formState: {errors, isValid},
     handleSubmit,
-  } = useForm({
+  } = useForm ({
     defaultValues: {
       login: '',
       password: '',
@@ -31,32 +31,32 @@ function Login() {
     mode: 'onBlur',
   })
   const handleTogglePasswordOld = () => {
-    setShowPasswordOld(!showPasswordOld)
+    setShowPasswordOld (!showPasswordOld)
   }
   const onSubmit = async (data) => {
     try {
-      setIsLogin(true)
+      setIsLogin (true)
 
-      const logindata = await dispatch(login({ data }))
+      const logindata = await dispatch (login ({data}))
       if (logindata.payload) {
-        const role = localStorage.getItem('role')
+        const role = localStorage.getItem ('role')
         const routesByRole = {
           admin: '/order',
-          publisher: '/inventory',
-          channel: '/inventory',
+          publisher: '/sents-order',
+          channel: '/sents-order',
           advertiser: '/order',
           guest: '/login',
           advertising_agency: '/order',
         }
         const redirectRoute = role ? routesByRole[role] : routesByRole.guest
-        navigate(redirectRoute)
+        navigate (redirectRoute)
       }
 
-      setIsLogin(false)
+      setIsLogin (false)
     } catch (error) {
-      setIsLogin(false)
+      setIsLogin (false)
 
-      toast.error(
+      toast.error (
         'Ошибка при входе. Пожалуйста, попробуйте снова.',
         toastConfig,
       )
@@ -65,10 +65,10 @@ function Login() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit (onSubmit)}>
         <div className={style.login}>
-          <img className={style.eclipse_1} src={Eclipse} alt="" />
-          <img className={style.eclipse_2} src={Eclipse} alt="" />
+          <img className={style.eclipse_1} src={Eclipse} alt=""/>
+          <img className={style.eclipse_2} src={Eclipse} alt=""/>
 
           <div className={style.login__wrapper}>
             <div className={style.login__wrapper__table_header}>
@@ -83,18 +83,18 @@ function Login() {
             <div>
               <div
                 className={style.modalWindow}
-                style={{ marginBottom: '40px' }}
+                style={{marginBottom: '40px'}}
               >
                 <div className={style.inputContainer}>
                   <div className={style.inputIcon}>
-                    <Email />
+                    <Email/>
                   </div>
                   <input
                     className={style.modalWindow__input}
                     type="text"
                     placeholder="Логин"
                     autoComplete="off"
-                    {...register('login', {
+                    {...register ('login', {
                       required: 'Поле обезательно к заполнению',
                     })}
                   />
@@ -107,18 +107,18 @@ function Login() {
 
               <div
                 className={style.modalWindow}
-                style={{ marginBottom: '80px' }}
+                style={{marginBottom: '80px'}}
               >
                 <div className={style.inputContainer}>
                   <div className={style.inputIcon}>
-                    <Lock />
+                    <Lock/>
                   </div>
                   <input
                     className={style.modalWindow__input}
                     type={showPasswordOld ? 'text' : 'password'}
                     placeholder="Пароль"
                     autoComplete="off"
-                    {...register('password', {
+                    {...register ('password', {
                       required: 'Поле обезательно к заполнению',
                     })}
                   />
@@ -137,9 +137,9 @@ function Login() {
                   }}
                 >
                   {showPasswordOld ? (
-                    <Ulock style={{ width: '20px', height: '20px' }} />
+                    <Ulock style={{width: '20px', height: '20px'}}/>
                   ) : (
-                    <Show style={{ width: '20px', height: '20px' }} />
+                    <Show style={{width: '20px', height: '20px'}}/>
                   )}
                 </div>
               </div>
@@ -149,7 +149,7 @@ function Login() {
               </ButtonUI> */}
               <div className={style.btn__wrapper}>
                 <button
-                  style={{ display: 'flex', alignItems: 'center' }}
+                  style={{display: 'flex', alignItems: 'center'}}
                   type="submit"
                   disabled={!isValid || isLogin}
                   className={

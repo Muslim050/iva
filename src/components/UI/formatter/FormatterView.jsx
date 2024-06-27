@@ -5,7 +5,7 @@ function FormatterView (props) {
   const formattedNumber = number ? number.toLocaleString ("ru-RU") : "";
   return (
     <div>
-      <div>{formattedNumber ? formattedNumber : <div style={{color: "orange"}}>Ведется аналитика</div>} </div>
+      <div>{formattedNumber ? formattedNumber : <div style={{color: "orange"}}>----</div>} </div>
     </div>
   );
 }

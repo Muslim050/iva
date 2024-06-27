@@ -13,7 +13,9 @@ const headers = [
   {key: 'name', label: 'Конец'},
   {key: 'name', label: 'Ролик'},
 
-  {key: 'category', label: 'Просмотры'},
+  {key: 'category', label: 'План показов'},
+  // {key: 'category', label: 'Комментарий'},
+
   {key: 'category', label: 'Статус'},
   {key: 'category', label: 'Действия'},
 

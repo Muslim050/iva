@@ -5,12 +5,17 @@ import style from "./receivedOrders.module.scss";
 import OpenTableSentOrder from "../OpenTableSentOrder/OpenTableSentOrder";
 import AdvertStatus from "../../../UI/AdvertStatus/AdvertStatus";
 import {ReactComponent as Video} from 'src/assets/Table/video.svg'
+import {AnimatePresence} from "framer-motion";
+import MyModal from "../../../UI/ModalComponents/ModalUI/ModalUI";
+import CommentModal from "../../Order/CommentModal/CommentModal";
 
 function SentOrderList ({
                           listsentPublisher,
                         }) {
   const [openPopoverIndex, setOpenPopoverIndex] = React.useState (null);
   const [expandedRows, setExpandedRows] = React.useState ('')
+  const [showKomment, setShowKomment] = React.useState (false)
+  const [currentOrder, setCurrentOrder] = React.useState (null)
 
   const handleRowClick = (id) => {
     setExpandedRows (id === expandedRows ? false : id)
@@ -20,7 +25,16 @@ function SentOrderList ({
   }
   return (
     <>
-
+      <AnimatePresence>
+        {showKomment && (
+          <MyModal>
+            <CommentModal
+              setShowKomment={setShowKomment}
+              currentOrder={currentOrder}
+            />
+          </MyModal>
+        )}
+      </AnimatePresence>
       {listsentPublisher.map ((item, i) => (
         <>
           <tr>
@@ -69,40 +83,59 @@ function SentOrderList ({
             <td>
               <FormatterView data={item.ordered_number_of_views}/>
             </td>
+            {/*<td>*/}
+            {/*  {item?.notes ? (*/}
+            {/*    <ButtonBorder*/}
+            {/*      onClick={() => {*/}
+            {/*        setShowKomment (true)*/}
+            {/*        setCurrentOrder (item)*/}
+            {/*      }}*/}
+            {/*    >*/}
+            {/*      <Comment*/}
+            {/*        style={{*/}
+            {/*          width: '16px',*/}
+            {/*          height: '16px',*/}
+            {/*        }}*/}
+            {/*      />*/}
+            {/*    </ButtonBorder>*/}
+            {/*  ) : null}*/}
+            {/*</td>*/}
 
             <td>
               <AdvertStatus status={item.order_status}/>
             </td>
             <td style={{position: "relative", display: "flex", gap: "10px"}}>
-              <div style={{
-                color: '#53545C',
-                borderRadius: "8px",
-                fontSize: "15px",
-                border: "1.5px solid #53545C",
-                padding: '6.5px 8px',
-                cursor: 'pointer',
-                display: 'inline-flex'
-              }}
-                   onClick={() => setOpenPopoverIndex (i)}>
-                Размещение
-                {
-                  openPopoverIndex === i && (
-                    <div style={{
-                      width: "430px",
-                      position: "absolute",
-                      zIndex: "10",
-                      background: "#ffffff",
-                      borderRadius: "12px",
-                      border: "2px solid #cfcfd1",
-                      left: "-50%",
-                      padding: "12px",
-                      boxShadow: "black 0px 0px 15px -7px"
-                    }}>
-                      <ModalSentOrder setOpenPopoverIndex={setOpenPopoverIndex} item={item}/>
-                    </div>
-                  )
-                }
-              </div>
+              {item.order_status === 'in_progress' ? null :
+                <div style={{
+                  color: '#53545C',
+                  borderRadius: "8px",
+                  fontSize: "15px",
+                  border: "1.5px solid #53545C",
+                  padding: '6.5px 8px',
+                  cursor: 'pointer',
+                  display: 'inline-flex'
+                }}
+                     onClick={() => setOpenPopoverIndex (i)}>
+                  Размещение
+                  {
+                    openPopoverIndex === i && (
+                      <div style={{
+                        width: "430px",
+                        position: "absolute",
+                        zIndex: "10",
+                        background: "#ffffff",
+                        borderRadius: "12px",
+                        border: "2px solid #cfcfd1",
+                        left: "-50%",
+                        padding: "12px",
+                        boxShadow: "black 0px 0px 15px -7px"
+                      }}>
+                        <ModalSentOrder setOpenPopoverIndex={setOpenPopoverIndex} item={item}/>
+                      </div>
+                    )
+                  }
+                </div>
+              }
 
 
               <button

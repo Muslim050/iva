@@ -20,7 +20,7 @@ function AddSentPublisherData ({listsentPublisher, expandedRows}) {
     if (confirmDelete) {
       dispatch (sentToPublisherButton ({id: itemID}))
         .then (() => {
-          toast.success ("Запись успешно отправлена паблишеру", toastConfig);
+          toast.success ("Запись успешно отправлен", toastConfig);
           dispatch (fetchOnceListSentToPublisher ({expandedRows}));
         })
         .catch ((error) => {
