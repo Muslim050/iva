@@ -16,6 +16,8 @@ import {ReactComponent as Linkk} from 'src/assets/link.svg'
 function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRows, handleDeactivateInventory}) {
   const dispatch = useDispatch ();
   const [selectedInventoryId, setSelectedInventoryId] = React.useState ('')
+  const role = localStorage.getItem ('role')
+
   const {showVerify} = useSelector ((state) => state.modal)
   const [showModalSelectingVerify, setShowModalSelectingVerify] =
     React.useState (false)
@@ -118,7 +120,8 @@ function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRow
             <th className={style.table__tr_th}>
               <div style={{display: "flex", gap: "5px"}}>
                 {
-                  advert.status === "in_use" || advert.status === "inactive" ? <AdvertStatus status={advert.status}/>
+                  role === 'admin' && advert.status === "in_use" || advert.status === "inactive" ?
+                    <AdvertStatus status={advert.status}/>
                     : <div style={{width: "fit-content"}}
                     >
                       <ButtonBorder

@@ -15,20 +15,24 @@ const format = [
   {value: 'mixroll', text: 'Mix-roll'},
 ]
 
-const EditSendPublisherModal = ({setEditModal, expandedRows, item, setCurrentOrder}) => {
+const EditSendPublisherModal = ({onCancel, expandedRows, item, setCurrentOrder}) => {
   const dispatch = useDispatch ();
   const [channelModal, setChannelModal] = React.useState ([]);
   const {publisher} = useSelector ((state) => state.publisher);
-  const [publisherID, setPublisherID] = React.useState ('');
 
+  const [publisherID, setPublisherID] = React.useState ('');
+  const [channelID, setChannelID] = React.useState ('');
   const selectedPublisher = (event) => {
     setPublisherID (event.target.value);
   };
+  const selectedChannelID = (event) => {
+    setChannelID (event.target.value);
+  };
   const fetchChannel = async () => {
+    if (!publisherID) return; // Skip fetch if publisherID is not set
     const token = localStorage.getItem ("token");
     const response = await axios.get (
-      `${backendURL}/publisher/channel/?publisher_id=${publisherID || ''}`,
-
+      `${backendURL}/publisher/channel/?publisher_id=${publisherID}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +55,8 @@ const EditSendPublisherModal = ({setEditModal, expandedRows, item, setCurrentOrd
     handleSubmit,
     setValue,
     watch,
-    control
+    control,
+    trigger
   } = useForm ({
     defaultValues: {
       order: expandedRows,
@@ -68,25 +73,11 @@ const EditSendPublisherModal = ({setEditModal, expandedRows, item, setCurrentOrd
       notes_url: '',
 
     },
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const selectedFormat = watch ('format')
   const expectedView = watch ('ordered_number_of_views')
-  // const onSubmit = async (data) => {
-  //   try {
-  //     const response = await dispatch (EditSentToPublisher ({id: item.id, data}));
-  //     if (response.payload) {
-  //       toast.success ("Видео успешно создано!", toastConfig);
-  //       setEditModal (false);
-  //       dispatch (fetchOnceListSentToPublisher ({expandedRows}))
-  //     } else {
-  //       toast.error ("Произошла ошибка при создании записи", toastConfig);
-  //     }
-  //   } catch (error) {
-  //     toast.error ("Произошла ошибка при создании записи!", toastConfig);
-  //   }
-  // };
 
   const onSubmit = async (data) => {
     const token = localStorage.getItem ('token');
@@ -149,27 +140,13 @@ const EditSendPublisherModal = ({setEditModal, expandedRows, item, setCurrentOrd
         console.log ('Response:', response);
 
         toast.success ("Данные успешно обновлены!", toastConfig);
-        setEditModal (false);
+        onCancel ()
         await dispatch (fetchOnceListSentToPublisher ({expandedRows}));
       } else {
         // Handle case where payload is not as expected
         throw new Error ('Unexpected response payload');
       }
     } catch (error) {
-      // // Debug log to inspect error
-      // const errorData = error?.response?.data?.error;
-      // // Convert array contents to a string and format with index
-      // let index = 1;
-      // const errorMessages = Object.keys (errorData)?.map ((key) => {
-      //   let message = '';
-      //   if (Array.isArray (errorData[key])) {
-      //     message = errorData[key].map ((item) => `${index++}: ${item}`).join ('; ');
-      //   } else {
-      //     message = `${index++}: ${errorData[key]}`;
-      //   }
-      //   return `${key}:    ${message}`;
-      // }).join ('\n'); // Use '\n' to add a new line between each error message
-
       console.log (error);
       toast.error (error, toastConfig);
     }
@@ -214,7 +191,10 @@ const EditSendPublisherModal = ({setEditModal, expandedRows, item, setCurrentOrd
   }, [])
   React.useEffect (() => {
     if (item) {
-      setValue ('channel', item.channel?.name);
+      setValue ('publisher', item.publisher?.id || '');
+      setPublisherID (item.publisher?.id || ''); // Set publisher ID here
+      setChannelID (item.channel?.id || "")
+      setValue ('channel', item.channel?.id || '');
       setValue ('format', item.format);
       setValue ('startdate', item.start_date ? item.start_date.substring (0, 10) : "");
       setValue ('enddate', item.end_date ? item.end_date.substring (0, 10) : "");
@@ -225,8 +205,20 @@ const EditSendPublisherModal = ({setEditModal, expandedRows, item, setCurrentOrd
       setValue ('country', item.country);
       setValue ('notes_text', item.notes_text);
       setValue ('notes_url', item.notes_url);
+      trigger (); // Manually trigger validation
+
+
     }
-  }, [item, setValue]);
+  }, [item, setValue, trigger]);
+
+  React.useEffect (() => {
+    console.log ("isValid:", isValid);
+    console.log ("errors:", errors);
+  }, [isValid, errors]);
+
+  React.useEffect (() => {
+
+  }, [setPublisherID, setChannelID])
 
   return (
     <>
@@ -234,23 +226,26 @@ const EditSendPublisherModal = ({setEditModal, expandedRows, item, setCurrentOrd
         <select
           id="countries"
           className={style.select__select}
+          value={publisherID}
           onChange={selectedPublisher}
         >
           <option value="">Выбрать Паблишера</option>
           {
             publisher?.map ((option, index) => (
-              <>
-                <option key={index} value={option.id}>
-                  {option.name}
-                </option>
-              </>
-            ))}
+              <option key={index} value={option.id}>
+                {option.name}
+              </option>
+            ))
+          }
         </select>
 
       </td>
       <td style={{padding: "2px", paddingTop: "18px"}}>
         <select
           id="countries"
+          value={channelID}
+          onChange={selectedChannelID}
+
           className={style.select__select}
           {...register ('channel', {
             required: 'Поле обязательно для заполнения',
@@ -464,7 +459,7 @@ const EditSendPublisherModal = ({setEditModal, expandedRows, item, setCurrentOrd
         gap: "5px",
 
       }}>
-        <button isValid={true} disabled={!isValid} onClick={handleSubmit (onSubmit)}
+        <button disabled={!isValid} onClick={handleSubmit (onSubmit)}
                 className={`${isValid ? style.ok_btn : style.ok_btndis}`}>
           Обновить
         </button>
