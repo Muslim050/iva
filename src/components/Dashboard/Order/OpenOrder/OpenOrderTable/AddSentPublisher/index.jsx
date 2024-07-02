@@ -64,7 +64,8 @@ export default function AddSentPublisher ({expandedRows, onceOrder}) {
               <AddSentPublisherRows/>
               </thead>
               <tbody>
-              <AddSentPublisherData listsentPublisher={listsentPublisher} expandedRows={expandedRows}/>
+              <AddSentPublisherData listsentPublisher={listsentPublisher} expandedRows={expandedRows}
+                                    onceOrder={onceOrder}/>
               </tbody>
             </table>
           </div>

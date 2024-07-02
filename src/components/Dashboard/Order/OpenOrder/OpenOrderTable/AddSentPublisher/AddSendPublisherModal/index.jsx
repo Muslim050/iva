@@ -22,7 +22,6 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
   const [publisherID, setPublisherID] = React.useState ('');
   const [cpm, setCpm] = React.useState ([])
   const [budgett, setBudgett] = React.useState (0)
-  console.log (onceOrder)
   const selectedPublisher = (event) => {
     setPublisherID (event.target.value);
   };
