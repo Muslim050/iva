@@ -10,6 +10,7 @@ import {toastConfig} from "../../../../../../utils/toastConfig";
 import FormatterView from "../../../../../UI/formatter/FormatterView";
 import PopoverEditView from "./PopoverEditView";
 import {ReactComponent as Add} from 'src/assets/Table/add.svg'
+import {formatDate} from "../../../../../../utils/formatterDate";
 
 function AddSentPublisherData ({listsentPublisher, expandedRows, onceOrder}) {
   const [editOpen, setEditOpen] = React.useState (false);
@@ -63,11 +64,11 @@ function AddSentPublisherData ({listsentPublisher, expandedRows, onceOrder}) {
               {/*</td>*/}
               <td>{(item.format === 'preroll' && 'Pre-roll') || ('mixroll' && 'Mix-roll')}</td>
               <td>
-                {new Date (item.start_date)
-                  .toLocaleDateString ('en-GB')
-                  .replace (/\//g, '.')} - {new Date (item.end_date)
-                .toLocaleDateString ('en-GB')
-                .replace (/\//g, '.')}
+                {formatDate (item.start_date)}
+
+
+                - {formatDate (item.end_date)}
+
               </td>
 
               <td>

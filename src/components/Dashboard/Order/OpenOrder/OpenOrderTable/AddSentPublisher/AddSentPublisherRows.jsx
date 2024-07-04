@@ -16,7 +16,6 @@ function AddSentPublisherRows () {
           fontSize: "14px"
         }}>Канал
         </th>
-
         {/*<th style={{*/}
         {/*  color: '#2c2d33',*/}
         {/*  fontWeight: '400',*/}

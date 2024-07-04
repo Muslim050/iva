@@ -11,6 +11,7 @@ import ModalUI from "../../../UI/ModalComponents/ModalUI/ModalUI";
 import TableLinkedVideo from "../../Video/TableVideo/TableLinkedVideo/TableLinkedVideo";
 import {AnimatePresence} from "framer-motion";
 import {ReactComponent as Link} from 'src/assets/link.svg'
+import {formatDate} from "../../../../utils/formatterDate";
 
 function OpenTableSentOrderData ({
                                    data,
@@ -114,9 +115,8 @@ function OpenTableSentOrderData ({
               {inventor.video_content?.category}
             </td>
             <td className={style.table_td}>
-              {new Date (inventor.video_content?.publication_time)
-                .toLocaleDateString ('en-GB')
-                .replace (/\//g, '.')}
+              {formatDate (inventor.video_content?.publication_time)}
+
             </td>
             <td className={style.table_td}>
               {inventor.video_content.link_to_video === null ? (

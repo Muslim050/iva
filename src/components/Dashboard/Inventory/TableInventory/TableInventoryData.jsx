@@ -8,6 +8,7 @@ import {ReactComponent as Arrow} from 'src/assets/Table/arrow.svg'
 import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
 import {ReactComponent as Edit} from 'src/assets/Table/Edit.svg'
 import BindingInventoryOrderTable from '../BindingInventoryOrderTable/BindingInventoryOrderTable'
+import {formatDate} from "../../../../utils/formatterDate";
 
 function TableInventoryData ({
                                sortedData,
@@ -95,9 +96,8 @@ function TableInventoryData ({
               {inventor.video_content?.category}
             </td>
             <td className={style.table_td}>
-              {new Date (inventor.video_content?.publication_time)
-                .toLocaleDateString ('en-GB')
-                .replace (/\//g, '.')}
+              {formatDate (inventor.video_content?.publication_time)}
+
             </td>
             <td className={style.table_td}>
               <div>

@@ -10,6 +10,7 @@ import MyModal from "../../../UI/ModalComponents/ModalUI/ModalUI";
 import ButtonBorder from "../../../UI/ButtonBorder/ButtonBorder";
 import {ReactComponent as Comment} from 'src/assets/Table/comment.svg'
 import CommentSentOrderModal from "../CommentSentOrderModal/CommentSentOrderModal";
+import {formatDate} from "../../../../utils/formatterDate";
 
 function SentOrderList ({
                           listsentPublisher,
@@ -56,14 +57,12 @@ function SentOrderList ({
                 ("midroll4" && "Mid-roll 4")}
             </td>
             <td>
-              {new Date (item.start_date)
-                .toLocaleDateString ('en-GB')
-                .replace (/\//g, '.')}
+              {formatDate (item.start_date)}
+
             </td>
             <td>
-              {new Date (item.end_date)
-                .toLocaleDateString ('en-GB')
-                .replace (/\//g, '.')}
+              {formatDate (item.end_date)}
+
             </td>
             <td className={style.td_Order}>
               <div style={{display: 'flex'}}>

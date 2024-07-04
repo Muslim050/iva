@@ -8,6 +8,7 @@ import FormatterTime from 'src/components/UI/formatter/FormatterTime'
 import CircularTable from 'src/components/UI/Circular/CircularTable'
 import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
 import {ReactComponent as Edit} from 'src/assets/Table/Edit.svg'
+import {formatDate} from "../../../../utils/formatterDate";
 
 function TableVideoList ({
                            sortedData,
@@ -58,9 +59,8 @@ function TableVideoList ({
             {/* <td>{video.name}</td> */}
             <td>{video.category}</td>
             <td>
-              {new Date (video.publication_time)
-                .toLocaleDateString ('en-GB')
-                .replace (/\//g, '.')}
+              {formatDate (video.publication_time)}
+
             </td>
 
             <td>

@@ -21,27 +21,23 @@ export default function AddSentPublisher ({expandedRows, onceOrder}) {
         <table className={style.table} style={{overflow: "auto"}}>
           {viewNote &&
             <thead style={{borderTop: "0"}}>
-            <tr>
-              <th>Паблишер</th>
-              <th>Канал</th>
-              <th>Формат</th>
-              <th>Период</th>
-              <th>Показы</th>
-              <th>Бюджет</th>
-              <th>Целевая аудитория</th>
-              <th>Язык контента</th>
-              <th>Текст и ссылка</th>
-              <th>Настройка</th>
-            </tr>
+            <th>Паблишер</th>
+            <th>Канал</th>
+            <th>Формат</th>
+            <th>Период</th>
+            <th>Показы</th>
+            <th>Бюджет</th>
+            <th>Целевая аудитория</th>
+            <th>Язык контента</th>
+            <th>Текст и ссылка</th>
+            <th>Настройка</th>
             </thead>}
           <tbody>
           {viewNote && (
-            <motion.tr
-              initial={{opacity: 0, x: -10, filter: "blur(10px)"}}
-              animate={{opacity: 1, x: 0, filter: "blur(0px)"}}
-              transition={{duration: 0.5}}
+            <motion.tr initial={{opacity: 0, x: -10, filter: "blur(10px)"}}
+                       animate={{opacity: 1, x: 0, filter: "blur(0px)"}}
+                       transition={{duration: 0.5}}>
 
-            >
               <AddSendPublisherModal expandedRows={expandedRows} setViewNote={setViewNote} onceOrder={onceOrder}/>
             </motion.tr>
           )}

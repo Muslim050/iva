@@ -382,7 +382,6 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
           })}
         />
       </td>
-
       <td>
         <div style={{display: "flex", justifyContent: "end"}}>
           <button disabled={!isValid} onClick={handleSubmit (onSubmit)}
@@ -392,7 +391,6 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
         </div>
       </td>
     </>
-
   );
 }
 export default AddSendPublisherModal
