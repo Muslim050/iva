@@ -1,6 +1,6 @@
 import React from 'react'
 import FormatterView from "../../../UI/formatter/FormatterView";
-import ModalSentOrder from "./ModalSentOrder";
+import ModalSentOrder from "../receivedOrders/ModalSentOrder/index";
 import style from "./receivedOrders.module.scss";
 import OpenTableSentOrder from "../OpenTableSentOrder/OpenTableSentOrder";
 import AdvertStatus from "../../../UI/AdvertStatus/AdvertStatus";

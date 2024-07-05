@@ -62,7 +62,7 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
       promo_start_at: 0,
       promo_duration: "",
       order_id: item.id,
-      channel_id: id,
+      channel_id: user === 'channel' ? "" : id,
       video_name: "",
       category: "",
       video_duration: 0,

@@ -239,7 +239,15 @@ export const deleteOrder = createAsyncThunk (
 const orderSlice = createSlice ({
   name: 'order',
   initialState,
-  reducers: {},
+  reducers: {
+    setOrderStatus: (state, action) => {
+      const {orderId, status} = action.payload
+      const order = state.order.find ((o) => o.id === orderId)
+      if (order) {
+        order.status = status
+      }
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase (fetchOrder.pending, (state) => {
@@ -298,4 +306,6 @@ const orderSlice = createSlice ({
   },
 })
 
-export default orderSlice.reducer
+export const {setOrderStatus} = orderSlice.actions;
+
+export default orderSlice.reducer;

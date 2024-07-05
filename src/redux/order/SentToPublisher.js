@@ -17,13 +17,18 @@ const initialState = {
 }
 
 //запрос на получения списка
-export const fetchOnceListSentToPublisher = createAsyncThunk ('sentToPublisher/sentToPublisher', async ({expandedRows}) => {
+export const fetchOnceListSentToPublisher = createAsyncThunk ('sentToPublisher/sentToPublisher', async ({
+                                                                                                          expandedRows,
+                                                                                                          is_deactivated
+                                                                                                        }) => {
   const token = localStorage.getItem ('token')
 
   let data = '';
 
   if (expandedRows) {
     data = `${backendURL}/order/assignments/?order_id=${expandedRows}`;
+  } else if (is_deactivated) {
+    data = `${backendURL}/order/assignments/?is_deactivated=${is_deactivated}`;
   } else {
     data = `${backendURL}/order/assignments/`;
   }

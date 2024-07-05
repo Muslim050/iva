@@ -47,7 +47,8 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
     formState: {errors, isValid},
     handleSubmit,
     setValue,
-    control
+    control,
+    watch
   } = useForm ({
     defaultValues: {
       expected_number_of_views: '',
@@ -56,10 +57,12 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
       promo_duration: "",
       order_id: item.id,
       video_id: '',
+      channel_id: ""
     },
     mode: "onBlur",
   });
-
+  const cId = watch ('channel_id')
+  console.log (cId)
   const onSubmit = async (data) => {
     const token = localStorage.getItem ('token');
 
@@ -73,6 +76,7 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
           promo_duration: data.promo_duration,
           order_assignment_id: data.order_id,
           video_id: data.video_id,
+
         },
         {
           headers: {
@@ -163,17 +167,23 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
     // if (user === 'channel') {
     //   fetchVideo ()
     // }
+    if (cId) {
+      fetchVideo ()
+
+    }
     fetchVideo ()
-  }, [])
+  }, [dispatch])
 
   React.useEffect (() => {
     fetchChannel ()
   }, [dispatch])
+
+
   const fetchVideo = async () => {
     try {
       const token = localStorage.getItem ('token')
       const response = await axios.get (
-        `${backendURL}/inventory/video/`,
+        `${backendURL}/inventory/video/?channel_id=${cId}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -182,9 +192,10 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
           },
         },
       )
+      console.log (response.data.data)
       setVideoModal (
         // response.data.data
-        response.data.data.filter ((item) => item.is_visible_in_select === true),
+        response.data.data,
       )
     } catch (error) {
       console.error ('Error fetching video:', error)
@@ -201,6 +212,20 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
         <div className="modalWindow">
 
           <form onSubmit={handleSubmit (onSubmit)}>
+            {user === "publisher" ? (
+              <SelectUI
+                label="Канал"
+                options={channelModal}
+                register={register ('channel_id', {
+                  required: 'Поле обязательно для заполнения',
+                })}
+                error={errors?.channelID?.message}
+                inputWidth
+              />
+            ) : (
+              ""
+            )}
+
             <SelectUI
               label="Видео"
               options={Array.isArray (videoModal) ? videoModal : []}

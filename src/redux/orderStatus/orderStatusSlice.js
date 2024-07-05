@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { toastConfig } from "src/utils/toastConfig";
+import {toast} from "react-toastify";
+import {toastConfig} from "src/utils/toastConfig";
 import backendURL from "src/utils/url";
 
 const initialState = {
@@ -10,13 +10,13 @@ const initialState = {
   statusb: "",
 };
 
-export const fetchViewStatus = createAsyncThunk(
+export const fetchViewStatus = createAsyncThunk (
   "order/fetchViewStatus",
   async (orderID) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem ("token");
 
     try {
-      const response = await axios.post(
+      const response = await axios.post (
         `${backendURL}/order/accept-order/`,
         {
           order_id: orderID,
@@ -37,13 +37,13 @@ export const fetchViewStatus = createAsyncThunk(
   }
 );
 
-export const assignInventories = createAsyncThunk(
+export const assignInventories = createAsyncThunk (
   "order/assignInventories",
-  async ({ expandedRows, selectedRows }) => {
-    const token = localStorage.getItem("token");
+  async ({expandedRows, selectedRows}) => {
+    const token = localStorage.getItem ("token");
 
     try {
-      const response = await axios.post(
+      const response = await axios.post (
         `${backendURL}/order/assign-inventories/`,
         {
           order_id: expandedRows,
@@ -64,12 +64,12 @@ export const assignInventories = createAsyncThunk(
   }
 );
 
-export const confirmByChannel = createAsyncThunk(
+export const confirmByChannel = createAsyncThunk (
   "order/comfirmByChannel",
   async (data) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem ("token");
     try {
-      const response = await axios.post(
+      const response = await axios.post (
         `${backendURL}/order/confirm-by-channel/`,
         {
           order_id: data.inventory,
@@ -90,12 +90,12 @@ export const confirmByChannel = createAsyncThunk(
   }
 );
 
-export const removeInventories = createAsyncThunk(
+export const removeInventories = createAsyncThunk (
   "order/removeInventories",
-  async ({ expandedRows, inventory_id }, { rejectWithValue }) => {
-    const token = localStorage.getItem("token");
+  async ({expandedRows, inventory_id}, {rejectWithValue}) => {
+    const token = localStorage.getItem ("token");
     try {
-      const response = await axios.post(
+      const response = await axios.post (
         `${backendURL}/order/remove-inventory/`,
         {
           order_id: expandedRows,
@@ -110,19 +110,19 @@ export const removeInventories = createAsyncThunk(
         }
       );
 
-      return { expandedRows, inventory_id }; // Возвращаем данные, чтобы использовать их в reducer
+      return {expandedRows, inventory_id}; // Возвращаем данные, чтобы использовать их в reducer
     } catch (error) {
-      return rejectWithValue(error.response.data); // Возвращаем ошибку с данными из response.data
+      return rejectWithValue (error.response.data); // Возвращаем ошибку с данными из response.data
     }
   }
 );
 
-export const deactivateInventories = createAsyncThunk(
+export const deactivateInventories = createAsyncThunk (
   "order/deactivateInventories",
-  async ({ inventory_id }, { rejectWithValue }) => {
-    const token = localStorage.getItem("token");
+  async ({inventory_id}, {rejectWithValue}) => {
+    const token = localStorage.getItem ("token");
     try {
-      const response = await axios.post(
+      const response = await axios.post (
         `${backendURL}/inventory/deactivate/`,
         {
           inventory_id: inventory_id,
@@ -136,19 +136,19 @@ export const deactivateInventories = createAsyncThunk(
         }
       );
 
-      return { inventory_id }; // Возвращаем данные, чтобы использовать их в reducer
+      return {inventory_id}; // Возвращаем данные, чтобы использовать их в reducer
     } catch (error) {
-      return rejectWithValue(error.response.data); // Возвращаем ошибку с данными из response.data
+      return rejectWithValue (error.response.data); // Возвращаем ошибку с данными из response.data
     }
   }
 );
 
-export const deletedComplitedOrder = createAsyncThunk(
+export const deletedComplitedOrder = createAsyncThunk (
   "order/deletedComplitedOrder",
-  async ({ inventory_id }, { rejectWithValue }) => {
-    const token = localStorage.getItem("token");
+  async ({inventory_id}, {rejectWithValue}) => {
+    const token = localStorage.getItem ("token");
     try {
-      const response = await axios.post(
+      const response = await axios.post (
         `${backendURL}/inventory/confirm-removal/`,
         {
           inventory_id: inventory_id,
@@ -162,20 +162,20 @@ export const deletedComplitedOrder = createAsyncThunk(
         }
       );
 
-      return { inventory_id }; // Возвращаем данные, чтобы использовать их в reducer
+      return {inventory_id}; // Возвращаем данные, чтобы использовать их в reducer
     } catch (error) {
-      return rejectWithValue(error.response.data); // Возвращаем ошибку с данными из response.data
+      return rejectWithValue (error.response.data); // Возвращаем ошибку с данными из response.data
     }
   }
 );
 
-export const confirmOrder = createAsyncThunk(
+export const confirmOrder = createAsyncThunk (
   "order/confirmOrder",
-  async ({ expandedRows }) => {
-    const token = localStorage.getItem("token");
+  async ({expandedRows}) => {
+    const token = localStorage.getItem ("token");
 
     try {
-      const response = await axios.post(
+      const response = await axios.post (
         `${backendURL}/order/confirm-by-admin/`,
         {
           order_id: expandedRows,
@@ -195,13 +195,13 @@ export const confirmOrder = createAsyncThunk(
   }
 );
 
-export const finishOrder = createAsyncThunk(
+export const finishOrder = createAsyncThunk (
   "order/finishOrder",
-  async ({ id }) => {
-    const token = localStorage.getItem("token");
+  async ({id}) => {
+    const token = localStorage.getItem ("token");
 
     try {
-      const response = await axios.post(
+      const response = await axios.post (
         `${backendURL}/order/finish/`,
 
         {
@@ -222,91 +222,106 @@ export const finishOrder = createAsyncThunk(
   }
 );
 
-const orderStatusSlice = createSlice({
+const orderStatusSlice = createSlice ({
   name: "status",
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentOrder: (state, action) => {
+      state.currentOrder = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchViewStatus.fulfilled, (state, action) => {
-        state.statusb = action.payload.data.status;
-        state.status = "succeeded";
+      .addCase (fetchViewStatus.pending, (state) => {
+        state.status = "loading";
       })
-      .addCase(removeInventories.pending, (state) => {
+      .addCase (fetchViewStatus.fulfilled, (state, action) => {
+        state.statusb = action.payload.status;
+        state.status = "succeeded";
+        state.currentOrder = action.payload;
+      })
+      .addCase (fetchViewStatus.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+        toast.error ("Failed to fetch status", toastConfig);
+      })
+      .addCase (removeInventories.pending, (state) => {
         state.status = "loading";
         state.error = null;
       })
-      .addCase(removeInventories.fulfilled, (state, action) => {
-        const { expandedRows, inventory_id } = action.payload;
+      .addCase (removeInventories.fulfilled, (state, action) => {
+        const {expandedRows, inventory_id} = action.payload;
 
-        if (Array.isArray(state.expandedRows)) {
-          state.expandedRows = state.expandedRows.filter(
+        if (Array.isArray (state.expandedRows)) {
+          state.expandedRows = state.expandedRows.filter (
             (row) => row !== expandedRows
           );
         }
 
         state.status = "succeeded";
       })
-      .addCase(removeInventories.rejected, (state, action) => {
+      .addCase (removeInventories.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
 
-      .addCase(deactivateInventories.pending, (state) => {
+      .addCase (deactivateInventories.pending, (state) => {
         state.status = "loading";
         state.error = null;
       })
-      .addCase(deactivateInventories.fulfilled, (state, action) => {
-        const { expandedRows, inventory_id } = action.payload;
+      .addCase (deactivateInventories.fulfilled, (state, action) => {
+        const {expandedRows, inventory_id} = action.payload;
 
-        if (Array.isArray(state.expandedRows)) {
-          state.expandedRows = state.expandedRows.filter(
+        if (Array.isArray (state.expandedRows)) {
+          state.expandedRows = state.expandedRows.filter (
             (row) => row !== expandedRows
           );
         }
 
         state.status = "succeeded";
       })
-      .addCase(deactivateInventories.rejected, (state, action) => {
+      .addCase (deactivateInventories.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
 
-      .addCase(confirmOrder.fulfilled, (state, action) => {
+      .addCase (confirmOrder.fulfilled, (state, action) => {
         state.status = "succeeded";
-        toast.success("Инвентарь подтвержден!", toastConfig);
+        toast.success ("Инвентарь подтвержден!", toastConfig);
       })
-      .addCase(confirmOrder.rejected, (state, action) => {
+      .addCase (confirmOrder.rejected, (state, action) => {
         state.status = "failed";
-        toast.error(
+        toast.error (
           "Инвентори этого заказа все еще открыты или предварительно забронированы.!",
           toastConfig
         );
       })
-      .addCase(confirmByChannel.fulfilled, (state, action) => {
+      .addCase (confirmByChannel.fulfilled, (state, action) => {
         state.status = "succeeded";
       })
-      .addCase(finishOrder.fulfilled, (state, action) => {
+      .addCase (finishOrder.fulfilled, (state, action) => {
         state.status = "succeeded";
-        toast.success("Заказ успешно финиширован!", toastConfig);
+        toast.success ("Заказ успешно финиширован!", toastConfig);
       })
-      .addCase(finishOrder.rejected, (state, action) => {
+      .addCase (finishOrder.rejected, (state, action) => {
         state.status = "failed";
         // Здесь обрабатываем ошибку запроса
-        toast.error(
+        toast.error (
           "Чтобы завершить заказ, сначала необходимо деактивировать все инвентари этого заказа!",
           toastConfig
         ); // Выводим сообщение об ошибке
         // ...обновление состояния...
       })
 
-      .addCase(deletedComplitedOrder.fulfilled, (state, action) => {
+      .addCase (deletedComplitedOrder.fulfilled, (state, action) => {
         state.status = "succeeded";
       })
-      .addCase(deletedComplitedOrder.rejected, (state, action) => {
+      .addCase (deletedComplitedOrder.rejected, (state, action) => {
         state.status = "failed";
       });
   },
 });
+
+export const {setCurrentOrder} = orderStatusSlice.actions;
 
 export default orderStatusSlice.reducer;
