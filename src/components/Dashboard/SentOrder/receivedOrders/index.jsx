@@ -28,7 +28,7 @@ const ReceivedOrders = () => {
   const {listsentPublisher} = useSelector ((state) => state.sentToPublisher)
 
   React.useEffect (() => {
-    dispatch (fetchOnceListSentToPublisher ({is_deactivated: true})).then (() => setLoading (false))
+    dispatch (fetchOnceListSentToPublisher ({})).then (() => setLoading (false))
   }, [dispatch])
 
   return (

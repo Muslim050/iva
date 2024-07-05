@@ -28,6 +28,8 @@ function OrderTable () {
   React.useEffect (() => {
     dispatch (fetchOrder ()).then (() => setLoading (false))
   }, [dispatch])
+
+
   const sortedData = React.useCallback (
     () =>
       sortData ({
