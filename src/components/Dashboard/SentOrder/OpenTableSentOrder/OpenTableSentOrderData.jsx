@@ -115,7 +115,7 @@ function OpenTableSentOrderData ({
               {inventor.video_content?.category}
             </td>
             <td className={style.table_td}>
-              {formatDate (inventor.video_content?.publication_time)}
+              {formatDate (inventor.video_content?.actual_publication_time)}
 
             </td>
             <td className={style.table_td}>
