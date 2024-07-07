@@ -120,7 +120,7 @@ function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRow
             <th className={style.table__tr_th}>
               <div style={{display: "flex", gap: "5px"}}>
                 {
-                  role === 'admin' && advert.status === "in_use" || advert.status === "inactive" ?
+                  (role === 'advertiser' || role === 'advertising_agency' || advert.status === "in_use" || advert.status === "inactive") ?
                     <AdvertStatus status={advert.status}/>
                     : <div style={{width: "fit-content"}}
                     >
@@ -158,22 +158,24 @@ function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRow
                     </div>
                 }
 
-                {advert.status === "in_use" ? (
-                  <div>
-                    <ButtonBorder onClick={() => handleDeactivateInventory (advert.id)}>
-                      <Deactivate
-                        style={{
-                          width: "16px",
-                          height: "16px",
-                          marginRight: "5px",
-                        }}
-                      />
-                      Завершить
-                    </ButtonBorder>
-                  </div>
-                ) : (
-                  ""
-                )}
+                {
+                  role === 'admin' && advert.status === "in_use" ? (
+                    <div>
+                      <ButtonBorder onClick={() => handleDeactivateInventory (advert.id)}>
+                        <Deactivate
+                          style={{
+                            width: "16px",
+                            height: "16px",
+                            marginRight: "5px",
+                          }}
+                        />
+                        Завершить
+                      </ButtonBorder>
+                    </div>
+                  ) : (
+                    ""
+                  )
+                }
               </div>
 
             </th>
