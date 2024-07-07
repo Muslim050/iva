@@ -108,7 +108,7 @@ function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRow
             </th>
 
             <th className={style.table__tr_th}>
-              {new Date (advert.video_content?.publication_time)
+              {new Date (advert.video_content?.actual_publication_time)
                 .toLocaleDateString ("en-GB")
                 .replace (/\//g, ".")}
             </th>
