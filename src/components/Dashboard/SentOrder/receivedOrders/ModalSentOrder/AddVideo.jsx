@@ -8,8 +8,8 @@ import {ButtonModal} from "src/components/UI/ButtonUI/ButtonUI";
 import InputUI from "../../../../UI/InputUI/InputUI";
 import {toastConfig} from "../../../../../utils/toastConfig";
 import SelectUI from "../../../../UI/SelectUI/SelectUI";
-import {fetchOnceListSentToPublisher} from "../../../../../redux/order/SentToPublisher";
 import {useDispatch} from "react-redux";
+import {fetchInventory} from "../../../../../redux/inventory/inventorySlice";
 
 const categoryC = [
   {id: 1, text: "Шоу"},
@@ -126,8 +126,8 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
 
       if (response.data) {
         toast.success ("Видео успешно создано!", toastConfig);
-        dispatch (fetchOnceListSentToPublisher ({}))
         setOpenPopoverIndex (null);
+        dispatch (fetchInventory ({orderAssignmentId: item.id}))
       } else {
         throw new Error ('Unexpected response payload');
       }
