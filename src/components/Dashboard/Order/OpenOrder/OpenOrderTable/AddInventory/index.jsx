@@ -66,7 +66,7 @@ export default function AddInventory ({getOrder, setSelectedRows, selectedRows, 
               Показы
             </th>
             <th style={{color: "#717377", fontWeight: "500"}}>
-              Действия/Статус
+              Статус/Действия
             </th>
           </tr>
           </thead>
