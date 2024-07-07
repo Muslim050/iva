@@ -49,8 +49,7 @@ const ReceivedOrders = () => {
             </div>
 
           </div>
-
-          <table className="tableWrapper">
+          {listsentPublisher.length > 0 ? <table className="tableWrapper">
             <thead>
             <tr>
               {headers.map ((row) => {
@@ -76,7 +75,9 @@ const ReceivedOrders = () => {
               listsentPublisher={listsentPublisher}
             />
             </tbody>
-          </table>
+          </table> : <div className="empty_list">Список пустой. У вас нет полученных заказов</div>
+          }
+
 
         </div>
       )}
