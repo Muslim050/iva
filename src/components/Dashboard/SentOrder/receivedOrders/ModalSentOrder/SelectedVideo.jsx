@@ -8,6 +8,7 @@ import backendURL from "src/utils/url";
 import {ButtonModal} from "src/components/UI/ButtonUI/ButtonUI";
 import {toastConfig} from "../../../../../utils/toastConfig";
 import SelectUI from "../../../../UI/SelectUI/SelectUI";
+import {fetchOnceListSentToPublisher} from "../../../../../redux/order/SentToPublisher";
 
 const categoryC = [
   {id: 1, text: "Шоу"},
@@ -62,7 +63,6 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
     mode: "onBlur",
   });
   const cId = watch ('channel_id')
-  console.log (cId)
   const onSubmit = async (data) => {
     const token = localStorage.getItem ('token');
 
@@ -91,6 +91,7 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
 
       if (response.data) {
         toast.success ("Видео успешно создано!", toastConfig);
+        dispatch (fetchOnceListSentToPublisher ({}))
         setOpenPopoverIndex (null);
       } else {
         throw new Error ('Unexpected response payload');
@@ -192,7 +193,6 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
           },
         },
       )
-      console.log (response.data.data)
       setVideoModal (
         // response.data.data
         response.data.data,

@@ -77,7 +77,10 @@ function PublisherReportTable () {
     }
   }, [dispatch, selectedPublisher])
   React.useEffect (() => {
-    dispatch (fetchPublisher ())
+    if (user === "admin") {
+      dispatch (fetchPublisher ())
+
+    }
   }, [dispatch])
   React.useEffect (() => {
     if (selectedChannel) {
@@ -98,9 +101,7 @@ function PublisherReportTable () {
   const handleEndDateChange = (date) => {
     setEndDate (date) // Keep the Date object for DatePicker
   }
-  const handleReload = () => {
-    window.location.reload ()
-  }
+
   const uniqueChannelName = new Set (data.map ((item) => item.channel_name))
   const uniqueChannelNameFiltered = Array.from (uniqueChannelName)
 

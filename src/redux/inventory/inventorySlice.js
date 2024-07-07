@@ -133,50 +133,50 @@ export const inventoryPublish = createAsyncThunk (
     }
   },
 )
-export const fetchComplitedInventory = createAsyncThunk (
-  'inventory/fetchComplitedInventory',
-  async () => {
-    const token = localStorage.getItem ('token')
-
-    try {
-      const response = await axios.get (
-        `${backendURL}/inventory/deactivated-inventories/`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
-      return response.data.data
-    } catch (error) {
-      throw new Error ('Failed to fetch order')
-    }
-  },
-)
-export const fetchConfirmedIInventory = createAsyncThunk (
-  'inventory/fetchConfirmedIInventory',
-  async () => {
-    const token = localStorage.getItem ('token')
-
-    try {
-      const response = await axios.get (
-        `${backendURL}/inventory/confirmed-inventories/`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
-      return response.data.data
-    } catch (error) {
-      throw new Error ('Failed to fetch order')
-    }
-  },
-)
+// export const fetchComplitedInventory = createAsyncThunk (
+//   'inventory/fetchComplitedInventory',
+//   async () => {
+//     const token = localStorage.getItem ('token')
+//
+//     try {
+//       const response = await axios.get (
+//         `${backendURL}/inventory/deactivated-inventories/`,
+//         {
+//           headers: {
+//             'Content-Type': 'application/json',
+//             Accept: 'application/json',
+//             Authorization: `Bearer ${token}`,
+//           },
+//         },
+//       )
+//       return response.data.data
+//     } catch (error) {
+//       throw new Error ('Failed to fetch order')
+//     }
+//   },
+// )
+// export const fetchConfirmedIInventory = createAsyncThunk (
+//   'inventory/fetchConfirmedIInventory',
+//   async () => {
+//     const token = localStorage.getItem ('token')
+//
+//     try {
+//       const response = await axios.get (
+//         `${backendURL}/inventory/confirmed-inventories/`,
+//         {
+//           headers: {
+//             'Content-Type': 'application/json',
+//             Accept: 'application/json',
+//             Authorization: `Bearer ${token}`,
+//           },
+//         },
+//       )
+//       return response.data.data
+//     } catch (error) {
+//       throw new Error ('Failed to fetch order')
+//     }
+//   },
+// )
 
 export const fetchEditInventory = createAsyncThunk (
   'inventory/fetchEditInventory',
@@ -282,28 +282,28 @@ const inventorySlice = createSlice ({
         state.inventory.push (action.payload.data)
         state.status = 'succeeded'
       })
-      .addCase (fetchComplitedInventory.pending, (state) => {
-        state.status = 'loading'
-      })
-      .addCase (fetchComplitedInventory.fulfilled, (state, action) => {
-        state.status = 'succeeded'
-        state.сomplitedInventories = action.payload
-      })
-      .addCase (fetchComplitedInventory.rejected, (state, action) => {
-        state.status = 'failed'
-        state.error = action.error.message
-      })
-      .addCase (fetchConfirmedIInventory.pending, (state) => {
-        state.status = 'loading'
-      })
-      .addCase (fetchConfirmedIInventory.fulfilled, (state, action) => {
-        state.status = 'succeeded'
-        state.сonfirmedInventories = action.payload
-      })
-      .addCase (fetchConfirmedIInventory.rejected, (state, action) => {
-        state.status = 'failed'
-        state.error = action.error.message
-      })
+      // .addCase (fetchComplitedInventory.pending, (state) => {
+      //   state.status = 'loading'
+      // })
+      // .addCase (fetchComplitedInventory.fulfilled, (state, action) => {
+      //   state.status = 'succeeded'
+      //   state.сomplitedInventories = action.payload
+      // })
+      // .addCase (fetchComplitedInventory.rejected, (state, action) => {
+      //   state.status = 'failed'
+      //   state.error = action.error.message
+      // })
+      // .addCase (fetchConfirmedIInventory.pending, (state) => {
+      //   state.status = 'loading'
+      // })
+      // .addCase (fetchConfirmedIInventory.fulfilled, (state, action) => {
+      //   state.status = 'succeeded'
+      //   state.сonfirmedInventories = action.payload
+      // })
+      // .addCase (fetchConfirmedIInventory.rejected, (state, action) => {
+      //   state.status = 'failed'
+      //   state.error = action.error.message
+      // })
       .addCase (fetchEditInventory.pending, (state) => {
         state.status = 'loading'
       })

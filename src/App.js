@@ -18,10 +18,6 @@ import PublisherUsers from './pages/Dashboard/Pablisher/publisherUsers/publisher
 import Publisher from './pages/Dashboard/Pablisher/publishers/publishers'
 import ChannelStatistics from './pages/Dashboard/ChannelStatistics/ChannelStatistics'
 import NotFound from './pages/NotFound'
-import ConfirmedOrder from './pages/Dashboard/ConfirmedOrders/confirmed/confirmedOrder'
-import CompletedOrder from './pages/Dashboard/ConfirmedOrders/completed/completedOrder'
-import {useDispatch, useSelector} from 'react-redux'
-import {fetchComplitedInventory, fetchConfirmedIInventory,} from './redux/inventory/inventorySlice'
 import Revenue from './pages/Dashboard/Revenue/Revenue'
 import News from './components/Site/News/News'
 import PublisherReport from './components/Dashboard/Reports/PublisherReport/PublisherReportTable'
@@ -29,22 +25,6 @@ import AdvertiserReport from "./components/Dashboard/Reports/AdvertiserReport/Ad
 import SentOrder from "./components/Dashboard/SentOrder";
 
 function App () {
-  const dispatch = useDispatch ()
-  const {сomplitedInventories} = useSelector ((state) => state.inventory)
-  const {сonfirmedInventories} = useSelector ((state) => state.inventory)
-  const user = localStorage.getItem ('role')
-
-  React.useEffect (() => {
-    if (user === 'publisher' || user === 'channel') {
-      dispatch (fetchComplitedInventory ())
-      dispatch (fetchConfirmedIInventory ())
-    }
-  }, [dispatch])
-
-  const filteredComplitedI = сomplitedInventories.filter (
-    (i) => i.removal_date === null,
-  )
-  const filteredConfirmedI = сonfirmedInventories.filter ((i) => i)
   return (
     <>
       <Routes>
@@ -76,18 +56,6 @@ function App () {
             }
           />
           <Route
-            path="/confirmed-order"
-            index
-            element={
-              <Protected allowedRoles={['publisher', 'channel']}>
-                <ConfirmedOrder
-                  filteredComplitedI={filteredComplitedI}
-                  filteredConfirmedI={filteredConfirmedI}
-                />
-              </Protected>
-            }
-          />
-          <Route
             path="/sents-order"
             index
             element={
@@ -96,18 +64,7 @@ function App () {
               </Protected>
             }
           />
-          <Route
-            path="/complited-order"
-            index
-            element={
-              <Protected allowedRoles={['publisher', 'channel']}>
-                <CompletedOrder
-                  filteredComplitedI={filteredComplitedI}
-                  filteredConfirmedI={filteredConfirmedI}
-                />
-              </Protected>
-            }
-          />
+
           <Route
             path="/inventory"
             element={
