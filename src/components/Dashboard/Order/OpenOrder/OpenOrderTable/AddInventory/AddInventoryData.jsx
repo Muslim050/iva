@@ -12,6 +12,7 @@ import VerifyModal from "../../VerifyModal/VerifyModal";
 import AdvertStatus from "../../../../../UI/AdvertStatus/AdvertStatus";
 import {ReactComponent as Deactivate} from "src/assets/Table/deactivate.svg";
 import {ReactComponent as Linkk} from 'src/assets/link.svg'
+import {formatDate} from "../../../../../../utils/formatterDate";
 
 function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRows, handleDeactivateInventory}) {
   const dispatch = useDispatch ();
@@ -108,9 +109,16 @@ function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRow
             </th>
 
             <th className={style.table__tr_th}>
-              {new Date (advert.video_content?.actual_publication_time)
-                .toLocaleDateString ("en-GB")
-                .replace (/\//g, ".")}
+              {
+                advert.video_content?.actual_publication_time === null ? (
+                    <>
+                      {formatDate (advert.video_content?.publication_time)}
+                    </>
+                  )
+                  : (<>
+                    {formatDate (advert.video_content?.actual_publication_time)}</>)
+              }
+
             </th>
 
 
