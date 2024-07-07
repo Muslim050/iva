@@ -59,7 +59,15 @@ function TableVideoList ({
             {/* <td>{video.name}</td> */}
             <td>{video.category}</td>
             <td>
-              {formatDate (video.actual_publication_time)}
+              {
+                video.actual_publication_time === null ? (
+                    <>
+                      {formatDate (video.publication_time)}
+                    </>
+                  )
+                  : (<>
+                    {formatDate (video.actual_publication_time)}</>)
+              }
 
             </td>
 
