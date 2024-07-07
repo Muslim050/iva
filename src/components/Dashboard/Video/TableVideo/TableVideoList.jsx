@@ -59,7 +59,7 @@ function TableVideoList ({
             {/* <td>{video.name}</td> */}
             <td>{video.category}</td>
             <td>
-              {formatDate (video.publication_time)}
+              {formatDate (video.actual_publication_time)}
 
             </td>
 
