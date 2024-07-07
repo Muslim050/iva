@@ -77,7 +77,7 @@ const CompletedOrders = () => {
                   listsentPublisher={listsentPublisher}
                 />
                 </tbody>
-              </table> : <div className="empty_list">Список пустой. У вас нет полученных заказов</div>
+              </table> : <div className="empty_list">Список пустой. У вас нет завершенных заказов</div>
 
           }
 
