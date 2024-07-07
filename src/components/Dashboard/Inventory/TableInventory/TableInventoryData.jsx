@@ -1,13 +1,10 @@
 import React from 'react'
 import style from './TableInventory.module.scss'
 import CircularTable from 'src/components/UI/Circular/CircularTable'
-import CircularBadge from 'src/components/UI/Circular/CircularBadge'
 import FormatterView from '../../../UI/formatter/FormatterView'
 import AdvertStatus from 'src/components/UI/AdvertStatus/AdvertStatus'
-import {ReactComponent as Arrow} from 'src/assets/Table/arrow.svg'
 import ButtonBorder from 'src/components/UI/ButtonBorder/ButtonBorder'
 import {ReactComponent as Edit} from 'src/assets/Table/Edit.svg'
-import BindingInventoryOrderTable from '../BindingInventoryOrderTable/BindingInventoryOrderTable'
 import {formatDate} from "../../../../utils/formatterDate";
 
 function TableInventoryData ({
@@ -108,37 +105,37 @@ function TableInventoryData ({
               </div>
             </td>
 
-            {inventor.status === 'pre_booked' ||
-            inventor.status === 'booked' ? (
-              <td className={style.table_td}>
-                <button
-                  className={style.dopBtn}
-                  onClick={() => handleRowClick (inventor.id)}
-                  style={{position: 'relative'}}
-                >
-                  Открыть
-                  <span className={style.arrow}>
-                    <Arrow
-                      className={`${style.arrow__icon} ${
-                        expandedRows === inventor.id ? style.arrow__rotate : ''
-                      }`}
-                    />
-                  </span>
-                  {inventor.status === 'pre_booked' ? (
-                    <CircularBadge
-                      style={{
-                        backgroundColor: '#ff7d00',
-                        color: '#4833d0',
-                        width: '15px',
-                        height: '15px',
-                        top: '-5px',
-                        right: '-5px',
-                      }}
-                    />
-                  ) : null}
-                </button>
-              </td>
-            ) : null}
+            {/*{inventor.status === 'pre_booked' ||*/}
+            {/*inventor.status === 'booked' ? (*/}
+            {/*  <td className={style.table_td}>*/}
+            {/*    <button*/}
+            {/*      className={style.dopBtn}*/}
+            {/*      onClick={() => handleRowClick (inventor.id)}*/}
+            {/*      style={{position: 'relative'}}*/}
+            {/*    >*/}
+            {/*      Открыть*/}
+            {/*      <span className={style.arrow}>*/}
+            {/*        <Arrow*/}
+            {/*          className={`${style.arrow__icon} ${*/}
+            {/*            expandedRows === inventor.id ? style.arrow__rotate : ''*/}
+            {/*          }`}*/}
+            {/*        />*/}
+            {/*      </span>*/}
+            {/*      {inventor.status === 'pre_booked' ? (*/}
+            {/*        <CircularBadge*/}
+            {/*          style={{*/}
+            {/*            backgroundColor: '#ff7d00',*/}
+            {/*            color: '#4833d0',*/}
+            {/*            width: '15px',*/}
+            {/*            height: '15px',*/}
+            {/*            top: '-5px',*/}
+            {/*            right: '-5px',*/}
+            {/*          }}*/}
+            {/*        />*/}
+            {/*      ) : null}*/}
+            {/*    </button>*/}
+            {/*  </td>*/}
+            {/*) : null}*/}
             <td className={style.table_td}>
               <FormatterView data={inventor.online_views}/>
             </td>
@@ -165,20 +162,20 @@ function TableInventoryData ({
             </td>
           </tr>
 
-          {expandedRows === inventor.id && (
-            <tr className={style.doprow}>
-              <td
-                colSpan="11"
-                className={`${style.list__item} ${
-                  expandedRows === inventor.id ? style.list__item__open : ''
-                }`}
-              >
-                {/* <div className={style.status__wrapper}>{advert.status}</div> */}
+          {/*{expandedRows === inventor.id && (*/}
+          {/*  <tr className={style.doprow}>*/}
+          {/*    <td*/}
+          {/*      colSpan="11"*/}
+          {/*      className={`${style.list__item} ${*/}
+          {/*        expandedRows === inventor.id ? style.list__item__open : ''*/}
+          {/*      }`}*/}
+          {/*    >*/}
+          {/*      /!* <div className={style.status__wrapper}>{advert.status}</div> *!/*/}
 
-                <BindingInventoryOrderTable expandedRows={expandedRows}/>
-              </td>
-            </tr>
-          )}
+          {/*      <BindingInventoryOrderTable expandedRows={expandedRows}/>*/}
+          {/*    </td>*/}
+          {/*  </tr>*/}
+          {/*)}*/}
         </>
       ))}
     </>
