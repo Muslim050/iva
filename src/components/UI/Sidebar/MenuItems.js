@@ -48,13 +48,13 @@ export const menuItems = [
     icon: <AdvertiserReport/>,
   },
   {
-    roles: ['channel', 'publisher', 'admin'],
+    roles: ['admin'],
     label: 'Инвентарь',
     to: '/inventory',
     icon: <Inventory/>,
   },
   {
-    roles: ['channel', 'publisher', 'admin'],
+    roles: ['admin'],
     label: 'Видео',
     to: '/video',
     icon: <Video/>,

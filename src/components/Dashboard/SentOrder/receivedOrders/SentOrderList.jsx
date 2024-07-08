@@ -19,13 +19,11 @@ function SentOrderList ({
   const [expandedRows, setExpandedRows] = React.useState ('')
   const [showKomment, setShowKomment] = React.useState (false)
   const [currentOrder, setCurrentOrder] = React.useState (null)
-
   const handleRowClick = (id) => {
     setExpandedRows (id === expandedRows ? false : id)
-
-    // const item = listsentPublisher.find ((item) => item.id === id)
-
   }
+
+
   return (
     <>
       <AnimatePresence>
@@ -84,25 +82,6 @@ function SentOrderList ({
             <td>
               <FormatterView data={item.ordered_number_of_views}/>
             </td>
-
-            {/*<td>*/}
-            {/*  {item?.notes ? (*/}
-            {/*    <ButtonBorder*/}
-            {/*      onClick={() => {*/}
-            {/*        setShowKomment (true)*/}
-            {/*        setCurrentOrder (item)*/}
-            {/*      }}*/}
-            {/*    >*/}
-            {/*      <Comment*/}
-            {/*        style={{*/}
-            {/*          width: '16px',*/}
-            {/*          height: '16px',*/}
-            {/*        }}*/}
-            {/*      />*/}
-            {/*    </ButtonBorder>*/}
-            {/*  ) : null}*/}
-            {/*</td>*/}
-
             <td>
               <AdvertStatus status={item.order_status}/>
             </td>
