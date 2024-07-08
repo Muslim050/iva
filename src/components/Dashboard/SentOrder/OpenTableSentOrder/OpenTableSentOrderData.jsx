@@ -12,6 +12,7 @@ import TableLinkedVideo from "../../Video/TableVideo/TableLinkedVideo/TableLinke
 import {AnimatePresence} from "framer-motion";
 import {ReactComponent as Link} from 'src/assets/link.svg'
 import {formatDate} from "../../../../utils/formatterDate";
+import AdvertStatus from "../../../UI/AdvertStatus/AdvertStatus";
 
 function OpenTableSentOrderData ({
                                    data,
@@ -127,6 +128,10 @@ function OpenTableSentOrderData ({
                 }
 
               </td>
+            </td>
+
+            <td>
+              <AdvertStatus status={inventor.status}/>
             </td>
             <td className={style.table_td}>
               {inventor.video_content.link_to_video === null ? (

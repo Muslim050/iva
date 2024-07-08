@@ -5,8 +5,6 @@ import SelectedVideo from "./SelectedVideo";
 import styles from './ModalSent.module.scss'
 
 export default function ModalSentOrder ({setOpenPopoverIndex, item}) {
-  console.log (item)
-  console.log (setOpenPopoverIndex)
   const [tabs, setTabs] = React.useState ('1');
   return (
     <>

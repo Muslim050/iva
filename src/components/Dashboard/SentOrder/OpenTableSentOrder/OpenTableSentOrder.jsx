@@ -15,6 +15,8 @@ const headers = [
   },
   {key: 'category', label: 'Категория'},
   {key: 'publication_time', label: 'Дата начала'},
+  {key: 'publication_time', label: 'Статус'},
+
   {key: 'status', label: 'Действия'},
 ]
 
