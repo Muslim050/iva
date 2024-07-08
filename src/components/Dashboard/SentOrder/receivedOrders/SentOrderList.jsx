@@ -106,7 +106,15 @@ function SentOrderList ({
             <td>
               <AdvertStatus status={item.order_status}/>
             </td>
+
             <td style={{position: "relative", display: "flex", gap: "10px"}}>
+              <button
+                className={style.dopBtn}
+                style={{height: "30px"}}
+                onClick={() => handleRowClick (item.id)}
+              >
+                Открыть
+              </button>
               {
                 item.order_status === 'finished' ? null : (
                   <td style={{display: 'contents'}}>
@@ -161,13 +169,6 @@ function SentOrderList ({
               }
 
 
-              <button
-                className={style.dopBtn}
-                style={{height: "30px"}}
-                onClick={() => handleRowClick (item.id)}
-              >
-                Открыть
-              </button>
             </td>
           </tr>
 
