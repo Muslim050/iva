@@ -82,7 +82,7 @@ function SentOrderList ({
             </td>
 
             <td>
-              <AdvertStatus status={item.order_status}/>
+              <AdvertStatus status={item.order_status} endDate={item.deactivation_date}/>
             </td>
             <td>
               <button

@@ -7,7 +7,7 @@ import ModalSentOrder from "../receivedOrders/ModalSentOrder";
 const headers = [
   {key: 'id', label: '№'},
   {key: 'channel.name', label: 'Канал'},
-  {key: 'video_content.name', label: 'Контент'},
+  {key: 'video_content.name', label: 'Название Видео'},
   {key: 'category', label: 'Категория'},
   {key: 'format', label: 'Формат'},
   {key: 'publication_time', label: 'Дата начала'},

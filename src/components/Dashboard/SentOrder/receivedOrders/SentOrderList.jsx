@@ -24,7 +24,6 @@ function SentOrderList ({
   const handleRowClick = (id) => {
     setExpandedRows (id === expandedRows ? false : id)
   }
-  console.log (listsentPublisher.some ((item) => item.order_status === 'in_review'))
   return (
     <>
       <AnimatePresence>
@@ -43,13 +42,14 @@ function SentOrderList ({
           <tr>
             <td>
               <div style={{display: 'flex', position: 'relative'}}>
-                <div style={{position: 'relative'}}>{i + 1}</div>
+                <div style={{position: 'relative'}}>{i + 1}
+                  {user === 'channel' || user === 'publisher' ? (
+                    <>
+                      {item.order_status === 'in_review' &&
+                        <CircularBadge style={{background: "#05b705", width: "12px", height: "12px"}}/>}</>
+                  ) : null}
+                </div>
 
-                {user === 'channel' || user === 'publisher' ? (
-                  <>
-                    {item.order_status === 'in_review' &&
-                      <CircularBadge style={{background: "#05b705", width: "12px", height: "12px"}}/>}</>
-                ) : null}
 
               </div>
             </td>
@@ -95,7 +95,7 @@ function SentOrderList ({
               <AdvertStatus status={item.order_status}/>
             </td>
 
-            <td style={{display: "flex", gap: "10px", width: "100%", alignItems: "center"}}>
+            <td style={{display: "flex", gap: "10px", width: "100%", alignItems: "center", margin: "0"}}>
               <button
                 className={style.dopBtn}
                 style={{height: "30px"}}
@@ -132,10 +132,16 @@ function SentOrderList ({
                   border: "1.5px solid #53545C",
                   padding: '6.5px 8px',
                   cursor: 'pointer',
-                  display: 'inline-flex'
+                  display: 'inline-flex',
+                  position: "relative"
                 }}
                      onClick={() => setOpenPopoverIndex (i)}>
                   Размещение
+                  {user === 'channel' || user === 'publisher' ? (
+                    <>
+                      {item.order_status === 'in_review' &&
+                        <CircularBadge style={{background: "#05b705", width: "12px", height: "12px"}}/>}</>
+                  ) : null}
                   {
                     openPopoverIndex === i && (
                       <div style={{

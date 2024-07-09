@@ -48,14 +48,15 @@ export default function AddInventory ({getOrder, setSelectedRows, selectedRows, 
               Название Видео
             </th>
             <th style={{color: "#717377", fontWeight: "500"}}>
+              Категория
+            </th>
+            <th style={{color: "#717377", fontWeight: "500"}}>
               Формат
             </th>
             <th style={{color: "#717377", fontWeight: "500"}}>
               Прогноз показов
             </th>
-            <th style={{color: "#717377", fontWeight: "500"}}>
-              Категория
-            </th>
+
             <th style={{color: "#717377", fontWeight: "500"}}>
               Ссылка
             </th>

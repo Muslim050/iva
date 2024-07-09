@@ -132,7 +132,10 @@ function OpenTableSentOrderData ({
             </td>
 
             <td>
-              <AdvertStatus status={inventor.status}/>
+              <div style={{width: "fit-content"}}>
+                <AdvertStatus status={inventor.status} endDate={inventor.deactivation_date}/>
+              </div>
+
             </td>
             <td className={style.table_td}>
               {inventor.video_content.link_to_video === null ? (
