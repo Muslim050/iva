@@ -65,9 +65,9 @@ function AddSentPublisherData ({listsentPublisher, expandedRows, onceOrder}) {
               <td style={{color: 'blue'}}>{(item.format === 'preroll' && 'Pre-roll') || ('mixroll' && 'Mix-roll')}</td>
               <td>
                 {formatDate (item.start_date)}
-
-
-                - {formatDate (item.end_date)}
+              </td>
+              <td>
+                {formatDate (item.end_date)}
 
               </td>
 
