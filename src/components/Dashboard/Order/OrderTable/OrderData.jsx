@@ -159,7 +159,8 @@ function OrderData ({sortedData}) {
                   ) : null}
 
                   {role === 'admin' && (
-                    <>{advert.status === 'sent' ? <CircularTable/> : null}</>
+                    <>{advert.status === 'sent' || advert.status === 'in_review' || advert.status === 'accepted' ?
+                      <CircularTable/> : null}</>
                   )}
                 </div>
               </td>
