@@ -32,7 +32,7 @@ function AddSentPublisherRows () {
           color: '#2c2d33',
           fontWeight: '400',
           fontSize: "14px"
-        }}>Период
+        }}>Период размещения
         </th>
 
         <th style={{

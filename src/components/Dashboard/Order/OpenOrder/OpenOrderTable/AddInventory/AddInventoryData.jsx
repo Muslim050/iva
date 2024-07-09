@@ -63,7 +63,7 @@ function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRow
               {advert.channel?.name}
             </th>
             <th className={style.table__tr_th}>{advert.video_content?.name}</th>
-            <th className={style.table__tr_th}>
+            <th className={style.table__tr_th} style={{color: 'blue'}}>
               {(advert.format === "preroll" && "Pre-roll") ||
                 ("midroll1" && "Mid-roll 1") ||
                 ("midroll2" && "Mid-roll 2") ||

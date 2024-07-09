@@ -24,7 +24,7 @@ export default function AddSentPublisher ({expandedRows, onceOrder}) {
             <th>Паблишер</th>
             <th>Канал</th>
             <th>Формат</th>
-            <th>Период</th>
+            <th>Период размещения</th>
             <th>Показы</th>
             <th>Бюджет</th>
             <th>Целевая аудитория</th>

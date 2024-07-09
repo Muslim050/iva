@@ -62,7 +62,7 @@ function AddSentPublisherData ({listsentPublisher, expandedRows, onceOrder}) {
               {/*<td>*/}
               {/*  <Link to={item.promo_file}>Видео</Link>*/}
               {/*</td>*/}
-              <td>{(item.format === 'preroll' && 'Pre-roll') || ('mixroll' && 'Mix-roll')}</td>
+              <td style={{color: 'blue'}}>{(item.format === 'preroll' && 'Pre-roll') || ('mixroll' && 'Mix-roll')}</td>
               <td>
                 {formatDate (item.start_date)}
 

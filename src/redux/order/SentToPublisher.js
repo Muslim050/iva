@@ -27,7 +27,7 @@ export const fetchOnceListSentToPublisher = createAsyncThunk ('sentToPublisher/s
 
   if (expandedRows) {
     data = `${backendURL}/order/assignments/?order_id=${expandedRows}`;
-  } else if (is_deactivated) {
+  } else if (is_deactivated !== undefined) {
     data = `${backendURL}/order/assignments/?is_deactivated=${is_deactivated}`;
   } else {
     data = `${backendURL}/order/assignments/`;

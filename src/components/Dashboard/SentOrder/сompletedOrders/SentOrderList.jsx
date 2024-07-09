@@ -20,7 +20,7 @@ function SentOrderList ({
     setExpandedRows (id === expandedRows ? false : id)
   }
 
-  
+
   return (
     <>
       <AnimatePresence>

@@ -100,6 +100,10 @@ function OpenTableSentOrderData ({
               )}
             </td>
             {/**/}
+
+            <td className={style.table_td}>
+              {inventor.video_content?.category}
+            </td>
             <td className={style.table_td} style={{color: 'blue'}}>
               {(inventor.format === 'preroll' && 'Pre-roll') ||
                 (inventor.format === 'midroll1' && 'Mid-roll 1') ||
@@ -108,13 +112,7 @@ function OpenTableSentOrderData ({
                 (inventor.format === 'midroll4' && 'Mid-roll 4')}
             </td>
 
-            <td className={style.table_td}>
-              <FormatterView data={inventor.online_views}/>
-            </td>
 
-            <td className={style.table_td}>
-              {inventor.video_content?.category}
-            </td>
             <td className={style.table_td}>
               <td>
                 {
@@ -128,6 +126,9 @@ function OpenTableSentOrderData ({
                 }
 
               </td>
+            </td>
+            <td className={style.table_td}>
+              <FormatterView data={inventor.online_views}/>
             </td>
 
             <td>

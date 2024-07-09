@@ -11,10 +11,12 @@ import ButtonBorder from "../../../UI/ButtonBorder/ButtonBorder";
 import {ReactComponent as Comment} from 'src/assets/Table/comment.svg'
 import CommentSentOrderModal from "../CommentSentOrderModal/CommentSentOrderModal";
 import {formatDate} from "../../../../utils/formatterDate";
+import CircularBadge from "../../../UI/Circular/CircularBadge";
 
 function SentOrderList ({
                           listsentPublisher,
                         }) {
+  const user = localStorage.getItem ('role')
   const [openPopoverIndex, setOpenPopoverIndex] = React.useState (null);
   const [expandedRows, setExpandedRows] = React.useState ('')
   const [showKomment, setShowKomment] = React.useState (false)
@@ -22,8 +24,7 @@ function SentOrderList ({
   const handleRowClick = (id) => {
     setExpandedRows (id === expandedRows ? false : id)
   }
-
-
+  console.log (listsentPublisher.some ((item) => item.order_status === 'in_review'))
   return (
     <>
       <AnimatePresence>
@@ -37,11 +38,19 @@ function SentOrderList ({
         )}
       </AnimatePresence>
       {listsentPublisher.map ((item, i) => (
+
         <>
           <tr>
             <td>
-              <div style={{display: 'flex'}}>
-                <div>{i + 1}</div>
+              <div style={{display: 'flex', position: 'relative'}}>
+                <div style={{position: 'relative'}}>{i + 1}</div>
+
+                {user === 'channel' || user === 'publisher' ? (
+                  <>
+                    {item.order_status === 'in_review' &&
+                      <CircularBadge style={{background: "#05b705", width: "12px", height: "12px"}}/>}</>
+                ) : null}
+
               </div>
             </td>
             <td>
@@ -86,7 +95,7 @@ function SentOrderList ({
               <AdvertStatus status={item.order_status}/>
             </td>
 
-            <td style={{position: "relative", display: "flex", gap: "10px"}}>
+            <td style={{display: "flex", gap: "10px", width: "100%", alignItems: "center"}}>
               <button
                 className={style.dopBtn}
                 style={{height: "30px"}}
@@ -96,7 +105,7 @@ function SentOrderList ({
               </button>
               {
                 item.order_status === 'finished' ? null : (
-                  <td style={{display: 'contents'}}>
+                  <div>
                     {item?.notes_text ? (
                       <ButtonBorder
                         onClick={() => {
@@ -112,7 +121,7 @@ function SentOrderList ({
                         />
                       </ButtonBorder>
                     ) : null}
-                  </td>
+                  </div>
                 )
               }
               {item.order_status === 'in_progress' || item.order_status === 'finished' ? null :

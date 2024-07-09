@@ -26,7 +26,7 @@ const ReceivedOrders = () => {
   const videos = useSelector ((state) => state.video.videos)
   const [loading, setLoading] = React.useState (true)
   const {listsentPublisher} = useSelector ((state) => state.sentToPublisher)
-
+  //
   React.useEffect (() => {
     dispatch (fetchOnceListSentToPublisher ({is_deactivated: false})).then (() => setLoading (false))
   }, [dispatch])

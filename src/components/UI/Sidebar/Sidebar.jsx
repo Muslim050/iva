@@ -13,6 +13,7 @@ import {fetchChannel} from 'src/redux/channel/channelSlice'
 import {fetchVideos} from 'src/redux/video/videoSlice'
 import axios from 'axios'
 import backendURL from '../../../utils/url'
+import {fetchOnceListSentToPublisher} from "../../../redux/order/SentToPublisher";
 
 function Sidebar () {
   const [open, setOpen] = React.useState (false)
@@ -22,6 +23,7 @@ function Sidebar () {
   const {channel} = useSelector ((state) => state.channel)
   const {videos} = useSelector ((state) => state.video)
   const [filteredOrders, setFilteredOrders] = React.useState ('')
+  const {listsentPublisher} = useSelector ((state) => state.sentToPublisher)
 
   const dispatch = useDispatch ()
   const navigate = useNavigate ()
@@ -73,10 +75,12 @@ function Sidebar () {
     if (user === 'publisher') {
       dispatch (fetchChannel ())
       dispatch (fetchVideos ())
+      dispatch (fetchOnceListSentToPublisher ({is_deactivated: false}))
     }
     if (user === 'channel') {
       dispatch (fetchChannel ())
       dispatch (fetchVideos ())
+      dispatch (fetchOnceListSentToPublisher ({is_deactivated: false}))
     }
   }, [dispatch])
 
@@ -94,6 +98,9 @@ function Sidebar () {
   // Паблишер
   const filteredChannel = channel.filter ((i) => i.is_connected === false)
   const filteredVideo = videos.filter ((i) => i.link_to_video === null)
+  const listsentPublisherFiltered = listsentPublisher.filter ((i) => i.order_status === 'in_review')
+
+  console.log (listsentPublisherFiltered)
   // Паблишер
 
   const filteredInventoryPablisher = inventory.filter (
@@ -192,40 +199,6 @@ function Sidebar () {
                 {/* Рекломадатели */}
 
                 {/* Паблишер */}
-                {/*{user === 'publisher' && item.label === 'Заказы' ? (*/}
-                {/*  <>*/}
-                {/*    {filteredConfirmedI.length > 0 &&*/}
-                {/*    filteredComplitedI.length > 0 ? (*/}
-                {/*      <CircularBadge*/}
-                {/*        style={{backgroundColor: 'red', color: 'white'}}*/}
-                {/*        count={*/}
-                {/*          filteredComplitedI.length + filteredConfirmedI.length*/}
-                {/*        }*/}
-                {/*      />*/}
-                {/*    ) : (*/}
-                {/*      ''*/}
-                {/*    )}*/}
-                {/*  </>*/}
-                {/*) : (*/}
-                {/*  ''*/}
-                {/*)}*/}
-                {/*{user === 'channel' && item.label === 'Заказы' ? (*/}
-                {/*  <>*/}
-                {/*    {filteredConfirmedI.length > 0 ||*/}
-                {/*    filteredComplitedI.length > 0 ? (*/}
-                {/*      <CircularBadge*/}
-                {/*        style={{backgroundColor: 'red', color: 'white'}}*/}
-                {/*        count={*/}
-                {/*          filteredComplitedI.length + filteredConfirmedI.length*/}
-                {/*        }*/}
-                {/*      />*/}
-                {/*    ) : (*/}
-                {/*      ''*/}
-                {/*    )}*/}
-                {/*  </>*/}
-                {/*) : (*/}
-                {/*  ''*/}
-                {/*)}*/}
 
                 {user === 'channel' && item.label === 'Видео' ? (
                   <>
@@ -283,6 +256,25 @@ function Sidebar () {
                 ) : (
                   ''
                 )}
+
+                {(user === 'publisher' || user === 'channel') && item.label === 'Заказы Паблишера' ? (
+                  <>
+                    {listsentPublisherFiltered.length > 0 && (
+                      <CircularBadge
+                        style={{
+                          backgroundColor: 'green',
+                          color: 'white',
+                        }}
+                        count={listsentPublisherFiltered.length}
+                      />
+                    )}
+                  </>
+                ) : (
+                  ''
+                )}
+
+                {/*dispatch (fetchOnceListSentToPublisher ({is_deactivated: false})).then (() => setLoading (false))*/}
+
                 {/* Паблишер */}
 
                 {/* админ */}

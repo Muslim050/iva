@@ -8,13 +8,15 @@ const headers = [
   {key: 'id', label: '№'},
   {key: 'channel.name', label: 'Канал'},
   {key: 'video_content.name', label: 'Контент'},
+  {key: 'category', label: 'Категория'},
   {key: 'format', label: 'Формат'},
+  {key: 'publication_time', label: 'Дата начала'},
+
   {
     key: 'expected_number_of_views',
     label: 'Показы факт',
   },
-  {key: 'category', label: 'Категория'},
-  {key: 'publication_time', label: 'Дата начала'},
+
   {key: 'publication_time', label: 'Статус'},
 
   {key: 'status', label: 'Действия'},
@@ -26,7 +28,6 @@ function OpenTableSentOrder ({item}) {
   const data = useSelector ((state) => state.inventory.inventory)
   // const [openPopoverIndex, setOpenPopoverIndexLocal] = useState (false);
   const [openPopoverIndex, setOpenPopoverIndex] = React.useState (null);
-  console.log (openPopoverIndex)
 
   React.useEffect (() => {
     dispatch (fetchInventory ({orderAssignmentId: item.id})).then (() => setLoading (false))
