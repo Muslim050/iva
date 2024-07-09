@@ -131,45 +131,76 @@ function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRow
               <th className={style.table__tr_th}>
                 <div style={{display: "flex", gap: "5px"}}>
                   <AdvertStatus status={advert.status} endDate={advert.deactivation_date}/>
-                  {
-                    (role === 'advertiser' || role === 'advertising_agency' || advert.status === "in_use" || advert.status === "inactive" || advert.verified_link_with_timecode === null) ?
-                      // <AdvertStatus status={advert.status}/>
-                      ''
-                      :
-                      <div style={{width: "fit-content"}}>
-                        <ButtonBorder
-                          onClick={() => {
-                            dispatch (showModalVerify ());
-                            setSelectedInventoryId (() => advert.id);
-                          }}
-                          style={{position: "relative", width: "fit-content"}}
-                        >
-                          <Star
-                            style={{
-                              width: "16px",
-                              height: "16px",
-                              marginRight: "5px",
-                            }}
-                          />
-                          {advert.video_content.link_to_video ? (
-                            <CircularBadge
-                              style={{
-                                backgroundColor: "#4833d0",
-                                width: "15px",
-                                height: "15px",
-                                top: "-5px",
-                                right: "-5px",
-                                position: "absolute",
-                              }}
-                            />
-                          ) : (
-                            ""
-                          )}
-                          Проверить
-                        </ButtonBorder>
+                  {/*{*/}
+                  {/*  (role === 'advertiser' || role === 'advertising_agency' || advert.status === "in_use" || advert.status === "inactive" || advert.verified_link_with_timecode != null) ?*/}
+                  {/*    // <AdvertStatus status={advert.status}/>*/}
+                  {/*    ''*/}
+                  {/*    :*/}
+                  {/*    <div style={{width: "fit-content"}}>*/}
+                  {/*      <ButtonBorder*/}
+                  {/*        onClick={() => {*/}
+                  {/*          dispatch (showModalVerify ());*/}
+                  {/*          setSelectedInventoryId (() => advert.id);*/}
+                  {/*        }}*/}
+                  {/*        style={{position: "relative", width: "fit-content"}}*/}
+                  {/*      >*/}
+                  {/*        <Star*/}
+                  {/*          style={{*/}
+                  {/*            width: "16px",*/}
+                  {/*            height: "16px",*/}
+                  {/*            marginRight: "5px",*/}
+                  {/*          }}*/}
+                  {/*        />*/}
+                  {/*        {advert.video_content.link_to_video ? (*/}
+                  {/*          <CircularBadge*/}
+                  {/*            style={{*/}
+                  {/*              backgroundColor: "#4833d0",*/}
+                  {/*              width: "15px",*/}
+                  {/*              height: "15px",*/}
+                  {/*              top: "-5px",*/}
+                  {/*              right: "-5px",*/}
+                  {/*              position: "absolute",*/}
+                  {/*            }}*/}
+                  {/*          />*/}
+                  {/*        ) : (*/}
+                  {/*          ""*/}
+                  {/*        )}*/}
+                  {/*        Проверить*/}
+                  {/*      </ButtonBorder>*/}
 
-                      </div>
-                  }
+                  {/*    </div>*/}
+                  {/*}*/}
+
+                  {role === 'admin' && (advert.status === 'booked' && advert.video_content.link_to_video) ? (
+                    <div style={{position: "relative"}}>
+                      <ButtonBorder
+                        onClick={() => {
+                          dispatch (showModalVerify ());
+                          setSelectedInventoryId (advert.id);
+                        }}
+                        style={{position: "relative", width: "fit-content"}}
+                      >
+                        <Star
+                          style={{
+                            width: "16px",
+                            height: "16px",
+                            marginRight: "5px",
+                          }}
+                        />
+                        <CircularBadge
+                          style={{
+                            backgroundColor: "#4833d0",
+                            width: "15px",
+                            height: "15px",
+                            top: "-5px",
+                            right: "-5px",
+                            position: "absolute",
+                          }}
+                        />
+                        Проверить
+                      </ButtonBorder>
+                    </div>
+                  ) : null}
 
                   {
                     role === 'admin' && advert.status === "in_use" ? (
