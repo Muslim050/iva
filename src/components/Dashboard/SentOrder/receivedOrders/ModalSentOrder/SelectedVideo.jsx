@@ -8,7 +8,7 @@ import backendURL from "src/utils/url";
 import {ButtonModal} from "src/components/UI/ButtonUI/ButtonUI";
 import {toastConfig} from "../../../../../utils/toastConfig";
 import SelectUI from "../../../../UI/SelectUI/SelectUI";
-import {fetchOnceListSentToPublisher} from "../../../../../redux/order/SentToPublisher";
+import {fetchInventory} from "../../../../../redux/inventory/inventorySlice";
 
 const categoryC = [
   {id: 1, text: "Шоу"},
@@ -91,8 +91,8 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
       if (response.data) {
         toast.success ("Видео успешно создано!", toastConfig);
         setOpenPopoverIndex (null);
-        // dispatch (fetchInventory ({orderAssignmentId: item.id}))
-        dispatch (fetchOnceListSentToPublisher ({is_deactivated: false}))
+        dispatch (fetchInventory ({orderAssignmentId: item.id}))
+        // dispatch (fetchOnceListSentToPublisher ({is_deactivated: false}))
       } else {
         throw new Error ('Unexpected response payload');
       }
