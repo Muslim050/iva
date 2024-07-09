@@ -25,6 +25,7 @@ import EditOrderModal from '../EditOrderModalAdmin/EditOrderModal'
 import CommentModal from '../CommentModal/CommentModal'
 import {useNavigate} from 'react-router-dom'
 import BindingOrderModal from '../OpenOrder/OpenOrderTable'
+import {formatDate} from "../../../../utils/formatterDate";
 
 function OrderData ({sortedData}) {
   const dispatch = useDispatch ()
@@ -493,7 +494,7 @@ function OrderData ({sortedData}) {
                         <div style={{display: 'flex', width: '100px'}}>
                           {advert.actual_end_date === null
                             ? null
-                            : advert.actual_end_date.split ('T')[0]}
+                            : formatDate (advert.actual_end_date)}
                         </div>
                         <div>
                           {new Date (advert.actual_end_date).toLocaleTimeString (

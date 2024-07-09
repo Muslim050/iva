@@ -1,5 +1,6 @@
 import React from 'react'
 import style from './AdvertStatus.module.scss'
+import {formatDate} from "../../../utils/formatterDate";
 
 const statusTexts = {
   sent: 'Отправлено',
@@ -17,9 +18,9 @@ const statusTexts = {
   finished: 'Завершен',
 }
 
-const AdvertStatus = ({ status, children, endDate }) => {
+const AdvertStatus = ({status, children, endDate}) => {
   const statusText = statusTexts[status] || 'Неизвестный статус'
-  const wrapperStyles = endDate ? { width: 'max-content' } : {}
+  const wrapperStyles = endDate ? {width: 'max-content'} : {}
   return (
     <div
       className={`${style.wrapper__status} ${style[status]} `}
@@ -30,8 +31,8 @@ const AdvertStatus = ({ status, children, endDate }) => {
       {children}
 
       {endDate && (
-        <div style={{ color: 'red', fontSize: '11px', marginLeft: '5px' }}>
-          <div>{endDate.split('T')[0]}</div>
+        <div style={{color: 'red', fontSize: '11px', marginLeft: '5px'}}>
+          {formatDate (endDate)}
         </div>
       )}
     </div>

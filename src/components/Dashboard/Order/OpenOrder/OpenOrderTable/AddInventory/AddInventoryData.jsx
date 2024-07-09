@@ -128,7 +128,7 @@ function AddInventoryData ({inventor, selectedRows, setSelectedRows, expandedRow
             </th>
             <th className={style.table__tr_th}>
               <div style={{display: "flex", gap: "5px"}}>
-                <AdvertStatus status={advert.status}/>
+                <AdvertStatus status={advert.status} endDate={advert.deactivation_date}/>
                 {
                   (role === 'advertiser' || role === 'advertising_agency' || advert.status === "in_use" || advert.status === "inactive") ?
                     // <AdvertStatus status={advert.status}/>
