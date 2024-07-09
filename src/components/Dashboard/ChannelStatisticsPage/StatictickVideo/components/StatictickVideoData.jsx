@@ -31,13 +31,12 @@ function StatictickVideoData ({statistic, index, handleRowClick, isExpanded}) {
 
       <td className={style.table_td}>
         {
-          statistic.actual_publication_time === null ? (
+          statistic.actual_publication_time ? (
               <>
-                {formatDate (statistic.publication_time)}
-              </>
+                {formatDate (statistic.actual_publication_time)}</>
+
             )
-            : (<>
-              {formatDate (statistic.actual_publication_time)}</>)
+            : (<>{formatDate (statistic.publication_time)}</>)
         }
       </td>
 
