@@ -403,45 +403,48 @@ function OrderData ({sortedData}) {
                               : ''
                           }`}
                         />
-                        {advert.inventories.filter (
-                          (item) =>
-                            item.video_content.link_to_video &&
-                            item.status === 'booked',
-                        ).length > 0 ? (
-                          <CircularBadge
-                            style={{
-                              backgroundColor: '#d0c9fa',
-                              color: '#4833d0',
-                              width: '20px',
-                              height: '20px',
-                            }}
-                            count={
-                              advert.inventories.filter (
-                                (item) =>
-                                  item.video_content.link_to_video &&
-                                  item.status === 'booked',
-                              ).length
-                            }
-                          />
-                        ) : (
+                        {role === 'admin' ?
                           <>
-                            {advert.status === 'in_review' &&
-                            advert.inventories.filter (
-                              (item) => item.status === 'booked',
+                            {advert.inventories.filter (
+                              (item) =>
+                                item.video_content.link_to_video &&
+                                item.status === 'booked',
                             ).length > 0 ? (
                               <CircularBadge
                                 style={{
-                                  backgroundColor: '#ff7d00',
-                                  width: '15px',
-                                  height: '15px',
+                                  backgroundColor: '#d0c9fa',
+                                  color: '#4833d0',
+                                  width: '20px',
+                                  height: '20px',
                                 }}
-                                count={advert.status === 'booked'}
+                                count={
+                                  advert.inventories.filter (
+                                    (item) =>
+                                      item.video_content.link_to_video &&
+                                      item.status === 'booked',
+                                  ).length
+                                }
                               />
                             ) : (
-                              ''
-                            )}
-                          </>
-                        )}
+                              <>
+                                {advert.status === 'in_review' &&
+                                advert.inventories.filter (
+                                  (item) => item.status === 'booked',
+                                ).length > 0 ? (
+                                  <CircularBadge
+                                    style={{
+                                      backgroundColor: '#ff7d00',
+                                      width: '15px',
+                                      height: '15px',
+                                    }}
+                                    count={advert.status === 'booked'}
+                                  />
+                                ) : (
+                                  ''
+                                )}
+                              </>
+                            )}</> : null
+                        }
                         {advert.status === 'booked' ? (
                           <CircularBadge
                             style={{

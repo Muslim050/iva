@@ -329,7 +329,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
         <input
           className={style.input}
           type="text"
-          placeholder="age_range"
+          placeholder="Возраст"
           style={{border: errors?.age_range ? "1px solid red" : ""}}
           {...register ('age_range', {
             required: 'Поле обязательно к заполнению',
@@ -341,7 +341,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
           className={style.input}
           style={{border: errors?.content_language ? "1px solid red" : ""}}
           type="text"
-          placeholder="content_language"
+          placeholder="Ролик"
           {...register ('content_language', {
             required: 'Поле обязательно к заполнению',
           })}
@@ -354,7 +354,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
             type="text"
             style={{border: errors?.notes_text ? "1px solid red" : ""}}
 
-            placeholder="notes_text"
+            placeholder="Текст"
             {...register ('notes_text', {
               required: 'Поле обязательно к заполнению',
             })}
@@ -362,7 +362,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
           <input
             className={style.input}
             type="text"
-            placeholder="notes_url"
+            placeholder="Ссылка"
             style={{border: errors?.notes_url ? "1px solid red" : ""}}
 
             {...register ('notes_url', {
@@ -376,7 +376,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
           className={style.input}
           type="text"
           style={{border: errors?.country ? "1px solid red" : ""}}
-          placeholder="country"
+          placeholder="Target"
           {...register ('country', {
             required: 'Поле обязательно к заполнению',
           })}

@@ -1,30 +1,30 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import axios from 'axios'
-import { hideModalSInventory } from 'src/redux/modalSlice'
+import {hideModalSInventory} from 'src/redux/modalSlice'
 import backendURL from 'src/utils/url'
 import AddInventory from './AddInventory'
 import AddSentPublisher from './AddSentPublisher'
 
-const OpenOrderTable = ({ onRowsSelected, expandedRows }) => {
-  const dispatch = useDispatch()
-  const [selectedRows, setSelectedRows] = React.useState([])
-  const [tabs, setTabs] = React.useState('inventory')
-  const [getOrder, setGetOrder] = React.useState([])
-  const [isLoading, setIsLoading] = React.useState(false)
+const OpenOrderTable = ({statusOr, expandedRows}) => {
+  const dispatch = useDispatch ()
+  const [selectedRows, setSelectedRows] = React.useState ([])
+  const [tabs, setTabs] = React.useState ('inventory')
+  const [getOrder, setGetOrder] = React.useState ([])
+  const [isLoading, setIsLoading] = React.useState (false)
 
-  const [onceOrder, setOnceOrder] = React.useState([])
+  const [onceOrder, setOnceOrder] = React.useState ([])
 
-  const { order } = useSelector((state) => state)
+  const {order} = useSelector ((state) => state)
   const orders = order?.order
 
-  const { inventory } = useSelector((state) => state)
+  const {inventory} = useSelector ((state) => state)
   const inventor = inventory?.inventory
 
   const fetchGetOrder = async () => {
-    setIsLoading(true)
-    const token = localStorage.getItem('token')
-    const response = await axios.get(
+    setIsLoading (true)
+    const token = localStorage.getItem ('token')
+    const response = await axios.get (
       `${backendURL}/order/${expandedRows}/`,
 
       {
@@ -35,23 +35,23 @@ const OpenOrderTable = ({ onRowsSelected, expandedRows }) => {
         },
       },
     )
-    setGetOrder(response.data.data.inventories)
-    setOnceOrder(response.data.data)
+    setGetOrder (response.data.data.inventories)
+    setOnceOrder (response.data.data)
 
-    setIsLoading(false)
+    setIsLoading (false)
   }
-  React.useEffect(() => {
-    fetchGetOrder()
+  React.useEffect (() => {
+    fetchGetOrder ()
   }, [dispatch])
   const isDisabled = selectedRows.length === 0
   const handleButtonClick = () => {
-    dispatch(hideModalSInventory())
+    dispatch (hideModalSInventory ())
   }
-  const [addInventroyModal, setAddInventroyModal] = React.useState(false)
+  const [addInventroyModal, setAddInventroyModal] = React.useState (false)
   return (
     <>
       {isLoading ? (
-        <div className="loaderWrapper" style={{ height: '10vh' }}>
+        <div className="loaderWrapper" style={{height: '10vh'}}>
           <div className="spinner"></div>
         </div>
       ) : (
@@ -65,7 +65,7 @@ const OpenOrderTable = ({ onRowsSelected, expandedRows }) => {
               padding: '10px 0',
             }}
           >
-            <TabsComponent tabs={tabs} setTabs={setTabs} />
+            <TabsComponent tabs={tabs} setTabs={setTabs}/>
           </div>
           {/*Табы*/}
 
@@ -76,6 +76,9 @@ const OpenOrderTable = ({ onRowsSelected, expandedRows }) => {
               selectedRows={selectedRows}
               expandedRows={expandedRows}
               fetchGetOrder={fetchGetOrder} // Передача функции как пропс
+              statusOr={statusOr}
+              onceOrder={onceOrder}
+
             />
           ) : (
             <AddSentPublisher
@@ -84,24 +87,29 @@ const OpenOrderTable = ({ onRowsSelected, expandedRows }) => {
               expandedRows={expandedRows}
               setAddInventroyModal={setAddInventroyModal}
               onceOrder={onceOrder}
+
             />
           )}
+
+
         </>
+
+
       )}
     </>
   )
 }
 
-const TabsComponent = ({ setTabs, tabs }) => {
-  const role = localStorage.getItem('role')
+const TabsComponent = ({setTabs, tabs}) => {
+  const role = localStorage.getItem ('role')
 
   return (
-    <div className="toggle__swipper" style={{ marginBottom: '0px' }}>
+    <div className="toggle__swipper" style={{marginBottom: '0px'}}>
       <button
         className={`toggle__swipper__text ${
           tabs === 'inventory' ? 'active' : ''
         }`}
-        onClick={() => setTabs('inventory')}
+        onClick={() => setTabs ('inventory')}
         style={{
           borderRadius: ' 12px 0px 0px 12px',
         }}
@@ -114,7 +122,7 @@ const TabsComponent = ({ setTabs, tabs }) => {
           className={`toggle__swipper__text ${
             tabs === 'sentPublisher' ? 'activeR' : ''
           }`}
-          onClick={() => setTabs('sentPublisher')}
+          onClick={() => setTabs ('sentPublisher')}
           style={{
             borderRadius: '0px 12px 12px 0px',
           }}

@@ -100,7 +100,6 @@ function Sidebar () {
   const filteredVideo = videos.filter ((i) => i.link_to_video === null)
   const listsentPublisherFiltered = listsentPublisher.filter ((i) => i.order_status === 'in_review')
 
-  console.log (listsentPublisherFiltered)
   // Паблишер
 
   const filteredInventoryPablisher = inventory.filter (
