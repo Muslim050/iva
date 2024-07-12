@@ -305,9 +305,12 @@ export default function EditOrderModal ({
                 width: '100%',
                 marginLeft: "10px"
               }}
+
             >
               <div
+
                 style={{display: 'grid', marginTop: '5px', fontSize: '12px',}}
+
               >
                 <div style={{fontSize: '12px', color: 'var(--text-color)'}}>
                   Target для РУЗ
@@ -318,6 +321,8 @@ export default function EditOrderModal ({
                     type="checkbox"
                     defaultChecked={currentOrder.target_country === 'uz'}
                     onChange={taretCheckbox}
+                    disabled={role !== 'admin'}
+
                   />
                   <span className={style.checkmark}></span>
                 </label>
