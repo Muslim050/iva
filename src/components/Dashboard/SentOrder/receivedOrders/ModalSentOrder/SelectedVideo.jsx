@@ -88,7 +88,7 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
       // Debug log to inspect response
 
       if (response.data) {
-        toast.success ("Видео успешно создано!", toastConfig);
+        toast.success ("Размещение успешно создано! прикрепите ссылку", toastConfig);
         setOpenPopoverIndex (null);
         // dispatch (fetchOnceListSentToPublisher ({is_deactivated: false}))
 
