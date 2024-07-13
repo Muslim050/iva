@@ -139,8 +139,9 @@ function SentOrderList ({
                   Размещение
                   {user === 'channel' || user === 'publisher' ? (
                     <>
-                      {item.order_status === 'in_review' &&
-                        <CircularBadge style={{background: "#05b705", width: "12px", height: "12px"}}/>}</>
+                      {(item.order_status === 'in_review' || item.order_status === 'confirmed') ?
+                        <CircularBadge style={{background: "#05b705", width: "12px", height: "12px"}}/> : null}
+                    </>
                   ) : null}
                   {
                     openPopoverIndex === i && (
