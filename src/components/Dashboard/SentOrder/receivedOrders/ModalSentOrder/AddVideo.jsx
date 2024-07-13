@@ -235,6 +235,7 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
               onChange={timeC}
               defaultValue="00:00:00"
               style={{border: errors?.promo_start_at ? "1px solid red" : ""}}
+              disabled={item.format === 'preroll'}
 
             />
 

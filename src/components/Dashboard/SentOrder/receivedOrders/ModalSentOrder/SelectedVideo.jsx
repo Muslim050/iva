@@ -279,6 +279,8 @@ export default function SelectedVideo ({setOpenPopoverIndex, item}) {
                   inputMode="numeric"
                   onChange={timeC}
                   defaultValue="00:00:00"
+                  disabled={item.format === 'preroll'}
+
                 />
                 <span className={style.error}>
                   {errors?.timecod && <p>{errors?.timecod?.message}</p>}
