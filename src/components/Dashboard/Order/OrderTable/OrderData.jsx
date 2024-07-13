@@ -386,7 +386,7 @@ function OrderData ({sortedData}) {
                   )}
 
 
-                  {(role === 'admin' && (advert.status === 'in_progress' || advert.status === 'finished' || advert.status === 'accepted')) ? (
+                  {(role === 'admin' && (advert.status === 'in_progress' || advert.status === 'finished' || advert.status === 'accepted' || advert.status === 'in_review')) ? (
                     <button
                       className={style.dopBtn}
                       onClick={() => handleRowClick (advert.id)}
