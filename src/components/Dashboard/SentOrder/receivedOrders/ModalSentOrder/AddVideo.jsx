@@ -9,7 +9,6 @@ import InputUI from "../../../../UI/InputUI/InputUI";
 import {toastConfig} from "../../../../../utils/toastConfig";
 import SelectUI from "../../../../UI/SelectUI/SelectUI";
 import {useDispatch} from "react-redux";
-import {fetchOnceListSentToPublisher} from "../../../../../redux/order/SentToPublisher";
 
 const categoryC = [
   {id: 1, text: "Шоу"},
@@ -127,8 +126,8 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
       if (response.data) {
         toast.success ("Видео успешно создано!", toastConfig);
         setOpenPopoverIndex (null);
-        dispatch (fetchOnceListSentToPublisher ({is_deactivated: false}))
-        // dispatch (fetchInventory ({orderAssignmentId: item.id}))
+        // dispatch (fetchOnceListSentToPublisher ({is_deactivated: false}))
+        dispatch (fetchInventory ({orderAssignmentId: item.id}))
         // dispatch (fetchOnceListSentToPublisher ({is_deactivated: false}))
       } else {
         throw new Error ('Unexpected response payload');
