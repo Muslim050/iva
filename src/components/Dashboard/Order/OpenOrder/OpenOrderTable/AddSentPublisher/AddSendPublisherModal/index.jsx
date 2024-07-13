@@ -9,6 +9,7 @@ import {fetchOnceListSentToPublisher} from "../../../../../../../redux/order/Sen
 import {fetchPublisher} from "../../../../../../../redux/publisher/publisherSlice";
 import style from "./AddSendPublisherModal.module.scss";
 import 'react-datepicker/dist/react-datepicker.css'
+import {setOrderStatus} from "../../../../../../../redux/order/orderSlice";
 
 const format = [
   {value: 'preroll', text: 'Pre-roll'},
@@ -25,6 +26,8 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
   const selectedPublisher = (event) => {
     setPublisherID (event.target.value);
   };
+
+
   const fetchChannel = async () => {
     const token = localStorage.getItem ("token");
     const url = `${backendURL}/publisher/channel${publisherID ? `?publisher_id=${publisherID}` : ''}`;
@@ -120,8 +123,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
       // Debug log to inspect response
 
       if (response.data) {
-        console.log ('Response:', response);
-
+        dispatch (setOrderStatus ({orderId: data.order, status: "in_review"}));
         toast.success ("Запись успешно создана!", toastConfig);
         setViewNote (false);
         await dispatch (fetchOnceListSentToPublisher ({expandedRows}));

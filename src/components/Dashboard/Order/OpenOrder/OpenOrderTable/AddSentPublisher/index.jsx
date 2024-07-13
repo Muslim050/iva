@@ -49,13 +49,17 @@ export default function AddSentPublisher ({expandedRows, onceOrder}) {
           )}
           </tbody>
         </table>
-        <div style={{display: "flex", justifyContent: "center", padding: "10px"}}>
-          <button className={style.ok_btn} onClick={() => setViewNote (!viewNote)}>
-            {viewNote ? "Отменить создание" :
-              <div style={{display: "flex", alignItems: "center"}}><Add style={{width: '25px', height: '23px'}}/>Добавить
-                запись</div>}
-          </button>
-        </div>
+        {
+          onceOrder.status === 'finished' ? null :
+            <div style={{display: "flex", justifyContent: "center", padding: "10px"}}>
+              <button className={style.ok_btn} onClick={() => setViewNote (!viewNote)}>
+                {viewNote ? "Отменить создание" :
+                  <div style={{display: "flex", alignItems: "center"}}><Add style={{width: '25px', height: '23px'}}/>Добавить
+                    запись</div>}
+              </button>
+            </div>
+        }
+
       </div>
 
       <div className={style.container}>

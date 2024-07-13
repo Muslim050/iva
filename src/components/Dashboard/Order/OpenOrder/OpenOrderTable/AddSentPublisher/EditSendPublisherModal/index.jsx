@@ -193,7 +193,7 @@ const EditSendPublisherModal = ({onCancel, expandedRows, item, setCurrentOrder})
     if (item) {
       setValue ('publisher', item.publisher?.id || '');
       setPublisherID (item.publisher?.id || ''); // Set publisher ID here
-      setChannelID (item.channel?.id || "")
+      setChannelID ("channel", item.channel?.id || "")
       setValue ('channel', item.channel?.id || '');
       setValue ('format', item.format);
       setValue ('startdate', item.start_date ? item.start_date.substring (0, 10) : "");
@@ -241,32 +241,36 @@ const EditSendPublisherModal = ({onCancel, expandedRows, item, setCurrentOrder})
 
       </td>
       <td style={{padding: "2px", paddingTop: "18px"}}>
-        <select
-          id="countries"
-          value={channelID}
-          onChange={selectedChannelID}
 
-          className={style.select__select}
-          {...register ('channel', {
-            required: 'Поле обязательно для заполнения',
-          })}
-          style={{border: errors?.channel ? "1px solid red" : ""}}
-        >
-          <option value="">Выбрать канал</option>
-          {
-            Array.isArray (channelModal)
-              ? channelModal.map ((option, index) => (
-                <option key={index} value={option.id}>
-                  {option.name}
-                </option>
-              ))
-              : (
-                <option value={channelModal.id}>
-                  {channelModal.name}
-                </option>
-              )
-          }
-        </select>
+        <>
+          <Controller
+            name="channel"
+            control={control}
+            rules={{required: 'Поле обязательно для заполнения'}}
+            render={({field}) => (
+              <select
+                id="countries"
+                {...field}
+                className={style.select__select}
+                style={{border: errors?.channel ? "1px solid red" : ""}}
+              >
+                <option value="">Выбрать канал</option>
+                {Array.isArray (channelModal)
+                  ? channelModal.map ((option, index) => (
+                    <option key={index} value={option.id}>
+                      {option.name}
+                    </option>
+                  ))
+                  : (
+                    <option value={channelModal.id}>
+                      {channelModal.name}
+                    </option>
+                  )
+                }
+              </select>
+            )}
+          />
+        </>
       </td>
       <td style={{padding: "2px", paddingTop: "18px"}}>
         <select
@@ -276,6 +280,8 @@ const EditSendPublisherModal = ({onCancel, expandedRows, item, setCurrentOrder})
             required: 'Поле обязательно',
           })}
           style={{border: errors?.format ? "1px solid red" : ""}}
+          disabled={item.format === "preroll"}
+
         >
           <option value="">Выбрать Формат</option>
 
@@ -286,8 +292,8 @@ const EditSendPublisherModal = ({onCancel, expandedRows, item, setCurrentOrder})
           ))}
         </select>
       </td>
-      <td style={{display: "flex", padding: "0px",}}>
-        <div style={{display: 'grid', marginRight: '10px'}}>
+      <td>
+        <div style={{display: 'grid'}}>
           <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
             Начало
           </label>
@@ -313,7 +319,8 @@ const EditSendPublisherModal = ({onCancel, expandedRows, item, setCurrentOrder})
                 {errors?.startdate && <p>{errors?.startdate?.message}</p>}
               </span>
         </div>
-
+      </td>
+      <td>
         <div style={{display: "grid"}}>
           <div style={{display: 'grid'}}>
             <label style={{fontSize: '12px', color: 'var(--text-color)'}}>
@@ -345,6 +352,7 @@ const EditSendPublisherModal = ({onCancel, expandedRows, item, setCurrentOrder})
 
         </div>
       </td>
+
       <td style={{padding: "2px", paddingTop: "18px"}}>
         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
           <div style={{display: 'grid'}}>
@@ -385,6 +393,19 @@ const EditSendPublisherModal = ({onCancel, expandedRows, item, setCurrentOrder})
           </span>
           </div>
         </div>
+      </td>
+      <td style={{padding: "2px", paddingTop: "18px"}}>
+        <input
+          className={style.input}
+          type="text"
+          style={{border: errors?.ordered_number_of_views ? "1px solid red" : ""}}
+          value={item.online_views}
+
+          placeholder="Количество показов"
+          autoComplete="off"
+          step="1000"
+          disabled={true}
+        />
       </td>
       <td style={{padding: "2px", paddingTop: "18px"}}>
         <input
