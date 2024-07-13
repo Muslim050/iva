@@ -9,6 +9,7 @@ import InputUI from "../../../../UI/InputUI/InputUI";
 import {toastConfig} from "../../../../../utils/toastConfig";
 import SelectUI from "../../../../UI/SelectUI/SelectUI";
 import {useDispatch} from "react-redux";
+import {fetchInventory} from "../../../../../redux/inventory/inventorySlice";
 
 const categoryC = [
   {id: 1, text: "Шоу"},
@@ -124,7 +125,7 @@ export default function AddVideo ({setOpenPopoverIndex, item}) {
       // Debug log to inspect response
 
       if (response.data) {
-        toast.success ("Видео успешно создано!", toastConfig);
+        toast.success ("Размещение успешно создано! прикрепите ссылку", toastConfig);
         setOpenPopoverIndex (null);
         // dispatch (fetchOnceListSentToPublisher ({is_deactivated: false}))
         dispatch (fetchInventory ({orderAssignmentId: item.id}))

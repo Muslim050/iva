@@ -42,7 +42,7 @@ function AddSentPublisherData ({listsentPublisher, expandedRows, onceOrder, tota
     <>
       {listsentPublisher.map ((item, i) => (
         totalOnlineView += item?.online_views,
-
+          console.log (item),
           <React.Fragment key={i}>
             {currentOrder === item ? (
               <>
@@ -77,7 +77,8 @@ function AddSentPublisherData ({listsentPublisher, expandedRows, onceOrder, tota
 
                     {/*<div style={{display: "flex", alignItems: "center", gap: "5px"}}>*/}
                     <FormatterView data={item.ordered_number_of_views}/>
-                    {item.finished ? null :
+                    {item.order_status === "finished"
+                      ? null :
                       <button
                         style={{
                           position: "relative",
