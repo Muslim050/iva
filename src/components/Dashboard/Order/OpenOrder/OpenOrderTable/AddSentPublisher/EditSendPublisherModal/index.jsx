@@ -29,10 +29,10 @@ const EditSendPublisherModal = ({onCancel, expandedRows, item, setCurrentOrder})
     setChannelID (event.target.value);
   };
   const fetchChannel = async () => {
-    if (!publisherID) return; // Skip fetch if publisherID is not set
+    // if (!publisherID) return; // Skip fetch if publisherID is not set
     const token = localStorage.getItem ("token");
     const response = await axios.get (
-      `${backendURL}/publisher/channel/?publisher_id=${publisherID}`,
+      `${backendURL}/publisher/channel${publisherID ? `?publisher_id=${publisherID}` : ''}`,
       {
         headers: {
           "Content-Type": "application/json",
