@@ -77,18 +77,20 @@ function AddSentPublisherData ({listsentPublisher, expandedRows, onceOrder, tota
 
                     {/*<div style={{display: "flex", alignItems: "center", gap: "5px"}}>*/}
                     <FormatterView data={item.ordered_number_of_views}/>
-                    <button
-                      style={{
-                        position: "relative",
-                        height: "18px",
-                        marginTop: '-2px',
-                        borderRadius: "20px",
-                        background: "#5670f1"
+                    {item.finished ? null :
+                      <button
+                        style={{
+                          position: "relative",
+                          height: "18px",
+                          marginTop: '-2px',
+                          borderRadius: "20px",
+                          background: "#5670f1"
 
-                      }}
-                      onClick={() => setOpenPopoverIndex (i)}>
-                      <Add style={{width: '18px', height: "18px"}}/>
-                    </button>
+                        }}
+                        onClick={() => setOpenPopoverIndex (i)}>
+                        <Add style={{width: '18px', height: "18px"}}/>
+                      </button>
+                    }
 
                     {openPopoverIndex === i && (
                       <div style={{
