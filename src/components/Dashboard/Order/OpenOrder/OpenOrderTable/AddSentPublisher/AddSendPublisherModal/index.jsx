@@ -355,7 +355,7 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
             className={style.input}
             type="text"
             style={{border: errors?.notes_text ? "1px solid red" : ""}}
-
+            autocomplete="off"
             placeholder="Текст"
             {...register ('notes_text', {
               required: 'Поле обязательно к заполнению',
@@ -364,6 +364,8 @@ const AddSendPublisherModal = ({setViewNote, expandedRows, onceOrder}) => {
           <input
             className={style.input}
             type="text"
+            autocomplete="off"
+
             placeholder="Ссылка"
             style={{border: errors?.notes_url ? "1px solid red" : ""}}
 

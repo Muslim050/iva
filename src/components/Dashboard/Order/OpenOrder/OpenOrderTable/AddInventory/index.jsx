@@ -97,161 +97,163 @@ export default function AddInventory ({
         <div className="empty_list" style={{padding: "10px 0"}}>Список пустой, добавьте размещение</div>
       )}
       {
-        role === 'admin' ? <div style={{
-          display: 'flex',
-          justifyContent: 'end',
-          marginTop: '10px',
-          width: '100%',
-        }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              border: '2px solid #ff991e',
-              borderRadius: '12px',
-              background: '#ffcc9163',
-              marginRight: '10px',
-              marginBottom: "10px"
+        getOrder.length > 0 ? (<>      {
+          role === 'admin' ? <div style={{
+            display: 'flex',
+            justifyContent: 'end',
+            marginTop: '10px',
+            width: '100%',
+          }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                border: '2px solid #ff991e',
+                borderRadius: '12px',
+                background: '#ffcc9163',
+                marginRight: '10px',
+                marginBottom: "10px"
 
-            }}
-          >
-            {onceOrder === 'finished' ? (
-              ''
-            ) : (
-              <div
-                style={{
-                  display: 'flex',
-                  padding: '8px 10px',
-                }}
-              >
-                <div style={{marginRight: '5px'}}>Итого показы:</div>
-                <FormatterView data={totalOnlineView}/>
-              </div>
-            )}
-            {onceOrder === 'finished' ? (
-              ''
-            ) : (
-              <div
-                style={{
-                  display: 'flex',
-                  padding: '8px 10px',
-                  borderLeft: '2px solid #ff991d',
-                }}
-              >
-                <div style={{marginRight: '5px'}}> Остаток:</div>
-                <FormatterView
-                  data={onceOrder.expected_number_of_views - onceOrder.online_views}
-                />
-              </div>
-            )}
-            {onceOrder === 'finished' ? (
-              ''
-            ) : (
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '0px 10px',
-                  borderLeft: '2px solid #ff991d',
+              }}
+            >
+              {onceOrder === 'finished' ? (
+                ''
+              ) : (
+                <div
+                  style={{
+                    display: 'flex',
+                    padding: '8px 10px',
+                  }}
+                >
+                  <div style={{marginRight: '5px'}}>Итого показы:</div>
+                  <FormatterView data={totalOnlineView}/>
+                </div>
+              )}
+              {onceOrder === 'finished' ? (
+                ''
+              ) : (
+                <div
+                  style={{
+                    display: 'flex',
+                    padding: '8px 10px',
+                    borderLeft: '2px solid #ff991d',
+                  }}
+                >
+                  <div style={{marginRight: '5px'}}> Остаток:</div>
+                  <FormatterView
+                    data={onceOrder.expected_number_of_views - onceOrder.online_views}
+                  />
+                </div>
+              )}
+              {onceOrder === 'finished' ? (
+                ''
+              ) : (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0px 10px',
+                    borderLeft: '2px solid #ff991d',
 
-                }}
-              >
-                <div style={{marginRight: '5px'}}>Статус:</div>
-                <AdvertStatus status={onceOrder.status}>
-                  {role === 'admin' || role === 'advertising_agency' ? (
-                    <>
-                      {role === 'admin' || role === 'advertising_agency' ? (
-                        <>
-                          {onceOrder.status === 'in_progress' ? (
-                            <div
-                              style={{
-                                display: (() => {
-                                  const ratie = Math.floor (
+                  }}
+                >
+                  <div style={{marginRight: '5px'}}>Статус:</div>
+                  <AdvertStatus status={onceOrder.status}>
+                    {role === 'admin' || role === 'advertising_agency' ? (
+                      <>
+                        {role === 'admin' || role === 'advertising_agency' ? (
+                          <>
+                            {onceOrder.status === 'in_progress' ? (
+                              <div
+                                style={{
+                                  display: (() => {
+                                    const ratie = Math.floor (
+                                      (onceOrder.online_views /
+                                        onceOrder.expected_number_of_views) *
+                                      100,
+                                    )
+                                    if (ratie >= 1) {
+                                      return 'initial'
+                                    }
+                                    return 'none'
+                                  }) (),
+                                  padding: '1px 5px',
+                                  borderRadius: '7px',
+                                  fontWeight: '600',
+                                  background: (() => {
+                                    const ratie = Math.floor (
+                                      (onceOrder.online_views /
+                                        onceOrder.expected_number_of_views) *
+                                      100,
+                                    )
+
+                                    if (ratie >= 100) {
+                                      return '#ec2020'
+                                    } else if (ratie >= 80) {
+                                      return '#fd8b00'
+                                    } else if (ratie >= 50) {
+                                      return 'rgba(50, 147, 111, 0.16)'
+                                    } else if (ratie >= 1) {
+                                      return 'rgb(86 112 241)'
+                                    }
+                                    return 'inherit'
+                                  }) (),
+
+                                  color: (() => {
+                                    const ratio =
+                                      (onceOrder.online_views /
+                                        onceOrder.expected_number_of_views) *
+                                      100
+
+                                    if (ratio >= 100) {
+                                      return '#f8f8f8'
+                                    } else if (ratio >= 80) {
+                                      return '#764306'
+                                    } else if (ratio >= 50) {
+                                      return '#047f27'
+                                    } else if (ratio >= 1) {
+                                      return 'rgb(228 232 253)'
+                                    }
+                                    return 'inherit'
+                                  }) (),
+                                }}
+                              >
+                                {onceOrder.online_views > 0 &&
+                                  Math.floor (
                                     (onceOrder.online_views /
                                       onceOrder.expected_number_of_views) *
                                     100,
-                                  )
-                                  if (ratie >= 1) {
-                                    return 'initial'
-                                  }
-                                  return 'none'
-                                }) (),
-                                padding: '1px 5px',
-                                borderRadius: '7px',
-                                fontWeight: '600',
-                                background: (() => {
-                                  const ratie = Math.floor (
-                                    (onceOrder.online_views /
-                                      onceOrder.expected_number_of_views) *
-                                    100,
-                                  )
+                                  ) +
+                                  ' ' +
+                                  '%'}
+                              </div>
+                            ) : null}
+                            {onceOrder.status === 'finished' ? (
+                              <div
+                                style={{
+                                  display: 'initial',
+                                  padding: '1px 4px',
+                                  borderRadius: '7px',
+                                  background: 'rgb(156 81 81)',
+                                  color: '#eedede',
+                                  marginLeft: '10px',
+                                }}
+                              >
+                                100%
+                              </div>
+                            ) : null}
+                          </>
+                        ) : null}
+                      </>
+                    ) : null}
+                  </AdvertStatus>
+                </div>
 
-                                  if (ratie >= 100) {
-                                    return '#ec2020'
-                                  } else if (ratie >= 80) {
-                                    return '#fd8b00'
-                                  } else if (ratie >= 50) {
-                                    return 'rgba(50, 147, 111, 0.16)'
-                                  } else if (ratie >= 1) {
-                                    return 'rgb(86 112 241)'
-                                  }
-                                  return 'inherit'
-                                }) (),
+              )}
+            </div>
 
-                                color: (() => {
-                                  const ratio =
-                                    (onceOrder.online_views /
-                                      onceOrder.expected_number_of_views) *
-                                    100
-
-                                  if (ratio >= 100) {
-                                    return '#f8f8f8'
-                                  } else if (ratio >= 80) {
-                                    return '#764306'
-                                  } else if (ratio >= 50) {
-                                    return '#047f27'
-                                  } else if (ratio >= 1) {
-                                    return 'rgb(228 232 253)'
-                                  }
-                                  return 'inherit'
-                                }) (),
-                              }}
-                            >
-                              {onceOrder.online_views > 0 &&
-                                Math.floor (
-                                  (onceOrder.online_views /
-                                    onceOrder.expected_number_of_views) *
-                                  100,
-                                ) +
-                                ' ' +
-                                '%'}
-                            </div>
-                          ) : null}
-                          {onceOrder.status === 'finished' ? (
-                            <div
-                              style={{
-                                display: 'initial',
-                                padding: '1px 4px',
-                                borderRadius: '7px',
-                                background: 'rgb(156 81 81)',
-                                color: '#eedede',
-                                marginLeft: '10px',
-                              }}
-                            >
-                              100%
-                            </div>
-                          ) : null}
-                        </>
-                      ) : null}
-                    </>
-                  ) : null}
-                </AdvertStatus>
-              </div>
-
-            )}
-          </div>
-
-        </div> : null
+          </div> : null
+        }</>) : null
       }
 
 

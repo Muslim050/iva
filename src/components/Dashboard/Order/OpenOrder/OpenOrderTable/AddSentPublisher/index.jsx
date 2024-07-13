@@ -74,7 +74,9 @@ export default function AddSentPublisher ({expandedRows, onceOrder}) {
                                     onceOrder={onceOrder} totalOnlineView={totalOnlineView}/>
               </tbody>
             </table>
-            <div style={{
+
+
+            {listsentPublisher.length > 0 ? (<div style={{
               display: 'flex',
               justifyContent: 'end',
               marginTop: '10px',
@@ -228,7 +230,8 @@ export default function AddSentPublisher ({expandedRows, onceOrder}) {
                 )}
               </div>
 
-            </div>
+            </div>) : null}
+
           </div>
         ) : (
           <div style={{fontSize: "15px", color: "gray"}} className={style['no-records']}>
