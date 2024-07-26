@@ -17,7 +17,7 @@
     background: #f9fafb;
     display: block;
     width: 100%;
-    padding: 10px
+    padding: 10px;
   }
 
   &__input_error {
@@ -49,7 +49,6 @@
       padding: 12px;
       border-radius: 10px;
       cursor: pointer;
-
     }
   }
 }
@@ -58,7 +57,6 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
-
 
   &__btn {
     color: white;
@@ -73,8 +71,6 @@
     &:hover {
       background: rgb(4, 109, 213);
     }
-
-
   }
 
   &__disabled {
@@ -102,7 +98,7 @@
     font-size: 20px;
     line-height: 28px;
     font-weight: 600;
-    color: var(--text-color,);
+    color: var(--text-color);
   }
 
   &__btn {
@@ -113,7 +109,6 @@
     border: 0;
     cursor: pointer;
   }
-
 }
 
 .modal__btn svg path {
@@ -140,11 +135,9 @@
   overflow-x: auto;
   border: 1px solid rgba(0, 0, 0, 0.35);
 
-
   &__table_header {
-
     width: 100%;
-    background: #1A73E8;
+    background: #1a73e8;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: flex;
     justify-content: space-between;
@@ -194,7 +187,7 @@
     line-height: 16px;
     text-transform: uppercase;
     // background: rgb(176, 175, 175);
-    border-bottom: 2px solid var(--border-color,);
+    border-bottom: 2px solid var(--border-color);
   }
 
   &__th {
@@ -219,7 +212,6 @@
     }
   }
 
-
   &__expanded {
     background-color: #f5f5f5;
     height: 0;
@@ -230,16 +222,14 @@
     }
   }
 
-
   &__tr_th {
-    color: var(--text-color,);
+    color: var(--text-color);
     font-size: 14px;
     white-space: nowrap;
     padding: 16px 24px 16px 24px;
     line-height: 20px;
     font-weight: 400;
     border-bottom: 1px solid #e1e2e9;
-
 
     &__status {
       display: flex;
@@ -266,10 +256,8 @@
   }
 }
 
-
 .doprow {
   background: rgb(228, 16, 16);
-
 }
 
 .list__item {
@@ -288,7 +276,6 @@
   color: red;
 }
 
-
 .list__item__open {
   max-height: 1000px;
   /* здесь можете указать любое достаточно большое значение */
@@ -297,13 +284,11 @@
 
 /* задаем максимальную высоту элемента */
 
-
 .dopBtn {
   border: none;
   background-color: transparent;
   font-size: 1rem;
   cursor: pointer;
-
 
   css Copy code &:hover {
     text-decoration: underline;
@@ -325,7 +310,6 @@
   &:hover {
     background-color: #556ff1a9;
     box-shadow: 0 0 5px var(--primary_color);
-
   }
 }
 
@@ -355,7 +339,6 @@
   height: 100%;
   color: #999;
 }
-
 
 .linkWrapper {
   color: var(--text-color);
@@ -407,4 +390,57 @@
       }
     }
   }
+}
+
+.tooltiptext {
+  visibility: hidden;
+  /* другие стили */
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.table__tr_th:hover .tooltiptext {
+  visibility: visible;
+  left: 50px;
+  bottom: 45px;
+  transform: translateX(-28%);
+  background-color: #4e4e4e;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.hidden {
+  display: none;
+}
+
+.tooltip {
+  position: absolute;
+  top: -50px; /* Измените значение, если необходимо */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; /* Измените значение, если необходимо */
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
 }

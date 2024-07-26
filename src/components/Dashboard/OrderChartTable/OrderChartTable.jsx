@@ -110,6 +110,32 @@ function OrderChartTable() {
   let totalBudget = 0
   let totalAnalitickView = 0
   let totalData = []
+
+  const [sortOrder, setSortOrder] = React.useState('asc')
+  const [sortedOrder, setSortedOrder] = React.useState([])
+  React.useEffect(() => {
+    const sortData = () => {
+      if (data?.length > 0) {
+        const sortedData = [...data].sort((a, b) => {
+          console.log('aaaaa', a)
+          const dateA = new Date(a.publication_date)
+          const dateB = new Date(b.publication_date)
+          return sortOrder === 'asc' ? dateA - dateB : dateB - dateA
+        })
+        setSortedOrder(sortedData)
+      }
+    }
+    sortData()
+  }, [data, sortOrder])
+
+  const handleSort = () => {
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+  }
+  const rotateStyle = {
+    transform: sortOrder === 'asc' ? 'rotate(180deg) ' : 'rotate(0deg)',
+    transition: 'transform 0.3s ease',
+    color: sortOrder === 'asc' ? '#717377 ' : '#5670f1',
+  }
   return (
     <>
       {loading ? (
@@ -126,7 +152,7 @@ function OrderChartTable() {
             {/* Ячейки с инфо Бюджет,План показов, План бюджета */}
             <div>
               <div style={{ display: 'flex' }}>
-                <div>{getOrder.name}</div> &nbsp; / &nbsp;
+                <div>{data.name}</div> &nbsp; / &nbsp;
                 <div>{getOrder.advertiser.name}</div>
               </div>
               <InfoCardsTop getOrder={getOrder} />
@@ -223,13 +249,13 @@ function OrderChartTable() {
           <table className="tableWrapper">
             {/* Колонки основной таблица  */}
             <thead>
-              <OrderChartThead />
+              <OrderChartThead handleSort={handleSort} sortOrder={sortOrder} />
             </thead>
             {/* Колонки основной таблица  */}
 
             <tbody>
-              {data &&
-                data.map((statistic, index) => {
+              {sortedOrder &&
+                sortedOrder.map((statistic, index) => {
                   totalBudget += statistic.budget
                   totalAnalitickView += statistic.online_view_count
                   totalViews += statistic.online_view_count
@@ -281,7 +307,7 @@ function OrderChartTable() {
                                   {/* Колонки  ГЕО Возраст ПОЛ доп таблица  */}
                                   <tr>
                                     <TheadAgeGenderGeo
-                                      data={data}
+                                      data={sortedOrder}
                                       statistic={statistic}
                                     />
                                   </tr>
